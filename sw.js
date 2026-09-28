@@ -1,26 +1,20 @@
-// يومي | Yawmi — service worker: يفتح الواجهة فوراً من الجهاز ويحدّثها في الخلفية
-const V = 'yawmi-v1', FONTS = 'yawmi-fonts';
+// يومي | Yawmi — service worker v2: أحدث نسخة دايماً، والنسخة المحفوظة لو النت بطيء أو مقطوع
+const V = 'yawmi-v2', FONTS = 'yawmi-fonts';
 const SHELL = ['./', './manifest.json', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
-self.addEventListener('install', e => { e.waitUntil(caches.open(V).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())); });
+self.addEventListener('install', e => { e.waitUntil(caches.open(V).then(c => c.addAll(SHELL.map(u => new Request(u, { cache: 'reload' })))).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== V && k !== FONTS).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
-async function shell(e) {
-  const c = await caches.open(V); const cached = await c.match('./');
-  const net = fetch(e.request.url.split('?')[0], { cache: 'no-cache' }).then(async res => {
-    if (res.ok && res.type === 'basic') {
-      const txt = await res.clone().text(); const old = cached ? await cached.clone().text() : null;
-      await c.put('./', res.clone());
-      if (old !== null && old !== txt) (await self.clients.matchAll({ type: 'window' })).forEach(w => w.postMessage('yawmi-updated'));
-    }
-    return res;
-  });
-  if (cached) { e.waitUntil(net.catch(() => {})); return cached; }
-  return net;
-}
 self.addEventListener('fetch', e => {
   const r = e.request; if (r.method !== 'GET') return; // طلبات البيانات (POST) لا تُخزَّن أبداً
   const u = new URL(r.url);
+  if (u.origin === location.origin && r.mode === 'navigate') {
+    const net = fetch(r.url.split('?')[0], { cache: 'no-store' });
+    e.waitUntil(net.then(res => { if (res.ok) { const cp = res.clone(); return caches.open(V).then(c => c.put('./', cp)); } }).catch(() => {}));
+    const slow = new Promise((_, rej) => setTimeout(() => rej(new Error('slow')), 1800));
+    e.respondWith(Promise.race([net.then(res => res.ok ? res : Promise.reject(new Error('bad'))), slow])
+      .catch(() => caches.open(V).then(c => c.match('./')).then(m => m || net)));
+    return;
+  }
   if (u.origin === location.origin) {
-    if (r.mode === 'navigate') { e.respondWith(shell(e)); return; }
     e.respondWith(caches.open(V).then(async c => { const m = await c.match(r, { ignoreSearch: true }); const n = fetch(r).then(res => { if (res.ok) c.put(r, res.clone()); return res; }); if (m) { e.waitUntil(n.catch(() => {})); return m; } return n; }));
     return;
   }
