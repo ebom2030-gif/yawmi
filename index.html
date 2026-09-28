@@ -220,6 +220,7 @@ body.syncing:before{content:"";position:fixed;top:0;left:0;right:0;height:3px;z-
 .ucon{display:flex;gap:6px;margin-top:4px;flex-wrap:wrap;clear:both}.ucon a{font-size:11.5px;text-decoration:none;border:1px solid var(--line);border-radius:8px;padding:1px 7px;color:var(--ink2)}.ucon a.wa{border-color:#25d366;color:#128c4a}.ucon .nt{font-size:11px;color:var(--mut)}
 .chan{display:flex;gap:6px;flex-wrap:wrap}.chan label{flex:1;min-width:110px;border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;cursor:pointer;font-size:13px;display:flex;gap:6px;align-items:center}.chan label:has(input:checked){border-color:var(--gold);background:var(--gold-soft)}
 button[data-udel][data-sure="1"]{background:var(--late);color:#fff;border-color:var(--late)}
+.wabox{border:1.5px solid #25d366;border-radius:12px;padding:8px 12px;margin-top:8px;background:rgba(37,211,102,.05)}.wabox summary{cursor:pointer;font-weight:800;font-size:13.5px}.wabox ol{font-size:12.5px;line-height:1.9;padding-inline-start:18px;margin:8px 0}
 .linkbtn{background:none;border:0;color:var(--navy2);text-decoration:underline;cursor:pointer;font-size:13px;padding:4px 0;justify-self:start}
 .ihelp{position:fixed;inset:0;z-index:997;background:rgba(10,16,32,.55);display:grid;place-items:center;padding:16px}.ihelp[hidden]{display:none}.ihelp .card{background:var(--surface);border-radius:16px;max-width:420px;width:100%;padding:20px;box-shadow:0 20px 50px rgba(0,0,0,.3)}.ihelp h3{margin:0 0 10px}.ihelp ol{margin:6px 0 14px;padding-inline-start:20px;line-height:2;font-size:14px}.ihelp .os{font-weight:800;margin-top:8px;color:var(--navy2)}
 .hbtn{border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;border-radius:99px;padding:5px 12px;font-size:12.5px;font-weight:700}
@@ -795,7 +796,7 @@ const files = x.files.filter((_, j) => j !== i); await upd(x.id, { files });
 if (f.kind === "file" && assets) { try { await assets.delete(f.id); } catch {} }
 toast("أُزيل المرفق");
 }
-else if (a === "remind") { const time = document.querySelector(`[data-f="remTime"][data-id="${x.id}"]`)?.value || "09:00"; await upd(x.id, { reminder: { time, state: "auto" } }); toast(isDemo ? "في النسخة الحقيقية بيتضاف للتقويم ويوصلك تذكير" : "اتضاف للتقويم — هيوصلك تذكير " + time); if (!isDemo) { load.done = false; load(); } }
+else if (a === "remind") { const time = document.querySelector(`[data-f="remTime"][data-id="${x.id}"]`)?.value || "09:00"; await upd(x.id, { reminder: { time, state: "auto" } }); toast(isDemo ? "في النسخة الحقيقية بيوصلك تذكير على الإيميل/الواتساب والتقويم" : "⏰ هيوصلك تذكير الساعة " + time + " " + remVia()); }
 else if (a === "unremind") { await upd(x.id, { reminder: null }); toast("اتلغى التذكير"); }
 });
 $("#view").addEventListener("change", async e => {
@@ -856,11 +857,20 @@ const syncUI = () => document.body.classList.toggle("syncing", pending > 0 || !!
 async function bg(fn, ...args){ pending++; syncUI(); try { return await api(fn, ...args); } finally { pending--; syncUI(); } }
 async function call(fn, ...args){ if (isDemo && fn !== "getAll") return fn === "uploadFile" ? { kind: "link", url: "#", name: args[0] + " (عرض)" } : (fn === "addCalendar" ? { id: "" } : true); pending++; syncUI(); try { return await api(fn, ...args); } catch (e) { console.error(e); setTimeout(() => { load.done = false; load(); }, 400); throw { code: "unavailable", message: String(e && e.message || e) }; } finally { pending--; syncUI(); } }
 const CK = "yawmi_cache";
-function saveCache(){ if (isDemo || !TOKEN || !ME) return; try { localStorage.setItem(CK, JSON.stringify({ t: TOKEN.slice(-12), at: Date.now(), r: { me: ME, users: USERS, projects: PROJECTS, notes: noteStore, items: Object.entries(store).map(([id, v]) => ({ id, ...v })) } })); } catch {} }
-function readCache(){ try { const c = JSON.parse(localStorage.getItem(CK) || "null"); return c && c.t === TOKEN.slice(-12) && c.r && c.r.me ? c.r : null; } catch { return null; } }
+function saveCache(){ if (isDemo || !TOKEN || !ME) return; try { localStorage.setItem(CK, JSON.stringify({ u: ME.id, at: Date.now(), r: { me: ME, users: USERS, projects: PROJECTS, notes: noteStore, items: Object.entries(store).map(([id, v]) => ({ id, ...v })) } })); } catch {} }
+function readCache(uid){ try { const c = JSON.parse(localStorage.getItem(CK) || "null"); return c && c.r && c.r.me && (!uid || c.u === uid) ? c.r : null; } catch { return null; } }
 function clearCache(){ try { localStorage.removeItem(CK); } catch {} }
 document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") saveCache(); });
 window.addEventListener("pagehide", saveCache);
+// ----- قفل تلقائي بعد 30 دقيقة بدون نشاط -----
+const IDLE = 30 * 60000; let lastAct = Date.now();
+function touch(force){ const n = Date.now(); if (force || n - lastAct > 15000) { lastAct = n; try { localStorage.setItem("yawmi_last", String(n)); } catch {} } else lastAct = n; }
+["pointerdown", "keydown", "wheel", "touchstart", "scroll"].forEach(ev => addEventListener(ev, () => touch(), { passive: true, capture: true }));
+function idleLock(){ if (isDemo || !TOKEN) return; saveCache(); const tk = TOKEN; fetch(API, { method: "POST", body: JSON.stringify({ t: tk, fn: "logout", args: [] }), credentials: "omit" }).catch(() => {});
+  setToken(""); ME = null; USERS = []; allItems = []; items = []; store = {}; PROJECTS = []; setChip(); render(); showAuth("login", "🔒 اتقفلت الجلسة بعد 30 دقيقة بدون نشاط — ادخل تاني. (الإشعارات والتذكيرات شغالة عادي)");
+  let un = ""; try { un = localStorage.getItem("yawmi_user") || ""; } catch {} const i = $("#authForm").querySelector('[name="username"]'); if (i && un) { i.value = un; setTimeout(() => { const p = $("#authForm").querySelector('[name="password"]'); if (p) p.focus(); }, 80); } }
+function idleCheck(){ if (!TOKEN || isDemo) return; let l = lastAct; try { l = Math.max(l, Number(localStorage.getItem("yawmi_last") || 0)); } catch {} if (Date.now() - l > IDLE) idleLock(); }
+setInterval(idleCheck, 30000); document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") idleCheck(); });
 const Q = {}; // طابور لكل مهمة: الحفظ يوصل للسيرفر بالترتيب، وآخر نسخة بس
 function qRun(id, fn){ const p = (Q[id] || Promise.resolve()).then(fn); Q[id] = p.catch(e => handleWriteErr(e)); return Q[id]; }
 function qSave(id){ if (qSave.w[id]) return; qSave.w[id] = true; qRun(id, () => { delete qSave.w[id]; return store[id] ? call("saveItem", { id, ...store[id] }) : null; }); }
@@ -905,7 +915,7 @@ setInterval(() => { if (document.visibilityState === "visible") load(); }, 90000
 document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") load(); });
 })();
 
-function setToken(t){ if (isDemo) { TOKEN = t || ""; return; } TOKEN = t || ""; try { if (TOKEN) localStorage.setItem("tasks_token", TOKEN); else { localStorage.removeItem("tasks_token"); clearCache(); } } catch {} }
+function setToken(t){ if (isDemo) { TOKEN = t || ""; return; } TOKEN = t || ""; try { if (TOKEN) localStorage.setItem("tasks_token", TOKEN); else localStorage.removeItem("tasks_token"); } catch {} }
 function applyView(doRender){ const uid = PRIV() ? (ME && ME.id) : (viewUid || (ME && ME.id)); items = allItems.filter(x => (x.owner || (ME && ME.id)) === uid && ((x.space === "p") === PRIV())); if (doRender) render(); }
 function showAuth(mode, msg){
   const a = $("#auth"); a.hidden = false; $("#authErr").style.color = ""; $("#authErr").textContent = mode === "profile" ? "" : (msg || "");
@@ -920,7 +930,12 @@ function showAuth(mode, msg){
     <label class="chk"><input type="checkbox" name="daily" ${pr.daily !== false ? "checked" : ""}> ملخص مهام اليوم على الإيميل كل صباح (٧:٣٠)</label>
     <label class="chk"><input type="checkbox" name="assign" ${pr.assign !== false ? "checked" : ""}> إيميل لما حد يسند لي مهمة</label>
     <label class="chk"><input type="checkbox" name="cal" ${pr.cal !== false ? "checked" : ""}> إضافة الاجتماعات والتذكيرات لتقويمي تلقائياً</label>
-    <div><div style="font-size:13px;font-weight:700;margin:6px 0">توصلني الإشعارات على:</div><div class="chan">${Object.entries(NOTIFYL).map(([k, l]) => `<label><input type="radio" name="notify" value="${k}" ${(pr.notify || "email") === k ? "checked" : ""}> ${k === "wa" ? "💬" : k === "both" ? "✉️💬" : "✉️"} ${l}</label>`).join("")}</div><small style="color:var(--mut);font-size:11.5px">الإيميل بيوصل تلقائي. الواتساب: لما حد يسندلك مهمة، بيظهرله زرار يبعتلك الرسالة على واتساب من موبايله.</small></div>
+    <div><div style="font-size:13px;font-weight:700;margin:6px 0">توصلني الإشعارات على:</div><div class="chan">${Object.entries(NOTIFYL).map(([k, l]) => `<label><input type="radio" name="notify" value="${k}" ${(pr.notify || "email") === k ? "checked" : ""}> ${k === "wa" ? "💬" : k === "both" ? "✉️💬" : "✉️"} ${l}</label>`).join("")}</div><small style="color:var(--mut);font-size:11.5px">الإيميل بيوصل تلقائي. الواتساب بيوصل تلقائي بعد ما تفعّله تحت (مرة واحدة).</small></div>
+    <details class="wabox" ${pr.waOn ? "" : "open"}><summary>💬 واتساب تلقائي لرقمك ${pr.waOn ? '<span class="tag member">مفعّل ✓</span>' : '<span class="tag off">مش مفعّل</span>'}</summary>
+      <ol><li>احفظ الرقم <b dir="ltr">+34 644 78 13 70</b> في جهات الاتصال</li><li>ابعتله على واتساب الرسالة دي بالظبط: <b dir="ltr">I allow callmebot to send me messages</b></li><li>هيردّ عليك بـ <b>apikey</b> (أرقام) — حطّه هنا واحفظ</li></ol>
+      <label>مفتاح الواتساب (apikey)<input name="waKey" dir="ltr" autocomplete="off" inputmode="numeric" placeholder="${pr.waOn ? "مفعّل — اكتب مفتاح جديد لو عايز تغيّره" : "مثال: 123456"}"></label>
+      <div class="row2"><button type="button" class="btn ghost" id="testWa">جرّب رسالة واتساب</button>${pr.waOn ? '<button type="button" class="btn ghost" id="waOff">إلغاء ربط الواتساب</button>' : ""}</div>
+      <small style="color:var(--mut);font-size:11.5px">🔒 الخدمة دي (CallMeBot) مجانية وبتبعت لرقمك انت بس. نص التذكير بيعدّي عليها، فمتكتبش بيانات سرّية جداً في عنوان المهمة. المفتاح محدش يشوفه غيرك، حتى المالك.</small></details>
     <div class="row2"><button type="button" class="btn ghost" id="testMail">إرسال إيميل تجربة</button><button type="button" class="btn ghost" id="goPw">تغيير كلمة المرور</button><button type="button" class="btn ghost" id="authCancel">إلغاء</button></div>`; $("#authBtn").textContent = "حفظ"; }
   else if (mode === "forgot") { $("#authTitle").textContent = "نسيت كلمة المرور"; $("#authSub").textContent = "اكتب اسم المستخدم، وهيوصلك كود على الإيميل المسجّل في حسابك";
     f.innerHTML = `<label>اسم المستخدم<input name="username" autocomplete="username" dir="ltr" required value="${esc(showAuth.un || "")}"></label><button type="button" class="linkbtn" id="goLogin">رجوع لتسجيل الدخول</button>`; $("#authBtn").textContent = "ابعت الكود"; }
@@ -934,6 +949,11 @@ $("#auth").addEventListener("click", async e => { if (e.target.id === "authCance
   if (e.target.id === "goPw") showAuth("pw");
   if (e.target.id === "goForgot") { const u = $("#authForm").querySelector('[name="username"]'); if (u && u.value) showAuth.un = u.value; showAuth("forgot"); }
   if (e.target.id === "goLogin") showAuth("login");
+  if (e.target.id === "waOff") { e.target.disabled = true; try { const r = await api("updateUser", ME.id, { prefs: { waKey: "" } }); const mine = (r || []).find(u => u.id === ME.id); if (mine) Object.assign(ME, mine); showAuth("profile"); toast("اتلغى ربط الواتساب"); } catch (x) { $("#authErr").textContent = (x && x.message) || "خطأ"; e.target.disabled = false; } }
+  if (e.target.id === "testWa") { if (isDemo) { $("#authErr").textContent = "مش متاح في نسخة العرض"; return; } const k = ($("#authForm").querySelector('[name="waKey"]') || {}).value || "", ph = ($("#authForm").querySelector('[name="phone"]') || {}).value || "";
+    if (!(ME.prefs || {}).waOn && !k.trim()) { $("#authErr").textContent = "اكتب المفتاح الأول"; return; } e.target.disabled = true; $("#authErr").style.color = ""; $("#authErr").textContent = "جارٍ الإرسال…";
+    try { if (k.trim() || ph) { const r = await api("updateUser", ME.id, { phone: ph, prefs: k.trim() ? { waKey: k.trim() } : {} }); const mine = (r || []).find(u => u.id === ME.id); if (mine) Object.assign(ME, mine); }
+      await api("testWa"); $("#authErr").style.color = "var(--done)"; $("#authErr").textContent = "✅ اتبعتت رسالة على واتساب — شوف موبايلك"; } catch (x) { $("#authErr").style.color = ""; $("#authErr").textContent = (x && x.message) || "تعذّر الإرسال"; } finally { e.target.disabled = false; } }
   if (e.target.id === "testMail") { if (isDemo) { $("#authErr").textContent = "الإرسال مش متاح في نسخة العرض"; return; } if (!ME.email) { $("#authErr").textContent = "احفظ إيميلك الأول"; return; }
     e.target.disabled = true; try { const r = await api("sendDigest"); $("#authErr").style.color = "var(--done)"; $("#authErr").textContent = "اتبعت إيميل لـ " + r.to + " — شوف الوارد (أو الـ Spam)"; } catch (x) { $("#authErr").style.color = ""; $("#authErr").textContent = (x && x.message) || "تعذّر الإرسال"; } finally { e.target.disabled = false; } } });
 $("#authForm").addEventListener("submit", async e => {
@@ -945,13 +965,15 @@ $("#authForm").addEventListener("submit", async e => {
     if (mode === "pw") { await api("updateUser", ME.id, { password: g("password") }); $("#auth").hidden = true; toast("تم تغيير كلمة المرور — وخرجنا من أي جهاز تاني"); }
     else if (mode === "forgot") { if (isDemo) return err("مش متاح في نسخة العرض"); showAuth.un = g("username").trim(); await api("forgotPw", showAuth.un); showAuth("reset"); return; }
     else if (mode === "reset") { const r = await api("resetPw", g("username"), g("code"), g("password")); setToken(r.token); ME = r.user; viewUid = ME.id; $("#auth").hidden = true; load.done = false; await load(); toast("اتغيّرت كلمة المرور ✓ أهلاً " + ME.name); }
-    else if (mode === "profile") { const patch = { name: g("name").trim(), email: g("email").trim(), phone: g("phone").trim(), prefs: { daily: !!fd.get("daily"), assign: !!fd.get("assign"), cal: !!fd.get("cal"), notify: g("notify") || "email", spaceName: g("spaceName").trim() || "أعمالي الخاصة" } };
+    else if (mode === "profile") { const patch = { name: g("name").trim(), email: g("email").trim(), phone: g("phone").trim(), prefs: { daily: !!fd.get("daily"), assign: !!fd.get("assign"), cal: !!fd.get("cal"), notify: g("notify") || "email", spaceName: g("spaceName").trim() || "أعمالي الخاصة" } }; const wk = g("waKey").trim(); if (wk) patch.prefs.waKey = wk;
       const em = patch.email; if (em && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) return err("الإيميل غير صحيح");
       if (patch.prefs.notify !== "email" && !normPh(patch.phone)) return err("اكتب رقم جوالك عشان تختار الواتساب");
-      const before = JSON.stringify(ME); Object.assign(ME, { name: patch.name, email: em.toLowerCase(), phone: normPh(patch.phone), prefs: { ...(ME.prefs || {}), ...patch.prefs } }); setChip(); spaceBanner(); render(); $("#auth").hidden = true; toast("تم حفظ بياناتك");
+      const before = JSON.stringify(ME); Object.assign(ME, { name: patch.name, email: em.toLowerCase(), phone: normPh(patch.phone), prefs: { ...(ME.prefs || {}), ...patch.prefs, waOn: wk ? true : !!(ME.prefs || {}).waOn } }); delete ME.prefs.waKey; setChip(); spaceBanner(); render(); $("#auth").hidden = true; toast("تم حفظ بياناتك");
       bg("updateUser", ME.id, patch).then(r => { const mine = (r || []).find(u => u.id === ME.id); if (mine) Object.assign(ME, mine); if (can("users")) USERS = r; setChip(); saveCache(); }).catch(x => { Object.assign(ME, JSON.parse(before)); setChip(); spaceBanner(); render(); banner("ماتحفظتش بياناتك: " + ((x && x.message) || "خطأ"), true); }); }
     else { const r = mode === "setup" ? await api("setup", g("username"), g("name"), g("password")) : await api("login", g("username"), g("password"));
-      setToken(r.token); ME = r.user; viewUid = ME.id; $("#auth").hidden = true; load.done = false; await load(); toast("أهلاً " + ME.name); }
+      setToken(r.token); ME = r.user; viewUid = ME.id; touch(true); try { localStorage.setItem("yawmi_user", r.user.username || g("username")); } catch {}
+      const c = readCache(ME.id); if (c) { try { c.me = r.user; applyData(c); } catch (e) { console.warn(e); } }
+      $("#auth").hidden = true; load.done = false; toast("أهلاً " + ME.name); await load(); }
   } catch (x) { err((x && x.message) || "حدث خطأ"); } finally { $("#authBtn").disabled = false; }
 });
 $("#logoutBtn").onclick = async () => { if (isDemo) { try { await api("logout"); } catch {} } else { const tk = TOKEN; fetch(API, { method: "POST", body: JSON.stringify({ t: tk, fn: "logout", args: [] }), credentials: "omit" }).catch(() => {}); } setToken(""); clearCache(); ME = null; USERS = []; allItems = []; items = []; store = {}; setChip(); render(); showAuth("login"); };
@@ -980,7 +1002,8 @@ $("#installBtn").onclick = async () => { if (deferredInstall) { deferredInstall.
 $("#iHelpClose").onclick = () => $("#iHelp").hidden = true; $("#iHelp").onclick = e => { if (e.target.id === "iHelp") $("#iHelp").hidden = true; };
 async function boot(){
   if (/[?&]demo\b/.test(location.search)) { startDemo(); return; }
-  if (TOKEN) { const c = readCache(); if (c) { try { applyData(c); } catch (e) { console.warn(e); } } load(); return; }
+  if (TOKEN) { let l = 0; try { l = Number(localStorage.getItem("yawmi_last") || 0); } catch {} if (l && Date.now() - l > IDLE) { lastAct = 0; idleLock(); return; } touch(true);
+    const c = readCache(); if (c) { try { applyData(c); } catch (e) { console.warn(e); } } load(); return; }
   try { const s = await api("setupStatus"); showAuth(s.needsSetup ? "setup" : "login"); } catch (x) { showAuth("login", (x && x.message) || ""); }
 }
 function statsFor(uid){
@@ -992,6 +1015,7 @@ function statsFor(uid){
 }
 function normPh(p){ let d = String(p || "").replace(/[^0-9]/g, ""); if (d.startsWith("00")) d = d.slice(2); if (d.startsWith("05") && d.length === 10) d = "966" + d.slice(1); else if (d.startsWith("5") && d.length === 9) d = "966" + d; return d.length >= 8 ? d : ""; }
 const waURL = (ph, text) => { const n = normPh(ph); return n ? "https://wa.me/" + n + (text ? "?text=" + encodeURIComponent(text) : "") : ""; };
+const remVia = () => { const p = (ME && ME.prefs) || {}; const n = p.notify || "email"; return n === "email" ? "على الإيميل والتقويم" : (p.waOn ? (n === "both" ? "على الواتساب والإيميل" : "على الواتساب") : "على التقويم — فعّل واتساب من «حسابي»"); };
 const NOTIFYL = { email: "إيميل فقط", wa: "واتساب فقط", both: "إيميل + واتساب" };
 const wantsWA = u => !!u && !!u.phone && ["wa", "both"].includes((u.prefs || {}).notify);
 function actBar(msg, label, href){ const b = $("#actBar"); $("#actMsg").textContent = msg; const l = $("#actLink"); l.textContent = label; l.href = href; b.hidden = false; clearTimeout(actBar.t); actBar.t = setTimeout(() => b.hidden = true, 15000); }
