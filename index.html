@@ -248,39 +248,63 @@ nav.tabs button[aria-selected="true"] .c{background:rgba(255,255,255,.18);color:
 .tag.admin{background:var(--gold-soft);color:var(--gold)}.tag.member{background:var(--doing-soft);color:var(--doing)}.tag.off{background:var(--late-soft);color:var(--late)}
 .tblwrap{overflow-x:auto}
 /* projects */
-.phead{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-top:18px;flex-wrap:wrap}.phead h2{margin:0;font-size:22px}.phead .sub{color:var(--mut);font-size:13px}
-.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:14px}.kpis.k8{grid-template-columns:repeat(4,minmax(0,1fr))}
-.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:2px;border-top:3px solid var(--navy2);min-width:0}
-.kpi .kl{font-size:12.5px;color:var(--ink2);font-weight:700}.kpi b{font-size:21px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.3;word-break:break-word}.kpi small{font-size:12px;color:var(--mut)}
-.kpi.good{border-top-color:var(--done)}.kpi.warn{border-top-color:var(--late)}.kpi.gold{border-top-color:var(--gold)}.cur{font-size:.55em;color:var(--mut);font-weight:700}
-.pgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.pgrid .panel{margin-top:16px}
-.hb,.hb2{display:grid;grid-template-columns:110px 1fr 56px;align-items:center;gap:10px;font-size:13px;margin-block:8px}.hb2{cursor:pointer}.hb2:hover .hl{color:var(--gold)}
-.hl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink2)}.hb b,.hb2 b{font-variant-numeric:tabular-nums;text-align:left;font-size:12.5px}
+.phead{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-top:20px;flex-wrap:wrap}.phead h2{margin:0;font-size:24px;font-weight:800}.phead .sub{color:var(--mut);font-size:13px}
+.btn.gold{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#14213d;font-weight:800;box-shadow:0 4px 14px rgba(194,154,62,.35)}.btn.gold:hover{filter:brightness(1.05)}
+.dk{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:14px}
+.dkc{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow);display:flex;gap:14px;align-items:center;min-width:0;transition:transform .2s,box-shadow .2s}.dkc:hover{transform:translateY(-2px);box-shadow:var(--shadow-h)}
+.dkc>div:last-child{display:flex;flex-direction:column;min-width:0}.dkc .kl{font-size:12.5px;font-weight:700;color:var(--ink2)}.dkc b{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.25;word-break:break-word}.dkc small{font-size:12px;color:var(--mut)}
+.dkc.navy{background:radial-gradient(400px 120px at 90% -20%,rgba(228,199,127,.3),transparent 60%),linear-gradient(135deg,var(--navy),var(--navy2));border:0;color:#fff}.dkc.navy .kl,.dkc.navy small{color:#c9d2e8}.dkc.navy .cur{color:var(--gold2)}
+.dki{width:46px;height:46px;flex:none;border-radius:13px;display:grid;place-items:center;background:var(--doing-soft);color:var(--doing)}.dki svg{width:24px;height:24px}.dkc.navy .dki{background:rgba(228,199,127,.18);color:var(--gold2)}.dki.warn{background:var(--wait-soft);color:var(--wait)}.dki.good{background:var(--done-soft);color:var(--done)}
+.gauge{--p:0;width:56px;height:56px;flex:none;border-radius:50%;background:conic-gradient(var(--done) calc(var(--p)*1%),var(--surface2) 0);display:grid;place-items:center}.gauge span{width:42px;height:42px;border-radius:50%;background:var(--surface);display:grid;place-items:center;font-size:12.5px;font-weight:800;color:var(--done)}
+.sk{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0;margin-top:14px;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+.sk>div{padding:12px 14px;border-inline-start:1px solid var(--line);display:flex;flex-direction:column;gap:1px}.sk>div:first-child{border-inline-start:0}.sk span{font-size:11.5px;color:var(--mut);font-weight:700}.sk b{font-size:18px;font-weight:800;font-variant-numeric:tabular-nums}.sk small{font-size:11px;color:var(--mut)}.sk .bad b{color:var(--late)}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:14px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:2px;border-top:3px solid var(--navy2);min-width:0}
+.kpi .kl{font-size:12.5px;color:var(--ink2);font-weight:700}.kpi b{font-size:20px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.3;word-break:break-word}.kpi small{font-size:12px;color:var(--mut)}
+.kpi.good{border-top-color:var(--done)}.kpi.warn{border-top-color:var(--late)}.kpi.gold{border-top-color:var(--gold);background:linear-gradient(180deg,var(--gold-soft),var(--surface) 70%)}.cur{font-size:.55em;color:var(--mut);font-weight:700}
+.pgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.pgrid.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.pgrid .panel{margin-top:16px}
+.panel h3 small{font-size:12px;color:var(--mut);font-weight:600;margin-inline-start:6px}
+.dwrap{display:flex;align-items:center;gap:14px}.donut{width:150px;height:150px;flex:none}.donut circle{transition:stroke-dasharray .5s}.donut .dc{font-size:26px;font-weight:800;fill:var(--ink)}.donut .ds{font-size:11px;fill:var(--mut)}
+.dleg{list-style:none;margin:0;padding:0;flex:1;font-size:13px}.dleg li{display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px dashed var(--line)}.dleg li:last-child{border:0}.dleg i{width:10px;height:10px;border-radius:3px;flex:none}.dleg b{margin-inline-start:auto;font-variant-numeric:tabular-nums}
+.hb,.hb2{display:grid;grid-template-columns:120px 1fr 52px;align-items:center;gap:10px;font-size:13px;margin-block:9px}.hb2{cursor:pointer}.hb2:hover .hl{color:var(--gold)}
+.hl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink2)}.hl small{color:var(--mut)}.hb b,.hb2 b{font-variant-numeric:tabular-nums;text-align:left;font-size:12.5px}
 .ht{display:flex;gap:2px;height:12px;background:var(--surface2);border-radius:4px;overflow:hidden}.hb .ht i,.hb2 .ht i{display:block;height:100%;border-radius:0 4px 4px 0;min-width:0}.hb2 .ht{background:none}
 .f-done{background:var(--done)}.f-rest{background:var(--line)}.f-doing{background:var(--doing)}.f-late{background:var(--late)}.f-wait{background:var(--wait)}.f-mut{background:var(--mut)}
 .lg{display:flex;gap:14px;font-size:12px;color:var(--ink2);margin-bottom:4px}.lg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-inline-end:5px;vertical-align:-1px}
-.vchart{display:flex;align-items:flex-end;gap:6px;height:170px;padding-top:6px}.vc{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;min-width:0}
-.vb{flex:1;width:100%;display:flex;align-items:flex-end;background:linear-gradient(var(--line) 1px,transparent 1px) 0 0/100% 25%}.vb i{display:block;width:100%;background:var(--gold);border-radius:4px 4px 0 0;min-height:0;transition:height .5s}
-.vc:hover .vb i{background:var(--gold2)}.vl{font-size:10.5px;color:var(--mut);white-space:nowrap}.vv{font-size:10px;color:var(--ink2);height:13px;font-variant-numeric:tabular-nums}
-.alerts{list-style:none;margin:0;padding:0;font-size:13px}.alerts li{padding:8px 10px;border-radius:9px;background:var(--wait-soft);margin-bottom:6px;cursor:pointer;border-inline-start:3px solid var(--wait)}.alerts li.hi{background:var(--late-soft);border-color:var(--late)}
-.plbar{display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap;margin-bottom:10px}.plbar h3{margin:0}#projSearch{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:8px 12px;min-width:240px}
-.ptable,.etable,.ftable{width:100%;border-collapse:collapse;font-size:13.5px}.ptable th,.etable th{text-align:start;font-size:12px;color:var(--mut);font-weight:700;padding:8px 6px;border-bottom:1px solid var(--line);white-space:nowrap}
-.ptable td{padding:10px 6px;border-bottom:1px solid var(--line);vertical-align:middle}.ptable tr[data-popen]{cursor:pointer;transition:background .15s}.ptable tr[data-popen]:hover{background:var(--surface2)}.ptable td small{display:block;color:var(--mut);font-size:12px}
-.n{font-variant-numeric:tabular-nums;text-align:left;white-space:nowrap}.nw{white-space:nowrap;font-size:12.5px;color:var(--ink2)}
-.mini{height:6px;background:var(--surface2);border-radius:9px;overflow:hidden;width:90px}.mini i{display:block;height:100%;background:var(--done);border-radius:9px}.mini.g i{background:var(--gold)}
-.spill{display:inline-block;border-radius:99px;padding:1px 10px;font-size:12px;font-weight:700;white-space:nowrap}.s-mut{background:var(--surface2);color:var(--ink2)}.s-wait{background:var(--wait-soft);color:var(--wait)}.s-doing{background:var(--doing-soft);color:var(--doing)}.s-late{background:var(--late-soft);color:var(--late)}.s-done{background:var(--done-soft);color:var(--done)}
-.pdtop{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px}.pdname{flex:1;display:flex;align-items:center;gap:10px;min-width:200px}.pdname h2{margin:0;font-size:22px}.pdact{display:flex;gap:8px}.btn.danger{color:var(--late)}
-.pform{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 14px}.pform label{font-size:12.5px;font-weight:700;color:var(--ink2);display:flex;flex-direction:column;gap:4px}.pform .w2{grid-column:span 2}
-.pform input,.pform select,.etable input,.etable select,.dochead input,.dochead select{border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:7px 9px;font-size:13.5px;min-width:0;width:100%}.ro-f{padding:7px 9px;background:var(--gold-soft);border-radius:8px;font-weight:800;font-size:14px}
-.etable td{padding:5px 4px;border-bottom:1px solid var(--line);vertical-align:middle}.etable input.nn{width:110px;text-align:left}.etable .ix{color:var(--mut);width:24px;text-align:center}.etable .tot td{font-weight:800;background:var(--surface2);padding:9px 6px}
-.rm{border:0;background:none;color:var(--mut);font-size:18px;padding:0 6px}.rm:hover{color:var(--late)}.addr{margin-top:10px}.warnt{color:var(--late)!important;background:var(--late-soft)!important}
-.ftable td{padding:7px 4px;border-bottom:1px solid var(--line)}.ftable .b td{font-weight:800}.ftable .sep td{border-top:2px solid var(--line)}
+.vchart{display:flex;align-items:flex-end;gap:6px;height:190px;padding-top:6px}.vc{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;min-width:0}
+.vb{flex:1;width:100%;display:flex;align-items:flex-end;background:linear-gradient(var(--line) 1px,transparent 1px) 0 0/100% 25%}.vb i{display:block;width:100%;background:linear-gradient(var(--gold2),var(--gold));border-radius:4px 4px 0 0;min-height:0;transition:height .5s}
+.vc:hover .vb i{filter:brightness(1.1)}.vl{font-size:10.5px;color:var(--mut);white-space:nowrap}.vv{font-size:10px;color:var(--ink2);height:13px;font-variant-numeric:tabular-nums}
+.alerts{list-style:none;margin:0;padding:0;font-size:13px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.alerts li{padding:9px 12px;border-radius:10px;background:var(--wait-soft);cursor:pointer;border-inline-start:3px solid var(--wait)}.alerts li.hi{background:var(--late-soft);border-color:var(--late)}
+.plbar{display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap;margin-bottom:10px}.plbar h3{margin:0}#projSearch{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 12px;min-width:260px}
+.ptable,.etable,.ftable{width:100%;border-collapse:collapse;font-size:13.5px}.ptable th,.etable th{text-align:start;font-size:11.5px;color:var(--mut);font-weight:700;padding:9px 6px;border-bottom:1px solid var(--line);white-space:nowrap;text-transform:none}
+.ptable td{padding:11px 6px;border-bottom:1px solid var(--line);vertical-align:middle}.ptable tr[data-popen]{cursor:pointer;transition:background .15s}.ptable tr[data-popen]:hover{background:var(--surface2)}.ptable td small{display:block;color:var(--mut);font-size:11.5px;font-weight:500}
+.plist tr[data-popen] td:first-child{box-shadow:inset -4px 0 0 var(--sc)}.plist .pn b{font-size:14.5px}.ptable.compact td{padding:8px 6px}.go{color:var(--mut);font-size:20px;text-align:center}
+.tchip{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:7px;background:var(--surface2);color:var(--ink2);border:1px solid var(--line);white-space:nowrap}
+.n{font-variant-numeric:tabular-nums;text-align:left;white-space:nowrap}.nw{white-space:nowrap;font-size:12.5px;color:var(--ink2)}.mutd{color:var(--mut)}
+.mini{height:6px;background:var(--surface2);border-radius:9px;overflow:hidden;width:96px}.mini i{display:block;height:100%;background:var(--done);border-radius:9px}.mini.g i{background:var(--gold)}.mini.w{width:100%;margin-top:6px}
+.spill{display:inline-block;border-radius:99px;padding:2px 10px;font-size:12px;font-weight:700;white-space:nowrap}.s-mut{background:var(--surface2);color:var(--ink2)}.s-wait{background:var(--wait-soft);color:var(--wait)}.s-doing{background:var(--doing-soft);color:var(--doing)}.s-late{background:var(--late-soft);color:var(--late)}.s-done{background:var(--done-soft);color:var(--done)}
+.pband{margin-top:18px;border-radius:16px;padding:18px 20px;background:radial-gradient(600px 160px at 90% -30%,rgba(228,199,127,.25),transparent 60%),linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;border-bottom:4px solid var(--sc);box-shadow:var(--shadow-h)}
+.pbl{display:flex;gap:12px;align-items:center;min-width:0}.bk{width:40px;height:40px;border-radius:12px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;font-size:18px;flex:none}.bk:hover{background:rgba(255,255,255,.18)}
+.pbt{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.pbt h2{margin:0;font-size:22px;font-weight:800}.pband .tchip{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:#e8ecf5}.pbm{font-size:13px;color:#c9d2e8;margin-top:3px}
+.pbr{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.pbr .btn.ghost{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.22);color:#fff}.pbr .btn.danger{color:#ffb4ad}.saved-st{font-size:12px;color:#c9d2e8;margin-inline-end:6px}
+.btn.danger{color:var(--late)}.btn.xs{padding:4px 10px;font-size:12px;border-radius:8px}
+.pform{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 14px}.pform label,.dsc{font-size:12.5px;font-weight:700;color:var(--ink2);display:flex;flex-direction:column;gap:4px}.dsc{margin-top:12px}
+.pform input,.pform select,.dsc input,.etable input,.etable select,.dochead input,.dochead select{border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:7px 9px;font-size:13.5px;min-width:0;width:100%}
+.vtable{margin-top:14px;border:1px solid var(--line);border-radius:12px;overflow:hidden}.vtable table{width:100%;border-collapse:collapse;font-size:13.5px}.vtable th{font-size:11.5px;color:var(--mut);text-align:start;padding:8px 12px;background:var(--surface2)}.vtable td{padding:9px 12px;border-top:1px solid var(--line)}.vtable .hl2{background:var(--gold-soft)}.vtable .hl2 b{color:var(--ink)}
+.hint{font-size:12.5px;color:var(--ink2);background:var(--doing-soft);border-radius:10px;padding:8px 12px;margin-bottom:10px}
+.etable td{padding:5px 4px;border-bottom:1px solid var(--line);vertical-align:middle}.etable input.nn{width:120px;text-align:left}.etable input.sm{width:78px}.etable .ix{color:var(--mut);width:24px;text-align:center}.etable .tot td{font-weight:800;background:var(--surface2);padding:9px 6px}
+.etable tr.phdone td{background:var(--done-soft)}.phst.s-done{color:var(--done);font-weight:700}.phst.s-doing{color:var(--doing);font-weight:700}
+.rm{border:0;background:none;color:var(--mut);font-size:18px;padding:0 6px}.rm:hover{color:var(--late)}.addr{margin-top:10px}.warnt{color:var(--late)!important;background:var(--late-soft)!important;padding:1px 8px;border-radius:99px}
+.ftable td{padding:8px 4px;border-bottom:1px solid var(--line)}.ftable .b td{font-weight:800}.ftable .sep td{border-top:2px solid var(--line)}
 .rvbar{margin-top:12px;display:grid;gap:6px;font-size:12px}.rvbar div{display:grid;grid-template-columns:60px 1fr;align-items:center;gap:8px}.rvbar i{display:block;height:10px;border-radius:0 4px 4px 0}
 .ptasks{list-style:none;margin:0 0 10px;padding:0;font-size:13.5px}.ptasks li{padding:5px 0;border-bottom:1px dashed var(--line)}.ptasks li.d{color:var(--mut);text-decoration:line-through}.ptasks small{color:var(--mut);margin-inline-start:6px}
 .pnotes{width:100%;min-height:160px;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:10px;font-size:14px;resize:vertical}
 .dochead{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.dochead select{width:auto}.dochead .upbtn{padding:7px 12px}.doclink{color:var(--ink);text-decoration:none;font-weight:600}.doclink:hover{color:var(--gold)}
-@media (max-width:760px){.kpis,.kpis.k8{grid-template-columns:repeat(2,minmax(0,1fr))}.pgrid,.pform{grid-template-columns:1fr}.pform .w2{grid-column:auto}}
-@media print{.hero,.stats,nav.tabs,#banner,.toast,.pdact,.pdtop .btn,.addr,.rm,.dochead,#ptaskForm,.tfilter,.auth{display:none!important}body{background:#fff;padding:0}.panel,.kpi{box-shadow:none;break-inside:avoid}.pdetail input,.pdetail select,.pdetail textarea{border:0!important;background:none!important;padding:2px!important;-webkit-appearance:none;appearance:none}}
+#pmodal{background:rgba(12,18,34,.55);backdrop-filter:blur(4px)}.auth-card.pm{max-width:500px;max-height:92vh;overflow:auto}.auth-card.pm .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.auth-card.pm select{display:block;width:100%;margin-top:5px;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:10px 12px;font-size:15px}
+.vbox{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 12px}.vbox div{background:var(--surface2);border-radius:10px;padding:8px 10px;display:flex;flex-direction:column}.vbox span{font-size:11.5px;color:var(--mut);font-weight:700}.vbox b{font-variant-numeric:tabular-nums;font-size:15px}.vbox .t{background:var(--gold-soft)}
+@media (max-width:900px){.dk,.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.sk{grid-template-columns:repeat(3,minmax(0,1fr))}.pgrid.g3{grid-template-columns:1fr}}
+@media (max-width:760px){.pgrid,.pform,.alerts{grid-template-columns:1fr}.dwrap{flex-direction:column}}
+@media print{.hero,.stats,nav.tabs,#banner,.toast,.pbr,.bk,.addr,.rm,.dochead,#ptaskForm,.tfilter,.auth,.hint,[data-mkclaim]{display:none!important}body{background:#fff;padding:0}.pband{box-shadow:none;-webkit-print-color-adjust:exact;print-color-adjust:exact}.panel,.kpi{box-shadow:none;break-inside:avoid}.pdetail input,.pdetail select,.pdetail textarea{border:0!important;background:none!important;padding:2px!important;-webkit-appearance:none;appearance:none}}
 .sec-task{--acc:var(--gold);--acc-soft:var(--gold-soft)}
 .sec>h3 .cap{font-size:11.5px;font-weight:800;color:var(--ink2);background:var(--surface2);border:1px solid var(--line);border-radius:99px;padding:1px 8px;margin-inline-start:6px}.sec>h3 .cap.over{color:var(--late);border-color:var(--late)}
 .sec-backlog{--acc:#8a6d3b;--acc-soft:var(--gold-soft)}
@@ -931,83 +955,104 @@ $("#view").addEventListener("click", async e => { const b = e.target.closest("[d
 $("#view").addEventListener("change", async e => { const s = e.target.closest("[data-urole]"); if (!s) return; try { USERS = await api("updateUser", s.dataset.urole, { role: s.value }); toast("تم تحديث الصلاحية"); setChip(); } catch (x) { banner((x && x.message) || "خطأ", true); } });
 
 // ---------- projects ----------
-const PST = [["quote","عرض سعر","mut"],["contract","مرحلة التعاقد","wait"],["active","جاري العمل","doing"],["hold","متوقف","late"],["done","تم","done"]];
+const PST = [["quote","عرض سعر","mut"],["contract","مرحلة التعاقد","wait"],["active","جاري العمل","doing"],["hold","متوقف","late"],["done","منتهي","done"]];
 const PSTL = Object.fromEntries(PST.map(([k,l,c]) => [k, { l, c }]));
-const PTYPES = ["تصميم معماري","إشراف هندسي","إدارة مشاريع","تطوير عقاري","دراسات واستشارات","تصميم داخلي","أخرى"];
+const PCOL = { mut: "#8b94aa", wait: "#c9962b", doing: "#2f63b5", late: "#c2453b", done: "#2c8a60" };
+const PTYPES = ["إشراف عام ITC","مستشار معماري AOR","تصميم معماري","إشراف هندسي","إدارة مشاريع","تطوير عقاري","دراسات واستشارات","تصميم داخلي","أخرى"];
 const PHST = [["todo","لم تبدأ"],["doing","جارية"],["done","منجزة"]];
 const DOCCAT = ["عقد","عرض سعر","اعتمادات","مطالبة","تحويل / إيصال دفع","مراسلات","مخططات","محضر اجتماع","أخرى"];
-const LOGK = ["مراسلة واردة","مراسلة صادرة","اجتماع","قرار / اعتماد","ملاحظة مهمة"];
-let docCat = "عقد", docF = "all";
+const LOGK = ["مراسلة واردة","مراسلة صادرة","اجتماع","قرار / اعتماد","إنهاء مرحلة","ملاحظة مهمة"];
 const EXCAT = ["رواتب وأتعاب","مقاولين باطن","مواد وطباعة","رسوم حكومية","مواصلات وسفر","أخرى"];
-let projOpen = null, projDraft = null, projDirty = false, projQ = "", projF = "all", projLeave = false;
+let docCat = "عقد", docF = "all";
+let projOpen = null, projDraft = null, projDirty = false, projQ = "", projF = "all", projSaveT = null, projSaving = false, projModal = null;
 const num = v => { const n = parseFloat(String(v ?? "").replace(/,/g, "")); return isFinite(n) ? n : 0; };
 const money = n => (Math.round(num(n) * 100) / 100).toLocaleString("en-US", { maximumFractionDigits: 2 });
+const kmoney = n => { n = num(n); const a = Math.abs(n); return a >= 1e6 ? (Math.round(n / 1e4) / 100) + "M" : a >= 1e3 ? Math.round(n / 1e3) + "K" : money(n); };
 const SAR = n => `${money(n)} <small class="cur">ر.س</small>`;
 const pct = n => (isFinite(n) ? Math.round(n * 1000) / 10 : 0) + "%";
+const prate = p => (p.vat === "" || p.vat == null ? 15 : num(p.vat)) / 100;
+function parts(x, p){ const r = prate(p); x = num(x); if ((p.taxMode || "ex") === "inc") { const A = x / (1 + r); return { A, V: x - A, T: x }; } return { A: x, V: x * r, T: x * (1 + r) }; }
+function pmig(p){ if (!p.v2) { const r = prate(p); (p.claims || []).forEach(c => { if (num(c.amount)) c.amount = Math.round(num(c.amount) * (1 + r) * 100) / 100; }); p.taxMode = p.taxMode || "ex"; p.v2 = 1; } p.phases = p.phases || []; p.claims = p.claims || []; p.expenses = p.expenses || []; p.docs = p.docs || []; p.log = p.log || []; return p; }
 function pcalc(p){
-  const rate = (p.vat === "" || p.vat == null ? 15 : num(p.vat)) / 100;
-  const A = num(p.agreed) || (p.status === "quote" ? num(p.price) : 0), V = A * rate, T = A + V;
-  const ph = (p.phases || []).map(x => ({ ...x, amt: A * num(x.pct) / 100 }));
+  pmig(p); const rate = prate(p);
+  const base = num(p.agreed) || (p.status === "quote" ? num(p.price) : 0);
+  const { A, V, T } = parts(base, p), P = parts(p.price, p);
+  const ph = p.phases.map(x => { const amt = T * num(x.pct) / 100; return { ...x, amt, ex: amt / (1 + rate), claimed: p.claims.some(c => c.phase && c.phase === x.name) }; });
   const phPct = ph.reduce((s, x) => s + num(x.pct), 0), prog = ph.filter(x => x.status === "done").reduce((s, x) => s + num(x.pct), 0);
-  const cl = (p.claims || []).map(x => { const ex = num(x.amount), inc = ex * (1 + rate), pd = num(x.paid);
-    const st = !ex ? "draft" : pd >= inc - 0.5 ? "paid" : pd > 0 ? "part" : (x.date && daysBetween(x.date, today()) > 30) ? "late" : x.date ? "sent" : "draft"; return { ...x, ex, inc, vat: ex * rate, pd, st }; });
+  const cl = p.claims.map(x => { const inc = num(x.amount), pd = num(x.paid), age = x.date ? daysBetween(x.date, today()) : 0;
+    const st = !inc ? "draft" : pd >= inc - 0.5 ? "paid" : pd > 0 ? "part" : age > 30 ? "late" : "due"; return { ...x, inc, ex: inc / (1 + rate), vat: inc - inc / (1 + rate), pd, st, age }; });
   const claimed = cl.reduce((s, x) => s + x.inc, 0), paid = cl.reduce((s, x) => s + x.pd, 0);
-  const exp = (p.expenses || []).reduce((s, x) => s + num(x.amount), 0);
-  const paidNet = paid / (1 + rate);
-  return { rate, A, V, T, ph, phPct, prog, cl, claimed, paid, out: Math.max(T - paid, 0), col: T ? paid / T : 0, exp, profit: A - exp, margin: A ? (A - exp) / A : 0, paidNet, realized: paidNet - exp, vatCollected: paid - paidNet, unclaimed: Math.max(T - claimed, 0), late: cl.filter(x => x.st === "late") };
+  const exp = p.expenses.reduce((s, x) => s + num(x.amount), 0), paidNet = paid / (1 + rate);
+  return { rate, A, V, T, P, ph, phPct, prog, cl, claimed, paid, out: Math.max(T - paid, 0), col: T ? paid / T : 0, exp, profit: A - exp, margin: A ? (A - exp) / A : 0,
+    paidNet, realized: paidNet - exp, vatCollected: paid - paidNet, unclaimed: Math.max(T - claimed, 0), dueCl: cl.filter(x => x.inc && x.st !== "paid"), late: cl.filter(x => x.st === "late") };
 }
-const CLST = { draft: ["مسودة","mut"], sent: ["مطالبة مرسلة","doing"], part: ["مدفوعة جزئياً","wait"], paid: ["مدفوعة","done"], late: ["متأخرة +30 يوم","late"] };
+const CLST = { draft: ["مسودة","mut"], due: ["مستحقة","doing"], part: ["مدفوعة جزئياً","wait"], paid: ["مدفوعة","done"], late: ["متأخرة +30 يوم","late"] };
 const spill = (l, c) => `<span class="spill s-${c}">${esc(l)}</span>`;
-function newProject(){ return { id: rid(), name: "", client: "", type: "", status: "contract", start: today(), end: "", price: "", agreed: "", vat: 15, desc: "",
+const PICON = { box: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg>',
+  cash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 12h.01M18 12h.01"/></svg>',
+  clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  trend: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>',
+  doc: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/></svg>',
+  alert: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l10 18H2z"/><path d="M12 10v4M12 17h.01"/></svg>' };
+function newProject(){ return { id: rid(), v2: 1, name: "", client: "", type: PTYPES[0], status: "contract", start: today(), end: "", price: "", agreed: "", taxMode: "ex", vat: 15, desc: "",
   phases: [{ name: "دفعة مقدمة", pct: 20, due: "", status: "todo" }, { name: "المرحلة الأولى", pct: 40, due: "", status: "todo" }, { name: "التسليم النهائي", pct: 40, due: "", status: "todo" }],
-  claims: [], expenses: [], notes: "", createdAt: Date.now() }; }
+  claims: [], expenses: [], docs: [], log: [], notes: "", createdAt: Date.now() }; }
 function projectsView(){
   if (!isAdmin()) return `<div class="empty">صفحة المشاريع للمدير فقط</div>`;
-  if (projOpen) { if (!projDraft) { const p = PROJECTS.find(x => x.id === projOpen); if (!p) { projOpen = null; return projectsView(); } projDraft = JSON.parse(JSON.stringify(p)); } return projectDetail(projDraft); }
+  if (projOpen) { if (!projDraft) { const p = PROJECTS.find(x => x.id === projOpen); if (!p) { projOpen = null; return projectsView(); } projDraft = pmig(JSON.parse(JSON.stringify(p))); } return projectDetail(projDraft); }
   return projDash() + projList();
 }
 function kpi(label, val, sub, cls){ return `<div class="kpi ${cls || ""}"><span class="kl">${label}</span><b>${val}</b>${sub ? `<small>${sub}</small>` : ""}</div>`; }
+function donut(segs, total, center, sub){
+  const R = 52, C = 2 * Math.PI * R; let off = 0; const gap = total > 1 ? 2.5 : 0;
+  const arcs = segs.filter(s => s.v > 0).map(s => { const len = Math.max(s.v / total * C - gap, 0.1); const a = `<circle r="${R}" cx="70" cy="70" fill="none" stroke="${s.c}" stroke-width="18" stroke-dasharray="${len} ${C - len}" stroke-dashoffset="${-off}" transform="rotate(-90 70 70)"><title>${esc(s.l)}: ${s.t || s.v}</title></circle>`; off += s.v / total * C; return a; }).join("");
+  return `<svg viewBox="0 0 140 140" class="donut"><circle r="${R}" cx="70" cy="70" fill="none" stroke="var(--surface2)" stroke-width="18"/>${arcs}<text x="70" y="68" text-anchor="middle" class="dc">${center}</text><text x="70" y="88" text-anchor="middle" class="ds">${sub}</text></svg>`;
+}
 function projDash(){
   const P = PROJECTS.map(p => ({ p, c: pcalc(p) })); const con = P.filter(x => x.p.status !== "quote");
   const sum = (a, f) => a.reduce((s, x) => s + f(x), 0);
-  const T = sum(con, x => x.c.T), paid = sum(con, x => x.c.paid), exp = sum(con, x => x.c.exp), A = sum(con, x => x.c.A), quotes = P.filter(x => x.p.status === "quote");
-  const active = P.filter(x => x.p.status === "active").length;
-  const kpis = `<div class="kpis">
-    ${kpi("عدد المشاريع", P.length, `${active} جاري العمل · ${quotes.length} عروض أسعار`)}
-    ${kpi("قيمة العقود شامل الضريبة", SAR(T), `${SAR(A)} قبل الضريبة`)}
-    ${kpi("المحصّل", SAR(paid), `${pct(T ? paid / T : 0)} من قيمة العقود`, "good")}
-    ${kpi("المتبقي للتحصيل", SAR(Math.max(T - paid, 0)), `${sum(con, x => x.c.late.length)} مطالبة متأخرة`, "warn")}
-    ${kpi("المصاريف", SAR(exp), A ? `${pct(exp / A)} من الإيراد` : "")}
-    ${kpi("صافي الربح المتوقع", SAR(A - exp), A ? `هامش ${pct((A - exp) / A)}` : "", "gold")}
-  </div>`;
-  // status bars
-  const maxC = Math.max(1, ...PST.map(([k]) => P.filter(x => x.p.status === k).length));
-  const stBars = PST.map(([k, l, c]) => { const n = P.filter(x => x.p.status === k).length;
-    return `<div class="hb" title="${l}: ${n}"><span class="hl">${l}</span><span class="ht"><i class="f-${c}" style="width:${n / maxC * 100}%"></i></span><b>${n}</b></div>`; }).join("");
-  // collection per project
+  const T = sum(con, x => x.c.T), paid = sum(con, x => x.c.paid), exp = sum(con, x => x.c.exp), A = sum(con, x => x.c.A);
+  const quotes = P.filter(x => x.p.status === "quote"), qVal = sum(quotes, x => x.c.P.T || x.c.T), active = P.filter(x => x.p.status === "active").length;
+  const due = con.flatMap(x => x.c.dueCl.map(c => ({ ...c, p: x.p }))).sort((a, b) => b.age - a.age), dueSum = due.reduce((s, c) => s + (c.inc - c.pd), 0), lateN = due.filter(c => c.st === "late").length;
+  const col = T ? paid / T : 0;
+  const big = `<div class="dk">
+    <div class="dkc navy"><span class="dki">${PICON.box}</span><div><span class="kl">إجمالي قيمة العقود</span><b>${SAR(T)}</b><small>${con.length} عقد · ${active} جاري العمل</small></div></div>
+    <div class="dkc"><div class="gauge" style="--p:${Math.round(col * 100)}"><span>${Math.round(col * 100)}%</span></div><div><span class="kl">المحصّل</span><b>${SAR(paid)}</b><small>من قيمة العقود</small></div></div>
+    <div class="dkc"><span class="dki warn">${PICON.clock}</span><div><span class="kl">المتبقي للتحصيل</span><b>${SAR(Math.max(T - paid, 0))}</b><small>منها مطالبات مستحقة ${SAR(dueSum)}</small></div></div>
+    <div class="dkc"><span class="dki good">${PICON.trend}</span><div><span class="kl">صافي الربح المتوقع</span><b>${SAR(A - exp)}</b><small>هامش ${pct(A ? (A - exp) / A : 0)} · مصاريف ${kmoney(exp)}</small></div></div>
+  </div>
+  <div class="sk"><div><span>عدد المشاريع</span><b>${P.length}</b></div><div><span>عروض أسعار قائمة</span><b>${quotes.length}</b><small>${kmoney(qVal)} ر.س</small></div>
+    <div><span>قيمة العقود قبل الضريبة</span><b>${kmoney(A)}</b></div><div><span>المصاريف</span><b>${kmoney(exp)}</b></div>
+    <div class="${lateN ? "bad" : ""}"><span>مطالبات متأخرة</span><b>${lateN}</b></div><div><span>متوسط الإنجاز</span><b>${Math.round(con.length ? sum(con, x => x.c.prog) / con.length : 0)}%</b></div></div>`;
+  const segs = PST.map(([k, l, c]) => ({ l, c: PCOL[c], v: P.filter(x => x.p.status === k).length }));
+  const stat = `<div class="dwrap">${donut(segs, Math.max(P.length, 1), P.length, "مشروع")}<ul class="dleg">${segs.map(s => `<li><i style="background:${s.c}"></i>${s.l}<b>${s.v}</b></li>`).join("")}</ul></div>`;
+  const types = [...new Set(P.map(x => x.p.type || "أخرى"))].map(t => ({ t, v: sum(con.filter(x => (x.p.type || "أخرى") === t), x => x.c.T), n: P.filter(x => (x.p.type || "أخرى") === t).length })).sort((a, b) => b.v - a.v);
+  const maxTy = Math.max(1, ...types.map(x => x.v));
+  const byType = types.length ? types.map(x => `<div class="hb" title="${esc(x.t)}: ${money(x.v)} ر.س"><span class="hl">${esc(x.t)} <small>(${x.n})</small></span><span class="ht"><i style="width:${x.v / maxTy * 100}%;background:var(--navy2)"></i></span><b>${kmoney(x.v)}</b></div>`).join("") : `<div class="empty" style="padding:10px">لا توجد بيانات</div>`;
   const top = con.slice().sort((a, b) => b.c.T - a.c.T).slice(0, 8); const maxT = Math.max(1, ...top.map(x => x.c.T));
   const colBars = top.length ? top.map(x => `<div class="hb2" data-popen="${x.p.id}" title="${esc(x.p.name)} — محصّل ${money(x.c.paid)} من ${money(x.c.T)} ر.س"><span class="hl">${esc(x.p.name)}</span>
-    <span class="ht" style="width:${x.c.T / maxT * 100}%"><i class="f-done" style="width:${x.c.col * 100}%"></i><i class="f-rest" style="width:${(1 - x.c.col) * 100}%"></i></span><b>${pct(x.c.col)}</b></div>`).join("")
-    : `<div class="empty" style="padding:10px">لا توجد عقود بعد</div>`;
-  // monthly collections (last 12 months)
+    <span class="ht" style="width:${Math.max(x.c.T / maxT * 100, 8)}%"><i class="f-done" style="width:${x.c.col * 100}%"></i><i class="f-rest" style="width:${(1 - x.c.col) * 100}%"></i></span><b>${pct(x.c.col)}</b></div>`).join("") : `<div class="empty" style="padding:10px">لا توجد عقود بعد</div>`;
   const now = new Date(); const months = []; for (let i = 11; i >= 0; i--) { const d = new Date(now.getFullYear(), now.getMonth() - i, 1); months.push({ k: `${d.getFullYear()}-${pad(d.getMonth() + 1)}`, l: new Intl.DateTimeFormat("ar-EG-u-nu-latn", { month: "short" }).format(d), v: 0 }); }
-  P.forEach(x => (x.p.claims || []).forEach(c => { if (num(c.paid) && c.paidDate) { const m = months.find(m => m.k === c.paidDate.slice(0, 7)); if (m) m.v += num(c.paid); } }));
+  P.forEach(x => x.p.claims.forEach(c => { if (num(c.paid) && c.paidDate) { const m = months.find(m => m.k === c.paidDate.slice(0, 7)); if (m) m.v += num(c.paid); } }));
   const maxM = Math.max(1, ...months.map(m => m.v));
-  const cols = months.map(m => `<div class="vc" title="${m.l}: ${money(m.v)} ر.س"><span class="vv">${m.v ? money(Math.round(m.v / 1000)) + "k" : ""}</span><span class="vb"><i style="height:${m.v / maxM * 100}%"></i></span><span class="vl">${m.l}</span></div>`).join("");
-  // alerts
+  const cols = months.map(m => `<div class="vc" title="${m.l}: ${money(m.v)} ر.س"><span class="vv">${m.v ? kmoney(m.v) : ""}</span><span class="vb"><i style="height:${m.v / maxM * 100}%"></i></span><span class="vl">${m.l}</span></div>`).join("");
+  const dueT = due.length ? `<div class="tblwrap"><table class="ptable compact"><tr><th>المشروع</th><th>المرحلة</th><th>المستحق</th><th>منذ</th><th>الحالة</th></tr>${due.slice(0, 8).map(c => `<tr data-popen="${c.p.id}"><td><b>${esc(c.p.name)}</b></td><td>${esc(c.phase || c.inv || "—")}</td><td class="n">${money(c.inc - c.pd)}</td><td class="nw">${c.date ? c.age + " يوم" : "—"}</td><td>${spill(...CLST[c.st])}</td></tr>`).join("")}</table></div>` : `<div class="empty" style="padding:10px">لا توجد مطالبات مستحقة 👌</div>`;
   const alerts = [];
-  con.forEach(x => { x.c.late.forEach(cl => alerts.push({ w: 2, t: `مطالبة متأخرة: ${cl.phase || cl.inv || "دفعة"} — ${money(cl.inc - cl.pd)} ر.س`, p: x.p }));
-    x.c.ph.forEach(ph => { if (ph.due && ph.status !== "done" && ph.due <= iso(addDays(new Date(), 14))) { const claimedPh = (x.p.claims || []).some(c => c.phase === ph.name); if (!claimedPh) alerts.push({ w: ph.due < today() ? 2 : 1, t: `مرحلة «${ph.name}» ${ph.due < today() ? "فات موعدها" : "مستحقة"} ${nice(ph.due)} ولم تتم المطالبة`, p: x.p }); } });
-    if (x.p.end && x.p.status === "active" && x.p.end < today()) alerts.push({ w: 1, t: `تجاوز تاريخ الانتهاء المتوقع (${nice(x.p.end)})`, p: x.p }); });
+  con.forEach(x => { x.c.ph.forEach(ph => { if (ph.due && ph.status !== "done" && ph.due <= iso(addDays(new Date(), 14))) alerts.push({ w: ph.due < today() ? 2 : 1, t: `مرحلة «${ph.name}» ${ph.due < today() ? "فات موعدها" : "مستحقة"} ${nice(ph.due)}`, p: x.p }); });
+    if (x.p.end && x.p.status === "active" && x.p.end < today()) alerts.push({ w: 2, t: `تجاوز تاريخ الانتهاء المتوقع (${nice(x.p.end)})`, p: x.p }); });
   alerts.sort((a, b) => b.w - a.w);
-  const al = alerts.length ? `<ul class="alerts">${alerts.slice(0, 8).map(a => `<li class="${a.w > 1 ? "hi" : ""}" data-popen="${a.p.id}"><b>${esc(a.p.name)}</b> · ${esc(a.t)}</li>`).join("")}</ul>` : `<div class="empty" style="padding:10px">لا توجد تنبيهات 👌</div>`;
-  return `<div class="phead"><div><h2>المشاريع</h2><div class="sub">لوحة متابعة العقود والتحصيل والمصاريف</div></div><button class="btn" data-pnew>+ مشروع جديد</button></div>${kpis}
-  <div class="pgrid">
-    <div class="panel"><h3>المشاريع حسب الحالة</h3>${stBars}</div>
+  const al = alerts.length ? `<ul class="alerts">${alerts.slice(0, 6).map(a => `<li class="${a.w > 1 ? "hi" : ""}" data-popen="${a.p.id}"><b>${esc(a.p.name)}</b> · ${esc(a.t)}</li>`).join("")}</ul>` : `<div class="empty" style="padding:10px">لا توجد تنبيهات 👌</div>`;
+  return `<div class="phead"><div><h2>المشاريع</h2><div class="sub">لوحة مؤشرات العقود والتحصيل والربحية · ${esc(gFmtY.format(new Date()))}</div></div><button class="btn gold" data-pnew>+ مشروع جديد</button></div>${big}
+  <div class="pgrid g3">
+    <div class="panel"><h3>المشاريع حسب الحالة</h3>${stat}</div>
+    <div class="panel"><h3>قيمة العقود حسب النوع</h3>${byType}</div>
     <div class="panel"><h3>التحصيل لكل مشروع</h3><div class="lg"><span><i class="f-done"></i>محصّل</span><span><i class="f-rest"></i>متبقي</span></div>${colBars}</div>
+  </div>
+  <div class="pgrid">
     <div class="panel"><h3>التحصيل الشهري — آخر 12 شهر</h3><div class="vchart">${cols}</div></div>
-    <div class="panel"><h3>تنبيهات</h3>${al}</div>
-  </div>`;
+    <div class="panel"><h3>المطالبات المستحقة <small>${due.length} مطالبة · ${kmoney(dueSum)} ر.س</small></h3>${dueT}</div>
+  </div>
+  <div class="panel"><h3>تنبيهات المواعيد</h3>${al}</div>`;
 }
 function projList(){
   const q = projQ.trim(); let L = PROJECTS.map(p => ({ p, c: pcalc(p) }));
@@ -1015,65 +1060,96 @@ function projList(){
   if (q) L = L.filter(x => [x.p.name, x.p.client, x.p.type].join(" ").includes(q));
   L.sort((a, b) => (b.p.start || "").localeCompare(a.p.start || ""));
   const chips = [["all", `الكل (${PROJECTS.length})`], ...PST.map(([k, l]) => [k, `${l} (${PROJECTS.filter(p => p.status === k).length})`])].map(([k, l]) => `<button type="button" class="chip" data-pf-filter="${k}" aria-pressed="${projF === k}">${l}</button>`).join("");
-  const rows = L.map(({ p, c }) => `<tr data-popen="${p.id}"><td><b>${esc(p.name)}</b>${p.client ? `<small>${esc(p.client)}</small>` : ""}</td><td>${esc(p.type || "—")}</td>
-    <td>${spill(PSTL[p.status]?.l || "—", PSTL[p.status]?.c || "mut")}</td><td>${p.start ? esc(gFmtY.format(parse(p.start))) : "—"}</td>
-    <td class="n">${money(c.A)}</td><td class="n">${money(c.T)}</td>
-    <td><div class="mini"><i style="width:${Math.min(c.col, 1) * 100}%"></i></div><small>${pct(c.col)}</small></td>
-    <td><div class="mini g"><i style="width:${Math.min(c.prog, 100)}%"></i></div><small>${Math.round(c.prog)}%</small></td></tr>`).join("");
-  return `<div class="panel"><div class="plbar"><h3>قائمة المشاريع</h3><input type="search" id="projSearch" placeholder="بحث باسم المشروع أو العميل…" value="${esc(projQ)}"></div><div class="tfilter" style="border:0;padding:0 0 10px">${chips}</div>
-  ${L.length ? `<div class="tblwrap"><table class="ptable"><tr><th>المشروع</th><th>النوع</th><th>الحالة</th><th>البداية</th><th>المتفق عليه (قبل الضريبة)</th><th>الإجمالي شامل الضريبة</th><th>التحصيل</th><th>الإنجاز</th></tr>${rows}</table></div>`
+  const rows = L.map(({ p, c }) => { const st = PSTL[p.status] || PSTL.contract; return `<tr data-popen="${p.id}" style="--sc:${PCOL[st.c]}"><td class="pn"><b>${esc(p.name)}</b><small>${esc(p.client || "—")}</small></td><td><span class="tchip">${esc(p.type || "—")}</span></td>
+    <td>${spill(st.l, st.c)}</td><td class="nw">${p.start ? esc(gFmtY.format(parse(p.start))) : "—"}</td><td class="n"><b>${money(c.T)}</b><small>قبل الضريبة ${money(c.A)}</small></td>
+    <td><div class="mini"><i style="width:${Math.min(c.col, 1) * 100}%"></i></div><small>${pct(c.col)} · ${kmoney(c.paid)}</small></td>
+    <td><div class="mini g"><i style="width:${Math.min(c.prog, 100)}%"></i></div><small>${Math.round(c.prog)}%</small></td><td class="go">‹</td></tr>`; }).join("");
+  return `<div class="panel"><div class="plbar"><h3>قائمة المشاريع</h3><input type="search" id="projSearch" placeholder="بحث باسم المشروع أو الجهة…" value="${esc(projQ)}"></div><div class="tfilter" style="border:0;padding:0 0 10px">${chips}</div>
+  ${L.length ? `<div class="tblwrap"><table class="ptable plist"><tr><th>المشروع / الجهة</th><th>النوع</th><th>الحالة</th><th>البداية</th><th>الإجمالي شامل الضريبة</th><th>التحصيل</th><th>الإنجاز</th><th></th></tr>${rows}</table></div>`
   : `<div class="empty"><b>${PROJECTS.length ? "لا نتائج" : "لا توجد مشاريع بعد"}</b>${PROJECTS.length ? "" : "دوس «+ مشروع جديد» وابدأ."}</div>`}</div>`;
 }
+// ----- new project modal -----
+function openPModal(){ projModal = newProject(); let m = $("#pmodal"); if (!m) { m = document.createElement("div"); m.id = "pmodal"; m.className = "auth"; document.body.appendChild(m); bindPModal(m); } m.hidden = false; drawPModal(); setTimeout(() => { const n = m.querySelector('[name="name"]'); if (n) n.focus(); }, 50); }
+function drawPModal(){ const p = projModal, m = $("#pmodal"); const c = pcalc(p); const val = p.status === "quote" ? p.price : p.agreed;
+  m.innerHTML = `<form class="auth-card pm" id="pmForm"><h2><i></i>مشروع جديد</h2><p>البيانات الأساسية — باقي التفاصيل (المراحل والدفعات والملفات) من صفحة المشروع</p>
+  <label>اسم المشروع *<input name="name" required value="${esc(p.name)}"></label><label>الجهة / العميل<input name="client" value="${esc(p.client)}"></label>
+  <div class="two"><label>نوع المشروع<select name="type">${PTYPES.map(t => `<option ${p.type === t ? "selected" : ""}>${t}</option>`).join("")}</select></label>
+  <label>الحالة<select name="status">${PST.map(([k, l]) => `<option value="${k}" ${p.status === k ? "selected" : ""}>${l}</option>`).join("")}</select></label></div>
+  <div class="two"><label>${p.status === "quote" ? "قيمة العرض" : "القيمة المتفق عليها"}<input name="val" type="number" step="0.01" value="${esc(val)}"></label>
+  <label>القيمة المدخلة<select name="taxMode"><option value="ex" ${p.taxMode !== "inc" ? "selected" : ""}>غير شاملة الضريبة</option><option value="inc" ${p.taxMode === "inc" ? "selected" : ""}>شاملة الضريبة</option></select></label></div>
+  <div class="vbox" id="pmCalc">${vbox(c.status === "quote" ? c.P : (p.status === "quote" ? c.P : { A: c.A, V: c.V, T: c.T }), c.rate)}</div>
+  <label>تاريخ البداية<input name="start" type="date" value="${esc(p.start)}"></label>
+  <button class="btn gold">إنشاء وفتح صفحة المشروع</button><button type="button" class="btn ghost" data-pmclose style="margin-top:8px;width:100%">إلغاء</button><div class="auth-err" id="pmErr"></div></form>`; }
+function vbox(x, r){ return `<div><span>قبل الضريبة</span><b>${money(x.A)}</b></div><div><span>الضريبة ${Math.round(r * 100)}%</span><b>${money(x.V)}</b></div><div class="t"><span>الإجمالي</span><b>${money(x.T)}</b></div>`; }
+function bindPModal(m){
+  const sync = () => { const f = $("#pmForm"); if (!f) return; const fd = new FormData(f); const p = projModal; ["name","client","type","status","taxMode","start"].forEach(k => p[k] = (fd.get(k) || "").toString());
+    const v = fd.get("val"); if (p.status === "quote") { p.price = v === "" ? "" : num(v); p.agreed = ""; } else { p.agreed = v === "" ? "" : num(v); p.price = p.agreed; } const c = pcalc(p); $("#pmCalc").innerHTML = vbox(p.status === "quote" ? c.P : c, c.rate); };
+  m.addEventListener("input", sync); m.addEventListener("change", e => { sync(); if (e.target.name === "status") { drawPModal(); } });
+  m.addEventListener("click", e => { if (e.target.closest("[data-pmclose]") || e.target === m) { m.hidden = true; projModal = null; } });
+  m.addEventListener("submit", async e => { e.preventDefault(); sync(); const p = projModal; if (!p.name.trim()) { $("#pmErr").textContent = "اكتب اسم المشروع"; return; }
+    p.log = [{ date: today(), kind: "ملاحظة مهمة", subject: "إنشاء المشروع", details: `${PSTL[p.status].l} · ${p.type}` }];
+    const b = m.querySelector(".btn.gold"); b.disabled = true;
+    try { await api("saveProject", p); PROJECTS.push(JSON.parse(JSON.stringify(p))); m.hidden = true; projModal = null; projOpen = p.id; projDraft = null; projDirty = false; toast("اتعمل المشروع ✓ — كمّل التفاصيل"); render(); window.scrollTo({ top: 0 }); }
+    catch (x) { $("#pmErr").textContent = (x && x.message) || "تعذّر الحفظ"; } finally { b.disabled = false; } });
+}
+// ----- detail -----
 function projectDetail(p){
   const c = pcalc(p); const st = PSTL[p.status] || PSTL.contract;
   const inp = (k, lbl, type, extra) => `<label>${lbl}<input ${type ? `type="${type}"` : ""} data-pf="${k}" value="${esc(p[k] ?? "")}" ${extra || ""}></label>`;
-  const phRows = c.ph.map((x, i) => `<tr><td class="ix">${i + 1}</td><td><input data-row="phases" data-i="${i}" data-k="name" value="${esc(x.name)}" placeholder="اسم المرحلة"></td>
-    <td><input class="nn" type="number" step="0.01" data-row="phases" data-i="${i}" data-k="pct" value="${esc(x.pct)}"></td><td class="n" data-c="ph${i}">${money(x.amt)}</td><td class="n" data-c="phv${i}">${money(x.amt * (1 + c.rate))}</td>
-    <td><input type="date" data-row="phases" data-i="${i}" data-k="due" value="${esc(x.due)}"></td><td><select data-row="phases" data-i="${i}" data-k="status">${PHST.map(([k, l]) => `<option value="${k}" ${x.status === k ? "selected" : ""}>${l}</option>`).join("")}</select></td>
+  const phRows = c.ph.map((x, i) => `<tr class="${x.status === "done" ? "phdone" : ""}"><td class="ix">${i + 1}</td><td><input data-row="phases" data-i="${i}" data-k="name" value="${esc(x.name)}" placeholder="اسم المرحلة"></td>
+    <td><input class="nn sm" type="number" step="0.01" data-row="phases" data-i="${i}" data-k="pct" value="${esc(x.pct)}"></td><td class="n" data-c="ph${i}"><b>${money(x.amt)}</b></td><td class="n mutd" data-c="phv${i}">${money(x.amt - x.ex)}</td>
+    <td><input type="date" data-row="phases" data-i="${i}" data-k="due" value="${esc(x.due)}"></td><td><select class="phst s-${x.status}" data-row="phases" data-i="${i}" data-k="status">${PHST.map(([k, l]) => `<option value="${k}" ${x.status === k ? "selected" : ""}>${l}</option>`).join("")}</select></td>
+    <td>${x.claimed ? spill("صدرت مطالبة", "done") : `<button class="btn ghost xs" data-mkclaim="${i}">إصدار مطالبة</button>`}</td>
     <td><button class="rm" data-rm="phases" data-i="${i}" title="حذف">×</button></td></tr>`).join("");
-  const phNames = (p.phases || []).map(x => x.name).filter(Boolean);
+  const phNames = p.phases.map(x => x.name).filter(Boolean);
   const clRows = c.cl.map((x, i) => `<tr><td><select data-row="claims" data-i="${i}" data-k="phase"><option value="">—</option>${phNames.map(n => `<option ${x.phase === n ? "selected" : ""}>${esc(n)}</option>`).join("")}</select></td>
-    <td><input data-row="claims" data-i="${i}" data-k="inv" value="${esc(x.inv || "")}" placeholder="رقم" style="width:80px"></td><td><input type="date" data-row="claims" data-i="${i}" data-k="date" value="${esc(x.date || "")}"></td>
-    <td><input class="nn" type="number" step="0.01" data-row="claims" data-i="${i}" data-k="amount" value="${esc(x.amount ?? "")}"></td><td class="n" data-c="clv${i}">${money(x.vat)}</td><td class="n" data-c="cli${i}">${money(x.inc)}</td>
+    <td><input data-row="claims" data-i="${i}" data-k="inv" value="${esc(x.inv || "")}" placeholder="رقم" class="sm"></td><td><input type="date" data-row="claims" data-i="${i}" data-k="date" value="${esc(x.date || "")}"></td>
+    <td><input class="nn" type="number" step="0.01" data-row="claims" data-i="${i}" data-k="amount" value="${esc(x.amount ?? "")}"></td><td class="n mutd" data-c="clv${i}">${money(x.vat)}</td>
     <td><input class="nn" type="number" step="0.01" data-row="claims" data-i="${i}" data-k="paid" value="${esc(x.paid ?? "")}"></td><td><input type="date" data-row="claims" data-i="${i}" data-k="paidDate" value="${esc(x.paidDate || "")}"></td>
     <td data-c="cls${i}">${spill(...CLST[x.st])}</td><td><button class="rm" data-rm="claims" data-i="${i}" title="حذف">×</button></td></tr>`).join("");
-  const exRows = (p.expenses || []).map((x, i) => `<tr><td><input data-row="expenses" data-i="${i}" data-k="desc" value="${esc(x.desc || "")}" placeholder="البند"></td>
+  const exRows = p.expenses.map((x, i) => `<tr><td><input data-row="expenses" data-i="${i}" data-k="desc" value="${esc(x.desc || "")}" placeholder="البند"></td>
     <td><select data-row="expenses" data-i="${i}" data-k="cat">${EXCAT.map(k => `<option ${x.cat === k ? "selected" : ""}>${k}</option>`).join("")}</select></td>
     <td><input type="date" data-row="expenses" data-i="${i}" data-k="date" value="${esc(x.date || "")}"></td><td><input class="nn" type="number" step="0.01" data-row="expenses" data-i="${i}" data-k="amount" value="${esc(x.amount ?? "")}"></td>
     <td><button class="rm" data-rm="expenses" data-i="${i}" title="حذف">×</button></td></tr>`).join("");
   const tasks = p.name ? allItems.filter(x => x.project === p.name) : []; const tOpen = tasks.filter(x => !x.done);
-  const byCat = EXCAT.map(k => [k, (p.expenses || []).filter(x => x.cat === k).reduce((s, x) => s + num(x.amount), 0)]).filter(x => x[1]);
-  const maxCat = Math.max(1, ...byCat.map(x => x[1]));
+  const byCat = EXCAT.map(k => [k, p.expenses.filter(x => x.cat === k).reduce((s, x) => s + num(x.amount), 0)]).filter(x => x[1]); const maxCat = Math.max(1, ...byCat.map(x => x[1]));
+  const docs = p.docs.map((d, i) => ({ d, i })).filter(({ d }) => docF === "all" || d.cat === docF).sort((a, b) => (b.d.at || 0) - (a.d.at || 0));
   return `<div class="pdetail">
-  <div class="pdtop"><button class="btn ghost" data-pback>→ كل المشاريع</button><div class="pdname"><h2 data-c="title">${esc(p.name || "مشروع جديد")}</h2>${spill(st.l, st.c)}</div>
-    <div class="pdact"><button class="btn" data-psave>${projDirty ? "● " : ""}حفظ</button><button class="btn ghost" data-pprint>طباعة / PDF</button><button class="btn ghost danger" data-pdel>حذف</button></div></div>
+  <div class="pband" style="--sc:${PCOL[st.c]}"><div class="pbl"><button class="bk" data-pback title="كل المشاريع">→</button><div><div class="pbt"><h2 data-c="title">${esc(p.name || "مشروع جديد")}</h2>${spill(st.l, st.c)}<span class="tchip">${esc(p.type || "")}</span></div>
+    <div class="pbm">${esc(p.client || "—")} · بداية ${p.start ? esc(gFmtY.format(parse(p.start))) : "—"}${p.end ? " · الانتهاء المتوقع " + esc(gFmtY.format(parse(p.end))) : ""}</div></div></div>
+    <div class="pbr"><span class="saved-st" id="psaveState">${projDirty ? "تعديلات غير محفوظة…" : "✓ محفوظ"}</span><button class="btn gold" data-psave>حفظ والعودة للمشاريع</button><button class="btn ghost" data-pprint>طباعة / PDF</button><button class="btn ghost danger" data-pdel>حذف</button></div></div>
   <div class="kpis k8">
-    ${kpi("المتفق عليه (قبل الضريبة)", `<span data-c="A">${SAR(c.A)}</span>`)}
-    ${kpi(`الضريبة <span data-c="rate">${Math.round(c.rate * 100)}%</span>`, `<span data-c="V">${SAR(c.V)}</span>`)}
-    ${kpi("الإجمالي شامل الضريبة", `<span data-c="T">${SAR(c.T)}</span>`, "", "gold")}
-    ${kpi("المحصّل", `<span data-c="paid">${SAR(c.paid)}</span>`, `<span data-c="col">${pct(c.col)}</span>`, "good")}
-    ${kpi("المتبقي للتحصيل", `<span data-c="out">${SAR(c.out)}</span>`, "", "warn")}
+    ${kpi("الإجمالي شامل الضريبة", `<span data-c="T">${SAR(c.T)}</span>`, `قبل الضريبة <span data-c="A">${money(c.A)}</span> · ضريبة <span data-c="V">${money(c.V)}</span>`, "gold")}
+    ${kpi("المحصّل", `<span data-c="paid">${SAR(c.paid)}</span>`, `<span data-c="col">${pct(c.col)}</span> من الإجمالي`, "good")}
+    ${kpi("المتبقي للتحصيل", `<span data-c="out">${SAR(c.out)}</span>`, `غير مُطالب به <span data-c="unclaimed2">${money(c.unclaimed)}</span>`, "warn")}
+    ${kpi("نسبة الإنجاز", `<span data-c="prog">${Math.round(c.prog)}%</span>`, `<div class="mini g w"><i data-c-w="prog" style="width:${Math.min(c.prog, 100)}%"></i></div>`)}
     ${kpi("المصاريف", `<span data-c="exp">${SAR(c.exp)}</span>`)}
     ${kpi("الربح المتوقع", `<span data-c="profit">${SAR(c.profit)}</span>`, `هامش <span data-c="margin">${pct(c.margin)}</span>`)}
-    ${kpi("نسبة الإنجاز", `<span data-c="prog">${Math.round(c.prog)}%</span>`, `<div class="mini g"><i data-c-w="prog" style="width:${Math.min(c.prog, 100)}%"></i></div>`)}
+    ${kpi("الربح المحقق", `<span data-c="real">${SAR(c.realized)}</span>`, "المحصّل صافي − المصاريف")}
+    ${kpi("السعر المقترح", `<span data-c="PT">${SAR(c.P.T)}</span>`, "شامل الضريبة")}
   </div>
   <div class="panel"><h3>البيانات الأساسية</h3><div class="pform">
-    ${inp("name", "اسم المشروع *")}${inp("client", "العميل / المالك")}
-    <label>نوع المشروع<input data-pf="type" list="ptypes" value="${esc(p.type || "")}"></label>
+    ${inp("name", "اسم المشروع *")}${inp("client", "الجهة / العميل")}
+    <label>نوع المشروع<select data-pf="type">${PTYPES.concat(PTYPES.includes(p.type) || !p.type ? [] : [p.type]).map(t => `<option ${p.type === t ? "selected" : ""}>${esc(t)}</option>`).join("")}</select></label>
     <label>الحالة<select data-pf="status">${PST.map(([k, l]) => `<option value="${k}" ${p.status === k ? "selected" : ""}>${l}</option>`).join("")}</select></label>
     ${inp("start", "تاريخ البداية", "date")}${inp("end", "تاريخ الانتهاء المتوقع", "date")}
-    ${inp("price", "السعر المقترح (قبل الضريبة)", "number", 'step="0.01"')}${inp("agreed", "السعر المتفق عليه (قبل الضريبة)", "number", 'step="0.01"')}
-    ${inp("vat", "نسبة الضريبة %", "number", 'step="0.01"')}
-    <label>الإجمالي شامل الضريبة<div class="ro-f" data-c="T2">${SAR(c.T)}</div></label>
-    <label class="w2">وصف مختصر<input data-pf="desc" value="${esc(p.desc || "")}"></label>
-  </div><datalist id="ptypes">${PTYPES.map(t => `<option value="${t}">`).join("")}</datalist></div>
-  <div class="panel"><h3>المراحل والدفعات التعاقدية <small data-c="phpct" class="${Math.round(c.phPct) === 100 ? "" : "warnt"}">مجموع النسب ${Math.round(c.phPct * 100) / 100}%</small></h3>
-    <div class="tblwrap"><table class="etable"><tr><th>#</th><th>المرحلة</th><th>النسبة %</th><th>المبلغ</th><th>شامل الضريبة</th><th>تاريخ الاستحقاق</th><th>الحالة</th><th></th></tr>${phRows}</table></div>
+    <label>المبالغ المدخلة<select data-pf="taxMode"><option value="ex" ${p.taxMode !== "inc" ? "selected" : ""}>غير شاملة الضريبة (تُضاف الضريبة)</option><option value="inc" ${p.taxMode === "inc" ? "selected" : ""}>شاملة الضريبة</option></select></label>
+    ${inp("vat", "نسبة الضريبة %", "number", 'step="0.01"')}<span></span>
+    ${inp("price", "السعر المقترح", "number", 'step="0.01"')}${inp("agreed", "السعر المتفق عليه", "number", 'step="0.01"')}<span></span>
+  </div>
+  <div class="vtable"><table><tr><th></th><th>قبل الضريبة</th><th>الضريبة</th><th>الإجمالي شامل الضريبة</th></tr>
+    <tr><td>السعر المقترح</td><td class="n" data-c="PA">${money(c.P.A)}</td><td class="n" data-c="PV">${money(c.P.V)}</td><td class="n" data-c="PT2"><b>${money(c.P.T)}</b></td></tr>
+    <tr class="hl2"><td>المتفق عليه</td><td class="n" data-c="A2">${money(c.A)}</td><td class="n" data-c="V2">${money(c.V)}</td><td class="n" data-c="T2"><b>${money(c.T)}</b></td></tr></table></div>
+  <label class="w2 dsc">وصف مختصر<input data-pf="desc" value="${esc(p.desc || "")}"></label></div>
+  <div class="panel"><h3>المراحل والدفعات <small data-c="phpct" class="${Math.round(c.phPct) === 100 ? "" : "warnt"}">مجموع النسب ${Math.round(c.phPct * 100) / 100}%</small></h3>
+    <div class="hint">النسب بتتقسم من <b>الإجمالي شامل الضريبة</b>. لما تحوّل حالة المرحلة لـ <b>منجزة</b> بتصدر مطالبة تلقائياً بقيمتها وتوصلك تنبيه.</div>
+    <div class="tblwrap"><table class="etable"><tr><th>#</th><th>المرحلة</th><th>النسبة %</th><th>المبلغ شامل الضريبة</th><th>منها ضريبة</th><th>تاريخ الاستحقاق</th><th>الحالة</th><th>المطالبة</th><th></th></tr>${phRows}
+    <tr class="tot"><td colspan="3">الإجمالي</td><td class="n" data-c="phsum">${money(c.ph.reduce((s, x) => s + x.amt, 0))}</td><td colspan="5"></td></tr></table></div>
     <button class="btn ghost addr" data-add="phases">+ إضافة مرحلة</button></div>
   <div class="panel"><h3>المطالبات والدفعات</h3>
-    <div class="tblwrap"><table class="etable"><tr><th>المرحلة</th><th>رقم الفاتورة</th><th>تاريخ المطالبة</th><th>المبلغ (قبل الضريبة)</th><th>الضريبة</th><th>الإجمالي</th><th>المدفوع</th><th>تاريخ الدفع</th><th>الحالة</th><th></th></tr>${clRows}
-    <tr class="tot"><td colspan="5">الإجمالي</td><td class="n" data-c="claimed">${money(c.claimed)}</td><td class="n" data-c="paid2">${money(c.paid)}</td><td colspan="3">غير مُطالب به: <b data-c="unclaimed">${money(c.unclaimed)}</b></td></tr></table></div>
-    <button class="btn ghost addr" data-add="claims">+ إضافة مطالبة / دفعة</button></div>
+    <div class="tblwrap"><table class="etable"><tr><th>المرحلة</th><th>رقم الفاتورة</th><th>تاريخ المطالبة</th><th>قيمة المطالبة (شامل)</th><th>منها ضريبة</th><th>المدفوع</th><th>تاريخ الدفع</th><th>الحالة</th><th></th></tr>${clRows}
+    <tr class="tot"><td colspan="3">الإجمالي</td><td class="n" data-c="claimed">${money(c.claimed)}</td><td></td><td class="n" data-c="paid2">${money(c.paid)}</td><td colspan="3">غير مُطالب به: <b data-c="unclaimed">${money(c.unclaimed)}</b></td></tr></table></div>
+    <button class="btn ghost addr" data-add="claims">+ إضافة مطالبة يدوية</button></div>
   <div class="panel"><h3>المصاريف</h3>
     <div class="tblwrap"><table class="etable"><tr><th>البند</th><th>التصنيف</th><th>التاريخ</th><th>المبلغ</th><th></th></tr>${exRows}<tr class="tot"><td colspan="3">إجمالي المصاريف</td><td class="n" data-c="exp2">${money(c.exp)}</td><td></td></tr></table></div>
     <button class="btn ghost addr" data-add="expenses">+ إضافة مصروف</button></div>
@@ -1084,24 +1160,23 @@ function projectDetail(p){
       <tr class="b"><td>صافي الربح المتوقع</td><td class="n" data-c="fP">${money(c.profit)}</td></tr>
       <tr><td>هامش الربح</td><td class="n" data-c="fM">${pct(c.margin)}</td></tr>
       <tr class="sep"><td>المحصّل صافي (بدون الضريبة)</td><td class="n" data-c="fN">${money(c.paidNet)}</td></tr>
-      <tr class="b"><td>الربح المحقق حتى الآن (المحصّل − المصاريف)</td><td class="n" data-c="fR">${money(c.realized)}</td></tr>
-      <tr><td>ضريبة القيمة المضافة المحصّلة (للتوريد)</td><td class="n" data-c="fV">${money(c.vatCollected)}</td></tr>
-    </table>
+      <tr class="b"><td>الربح المحقق حتى الآن</td><td class="n" data-c="fR">${money(c.realized)}</td></tr>
+      <tr><td>ضريبة القيمة المضافة المحصّلة (للتوريد)</td><td class="n" data-c="fV">${money(c.vatCollected)}</td></tr></table>
     <div class="rvbar"><div><span>الإيراد</span><i class="f-doing" style="width:100%"></i></div><div><span>المصاريف</span><i class="f-late" data-c-w="expw" style="width:${c.A ? Math.min(c.exp / c.A, 1) * 100 : 0}%"></i></div><div><span>المحصّل</span><i class="f-done" data-c-w="paidw" style="width:${c.T ? Math.min(c.paid / c.T, 1) * 100 : 0}%"></i></div></div></div>
-    <div class="panel"><h3>المصاريف حسب التصنيف</h3>${byCat.length ? byCat.map(([k, v]) => `<div class="hb" title="${k}: ${money(v)}"><span class="hl">${k}</span><span class="ht"><i class="f-late" style="width:${v / maxCat * 100}%"></i></span><b>${money(v)}</b></div>`).join("") : `<div class="empty" style="padding:10px">لا مصاريف مسجلة</div>`}</div>
+    <div class="panel"><h3>المصاريف حسب التصنيف</h3>${byCat.length ? byCat.map(([k, v]) => `<div class="hb" title="${k}: ${money(v)}"><span class="hl">${k}</span><span class="ht"><i class="f-late" style="width:${v / maxCat * 100}%"></i></span><b>${kmoney(v)}</b></div>`).join("") : `<div class="empty" style="padding:10px">لا مصاريف مسجلة</div>`}</div>
   </div>
-  <div class="panel"><h3>ملفات المشروع <small>${(p.docs || []).length} ملف</small></h3>
+  <div class="panel"><h3>ملفات المشروع <small>${p.docs.length} ملف</small></h3>
     <div class="dochead"><select id="docCat" aria-label="تصنيف الملف">${DOCCAT.map(k => `<option ${docCat === k ? "selected" : ""}>${k}</option>`).join("")}</select>
       <label class="upbtn">⬆ رفع ملف<input type="file" data-pupload multiple hidden></label>
       <input id="docLName" placeholder="اسم الرابط" style="width:130px"><input id="docLUrl" type="url" placeholder="أو الصق رابط (Drive / OneDrive)…" style="flex:1;min-width:160px"><button class="btn ghost" data-plink>إضافة رابط</button></div>
-    <div class="tfilter" style="border:0;padding:6px 0 8px">${[["all", `الكل (${(p.docs || []).length})`], ...DOCCAT.filter(k => (p.docs || []).some(d => d.cat === k)).map(k => [k, `${k} (${(p.docs || []).filter(d => d.cat === k).length})`])].map(([k, l]) => `<button type="button" class="chip" data-docf="${k}" aria-pressed="${docF === k}">${l}</button>`).join("")}</div>
-    ${(p.docs || []).length ? `<div class="tblwrap"><table class="etable"><tr><th>التصنيف</th><th>الملف</th><th>تاريخ الرفع</th><th>رفعه</th><th>ملاحظة</th><th></th></tr>${(p.docs || []).map((d, i) => ({ d, i })).filter(({ d }) => docF === "all" || d.cat === docF).sort((a, b) => (b.d.at || 0) - (a.d.at || 0)).map(({ d, i }) => `<tr>
+    <div class="tfilter" style="border:0;padding:6px 0 8px">${[["all", `الكل (${p.docs.length})`], ...DOCCAT.filter(k => p.docs.some(d => d.cat === k)).map(k => [k, `${k} (${p.docs.filter(d => d.cat === k).length})`])].map(([k, l]) => `<button type="button" class="chip" data-docf="${k}" aria-pressed="${docF === k}">${l}</button>`).join("")}</div>
+    ${p.docs.length ? `<div class="tblwrap"><table class="etable"><tr><th>التصنيف</th><th>الملف</th><th>تاريخ الرفع</th><th>رفعه</th><th>ملاحظة</th><th></th></tr>${docs.map(({ d, i }) => `<tr>
       <td><select data-row="docs" data-i="${i}" data-k="cat">${DOCCAT.map(k => `<option ${d.cat === k ? "selected" : ""}>${k}</option>`).join("")}</select></td>
       <td><a class="doclink" href="${esc(d.url)}" target="_blank" rel="noopener">${/\.pdf$/i.test(d.name || "") ? "📕" : d.kind === "link" ? "🔗" : "📄"} ${esc(d.name)}</a></td>
       <td class="nw">${d.at ? esc(gFmtY.format(new Date(d.at))) + " · " + new Date(d.at).toLocaleTimeString("ar-EG-u-nu-latn", { hour: "2-digit", minute: "2-digit" }) : "—"}</td><td>${esc(d.by || "")}</td>
       <td><input data-row="docs" data-i="${i}" data-k="note" value="${esc(d.note || "")}" placeholder="مثلاً: النسخة الموقعة"></td><td><button class="rm" data-rm="docs" data-i="${i}" title="إزالة من القائمة">×</button></td></tr>`).join("")}</table></div>` : `<div class="empty" style="padding:10px">ارفع العقد، عروض الأسعار، الاعتمادات، المطالبات، إيصالات التحويل… كل ملف بيتسجل بتاريخ رفعه</div>`}</div>
   <div class="panel"><h3>سجل المراسلات والأحداث المهمة</h3>
-    <div class="tblwrap"><table class="etable"><tr><th>التاريخ</th><th>النوع</th><th>الجهة / الموضوع</th><th>التفاصيل</th><th></th></tr>${(p.log || []).map((x, i) => `<tr>
+    <div class="tblwrap"><table class="etable"><tr><th>التاريخ</th><th>النوع</th><th>الجهة / الموضوع</th><th>التفاصيل</th><th></th></tr>${p.log.map((x, i) => `<tr>
       <td><input type="date" data-row="log" data-i="${i}" data-k="date" value="${esc(x.date || "")}"></td>
       <td><select data-row="log" data-i="${i}" data-k="kind">${LOGK.map(k => `<option ${x.kind === k ? "selected" : ""}>${k}</option>`).join("")}</select></td>
       <td><input data-row="log" data-i="${i}" data-k="subject" value="${esc(x.subject || "")}" placeholder="مثلاً: خطاب المالك بخصوص التعديلات"></td>
@@ -1119,15 +1194,16 @@ function projRecalc(){
   const p = projDraft; if (!p) return; const c = pcalc(p);
   const set = (k, html) => document.querySelectorAll(`[data-c="${k}"]`).forEach(e => e.innerHTML = html);
   const w = (k, v) => document.querySelectorAll(`[data-c-w="${k}"]`).forEach(e => e.style.width = v);
-  set("title", esc(p.name || "مشروع جديد")); set("A", SAR(c.A)); set("V", SAR(c.V)); set("T", SAR(c.T)); set("T2", SAR(c.T)); set("rate", Math.round(c.rate * 100) + "%");
-  set("paid", SAR(c.paid)); set("col", pct(c.col)); set("out", SAR(c.out)); set("exp", SAR(c.exp)); set("profit", SAR(c.profit)); set("margin", pct(c.margin)); set("prog", Math.round(c.prog) + "%"); w("prog", Math.min(c.prog, 100) + "%");
-  c.ph.forEach((x, i) => { set("ph" + i, money(x.amt)); set("phv" + i, money(x.amt * (1 + c.rate))); });
-  c.cl.forEach((x, i) => { set("clv" + i, money(x.vat)); set("cli" + i, money(x.inc)); set("cls" + i, spill(...CLST[x.st])); });
+  set("title", esc(p.name || "مشروع جديد")); set("T", SAR(c.T)); set("A", money(c.A)); set("V", money(c.V)); set("PT", SAR(c.P.T));
+  set("PA", money(c.P.A)); set("PV", money(c.P.V)); set("PT2", `<b>${money(c.P.T)}</b>`); set("A2", money(c.A)); set("V2", money(c.V)); set("T2", `<b>${money(c.T)}</b>`);
+  set("paid", SAR(c.paid)); set("col", pct(c.col)); set("out", SAR(c.out)); set("exp", SAR(c.exp)); set("profit", SAR(c.profit)); set("margin", pct(c.margin)); set("real", SAR(c.realized));
+  set("prog", Math.round(c.prog) + "%"); w("prog", Math.min(c.prog, 100) + "%");
+  c.ph.forEach((x, i) => { set("ph" + i, `<b>${money(x.amt)}</b>`); set("phv" + i, money(x.amt - x.ex)); }); set("phsum", money(c.ph.reduce((s, x) => s + x.amt, 0)));
+  c.cl.forEach((x, i) => { set("clv" + i, money(x.vat)); set("cls" + i, spill(...CLST[x.st])); });
   const pp = document.querySelector('[data-c="phpct"]'); if (pp) { pp.textContent = `مجموع النسب ${Math.round(c.phPct * 100) / 100}%`; pp.className = Math.round(c.phPct) === 100 ? "" : "warnt"; }
-  set("claimed", money(c.claimed)); set("paid2", money(c.paid)); set("unclaimed", money(c.unclaimed)); set("exp2", money(c.exp));
+  set("claimed", money(c.claimed)); set("paid2", money(c.paid)); set("unclaimed", money(c.unclaimed)); set("unclaimed2", money(c.unclaimed)); set("exp2", money(c.exp));
   set("fA", money(c.A)); set("fE", `(${money(c.exp)})`); set("fP", money(c.profit)); set("fM", pct(c.margin)); set("fN", money(c.paidNet)); set("fR", money(c.realized)); set("fV", money(c.vatCollected));
   w("expw", (c.A ? Math.min(c.exp / c.A, 1) * 100 : 0) + "%"); w("paidw", (c.T ? Math.min(c.paid / c.T, 1) * 100 : 0) + "%");
-  const sb = document.querySelector("[data-psave]"); if (sb) sb.textContent = (projDirty ? "● " : "") + "حفظ";
 }
 const NUMK = new Set(["pct", "amount", "paid", "price", "agreed", "vat"]);
 function projInput(el){
@@ -1135,47 +1211,68 @@ function projInput(el){
   if (el.dataset.pf) { const k = el.dataset.pf; p[k] = NUMK.has(k) && el.value !== "" ? num(el.value) : el.value; }
   else if (el.dataset.row) { const r = p[el.dataset.row][+el.dataset.i]; const k = el.dataset.k; r[k] = NUMK.has(k) && el.value !== "" ? num(el.value) : el.value; }
   else return false;
-  projDirty = true; projLeave = false; return true;
+  return true;
 }
-$("#view").addEventListener("input", e => { if (tab !== "projects") return; if (e.target.id === "projSearch") { projQ = e.target.value; const pos = e.target.selectionStart; render(); const s = $("#projSearch"); if (s) { s.focus(); s.setSelectionRange(pos, pos); } return; } if (projInput(e.target)) projRecalc(); });
-async function projAutoSave(msg){ projDirty = true; if (!String(projDraft.name || "").trim()) { render(); toast(msg + " — اكتب اسم المشروع ودوس حفظ"); return; }
-  try { await api("saveProject", projDraft); const i = PROJECTS.findIndex(x => x.id === projDraft.id); const copy = JSON.parse(JSON.stringify(projDraft)); if (i < 0) PROJECTS.push(copy); else PROJECTS[i] = copy; projDirty = false; toast(msg + " ✓"); } catch (x) { banner((x && x.message) || "تعذّر الحفظ", true); } render(); }
+function pState(t){ const s = $("#psaveState"); if (s) s.textContent = t; }
+function projTouch(){ projDirty = true; pState("تعديلات غير محفوظة…"); clearTimeout(projSaveT); projSaveT = setTimeout(projSaveNow, 1400); }
+async function projSaveNow(){
+  clearTimeout(projSaveT); const p = projDraft; if (!p || !projDirty) return true;
+  if (!String(p.name || "").trim()) { pState("اكتب اسم المشروع عشان يتحفظ"); return false; }
+  if (projSaving) { projSaveT = setTimeout(projSaveNow, 800); return false; }
+  projSaving = true; pState("جارٍ الحفظ…"); const snap = JSON.stringify(p);
+  try { p.updatedAt = Date.now(); await api("saveProject", p); const copy = JSON.parse(snap); const i = PROJECTS.findIndex(x => x.id === p.id); if (i < 0) PROJECTS.push(copy); else PROJECTS[i] = copy;
+    if (JSON.stringify(projDraft) === snap || projDraft !== p) projDirty = false; pState("✓ اتحفظ تلقائياً " + new Date().toLocaleTimeString("ar-EG-u-nu-latn", { hour: "2-digit", minute: "2-digit" })); return true; }
+  catch (x) { pState("⚠ تعذّر الحفظ — هنحاول تاني"); banner((x && x.message) || "تعذّر حفظ المشروع", true); projSaveT = setTimeout(projSaveNow, 5000); return false; }
+  finally { projSaving = false; }
+}
+function makeClaim(i, auto){
+  const p = projDraft, c = pcalc(p), ph = c.ph[i]; if (!ph) return;
+  if (p.claims.some(x => x.phase && x.phase === ph.name)) { toast("المرحلة دي صدرت لها مطالبة قبل كده"); return; }
+  const amt = Math.round(ph.amt * 100) / 100;
+  p.claims.push({ phase: ph.name, inv: "", date: today(), amount: amt, paid: "", paidDate: "", auto: !!auto });
+  p.log.push({ date: today(), kind: "إنهاء مرحلة", subject: `${auto ? "إنهاء " : "مطالبة "}«${ph.name}»`, details: `صدرت مطالبة بقيمة ${money(amt)} ر.س شامل الضريبة (${num(ph.pct)}%)` });
+  toast(`🔔 صدرت مطالبة «${ph.name}» بقيمة ${money(amt)} ر.س`);
+}
+$("#view").addEventListener("input", e => { if (tab !== "projects") return; if (e.target.id === "projSearch") { projQ = e.target.value; const pos = e.target.selectionStart; render(); const s = $("#projSearch"); if (s) { s.focus(); s.setSelectionRange(pos, pos); } return; } if (e.target.tagName === "SELECT") return; if (projInput(e.target)) { projRecalc(); projTouch(); } });
 $("#view").addEventListener("change", async e => { if (tab !== "projects" || !projDraft) return;
   if (e.target.id === "docCat") { docCat = e.target.value; return; }
   if (e.target.matches("[data-pupload]")) { const fl = [...e.target.files]; e.target.value = ""; if (!fl.length) return;
     if (!String(projDraft.name || "").trim()) { toast("اكتب اسم المشروع الأول عشان نعمل له فولدر", true); return; }
-    projDraft.docs = projDraft.docs || []; let ok = 0;
+    let ok = 0;
     for (const file of fl) { if (file.size > 20 * 1024 * 1024) { banner(`«${file.name}» أكبر من 20 ميجا — ارفعه على Drive وأضف الرابط`, true); continue; }
       toast(`جارٍ رفع ${file.name}…`); const ext = (file.name.split(".").pop() || "").toLowerCase();
       try { const r = await api("uploadFile", file.name, file.type || MIME[ext] || "application/octet-stream", await b64(file), "المشاريع/" + projDraft.name.trim());
         projDraft.docs.push({ kind: r.kind || "drive", id: r.id || "", url: r.url, name: file.name, size: file.size, cat: docCat, at: Date.now(), by: ME.name, note: "" }); ok++; }
       catch (x) { banner(`تعذّر رفع «${file.name}»: ` + ((x && x.message) || ""), true); } }
-    if (ok) await projAutoSave(`اترفع ${ok} ملف`); return; }
-  const el = e.target; if (!projInput(el)) return;
-  if (el.dataset.row === "claims" && el.dataset.k === "phase") { const r = projDraft.claims[+el.dataset.i]; const c = pcalc(projDraft); const ph = c.ph.find(x => x.name === el.value); if (ph && !num(r.amount)) r.amount = Math.round(ph.amt * 100) / 100; }
+    if (ok) { projDirty = true; render(); await projSaveNow(); toast(`اترفع ${ok} ملف ✓`); } return; }
+  const el = e.target; const isPhSt = el.dataset.row === "phases" && el.dataset.k === "status"; const oldSt = isPhSt ? projDraft.phases[+el.dataset.i].status : null;
+  if (!projInput(el)) return;
+  if (isPhSt && el.value === "done" && oldSt !== "done") makeClaim(+el.dataset.i, true);
+  if (el.dataset.row === "claims" && el.dataset.k === "phase") { const r = projDraft.claims[+el.dataset.i]; const ph = pcalc(projDraft).ph.find(x => x.name === el.value); if (ph && !num(r.amount)) r.amount = Math.round(ph.amt * 100) / 100; }
+  projTouch();
   if (el.tagName === "SELECT" || el.dataset.pf === "name" || el.dataset.k === "name") render(); else projRecalc(); });
 $("#view").addEventListener("click", async e => {
   if (tab !== "projects") return;
   const o = e.target.closest("[data-popen]"); if (o) { projOpen = o.dataset.popen; projDraft = null; projDirty = false; render(); window.scrollTo({ top: 0, behavior: "smooth" }); return; }
   const df = e.target.closest("[data-docf]"); if (df) { docF = df.dataset.docf; render(); return; }
   if (e.target.closest("[data-plink]")) { let url = ($("#docLUrl").value || "").trim(); if (!url) return; if (!/^https?:[\/][\/]/i.test(url)) url = "https:\/\/" + url;
-    projDraft.docs = projDraft.docs || []; projDraft.docs.push({ kind: "link", name: ($("#docLName").value || "").trim() || new URL(url).hostname, url, cat: docCat, at: Date.now(), by: ME.name, note: "" }); await projAutoSave("أُضيف الرابط"); return; }
+    projDraft.docs.push({ kind: "link", name: ($("#docLName").value || "").trim() || new URL(url).hostname, url, cat: docCat, at: Date.now(), by: ME.name, note: "" }); projDirty = true; render(); await projSaveNow(); toast("أُضيف الرابط ✓"); return; }
   const f = e.target.closest("[data-pf-filter]"); if (f) { projF = f.dataset.pfFilter; render(); return; }
-  if (e.target.closest("[data-pnew]")) { projDraft = newProject(); projOpen = projDraft.id; projDirty = true; render(); const n = document.querySelector('[data-pf="name"]'); if (n) n.focus(); return; }
-  if (e.target.closest("[data-pback]")) { if (projDirty && !projLeave) { projLeave = true; toast("فيه تعديلات مش محفوظة — دوس «حفظ» أو دوس رجوع تاني للتجاهل", true); return; } projOpen = null; projDraft = null; projDirty = false; projLeave = false; render(); return; }
-  const add = e.target.closest("[data-add]"); if (add) { const k = add.dataset.add; projDraft[k] = projDraft[k] || [];
+  if (e.target.closest("[data-pnew]")) { openPModal(); return; }
+  const mk = e.target.closest("[data-mkclaim]"); if (mk) { makeClaim(+mk.dataset.mkclaim, false); projTouch(); render(); return; }
+  if (e.target.closest("[data-pback]") || e.target.closest("[data-psave]")) { const ok = await projSaveNow(); if (!ok && projDirty && String(projDraft.name || "").trim()) return;
+    if (e.target.closest("[data-psave]") && ok) toast("اتحفظ المشروع ✓"); projOpen = null; projDraft = null; projDirty = false; render(); window.scrollTo({ top: 0, behavior: "smooth" }); return; }
+  const add = e.target.closest("[data-add]"); if (add) { const k = add.dataset.add;
     projDraft[k].push(k === "phases" ? { name: "", pct: 0, due: "", status: "todo" } : k === "claims" ? { phase: "", inv: "", date: today(), amount: "", paid: "", paidDate: "" } : k === "log" ? { date: today(), kind: LOGK[0], subject: "", details: "" } : { desc: "", cat: EXCAT[0], date: today(), amount: "" });
-    projDirty = true; render(); return; }
-  const rm = e.target.closest("[data-rm]"); if (rm) { projDraft[rm.dataset.rm].splice(+rm.dataset.i, 1); projDirty = true; render(); return; }
+    projTouch(); render(); return; }
+  const rm = e.target.closest("[data-rm]"); if (rm) { projDraft[rm.dataset.rm].splice(+rm.dataset.i, 1); projTouch(); render(); return; }
   if (e.target.closest("[data-pprint]")) { window.print(); return; }
   if (e.target.closest("[data-pdel]")) { const b = e.target.closest("[data-pdel]"); if (b.dataset.sure !== "1") { b.dataset.sure = "1"; b.textContent = "تأكيد الحذف؟"; return; }
-    try { await api("deleteProject", projDraft.id); PROJECTS = PROJECTS.filter(x => x.id !== projDraft.id); projOpen = null; projDraft = null; projDirty = false; toast("اتحذف المشروع"); render(); } catch (x) { banner((x && x.message) || "تعذّر الحذف", true); } return; }
-  if (e.target.closest("[data-psave]")) { const b = e.target.closest("[data-psave]"); if (!String(projDraft.name || "").trim()) { toast("اكتب اسم المشروع الأول", true); return; }
-    b.disabled = true; try { projDraft.updatedAt = Date.now(); await api("saveProject", projDraft); const i = PROJECTS.findIndex(x => x.id === projDraft.id); const copy = JSON.parse(JSON.stringify(projDraft)); if (i < 0) PROJECTS.push(copy); else PROJECTS[i] = copy;
-      projDirty = false; projLeave = false; toast("اتحفظ المشروع ✓"); render(); } catch (x) { banner((x && x.message) || "تعذّر الحفظ", true); } finally { b.disabled = false; } return; }
+    clearTimeout(projSaveT); try { await api("deleteProject", projDraft.id); PROJECTS = PROJECTS.filter(x => x.id !== projDraft.id); projOpen = null; projDraft = null; projDirty = false; toast("اتحذف المشروع"); render(); } catch (x) { banner((x && x.message) || "تعذّر الحذف", true); } return; }
 });
 $("#view").addEventListener("submit", async e => { if (e.target.id !== "ptaskForm") return; e.preventDefault(); const t = (new FormData(e.target).get("title") || "").toString().trim(); if (!t || !projDraft || !projDraft.name) return;
   try { await col.doc().set({ kind: "task", title: t, due: null, done: false, doneAt: null, createdAt: Date.now(), note: "", priority: 0, ttype: "tech", status: "todo", project: projDraft.name, star: false, owner: ME.id }); toast("اتضافت للمهام العامة"); render(); } catch (x) { handleWriteErr(x); } }, true);
+window.addEventListener("beforeunload", () => { if (projDirty) projSaveNow(); });
 
 // re-render without losing the cursor in an add field
 function keepFocus(fn){
