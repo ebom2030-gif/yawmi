@@ -247,6 +247,42 @@ nav.tabs button[aria-selected="true"] .c{background:rgba(255,255,255,.18);color:
 .tag{border-radius:99px;padding:1px 9px;font-size:12px;font-weight:700}
 .tag.admin{background:var(--gold-soft);color:var(--gold)}.tag.member{background:var(--doing-soft);color:var(--doing)}.tag.off{background:var(--late-soft);color:var(--late)}
 .tblwrap{overflow-x:auto}
+/* projects */
+.phead{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-top:18px;flex-wrap:wrap}.phead h2{margin:0;font-size:22px}.phead .sub{color:var(--mut);font-size:13px}
+.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:14px}.kpis.k8{grid-template-columns:repeat(4,minmax(0,1fr))}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:2px;border-top:3px solid var(--navy2);min-width:0}
+.kpi .kl{font-size:12.5px;color:var(--ink2);font-weight:700}.kpi b{font-size:21px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.3;word-break:break-word}.kpi small{font-size:12px;color:var(--mut)}
+.kpi.good{border-top-color:var(--done)}.kpi.warn{border-top-color:var(--late)}.kpi.gold{border-top-color:var(--gold)}.cur{font-size:.55em;color:var(--mut);font-weight:700}
+.pgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.pgrid .panel{margin-top:16px}
+.hb,.hb2{display:grid;grid-template-columns:110px 1fr 56px;align-items:center;gap:10px;font-size:13px;margin-block:8px}.hb2{cursor:pointer}.hb2:hover .hl{color:var(--gold)}
+.hl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink2)}.hb b,.hb2 b{font-variant-numeric:tabular-nums;text-align:left;font-size:12.5px}
+.ht{display:flex;gap:2px;height:12px;background:var(--surface2);border-radius:4px;overflow:hidden}.hb .ht i,.hb2 .ht i{display:block;height:100%;border-radius:0 4px 4px 0;min-width:0}.hb2 .ht{background:none}
+.f-done{background:var(--done)}.f-rest{background:var(--line)}.f-doing{background:var(--doing)}.f-late{background:var(--late)}.f-wait{background:var(--wait)}.f-mut{background:var(--mut)}
+.lg{display:flex;gap:14px;font-size:12px;color:var(--ink2);margin-bottom:4px}.lg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-inline-end:5px;vertical-align:-1px}
+.vchart{display:flex;align-items:flex-end;gap:6px;height:170px;padding-top:6px}.vc{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;min-width:0}
+.vb{flex:1;width:100%;display:flex;align-items:flex-end;background:linear-gradient(var(--line) 1px,transparent 1px) 0 0/100% 25%}.vb i{display:block;width:100%;background:var(--gold);border-radius:4px 4px 0 0;min-height:0;transition:height .5s}
+.vc:hover .vb i{background:var(--gold2)}.vl{font-size:10.5px;color:var(--mut);white-space:nowrap}.vv{font-size:10px;color:var(--ink2);height:13px;font-variant-numeric:tabular-nums}
+.alerts{list-style:none;margin:0;padding:0;font-size:13px}.alerts li{padding:8px 10px;border-radius:9px;background:var(--wait-soft);margin-bottom:6px;cursor:pointer;border-inline-start:3px solid var(--wait)}.alerts li.hi{background:var(--late-soft);border-color:var(--late)}
+.plbar{display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap;margin-bottom:10px}.plbar h3{margin:0}#projSearch{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:8px 12px;min-width:240px}
+.ptable,.etable,.ftable{width:100%;border-collapse:collapse;font-size:13.5px}.ptable th,.etable th{text-align:start;font-size:12px;color:var(--mut);font-weight:700;padding:8px 6px;border-bottom:1px solid var(--line);white-space:nowrap}
+.ptable td{padding:10px 6px;border-bottom:1px solid var(--line);vertical-align:middle}.ptable tr[data-popen]{cursor:pointer;transition:background .15s}.ptable tr[data-popen]:hover{background:var(--surface2)}.ptable td small{display:block;color:var(--mut);font-size:12px}
+.n{font-variant-numeric:tabular-nums;text-align:left;white-space:nowrap}.nw{white-space:nowrap;font-size:12.5px;color:var(--ink2)}
+.mini{height:6px;background:var(--surface2);border-radius:9px;overflow:hidden;width:90px}.mini i{display:block;height:100%;background:var(--done);border-radius:9px}.mini.g i{background:var(--gold)}
+.spill{display:inline-block;border-radius:99px;padding:1px 10px;font-size:12px;font-weight:700;white-space:nowrap}.s-mut{background:var(--surface2);color:var(--ink2)}.s-wait{background:var(--wait-soft);color:var(--wait)}.s-doing{background:var(--doing-soft);color:var(--doing)}.s-late{background:var(--late-soft);color:var(--late)}.s-done{background:var(--done-soft);color:var(--done)}
+.pdtop{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px}.pdname{flex:1;display:flex;align-items:center;gap:10px;min-width:200px}.pdname h2{margin:0;font-size:22px}.pdact{display:flex;gap:8px}.btn.danger{color:var(--late)}
+.pform{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 14px}.pform label{font-size:12.5px;font-weight:700;color:var(--ink2);display:flex;flex-direction:column;gap:4px}.pform .w2{grid-column:span 2}
+.pform input,.pform select,.etable input,.etable select,.dochead input,.dochead select{border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:7px 9px;font-size:13.5px;min-width:0;width:100%}.ro-f{padding:7px 9px;background:var(--gold-soft);border-radius:8px;font-weight:800;font-size:14px}
+.etable td{padding:5px 4px;border-bottom:1px solid var(--line);vertical-align:middle}.etable input.nn{width:110px;text-align:left}.etable .ix{color:var(--mut);width:24px;text-align:center}.etable .tot td{font-weight:800;background:var(--surface2);padding:9px 6px}
+.rm{border:0;background:none;color:var(--mut);font-size:18px;padding:0 6px}.rm:hover{color:var(--late)}.addr{margin-top:10px}.warnt{color:var(--late)!important;background:var(--late-soft)!important}
+.ftable td{padding:7px 4px;border-bottom:1px solid var(--line)}.ftable .b td{font-weight:800}.ftable .sep td{border-top:2px solid var(--line)}
+.rvbar{margin-top:12px;display:grid;gap:6px;font-size:12px}.rvbar div{display:grid;grid-template-columns:60px 1fr;align-items:center;gap:8px}.rvbar i{display:block;height:10px;border-radius:0 4px 4px 0}
+.ptasks{list-style:none;margin:0 0 10px;padding:0;font-size:13.5px}.ptasks li{padding:5px 0;border-bottom:1px dashed var(--line)}.ptasks li.d{color:var(--mut);text-decoration:line-through}.ptasks small{color:var(--mut);margin-inline-start:6px}
+.pnotes{width:100%;min-height:160px;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:10px;font-size:14px;resize:vertical}
+.dochead{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.dochead select{width:auto}.dochead .upbtn{padding:7px 12px}.doclink{color:var(--ink);text-decoration:none;font-weight:600}.doclink:hover{color:var(--gold)}
+@media (max-width:760px){.kpis,.kpis.k8{grid-template-columns:repeat(2,minmax(0,1fr))}.pgrid,.pform{grid-template-columns:1fr}.pform .w2{grid-column:auto}}
+@media print{.hero,.stats,nav.tabs,#banner,.toast,.pdact,.pdtop .btn,.addr,.rm,.dochead,#ptaskForm,.tfilter,.auth{display:none!important}body{background:#fff;padding:0}.panel,.kpi{box-shadow:none;break-inside:avoid}.pdetail input,.pdetail select,.pdetail textarea{border:0!important;background:none!important;padding:2px!important;-webkit-appearance:none;appearance:none}}
+.sec-task{--acc:var(--gold);--acc-soft:var(--gold-soft)}
+.sec>h3 .cap{font-size:11.5px;font-weight:800;color:var(--ink2);background:var(--surface2);border:1px solid var(--line);border-radius:99px;padding:1px 8px;margin-inline-start:6px}.sec>h3 .cap.over{color:var(--late);border-color:var(--late)}
 .sec-backlog{--acc:#8a6d3b;--acc-soft:var(--gold-soft)}
 .bkhint{margin-block:14px 12px;font-size:13.5px;color:var(--ink2);background:var(--surface);border:1px dashed var(--gold);border-radius:12px;padding:10px 14px}
 .acts .sch{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--gold);border-radius:8px;padding:0 0 0 6px;font-size:13px;color:var(--gold);background:var(--surface);cursor:pointer}
@@ -288,6 +324,7 @@ nav.tabs button[aria-selected="true"] .c{background:rgba(255,255,255,.18);color:
 <nav class="tabs" role="tablist">
 <button role="tab" data-tab="day" aria-selected="true">صفحة اليوم</button>
 <button role="tab" data-tab="backlog" aria-selected="false">المهام العامة<span class="c" id="cBk">0</span></button>
+<button role="tab" data-tab="projects" aria-selected="false" id="tabProj" hidden>المشاريع</button>
 <button role="tab" data-tab="upcoming" aria-selected="false">القادمة<span class="c" id="cUp">0</span></button>
 <button role="tab" data-tab="report" aria-selected="false">ملخص الأسبوع</button>
 <button role="tab" data-tab="team" aria-selected="false" id="tabTeam" hidden>لوحة الفريق</button>
@@ -301,7 +338,7 @@ nav.tabs button[aria-selected="true"] .c{background:rgba(255,255,255,.18);color:
 <button class="nb" id="goToday">اليوم</button>
 <input type="date" id="pickDay" aria-label="اذهب لتاريخ">
 </div>
-<div class="pages" role="tablist">
+<div class="pages" role="tablist" hidden>
 <button role="tab" data-page="1" aria-selected="true">الصفحة 1 · أهم الأمور<span class="c" id="c1">0</span></button>
 <button role="tab" data-page="2" aria-selected="false">الصفحة 2 · جدول المهام<span class="c" id="c2">0</span></button>
 </div>
@@ -331,11 +368,11 @@ if (diff === 0) return "اليوم"; if (diff === 1) return "بكرة"; if (diff
 const d = parse(s); return `${DAYN[d.getDay()]} ${gFmt.format(d)}`; };
 const weekStart = () => { const d = new Date(); d.setHours(0,0,0,0); return addDays(d, -d.getDay()); };
 const STATUS = {todo:"جديدة", doing:"جاري العمل", waiting:"بانتظار رد"};
-const KIND = { top:"أهم 6 مهام ★", meeting:"الاجتماعات والمواعيد", follow:"متابعات — بانتظار رد", admin:"مهام إدارية", task:"جدول المهام" };
+const KIND = { top:"أهم 6 مهام ★", meeting:"الاجتماعات والمواعيد", follow:"متابعات — بانتظار رد", admin:"مهام إدارية", task:"مهام اليوم" };
 const TTYPE = { tech:"فنية", admin:"إدارية", fin:"مالية" };
 const API = "https://script.google.com/macros/s/AKfycbwgvjkn2Op3hg-sSwxMi3PJO4MmIot0udoa8FXKOGTK9LBjqKuGtqlLYY1FaAkMwnI9/exec";
 let TOKEN = ""; try { TOKEN = localStorage.getItem("tasks_token") || ""; } catch {}
-let ME = null, USERS = [], viewUid = "", allItems = [];
+let ME = null, USERS = [], viewUid = "", allItems = [], PROJECTS = [];
 const isAdmin = () => !!ME && ME.role === "admin";
 const uname = id => (USERS.find(u => u.id === id) || {}).name || "";
 const own = x => isAdmin() || (!!ME && x.owner === ME.id);
@@ -347,7 +384,7 @@ let db = null, col = null, mcp = null, assets = null, canWrite = false;
 let tfilter = "all", bfilter = "all";
 let tab = "day", page = "1", day = today(), open = null, confirmDel = null;
 function setChip(){ const c = $("#roleChip"); c.textContent = ME ? ME.name + " · " + (isAdmin() ? "مدير" : "مستخدم") : "جارٍ التحميل…"; c.className = "role" + (isAdmin() ? "" : " mgr");
-$("#logoutBtn").hidden = !ME; $("#pwBtn").hidden = !ME || isDemo; if (ME) $("#logoutBtn").textContent = isDemo ? "خروج من العرض" : "خروج"; $("#tabTeam").hidden = !isAdmin(); $("#tabUsers").hidden = !isAdmin();
+$("#logoutBtn").hidden = !ME; $("#pwBtn").hidden = !ME || isDemo; if (ME) $("#logoutBtn").textContent = isDemo ? "خروج من العرض" : "خروج"; $("#tabTeam").hidden = !isAdmin(); $("#tabProj").hidden = !isAdmin(); $("#tabUsers").hidden = !isAdmin();
 const s = $("#viewSel"); s.hidden = !isAdmin() || USERS.filter(u => u.active).length < 2;
 if (!s.hidden) s.innerHTML = USERS.filter(u => u.active).map(u => `<option value="${u.id}" ${u.id === viewUid ? "selected" : ""}>${u.id === ME.id ? "مهامي" : "مهام: " + esc(u.name)}</option>`).join(""); }
 setChip();
@@ -421,7 +458,7 @@ if (x.done && x.doneAt && iso(new Date(x.doneAt)) !== x.due) pills.push(`<span c
 let acts = "";
 if (canWrite && own(x)) {
 if (!x.done) {
-if (x.kind === "task") acts += `<button data-a="star" data-id="${x.id}" title="${x.star ? "إزالة من أهم 6" : "إضافة لأهم 6"}" aria-pressed="${!!x.star}" style="${x.star ? "color:var(--gold);border-color:var(--gold)" : ""}">${x.star ? "★" : "☆"}</button>`;
+if (x.kind === "task") acts += `<button data-a="star" data-id="${x.id}" title="${x.star ? "إزالة الأولوية" : "تعليم كأولوية"}" aria-pressed="${!!x.star}" style="${x.star ? "color:var(--gold);border-color:var(--gold)" : ""}">${x.star ? "★" : "☆"}</button>`;
 if (x.kind === "task") acts += `<select data-a="status" data-id="${x.id}" aria-label="الحالة">${Object.keys(STATUS).map(s => `<option value="${s}" ${ (x.status||"todo")===s?"selected":""}>${STATUS[s]}</option>`).join("")}</select>`;
 if (!x.due && x.kind !== "meeting") acts += `<button data-a="today" data-id="${x.id}">لليوم</button><label class="sch" title="حدد يوم للمهمة">📅<input type="date" data-f="due" data-id="${x.id}" aria-label="جدولة ليوم"></label>`;
 if (x.kind !== "meeting") acts += `<button data-a="tomorrow" data-id="${x.id}">لبكرة</button>`;
@@ -522,7 +559,7 @@ if (rec) { files.push(rec); await upd(x.id, { files }); toast(rec.kind === "driv
 }
 function section(kind, arr, extra){
 const open = arr.filter(x => !x.done).length;
-const head = `<h3>${KIND[kind]}<small>${arr.length ? `<i>${arr.length - open}</i> / ${arr.length} منجزة` : ""}</small></h3>`;
+const head = `<h3>${KIND[kind]}${extra?.cap || ""}<small>${arr.length ? `<i>${arr.length - open}</i> / ${arr.length} منجزة` : ""}</small></h3>`;
 const body = arr.length ? `<div class="list">${arr.map((x,i) => row(x,i)).join("")}</div>` : `<div class="empty" style="padding:14px">${extra?.empty || "لا يوجد"}</div>`;
 let add = "";
 if (canWrite && (!isMgr || kind === "task" || kind === "top")) {
@@ -546,7 +583,7 @@ const base = doneWeek.length + items.filter(x => !x.done && x.kind !== "meeting"
 $("#sBar").style.width = base ? Math.round(doneWeek.length / base * 100) + "%" : "0";
 const upN = items.filter(x => !x.done && x.due && x.due > t).length; $("#cUp").textContent = upN;
 $("#cBk").textContent = items.filter(x => !x.done && !x.due && x.kind !== "meeting").length;
-$("#projList").innerHTML = [...new Set(items.map(x => x.project).filter(Boolean))].map(p => `<option value="${esc(p)}">`).join("");
+$("#projList").innerHTML = [...new Set(PROJECTS.map(p => p.name).concat(items.map(x => x.project)).filter(Boolean))].map(p => `<option value="${esc(p)}">`).join("");
 $("#dayWrap").hidden = tab !== "day";
 let h = "";
 if (tab === "day") {
@@ -560,20 +597,20 @@ $("#c1").textContent = p1; $("#c2").textContent = by("task").filter(x => !x.done
 { const all = list.filter(x => x.kind !== "meeting"); const dn = all.filter(x => x.done).length; const pc = all.length ? Math.round(dn / all.length * 100) : 0;
 $("#ring").style.setProperty("--p", pc); $("#ringPct").textContent = pc + "%"; $("#ringTxt").textContent = day === t ? "إنجاز اليوم" : "إنجاز " + nice(day);
 $("#ringSub").textContent = all.length ? `${dn} من ${all.length} مهمة` : "لا توجد مهام بعد"; }
-if (page === "1") {
-const top = by("top");
+{
+const allT = by("task").sort((a,b) => (a.done - b.done) || ((b.star?1:0) - (a.star?1:0)) || ((b.priority||0)-(a.priority||0)) || (a.createdAt - b.createdAt));
+const shownT = tfilter === "all" ? allT : allT.filter(x => (x.ttype || "tech") === tfilter);
+const cntT = k => allT.filter(x => !x.done && (x.ttype || "tech") === k).length;
+const openT = allT.filter(x => !x.done).length;
 h = `<div class="sheet">
-${section("top", top, { full: true, empty: "أهم ما يجب إنجازه اليوم — حتى 6 مهام" })}
+${section("task", shownT, { full: true, empty: tfilter === "all" ? "اكتب مهام اليوم — حتى 15 مهمة، وعلّم الأهم بـ ☆ عشان تطلع فوق" : "لا مهام من هذا النوع",
+cap: `<span class="cap ${openT > 15 ? "over" : ""}">${openT} / 15</span>`,
+filter: `<div class="tfilter">عرض: ${[["all","الكل"],["tech",`فنية (${cntT("tech")})`],["admin",`إدارية (${cntT("admin")})`],["fin",`مالية (${cntT("fin")})`]].map(([k,l]) => `<button type="button" class="chip" data-tf="${k}" aria-pressed="${tfilter===k}">${l}</button>`).join("")}</div>` })}
 ${section("meeting", by("meeting").sort((a,b) => (a.time||"").localeCompare(b.time||"")), { empty: "لا اجتماعات" })}
 ${section("follow", by("follow"), { empty: "لا متابعات" })}
 ${section("admin", by("admin"), { empty: "لا مهام إدارية" })}
 ${!ME || viewUid !== ME.id ? "" : `<section class="sec sec-notes"><h3>ملاحظات</h3><textarea class="notes" id="notes" ${canWrite ? "" : "readonly"} placeholder="${canWrite ? "اكتب ملاحظاتك هنا…" : ""}">${esc(notes[day] || "")}</textarea><div class="saved" id="savedLbl"></div></section>`}
 </div>`;
-} else {
-const all = by("task"); const shown = tfilter === "all" ? all : all.filter(x => (x.ttype || "tech") === tfilter);
-const cnt = k => all.filter(x => !x.done && (x.ttype || "tech") === k).length;
-h = `<div class="sheet">${section("task", shown, { full: true, empty: tfilter === "all" ? "لا مهام في الجدول لهذا اليوم" : "لا مهام من هذا النوع",
-filter: `<div class="tfilter">عرض: ${[["all","الكل"],["tech",`فنية (${cnt("tech")})`],["admin",`إدارية (${cnt("admin")})`],["fin",`مالية (${cnt("fin")})`]].map(([k,l]) => `<button type="button" class="chip" data-tf="${k}" aria-pressed="${tfilter===k}">${l}</button>`).join("")}</div>` })}</div>`;
 }
 } else if (tab === "backlog") { h = backlogView();
 } else if (tab === "upcoming") {
@@ -581,9 +618,10 @@ const up = sortItems(items.filter(x => !x.done && x.due && x.due > t));
 if (!up.length) h = `<div class="list"><div class="empty"><b>لا توجد بنود قادمة</b>انتقل لأي يوم قادم من «صفحة اليوم» وأضف فيه.</div></div>`;
 else { const g = {}; up.forEach(x => (g[x.due] ||= []).push(x));
 Object.keys(g).sort().forEach(d => { h += `<div class="grp"><h3>${esc(nice(d))}</h3><small>${esc(gFmtY.format(parse(d)))}</small></div><div class="list">${g[d].map((x,i) => row(x,i).replace('<div class="tt"', `<div class="tt" title="${KIND[x.kind]}"`)).join("")}</div>`; }); }
-} else if (tab === "team") h = teamView(); else if (tab === "users") h = usersView(); else h = report();
-if (ME && viewUid && viewUid !== ME.id && tab !== "team" && tab !== "users") h = `<div class="viewing">👁 أنت تشاهد مهام: ${esc(uname(viewUid))} — أي مهمة تضيفها هنا تُسند له<button data-view="${ME.id}">رجوع لمهامي</button></div>` + h;
-$("#view").innerHTML = h;
+} else if (tab === "projects") h = projectsView();
+else if (tab === "team") h = teamView(); else if (tab === "users") h = usersView(); else h = report();
+if (ME && viewUid && viewUid !== ME.id && tab !== "team" && tab !== "users" && tab !== "projects") h = `<div class="viewing">👁 أنت تشاهد مهام: ${esc(uname(viewUid))} — أي مهمة تضيفها هنا تُسند له<button data-view="${ME.id}">رجوع لمهامي</button></div>` + h;
+if (render.busy) { setTimeout(render, 0); return; } render.busy = true; try { $("#view").innerHTML = h; } finally { render.busy = false; }
 if (open) { const f = document.querySelector(`[data-f="note"][data-id="${open}"]`); }
 }
 function backlogView(){
@@ -657,7 +695,7 @@ data.owner = viewUid || (ME && ME.id) || ""; if (ME && data.owner !== ME.id) dat
 if (kind === "meeting") data.time = (fd.get("time") || "").toString();
 if (kind === "follow") data.from = (fd.get("from") || "").toString().trim();
 if (kind === "task") { data.project = (fd.get("project") || "").toString().trim(); data.status = "todo"; }
-if (kind === "top" && forDay(day).filter(x => x.kind === "task" && x.star && !x.done).length >= 6) toast("تنبيه: عندك أكثر من 6 مهام مهمة");
+if (kind === "task" && forDay(day).filter(x => x.kind === "task" && !x.done).length > 15) toast("تنبيه: عندك أكثر من 15 مهمة النهارده — فكّر تنقل بعضها للمهام العامة");
 try { await col.doc().set(data); } catch (err) { handleWriteErr(err); return; }
 if (kind === "meeting" && !isDemo) setTimeout(load, 300);
 const inp = document.querySelector(`form.addrow[data-kind="${kind}"] input[name="title"]`); if (inp) inp.focus();
@@ -669,8 +707,7 @@ const b = e.target.closest("[data-a]"); if (!b) return; const a = b.dataset.a;
 if (a === "copy") { try { await navigator.clipboard.writeText(reportText()); toast("نُسخ الملخص — الصقه في واتساب أو الإيميل"); } catch { banner("تعذّر النسخ تلقائياً في هذا المتصفح."); } return; }
 const x = find(b.dataset.id); if (!x || !canWrite || !own(x)) return; if (isMgr && ["toggle","calMeet","remind"].includes(a)) return;
 if (a === "toggle") { const d = !x.done; if (d) toast("أحسنت ✓ تم إنجاز المهمة"); await upd(x.id, { done: d, doneAt: d ? Date.now() : null }); }
-else if (a === "star") { const s = !x.star; if (s && forDay(day).filter(y => y.kind === "task" && y.star && !y.done).length >= 6) toast("تنبيه: عندك أكثر من 6 مهام مهمة");
-await upd(x.id, { star: s, kind: "task" }); toast(s ? "أُضيفت لأهم 6 مهام" : "أُزيلت من أهم 6"); }
+else if (a === "star") { const s = !x.star; await upd(x.id, { star: s, kind: "task" }); toast(s ? "★ اتعلّمت أولوية — هتطلع فوق" : "اتشالت من الأولوية"); }
 else if (a === "today") { await upd(x.id, { due: today() }); toast("اتنقلت لمهام النهارده"); }
 else if (a === "unsched") { open = null; await upd(x.id, { due: null }); toast("رجعت للمهام العامة"); }
 else if (a === "tomorrow") { await upd(x.id, { due: iso(addDays(new Date(), 1)) }); toast("نُقلت إلى بكرة"); }
@@ -730,7 +767,9 @@ render();
 const DEMO_ME = { id: "demo", username: "demo", name: "زائر (نسخة عرض)", role: "admin", active: true };
 let demoUsers = [DEMO_ME, { id: "demo_u1", username: "ahmed", name: "أحمد (مستخدم تجريبي)", role: "member", active: true }];
 function demoApi(fn, args){
-  if (fn === "getAll") return { me: DEMO_ME, users: demoUsers.map(u => ({ ...u })), items: [], notes: {} };
+  if (fn === "getAll") return { me: DEMO_ME, users: demoUsers.map(u => ({ ...u })), items: [], notes: {}, projects: [] };
+  if (fn === "saveProject" || fn === "deleteProject") return true;
+  if (fn === "uploadFile") return { kind: "link", url: "#", name: args[0] + " (عرض)" };
   if (fn === "listUsers") return demoUsers.map(u => ({ ...u }));
   if (fn === "addUser") { const [username, name, role] = args; if (!username || !name) throw new Error("أكمل البيانات"); demoUsers.push({ id: "demo_" + rid(), username: String(username).toLowerCase(), name, role: role === "admin" ? "admin" : "member", active: true }); return demoUsers.map(u => ({ ...u })); }
   if (fn === "sendDigest") throw new Error("الإرسال مش متاح في نسخة العرض");
@@ -764,7 +803,7 @@ async function load(){
 if (!TOKEN) return;
 if (pending || (isDemo && load.done)) return; load.done = true;
 try { const r = await api("getAll"); if (pending) return;
-ME = r.me; USERS = r.users || []; if (!viewUid || !USERS.some(u => u.id === viewUid)) viewUid = ME.id; canWrite = true; setChip();
+ME = r.me; USERS = r.users || []; PROJECTS = r.projects || []; if (!viewUid || !USERS.some(u => u.id === viewUid)) viewUid = ME.id; canWrite = true; setChip();
 store = {}; (r.items || []).forEach(o => store[o.id] = strip(o)); noteStore = r.notes || {};
 emit(); emitN(); if (!isDemo && ME && !ME.email && !askedProfile) { askedProfile = true; setTimeout(() => showAuth("profile", "أهلاً " + ME.name + " 👋 — ضيف إيميلك ورقم جوالك عشان توصلك التذكيرات وملخص يومك."), 400); }
 banner(isDemo ? "نسخة عرض فاضية للتجربة: جرّب إضافة مهام ومستخدمين وإسناد — لا شيء يُحفظ، وبتتمسح لما تقفل الصفحة." : isMgr ? `وضع ${MGR}: تقدر تشوف المهام وتضيف مهام جديدة في «أهم 6 مهام» و«جدول المهام».` : "");
@@ -855,7 +894,7 @@ function teamView(){
   const lateAll = us.flatMap(u => statsFor(u.id).lateList.map(x => ({ ...x, who: u.name }))).sort((a, b) => a.due.localeCompare(b.due)).slice(0, 30);
   return `<div class="panel"><h3>إسناد مهمة سريعة</h3><form class="frm" id="assignForm"><select name="owner">${us.map(u => `<option value="${u.id}">${esc(u.name)}</option>`).join("")}</select>
     <input class="grow" name="title" placeholder="المهمة…" required><input type="date" name="due" value="${today()}"><select name="ttype"><option value="tech">فنية</option><option value="admin">إدارية</option><option value="fin">مالية</option></select>
-    <select name="priority"><option value="0">عادية</option><option value="1">مهمة</option><option value="2">عاجلة</option></select><label style="font-size:13px"><input type="checkbox" name="star"> من أهم 6</label><label style="font-size:13px"><input type="checkbox" name="nodate"> بدون تاريخ (مهام عامة)</label><button class="btn">إسناد</button></form></div>
+    <select name="priority"><option value="0">عادية</option><option value="1">مهمة</option><option value="2">عاجلة</option></select><label style="font-size:13px"><input type="checkbox" name="star"> أولوية ★</label><label style="font-size:13px"><input type="checkbox" name="nodate"> بدون تاريخ (مهام عامة)</label><button class="btn">إسناد</button></form></div>
     <div class="team">${cards || '<div class="empty">لا يوجد مستخدمين</div>'}</div>
     <div class="panel"><h3>المتأخرات على مستوى الفريق</h3>${lateAll.length ? `<div class="tblwrap"><table class="utable"><tr><th>المهمة</th><th>المسؤول</th><th>من يوم</th></tr>${lateAll.map(x => `<tr><td>${esc(x.title)}</td><td>${esc(x.who)}</td><td>${esc(nice(x.due))}</td></tr>`).join("")}</table></div>` : '<div class="empty" style="padding:8px;text-align:start">لا يوجد متأخرات 👌</div>'}</div>`;
 }
@@ -891,11 +930,259 @@ $("#view").addEventListener("click", async e => { const b = e.target.closest("[d
   try { const r = await api("sendDigest", b.dataset.digest); toast("اتبعت الملخص لـ " + r.to); } catch (x) { banner((x && x.message) || "تعذّر الإرسال", true); } finally { b.disabled = false; } });
 $("#view").addEventListener("change", async e => { const s = e.target.closest("[data-urole]"); if (!s) return; try { USERS = await api("updateUser", s.dataset.urole, { role: s.value }); toast("تم تحديث الصلاحية"); setChip(); } catch (x) { banner((x && x.message) || "خطأ", true); } });
 
+// ---------- projects ----------
+const PST = [["quote","عرض سعر","mut"],["contract","مرحلة التعاقد","wait"],["active","جاري العمل","doing"],["hold","متوقف","late"],["done","تم","done"]];
+const PSTL = Object.fromEntries(PST.map(([k,l,c]) => [k, { l, c }]));
+const PTYPES = ["تصميم معماري","إشراف هندسي","إدارة مشاريع","تطوير عقاري","دراسات واستشارات","تصميم داخلي","أخرى"];
+const PHST = [["todo","لم تبدأ"],["doing","جارية"],["done","منجزة"]];
+const DOCCAT = ["عقد","عرض سعر","اعتمادات","مطالبة","تحويل / إيصال دفع","مراسلات","مخططات","محضر اجتماع","أخرى"];
+const LOGK = ["مراسلة واردة","مراسلة صادرة","اجتماع","قرار / اعتماد","ملاحظة مهمة"];
+let docCat = "عقد", docF = "all";
+const EXCAT = ["رواتب وأتعاب","مقاولين باطن","مواد وطباعة","رسوم حكومية","مواصلات وسفر","أخرى"];
+let projOpen = null, projDraft = null, projDirty = false, projQ = "", projF = "all", projLeave = false;
+const num = v => { const n = parseFloat(String(v ?? "").replace(/,/g, "")); return isFinite(n) ? n : 0; };
+const money = n => (Math.round(num(n) * 100) / 100).toLocaleString("en-US", { maximumFractionDigits: 2 });
+const SAR = n => `${money(n)} <small class="cur">ر.س</small>`;
+const pct = n => (isFinite(n) ? Math.round(n * 1000) / 10 : 0) + "%";
+function pcalc(p){
+  const rate = (p.vat === "" || p.vat == null ? 15 : num(p.vat)) / 100;
+  const A = num(p.agreed) || (p.status === "quote" ? num(p.price) : 0), V = A * rate, T = A + V;
+  const ph = (p.phases || []).map(x => ({ ...x, amt: A * num(x.pct) / 100 }));
+  const phPct = ph.reduce((s, x) => s + num(x.pct), 0), prog = ph.filter(x => x.status === "done").reduce((s, x) => s + num(x.pct), 0);
+  const cl = (p.claims || []).map(x => { const ex = num(x.amount), inc = ex * (1 + rate), pd = num(x.paid);
+    const st = !ex ? "draft" : pd >= inc - 0.5 ? "paid" : pd > 0 ? "part" : (x.date && daysBetween(x.date, today()) > 30) ? "late" : x.date ? "sent" : "draft"; return { ...x, ex, inc, vat: ex * rate, pd, st }; });
+  const claimed = cl.reduce((s, x) => s + x.inc, 0), paid = cl.reduce((s, x) => s + x.pd, 0);
+  const exp = (p.expenses || []).reduce((s, x) => s + num(x.amount), 0);
+  const paidNet = paid / (1 + rate);
+  return { rate, A, V, T, ph, phPct, prog, cl, claimed, paid, out: Math.max(T - paid, 0), col: T ? paid / T : 0, exp, profit: A - exp, margin: A ? (A - exp) / A : 0, paidNet, realized: paidNet - exp, vatCollected: paid - paidNet, unclaimed: Math.max(T - claimed, 0), late: cl.filter(x => x.st === "late") };
+}
+const CLST = { draft: ["مسودة","mut"], sent: ["مطالبة مرسلة","doing"], part: ["مدفوعة جزئياً","wait"], paid: ["مدفوعة","done"], late: ["متأخرة +30 يوم","late"] };
+const spill = (l, c) => `<span class="spill s-${c}">${esc(l)}</span>`;
+function newProject(){ return { id: rid(), name: "", client: "", type: "", status: "contract", start: today(), end: "", price: "", agreed: "", vat: 15, desc: "",
+  phases: [{ name: "دفعة مقدمة", pct: 20, due: "", status: "todo" }, { name: "المرحلة الأولى", pct: 40, due: "", status: "todo" }, { name: "التسليم النهائي", pct: 40, due: "", status: "todo" }],
+  claims: [], expenses: [], notes: "", createdAt: Date.now() }; }
+function projectsView(){
+  if (!isAdmin()) return `<div class="empty">صفحة المشاريع للمدير فقط</div>`;
+  if (projOpen) { if (!projDraft) { const p = PROJECTS.find(x => x.id === projOpen); if (!p) { projOpen = null; return projectsView(); } projDraft = JSON.parse(JSON.stringify(p)); } return projectDetail(projDraft); }
+  return projDash() + projList();
+}
+function kpi(label, val, sub, cls){ return `<div class="kpi ${cls || ""}"><span class="kl">${label}</span><b>${val}</b>${sub ? `<small>${sub}</small>` : ""}</div>`; }
+function projDash(){
+  const P = PROJECTS.map(p => ({ p, c: pcalc(p) })); const con = P.filter(x => x.p.status !== "quote");
+  const sum = (a, f) => a.reduce((s, x) => s + f(x), 0);
+  const T = sum(con, x => x.c.T), paid = sum(con, x => x.c.paid), exp = sum(con, x => x.c.exp), A = sum(con, x => x.c.A), quotes = P.filter(x => x.p.status === "quote");
+  const active = P.filter(x => x.p.status === "active").length;
+  const kpis = `<div class="kpis">
+    ${kpi("عدد المشاريع", P.length, `${active} جاري العمل · ${quotes.length} عروض أسعار`)}
+    ${kpi("قيمة العقود شامل الضريبة", SAR(T), `${SAR(A)} قبل الضريبة`)}
+    ${kpi("المحصّل", SAR(paid), `${pct(T ? paid / T : 0)} من قيمة العقود`, "good")}
+    ${kpi("المتبقي للتحصيل", SAR(Math.max(T - paid, 0)), `${sum(con, x => x.c.late.length)} مطالبة متأخرة`, "warn")}
+    ${kpi("المصاريف", SAR(exp), A ? `${pct(exp / A)} من الإيراد` : "")}
+    ${kpi("صافي الربح المتوقع", SAR(A - exp), A ? `هامش ${pct((A - exp) / A)}` : "", "gold")}
+  </div>`;
+  // status bars
+  const maxC = Math.max(1, ...PST.map(([k]) => P.filter(x => x.p.status === k).length));
+  const stBars = PST.map(([k, l, c]) => { const n = P.filter(x => x.p.status === k).length;
+    return `<div class="hb" title="${l}: ${n}"><span class="hl">${l}</span><span class="ht"><i class="f-${c}" style="width:${n / maxC * 100}%"></i></span><b>${n}</b></div>`; }).join("");
+  // collection per project
+  const top = con.slice().sort((a, b) => b.c.T - a.c.T).slice(0, 8); const maxT = Math.max(1, ...top.map(x => x.c.T));
+  const colBars = top.length ? top.map(x => `<div class="hb2" data-popen="${x.p.id}" title="${esc(x.p.name)} — محصّل ${money(x.c.paid)} من ${money(x.c.T)} ر.س"><span class="hl">${esc(x.p.name)}</span>
+    <span class="ht" style="width:${x.c.T / maxT * 100}%"><i class="f-done" style="width:${x.c.col * 100}%"></i><i class="f-rest" style="width:${(1 - x.c.col) * 100}%"></i></span><b>${pct(x.c.col)}</b></div>`).join("")
+    : `<div class="empty" style="padding:10px">لا توجد عقود بعد</div>`;
+  // monthly collections (last 12 months)
+  const now = new Date(); const months = []; for (let i = 11; i >= 0; i--) { const d = new Date(now.getFullYear(), now.getMonth() - i, 1); months.push({ k: `${d.getFullYear()}-${pad(d.getMonth() + 1)}`, l: new Intl.DateTimeFormat("ar-EG-u-nu-latn", { month: "short" }).format(d), v: 0 }); }
+  P.forEach(x => (x.p.claims || []).forEach(c => { if (num(c.paid) && c.paidDate) { const m = months.find(m => m.k === c.paidDate.slice(0, 7)); if (m) m.v += num(c.paid); } }));
+  const maxM = Math.max(1, ...months.map(m => m.v));
+  const cols = months.map(m => `<div class="vc" title="${m.l}: ${money(m.v)} ر.س"><span class="vv">${m.v ? money(Math.round(m.v / 1000)) + "k" : ""}</span><span class="vb"><i style="height:${m.v / maxM * 100}%"></i></span><span class="vl">${m.l}</span></div>`).join("");
+  // alerts
+  const alerts = [];
+  con.forEach(x => { x.c.late.forEach(cl => alerts.push({ w: 2, t: `مطالبة متأخرة: ${cl.phase || cl.inv || "دفعة"} — ${money(cl.inc - cl.pd)} ر.س`, p: x.p }));
+    x.c.ph.forEach(ph => { if (ph.due && ph.status !== "done" && ph.due <= iso(addDays(new Date(), 14))) { const claimedPh = (x.p.claims || []).some(c => c.phase === ph.name); if (!claimedPh) alerts.push({ w: ph.due < today() ? 2 : 1, t: `مرحلة «${ph.name}» ${ph.due < today() ? "فات موعدها" : "مستحقة"} ${nice(ph.due)} ولم تتم المطالبة`, p: x.p }); } });
+    if (x.p.end && x.p.status === "active" && x.p.end < today()) alerts.push({ w: 1, t: `تجاوز تاريخ الانتهاء المتوقع (${nice(x.p.end)})`, p: x.p }); });
+  alerts.sort((a, b) => b.w - a.w);
+  const al = alerts.length ? `<ul class="alerts">${alerts.slice(0, 8).map(a => `<li class="${a.w > 1 ? "hi" : ""}" data-popen="${a.p.id}"><b>${esc(a.p.name)}</b> · ${esc(a.t)}</li>`).join("")}</ul>` : `<div class="empty" style="padding:10px">لا توجد تنبيهات 👌</div>`;
+  return `<div class="phead"><div><h2>المشاريع</h2><div class="sub">لوحة متابعة العقود والتحصيل والمصاريف</div></div><button class="btn" data-pnew>+ مشروع جديد</button></div>${kpis}
+  <div class="pgrid">
+    <div class="panel"><h3>المشاريع حسب الحالة</h3>${stBars}</div>
+    <div class="panel"><h3>التحصيل لكل مشروع</h3><div class="lg"><span><i class="f-done"></i>محصّل</span><span><i class="f-rest"></i>متبقي</span></div>${colBars}</div>
+    <div class="panel"><h3>التحصيل الشهري — آخر 12 شهر</h3><div class="vchart">${cols}</div></div>
+    <div class="panel"><h3>تنبيهات</h3>${al}</div>
+  </div>`;
+}
+function projList(){
+  const q = projQ.trim(); let L = PROJECTS.map(p => ({ p, c: pcalc(p) }));
+  if (projF !== "all") L = L.filter(x => x.p.status === projF);
+  if (q) L = L.filter(x => [x.p.name, x.p.client, x.p.type].join(" ").includes(q));
+  L.sort((a, b) => (b.p.start || "").localeCompare(a.p.start || ""));
+  const chips = [["all", `الكل (${PROJECTS.length})`], ...PST.map(([k, l]) => [k, `${l} (${PROJECTS.filter(p => p.status === k).length})`])].map(([k, l]) => `<button type="button" class="chip" data-pf-filter="${k}" aria-pressed="${projF === k}">${l}</button>`).join("");
+  const rows = L.map(({ p, c }) => `<tr data-popen="${p.id}"><td><b>${esc(p.name)}</b>${p.client ? `<small>${esc(p.client)}</small>` : ""}</td><td>${esc(p.type || "—")}</td>
+    <td>${spill(PSTL[p.status]?.l || "—", PSTL[p.status]?.c || "mut")}</td><td>${p.start ? esc(gFmtY.format(parse(p.start))) : "—"}</td>
+    <td class="n">${money(c.A)}</td><td class="n">${money(c.T)}</td>
+    <td><div class="mini"><i style="width:${Math.min(c.col, 1) * 100}%"></i></div><small>${pct(c.col)}</small></td>
+    <td><div class="mini g"><i style="width:${Math.min(c.prog, 100)}%"></i></div><small>${Math.round(c.prog)}%</small></td></tr>`).join("");
+  return `<div class="panel"><div class="plbar"><h3>قائمة المشاريع</h3><input type="search" id="projSearch" placeholder="بحث باسم المشروع أو العميل…" value="${esc(projQ)}"></div><div class="tfilter" style="border:0;padding:0 0 10px">${chips}</div>
+  ${L.length ? `<div class="tblwrap"><table class="ptable"><tr><th>المشروع</th><th>النوع</th><th>الحالة</th><th>البداية</th><th>المتفق عليه (قبل الضريبة)</th><th>الإجمالي شامل الضريبة</th><th>التحصيل</th><th>الإنجاز</th></tr>${rows}</table></div>`
+  : `<div class="empty"><b>${PROJECTS.length ? "لا نتائج" : "لا توجد مشاريع بعد"}</b>${PROJECTS.length ? "" : "دوس «+ مشروع جديد» وابدأ."}</div>`}</div>`;
+}
+function projectDetail(p){
+  const c = pcalc(p); const st = PSTL[p.status] || PSTL.contract;
+  const inp = (k, lbl, type, extra) => `<label>${lbl}<input ${type ? `type="${type}"` : ""} data-pf="${k}" value="${esc(p[k] ?? "")}" ${extra || ""}></label>`;
+  const phRows = c.ph.map((x, i) => `<tr><td class="ix">${i + 1}</td><td><input data-row="phases" data-i="${i}" data-k="name" value="${esc(x.name)}" placeholder="اسم المرحلة"></td>
+    <td><input class="nn" type="number" step="0.01" data-row="phases" data-i="${i}" data-k="pct" value="${esc(x.pct)}"></td><td class="n" data-c="ph${i}">${money(x.amt)}</td><td class="n" data-c="phv${i}">${money(x.amt * (1 + c.rate))}</td>
+    <td><input type="date" data-row="phases" data-i="${i}" data-k="due" value="${esc(x.due)}"></td><td><select data-row="phases" data-i="${i}" data-k="status">${PHST.map(([k, l]) => `<option value="${k}" ${x.status === k ? "selected" : ""}>${l}</option>`).join("")}</select></td>
+    <td><button class="rm" data-rm="phases" data-i="${i}" title="حذف">×</button></td></tr>`).join("");
+  const phNames = (p.phases || []).map(x => x.name).filter(Boolean);
+  const clRows = c.cl.map((x, i) => `<tr><td><select data-row="claims" data-i="${i}" data-k="phase"><option value="">—</option>${phNames.map(n => `<option ${x.phase === n ? "selected" : ""}>${esc(n)}</option>`).join("")}</select></td>
+    <td><input data-row="claims" data-i="${i}" data-k="inv" value="${esc(x.inv || "")}" placeholder="رقم" style="width:80px"></td><td><input type="date" data-row="claims" data-i="${i}" data-k="date" value="${esc(x.date || "")}"></td>
+    <td><input class="nn" type="number" step="0.01" data-row="claims" data-i="${i}" data-k="amount" value="${esc(x.amount ?? "")}"></td><td class="n" data-c="clv${i}">${money(x.vat)}</td><td class="n" data-c="cli${i}">${money(x.inc)}</td>
+    <td><input class="nn" type="number" step="0.01" data-row="claims" data-i="${i}" data-k="paid" value="${esc(x.paid ?? "")}"></td><td><input type="date" data-row="claims" data-i="${i}" data-k="paidDate" value="${esc(x.paidDate || "")}"></td>
+    <td data-c="cls${i}">${spill(...CLST[x.st])}</td><td><button class="rm" data-rm="claims" data-i="${i}" title="حذف">×</button></td></tr>`).join("");
+  const exRows = (p.expenses || []).map((x, i) => `<tr><td><input data-row="expenses" data-i="${i}" data-k="desc" value="${esc(x.desc || "")}" placeholder="البند"></td>
+    <td><select data-row="expenses" data-i="${i}" data-k="cat">${EXCAT.map(k => `<option ${x.cat === k ? "selected" : ""}>${k}</option>`).join("")}</select></td>
+    <td><input type="date" data-row="expenses" data-i="${i}" data-k="date" value="${esc(x.date || "")}"></td><td><input class="nn" type="number" step="0.01" data-row="expenses" data-i="${i}" data-k="amount" value="${esc(x.amount ?? "")}"></td>
+    <td><button class="rm" data-rm="expenses" data-i="${i}" title="حذف">×</button></td></tr>`).join("");
+  const tasks = p.name ? allItems.filter(x => x.project === p.name) : []; const tOpen = tasks.filter(x => !x.done);
+  const byCat = EXCAT.map(k => [k, (p.expenses || []).filter(x => x.cat === k).reduce((s, x) => s + num(x.amount), 0)]).filter(x => x[1]);
+  const maxCat = Math.max(1, ...byCat.map(x => x[1]));
+  return `<div class="pdetail">
+  <div class="pdtop"><button class="btn ghost" data-pback>→ كل المشاريع</button><div class="pdname"><h2 data-c="title">${esc(p.name || "مشروع جديد")}</h2>${spill(st.l, st.c)}</div>
+    <div class="pdact"><button class="btn" data-psave>${projDirty ? "● " : ""}حفظ</button><button class="btn ghost" data-pprint>طباعة / PDF</button><button class="btn ghost danger" data-pdel>حذف</button></div></div>
+  <div class="kpis k8">
+    ${kpi("المتفق عليه (قبل الضريبة)", `<span data-c="A">${SAR(c.A)}</span>`)}
+    ${kpi(`الضريبة <span data-c="rate">${Math.round(c.rate * 100)}%</span>`, `<span data-c="V">${SAR(c.V)}</span>`)}
+    ${kpi("الإجمالي شامل الضريبة", `<span data-c="T">${SAR(c.T)}</span>`, "", "gold")}
+    ${kpi("المحصّل", `<span data-c="paid">${SAR(c.paid)}</span>`, `<span data-c="col">${pct(c.col)}</span>`, "good")}
+    ${kpi("المتبقي للتحصيل", `<span data-c="out">${SAR(c.out)}</span>`, "", "warn")}
+    ${kpi("المصاريف", `<span data-c="exp">${SAR(c.exp)}</span>`)}
+    ${kpi("الربح المتوقع", `<span data-c="profit">${SAR(c.profit)}</span>`, `هامش <span data-c="margin">${pct(c.margin)}</span>`)}
+    ${kpi("نسبة الإنجاز", `<span data-c="prog">${Math.round(c.prog)}%</span>`, `<div class="mini g"><i data-c-w="prog" style="width:${Math.min(c.prog, 100)}%"></i></div>`)}
+  </div>
+  <div class="panel"><h3>البيانات الأساسية</h3><div class="pform">
+    ${inp("name", "اسم المشروع *")}${inp("client", "العميل / المالك")}
+    <label>نوع المشروع<input data-pf="type" list="ptypes" value="${esc(p.type || "")}"></label>
+    <label>الحالة<select data-pf="status">${PST.map(([k, l]) => `<option value="${k}" ${p.status === k ? "selected" : ""}>${l}</option>`).join("")}</select></label>
+    ${inp("start", "تاريخ البداية", "date")}${inp("end", "تاريخ الانتهاء المتوقع", "date")}
+    ${inp("price", "السعر المقترح (قبل الضريبة)", "number", 'step="0.01"')}${inp("agreed", "السعر المتفق عليه (قبل الضريبة)", "number", 'step="0.01"')}
+    ${inp("vat", "نسبة الضريبة %", "number", 'step="0.01"')}
+    <label>الإجمالي شامل الضريبة<div class="ro-f" data-c="T2">${SAR(c.T)}</div></label>
+    <label class="w2">وصف مختصر<input data-pf="desc" value="${esc(p.desc || "")}"></label>
+  </div><datalist id="ptypes">${PTYPES.map(t => `<option value="${t}">`).join("")}</datalist></div>
+  <div class="panel"><h3>المراحل والدفعات التعاقدية <small data-c="phpct" class="${Math.round(c.phPct) === 100 ? "" : "warnt"}">مجموع النسب ${Math.round(c.phPct * 100) / 100}%</small></h3>
+    <div class="tblwrap"><table class="etable"><tr><th>#</th><th>المرحلة</th><th>النسبة %</th><th>المبلغ</th><th>شامل الضريبة</th><th>تاريخ الاستحقاق</th><th>الحالة</th><th></th></tr>${phRows}</table></div>
+    <button class="btn ghost addr" data-add="phases">+ إضافة مرحلة</button></div>
+  <div class="panel"><h3>المطالبات والدفعات</h3>
+    <div class="tblwrap"><table class="etable"><tr><th>المرحلة</th><th>رقم الفاتورة</th><th>تاريخ المطالبة</th><th>المبلغ (قبل الضريبة)</th><th>الضريبة</th><th>الإجمالي</th><th>المدفوع</th><th>تاريخ الدفع</th><th>الحالة</th><th></th></tr>${clRows}
+    <tr class="tot"><td colspan="5">الإجمالي</td><td class="n" data-c="claimed">${money(c.claimed)}</td><td class="n" data-c="paid2">${money(c.paid)}</td><td colspan="3">غير مُطالب به: <b data-c="unclaimed">${money(c.unclaimed)}</b></td></tr></table></div>
+    <button class="btn ghost addr" data-add="claims">+ إضافة مطالبة / دفعة</button></div>
+  <div class="panel"><h3>المصاريف</h3>
+    <div class="tblwrap"><table class="etable"><tr><th>البند</th><th>التصنيف</th><th>التاريخ</th><th>المبلغ</th><th></th></tr>${exRows}<tr class="tot"><td colspan="3">إجمالي المصاريف</td><td class="n" data-c="exp2">${money(c.exp)}</td><td></td></tr></table></div>
+    <button class="btn ghost addr" data-add="expenses">+ إضافة مصروف</button></div>
+  <div class="pgrid">
+    <div class="panel"><h3>الدراسة المالية</h3><table class="ftable">
+      <tr><td>الإيراد المتفق عليه (قبل الضريبة)</td><td class="n" data-c="fA">${money(c.A)}</td></tr>
+      <tr><td>إجمالي المصاريف</td><td class="n" data-c="fE">(${money(c.exp)})</td></tr>
+      <tr class="b"><td>صافي الربح المتوقع</td><td class="n" data-c="fP">${money(c.profit)}</td></tr>
+      <tr><td>هامش الربح</td><td class="n" data-c="fM">${pct(c.margin)}</td></tr>
+      <tr class="sep"><td>المحصّل صافي (بدون الضريبة)</td><td class="n" data-c="fN">${money(c.paidNet)}</td></tr>
+      <tr class="b"><td>الربح المحقق حتى الآن (المحصّل − المصاريف)</td><td class="n" data-c="fR">${money(c.realized)}</td></tr>
+      <tr><td>ضريبة القيمة المضافة المحصّلة (للتوريد)</td><td class="n" data-c="fV">${money(c.vatCollected)}</td></tr>
+    </table>
+    <div class="rvbar"><div><span>الإيراد</span><i class="f-doing" style="width:100%"></i></div><div><span>المصاريف</span><i class="f-late" data-c-w="expw" style="width:${c.A ? Math.min(c.exp / c.A, 1) * 100 : 0}%"></i></div><div><span>المحصّل</span><i class="f-done" data-c-w="paidw" style="width:${c.T ? Math.min(c.paid / c.T, 1) * 100 : 0}%"></i></div></div></div>
+    <div class="panel"><h3>المصاريف حسب التصنيف</h3>${byCat.length ? byCat.map(([k, v]) => `<div class="hb" title="${k}: ${money(v)}"><span class="hl">${k}</span><span class="ht"><i class="f-late" style="width:${v / maxCat * 100}%"></i></span><b>${money(v)}</b></div>`).join("") : `<div class="empty" style="padding:10px">لا مصاريف مسجلة</div>`}</div>
+  </div>
+  <div class="panel"><h3>ملفات المشروع <small>${(p.docs || []).length} ملف</small></h3>
+    <div class="dochead"><select id="docCat" aria-label="تصنيف الملف">${DOCCAT.map(k => `<option ${docCat === k ? "selected" : ""}>${k}</option>`).join("")}</select>
+      <label class="upbtn">⬆ رفع ملف<input type="file" data-pupload multiple hidden></label>
+      <input id="docLName" placeholder="اسم الرابط" style="width:130px"><input id="docLUrl" type="url" placeholder="أو الصق رابط (Drive / OneDrive)…" style="flex:1;min-width:160px"><button class="btn ghost" data-plink>إضافة رابط</button></div>
+    <div class="tfilter" style="border:0;padding:6px 0 8px">${[["all", `الكل (${(p.docs || []).length})`], ...DOCCAT.filter(k => (p.docs || []).some(d => d.cat === k)).map(k => [k, `${k} (${(p.docs || []).filter(d => d.cat === k).length})`])].map(([k, l]) => `<button type="button" class="chip" data-docf="${k}" aria-pressed="${docF === k}">${l}</button>`).join("")}</div>
+    ${(p.docs || []).length ? `<div class="tblwrap"><table class="etable"><tr><th>التصنيف</th><th>الملف</th><th>تاريخ الرفع</th><th>رفعه</th><th>ملاحظة</th><th></th></tr>${(p.docs || []).map((d, i) => ({ d, i })).filter(({ d }) => docF === "all" || d.cat === docF).sort((a, b) => (b.d.at || 0) - (a.d.at || 0)).map(({ d, i }) => `<tr>
+      <td><select data-row="docs" data-i="${i}" data-k="cat">${DOCCAT.map(k => `<option ${d.cat === k ? "selected" : ""}>${k}</option>`).join("")}</select></td>
+      <td><a class="doclink" href="${esc(d.url)}" target="_blank" rel="noopener">${/\.pdf$/i.test(d.name || "") ? "📕" : d.kind === "link" ? "🔗" : "📄"} ${esc(d.name)}</a></td>
+      <td class="nw">${d.at ? esc(gFmtY.format(new Date(d.at))) + " · " + new Date(d.at).toLocaleTimeString("ar-EG-u-nu-latn", { hour: "2-digit", minute: "2-digit" }) : "—"}</td><td>${esc(d.by || "")}</td>
+      <td><input data-row="docs" data-i="${i}" data-k="note" value="${esc(d.note || "")}" placeholder="مثلاً: النسخة الموقعة"></td><td><button class="rm" data-rm="docs" data-i="${i}" title="إزالة من القائمة">×</button></td></tr>`).join("")}</table></div>` : `<div class="empty" style="padding:10px">ارفع العقد، عروض الأسعار، الاعتمادات، المطالبات، إيصالات التحويل… كل ملف بيتسجل بتاريخ رفعه</div>`}</div>
+  <div class="panel"><h3>سجل المراسلات والأحداث المهمة</h3>
+    <div class="tblwrap"><table class="etable"><tr><th>التاريخ</th><th>النوع</th><th>الجهة / الموضوع</th><th>التفاصيل</th><th></th></tr>${(p.log || []).map((x, i) => `<tr>
+      <td><input type="date" data-row="log" data-i="${i}" data-k="date" value="${esc(x.date || "")}"></td>
+      <td><select data-row="log" data-i="${i}" data-k="kind">${LOGK.map(k => `<option ${x.kind === k ? "selected" : ""}>${k}</option>`).join("")}</select></td>
+      <td><input data-row="log" data-i="${i}" data-k="subject" value="${esc(x.subject || "")}" placeholder="مثلاً: خطاب المالك بخصوص التعديلات"></td>
+      <td><input data-row="log" data-i="${i}" data-k="details" value="${esc(x.details || "")}" placeholder="الخلاصة / المطلوب" style="min-width:220px"></td>
+      <td><button class="rm" data-rm="log" data-i="${i}" title="حذف">×</button></td></tr>`).join("")}</table></div>
+    <button class="btn ghost addr" data-add="log">+ إضافة مراسلة / حدث</button></div>
+  <div class="pgrid">
+    <div class="panel"><h3>مهام المشروع <small>${tOpen.length} مفتوحة · ${tasks.length - tOpen.length} منجزة</small></h3>
+      ${tasks.length ? `<ul class="ptasks">${tasks.slice().sort((a, b) => a.done - b.done).slice(0, 12).map(x => `<li class="${x.done ? "d" : ""}">${x.done ? "✓" : "○"} ${esc(x.title)} <small>${x.due ? esc(nice(x.due)) : "مهام عامة"}${x.owner && x.owner !== ME.id ? " · " + esc(uname(x.owner)) : ""}</small></li>`).join("")}</ul>` : `<div class="empty" style="padding:8px">المهام اللي حقل «المشروع» فيها = اسم المشروع بتظهر هنا</div>`}
+      <form class="frm" id="ptaskForm"><input class="grow" name="title" placeholder="أضف مهمة للمشروع (للمهام العامة)…"><button class="btn">+</button></form></div>
+    <div class="panel"><h3>ملاحظات</h3><textarea class="pnotes" data-pf="notes" placeholder="ملاحظات عن المشروع…">${esc(p.notes || "")}</textarea></div>
+  </div></div>`;
+}
+function projRecalc(){
+  const p = projDraft; if (!p) return; const c = pcalc(p);
+  const set = (k, html) => document.querySelectorAll(`[data-c="${k}"]`).forEach(e => e.innerHTML = html);
+  const w = (k, v) => document.querySelectorAll(`[data-c-w="${k}"]`).forEach(e => e.style.width = v);
+  set("title", esc(p.name || "مشروع جديد")); set("A", SAR(c.A)); set("V", SAR(c.V)); set("T", SAR(c.T)); set("T2", SAR(c.T)); set("rate", Math.round(c.rate * 100) + "%");
+  set("paid", SAR(c.paid)); set("col", pct(c.col)); set("out", SAR(c.out)); set("exp", SAR(c.exp)); set("profit", SAR(c.profit)); set("margin", pct(c.margin)); set("prog", Math.round(c.prog) + "%"); w("prog", Math.min(c.prog, 100) + "%");
+  c.ph.forEach((x, i) => { set("ph" + i, money(x.amt)); set("phv" + i, money(x.amt * (1 + c.rate))); });
+  c.cl.forEach((x, i) => { set("clv" + i, money(x.vat)); set("cli" + i, money(x.inc)); set("cls" + i, spill(...CLST[x.st])); });
+  const pp = document.querySelector('[data-c="phpct"]'); if (pp) { pp.textContent = `مجموع النسب ${Math.round(c.phPct * 100) / 100}%`; pp.className = Math.round(c.phPct) === 100 ? "" : "warnt"; }
+  set("claimed", money(c.claimed)); set("paid2", money(c.paid)); set("unclaimed", money(c.unclaimed)); set("exp2", money(c.exp));
+  set("fA", money(c.A)); set("fE", `(${money(c.exp)})`); set("fP", money(c.profit)); set("fM", pct(c.margin)); set("fN", money(c.paidNet)); set("fR", money(c.realized)); set("fV", money(c.vatCollected));
+  w("expw", (c.A ? Math.min(c.exp / c.A, 1) * 100 : 0) + "%"); w("paidw", (c.T ? Math.min(c.paid / c.T, 1) * 100 : 0) + "%");
+  const sb = document.querySelector("[data-psave]"); if (sb) sb.textContent = (projDirty ? "● " : "") + "حفظ";
+}
+const NUMK = new Set(["pct", "amount", "paid", "price", "agreed", "vat"]);
+function projInput(el){
+  const p = projDraft; if (!p) return false;
+  if (el.dataset.pf) { const k = el.dataset.pf; p[k] = NUMK.has(k) && el.value !== "" ? num(el.value) : el.value; }
+  else if (el.dataset.row) { const r = p[el.dataset.row][+el.dataset.i]; const k = el.dataset.k; r[k] = NUMK.has(k) && el.value !== "" ? num(el.value) : el.value; }
+  else return false;
+  projDirty = true; projLeave = false; return true;
+}
+$("#view").addEventListener("input", e => { if (tab !== "projects") return; if (e.target.id === "projSearch") { projQ = e.target.value; const pos = e.target.selectionStart; render(); const s = $("#projSearch"); if (s) { s.focus(); s.setSelectionRange(pos, pos); } return; } if (projInput(e.target)) projRecalc(); });
+async function projAutoSave(msg){ projDirty = true; if (!String(projDraft.name || "").trim()) { render(); toast(msg + " — اكتب اسم المشروع ودوس حفظ"); return; }
+  try { await api("saveProject", projDraft); const i = PROJECTS.findIndex(x => x.id === projDraft.id); const copy = JSON.parse(JSON.stringify(projDraft)); if (i < 0) PROJECTS.push(copy); else PROJECTS[i] = copy; projDirty = false; toast(msg + " ✓"); } catch (x) { banner((x && x.message) || "تعذّر الحفظ", true); } render(); }
+$("#view").addEventListener("change", async e => { if (tab !== "projects" || !projDraft) return;
+  if (e.target.id === "docCat") { docCat = e.target.value; return; }
+  if (e.target.matches("[data-pupload]")) { const fl = [...e.target.files]; e.target.value = ""; if (!fl.length) return;
+    if (!String(projDraft.name || "").trim()) { toast("اكتب اسم المشروع الأول عشان نعمل له فولدر", true); return; }
+    projDraft.docs = projDraft.docs || []; let ok = 0;
+    for (const file of fl) { if (file.size > 20 * 1024 * 1024) { banner(`«${file.name}» أكبر من 20 ميجا — ارفعه على Drive وأضف الرابط`, true); continue; }
+      toast(`جارٍ رفع ${file.name}…`); const ext = (file.name.split(".").pop() || "").toLowerCase();
+      try { const r = await api("uploadFile", file.name, file.type || MIME[ext] || "application/octet-stream", await b64(file), "المشاريع/" + projDraft.name.trim());
+        projDraft.docs.push({ kind: r.kind || "drive", id: r.id || "", url: r.url, name: file.name, size: file.size, cat: docCat, at: Date.now(), by: ME.name, note: "" }); ok++; }
+      catch (x) { banner(`تعذّر رفع «${file.name}»: ` + ((x && x.message) || ""), true); } }
+    if (ok) await projAutoSave(`اترفع ${ok} ملف`); return; }
+  const el = e.target; if (!projInput(el)) return;
+  if (el.dataset.row === "claims" && el.dataset.k === "phase") { const r = projDraft.claims[+el.dataset.i]; const c = pcalc(projDraft); const ph = c.ph.find(x => x.name === el.value); if (ph && !num(r.amount)) r.amount = Math.round(ph.amt * 100) / 100; }
+  if (el.tagName === "SELECT" || el.dataset.pf === "name" || el.dataset.k === "name") render(); else projRecalc(); });
+$("#view").addEventListener("click", async e => {
+  if (tab !== "projects") return;
+  const o = e.target.closest("[data-popen]"); if (o) { projOpen = o.dataset.popen; projDraft = null; projDirty = false; render(); window.scrollTo({ top: 0, behavior: "smooth" }); return; }
+  const df = e.target.closest("[data-docf]"); if (df) { docF = df.dataset.docf; render(); return; }
+  if (e.target.closest("[data-plink]")) { let url = ($("#docLUrl").value || "").trim(); if (!url) return; if (!/^https?:[\/][\/]/i.test(url)) url = "https:\/\/" + url;
+    projDraft.docs = projDraft.docs || []; projDraft.docs.push({ kind: "link", name: ($("#docLName").value || "").trim() || new URL(url).hostname, url, cat: docCat, at: Date.now(), by: ME.name, note: "" }); await projAutoSave("أُضيف الرابط"); return; }
+  const f = e.target.closest("[data-pf-filter]"); if (f) { projF = f.dataset.pfFilter; render(); return; }
+  if (e.target.closest("[data-pnew]")) { projDraft = newProject(); projOpen = projDraft.id; projDirty = true; render(); const n = document.querySelector('[data-pf="name"]'); if (n) n.focus(); return; }
+  if (e.target.closest("[data-pback]")) { if (projDirty && !projLeave) { projLeave = true; toast("فيه تعديلات مش محفوظة — دوس «حفظ» أو دوس رجوع تاني للتجاهل", true); return; } projOpen = null; projDraft = null; projDirty = false; projLeave = false; render(); return; }
+  const add = e.target.closest("[data-add]"); if (add) { const k = add.dataset.add; projDraft[k] = projDraft[k] || [];
+    projDraft[k].push(k === "phases" ? { name: "", pct: 0, due: "", status: "todo" } : k === "claims" ? { phase: "", inv: "", date: today(), amount: "", paid: "", paidDate: "" } : k === "log" ? { date: today(), kind: LOGK[0], subject: "", details: "" } : { desc: "", cat: EXCAT[0], date: today(), amount: "" });
+    projDirty = true; render(); return; }
+  const rm = e.target.closest("[data-rm]"); if (rm) { projDraft[rm.dataset.rm].splice(+rm.dataset.i, 1); projDirty = true; render(); return; }
+  if (e.target.closest("[data-pprint]")) { window.print(); return; }
+  if (e.target.closest("[data-pdel]")) { const b = e.target.closest("[data-pdel]"); if (b.dataset.sure !== "1") { b.dataset.sure = "1"; b.textContent = "تأكيد الحذف؟"; return; }
+    try { await api("deleteProject", projDraft.id); PROJECTS = PROJECTS.filter(x => x.id !== projDraft.id); projOpen = null; projDraft = null; projDirty = false; toast("اتحذف المشروع"); render(); } catch (x) { banner((x && x.message) || "تعذّر الحذف", true); } return; }
+  if (e.target.closest("[data-psave]")) { const b = e.target.closest("[data-psave]"); if (!String(projDraft.name || "").trim()) { toast("اكتب اسم المشروع الأول", true); return; }
+    b.disabled = true; try { projDraft.updatedAt = Date.now(); await api("saveProject", projDraft); const i = PROJECTS.findIndex(x => x.id === projDraft.id); const copy = JSON.parse(JSON.stringify(projDraft)); if (i < 0) PROJECTS.push(copy); else PROJECTS[i] = copy;
+      projDirty = false; projLeave = false; toast("اتحفظ المشروع ✓"); render(); } catch (x) { banner((x && x.message) || "تعذّر الحفظ", true); } finally { b.disabled = false; } return; }
+});
+$("#view").addEventListener("submit", async e => { if (e.target.id !== "ptaskForm") return; e.preventDefault(); const t = (new FormData(e.target).get("title") || "").toString().trim(); if (!t || !projDraft || !projDraft.name) return;
+  try { await col.doc().set({ kind: "task", title: t, due: null, done: false, doneAt: null, createdAt: Date.now(), note: "", priority: 0, ttype: "tech", status: "todo", project: projDraft.name, star: false, owner: ME.id }); toast("اتضافت للمهام العامة"); render(); } catch (x) { handleWriteErr(x); } }, true);
+
 // re-render without losing the cursor in an add field
 function keepFocus(fn){
 const a = document.activeElement; let sel = null;
 if (a && a.closest && a.closest("form.addrow")) sel = { kind: a.closest("form").dataset.kind, name: a.name, val: a.value };
 if (a && a.isContentEditable) return; // don't clobber inline editing
+if (a && a.closest && a.closest(".pdetail") && (a.dataset.pf || a.dataset.row)) { const sel2 = a.dataset.pf ? `[data-pf="${a.dataset.pf}"]` : `[data-row="${a.dataset.row}"][data-i="${a.dataset.i}"][data-k="${a.dataset.k}"]`; let pos = null; try { pos = a.selectionStart; } catch {} fn(); const n = document.querySelector(sel2); if (n) { n.focus(); try { if (pos != null) n.setSelectionRange(pos, pos); } catch {} } return; }
 if (a && a.id === "notes") { const v = a.value, s = a.selectionStart; fn(); const n = $("#notes"); if (n) { n.value = v; n.focus(); n.setSelectionRange(s, s); } return; }
 fn();
 if (sel) { const f = document.querySelector(`form.addrow[data-kind="${sel.kind}"] [name="${sel.name}"]`); if (f) { if (sel.name !== "title") f.value = sel.val; f.focus(); } }
