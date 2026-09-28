@@ -247,6 +247,10 @@ nav.tabs button[aria-selected="true"] .c{background:rgba(255,255,255,.18);color:
 .tag{border-radius:99px;padding:1px 9px;font-size:12px;font-weight:700}
 .tag.admin{background:var(--gold-soft);color:var(--gold)}.tag.member{background:var(--doing-soft);color:var(--doing)}.tag.off{background:var(--late-soft);color:var(--late)}
 .tblwrap{overflow-x:auto}
+.sec-backlog{--acc:#8a6d3b;--acc-soft:var(--gold-soft)}
+.bkhint{margin-block:14px 12px;font-size:13.5px;color:var(--ink2);background:var(--surface);border:1px dashed var(--gold);border-radius:12px;padding:10px 14px}
+.acts .sch{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--gold);border-radius:8px;padding:0 0 0 6px;font-size:13px;color:var(--gold);background:var(--surface);cursor:pointer}
+.acts .sch input{border:0;background:transparent;font-size:12px;padding:3px 4px;width:122px;color:var(--ink2)}
 .hero h1 .en{font-size:15px;font-weight:700;color:var(--gold2);letter-spacing:1.5px;text-transform:uppercase;align-self:flex-end;margin-bottom:5px}
 .hero .tagline{font-size:12.5px;color:#c9d2e8;margin-top:1px;letter-spacing:.2px}
 .brandbar{display:flex;align-items:center;gap:12px;padding-bottom:12px;margin-bottom:10px;border-bottom:1px solid rgba(228,199,127,.25)}
@@ -283,6 +287,7 @@ nav.tabs button[aria-selected="true"] .c{background:rgba(255,255,255,.18);color:
 <div class="banner" id="banner" hidden></div>
 <nav class="tabs" role="tablist">
 <button role="tab" data-tab="day" aria-selected="true">صفحة اليوم</button>
+<button role="tab" data-tab="backlog" aria-selected="false">المهام العامة<span class="c" id="cBk">0</span></button>
 <button role="tab" data-tab="upcoming" aria-selected="false">القادمة<span class="c" id="cUp">0</span></button>
 <button role="tab" data-tab="report" aria-selected="false">ملخص الأسبوع</button>
 <button role="tab" data-tab="team" aria-selected="false" id="tabTeam" hidden>لوحة الفريق</button>
@@ -339,7 +344,7 @@ let ROLE = "", MGR = "المدير"; let isMgr = false, isDemo = false;
 const ROLL = new Set(["top","follow","admin","task"]); // meetings don't roll over
 let items = [], notes = {};
 let db = null, col = null, mcp = null, assets = null, canWrite = false;
-let tfilter = "all";
+let tfilter = "all", bfilter = "all";
 let tab = "day", page = "1", day = today(), open = null, confirmDel = null;
 function setChip(){ const c = $("#roleChip"); c.textContent = ME ? ME.name + " · " + (isAdmin() ? "مدير" : "مستخدم") : "جارٍ التحميل…"; c.className = "role" + (isAdmin() ? "" : " mgr");
 $("#logoutBtn").hidden = !ME; $("#pwBtn").hidden = !ME || isDemo; if (ME) $("#logoutBtn").textContent = isDemo ? "خروج من العرض" : "خروج"; $("#tabTeam").hidden = !isAdmin(); $("#tabUsers").hidden = !isAdmin();
@@ -418,6 +423,7 @@ if (canWrite && own(x)) {
 if (!x.done) {
 if (x.kind === "task") acts += `<button data-a="star" data-id="${x.id}" title="${x.star ? "إزالة من أهم 6" : "إضافة لأهم 6"}" aria-pressed="${!!x.star}" style="${x.star ? "color:var(--gold);border-color:var(--gold)" : ""}">${x.star ? "★" : "☆"}</button>`;
 if (x.kind === "task") acts += `<select data-a="status" data-id="${x.id}" aria-label="الحالة">${Object.keys(STATUS).map(s => `<option value="${s}" ${ (x.status||"todo")===s?"selected":""}>${STATUS[s]}</option>`).join("")}</select>`;
+if (!x.due && x.kind !== "meeting") acts += `<button data-a="today" data-id="${x.id}">لليوم</button><label class="sch" title="حدد يوم للمهمة">📅<input type="date" data-f="due" data-id="${x.id}" aria-label="جدولة ليوم"></label>`;
 if (x.kind !== "meeting") acts += `<button data-a="tomorrow" data-id="${x.id}">لبكرة</button>`;
 if (x.reminder && x.reminder.state === "link") acts += `<a href="${esc(calLink(x))}" target="_blank" rel="noopener">أضف للتقويم</a>`;
 }
@@ -442,7 +448,7 @@ ${(mcp || assets) ? `<label class="upbtn">رفع ملف<input type="file" data-a
 <small>${mcp ? `الملفات تُرفع على Google Drive في فولدر <a href="${DRIVE_URL}" target="_blank" rel="noopener">«المهام»</a> — Word وExcel وPDF وDWG وغيرها.` : assets ? "ارفع PDF أو صور مباشرة، أو أضف رابط الملف." : "أضف رابط الملف من Drive أو OneDrive."}</small>
 </div>
 ${confirmDel === x.id ? `<span class="confirm">حذف نهائي؟ <button data-a="delyes" data-id="${x.id}">نعم</button><button data-a="delno" data-id="${x.id}">لا</button></span>`
-: (canDel(x) ? `<button data-a="del" data-id="${x.id}" class="del">حذف</button>` : "")}
+: ((x.due && x.kind !== "meeting" && !x.done ? `<button data-a="unsched" data-id="${x.id}">↩ رجّعها للمهام العامة</button> ` : "") + (canDel(x) ? `<button data-a="del" data-id="${x.id}" class="del">حذف</button>` : ""))}
 </div>`;
 }
 const lead = x.kind === "meeting" ? `<span class="time">${esc(x.time || "—")}</span>` : (x.kind === "top" || x.kind === "task") ? `<span class="num">${i+1}</span>` : "";
@@ -539,6 +545,7 @@ $("#sToday").textContent = openToday.length; $("#sLate").textContent = late.leng
 const base = doneWeek.length + items.filter(x => !x.done && x.kind !== "meeting" && x.due && x.due <= we).length;
 $("#sBar").style.width = base ? Math.round(doneWeek.length / base * 100) + "%" : "0";
 const upN = items.filter(x => !x.done && x.due && x.due > t).length; $("#cUp").textContent = upN;
+$("#cBk").textContent = items.filter(x => !x.done && !x.due && x.kind !== "meeting").length;
 $("#projList").innerHTML = [...new Set(items.map(x => x.project).filter(Boolean))].map(p => `<option value="${esc(p)}">`).join("");
 $("#dayWrap").hidden = tab !== "day";
 let h = "";
@@ -568,6 +575,7 @@ const cnt = k => all.filter(x => !x.done && (x.ttype || "tech") === k).length;
 h = `<div class="sheet">${section("task", shown, { full: true, empty: tfilter === "all" ? "لا مهام في الجدول لهذا اليوم" : "لا مهام من هذا النوع",
 filter: `<div class="tfilter">عرض: ${[["all","الكل"],["tech",`فنية (${cnt("tech")})`],["admin",`إدارية (${cnt("admin")})`],["fin",`مالية (${cnt("fin")})`]].map(([k,l]) => `<button type="button" class="chip" data-tf="${k}" aria-pressed="${tfilter===k}">${l}</button>`).join("")}</div>` })}</div>`;
 }
+} else if (tab === "backlog") { h = backlogView();
 } else if (tab === "upcoming") {
 const up = sortItems(items.filter(x => !x.done && x.due && x.due > t));
 if (!up.length) h = `<div class="list"><div class="empty"><b>لا توجد بنود قادمة</b>انتقل لأي يوم قادم من «صفحة اليوم» وأضف فيه.</div></div>`;
@@ -577,6 +585,16 @@ Object.keys(g).sort().forEach(d => { h += `<div class="grp"><h3>${esc(nice(d))}<
 if (ME && viewUid && viewUid !== ME.id && tab !== "team" && tab !== "users") h = `<div class="viewing">👁 أنت تشاهد مهام: ${esc(uname(viewUid))} — أي مهمة تضيفها هنا تُسند له<button data-view="${ME.id}">رجوع لمهامي</button></div>` + h;
 $("#view").innerHTML = h;
 if (open) { const f = document.querySelector(`[data-f="note"][data-id="${open}"]`); }
+}
+function backlogView(){
+const all = items.filter(x => !x.done && !x.due && x.kind !== "meeting").sort((a,b) => ((b.priority||0)-(a.priority||0)) || (a.createdAt - b.createdAt));
+const shown = bfilter === "all" ? all : all.filter(x => (x.ttype || "tech") === bfilter);
+const cnt = k => all.filter(x => (x.ttype || "tech") === k).length;
+const filter = `<div class="tfilter">عرض: ${[["all",`الكل (${all.length})`],["tech",`فنية (${cnt("tech")})`],["admin",`إدارية (${cnt("admin")})`],["fin",`مالية (${cnt("fin")})`]].map(([k,l]) => `<button type="button" class="chip" data-bf="${k}" aria-pressed="${bfilter===k}">${l}</button>`).join("")}</div>`;
+const body = shown.length ? `<div class="list">${shown.map((x,i) => row(x,i)).join("")}</div>` : `<div class="empty"><b>${all.length ? "لا مهام من هذا النوع" : "لا توجد مهام عامة"}</b>اكتب هنا أي مهمة لسه ملهاش يوم محدد.</div>`;
+const add = canWrite ? `<form class="addrow" data-kind="backlog"><input name="title" placeholder="مهمة بدون تاريخ… اكتب واضغط Enter" aria-label="مهمة عامة"><input class="sm" name="project" list="projList" placeholder="المشروع" aria-label="المشروع"><select name="ttype" aria-label="نوع المهمة"><option value="tech">فنية</option><option value="admin">إدارية</option><option value="fin">مالية</option></select> <select name="priority" aria-label="الأولوية"><option value="0">عادية</option><option value="1">مهمة</option><option value="2">عاجلة</option></select><button>+</button></form>` : "";
+return `<div class="bkhint">💡 اكتب هنا المهام اللي لسه ملهاش يوم. لما تحتاج واحدة، دوس <b>لليوم</b> أو <b>لبكرة</b> أو اختار يوم من <b>📅</b> — وهتظهر تلقائياً في صفحة اليوم ده، ولو ما خلصتش بتترحل لليوم اللي بعده.</div>
+<div class="sheet"><section class="sec sec-backlog full"><h3>المهام العامة — بدون تاريخ<small>${all.length} مهمة</small></h3>${filter}${body}${add}</section></div>`;
 }
 function report(){
 const t = today(), ws = iso(weekStart()), we = iso(addDays(weekStart(), 6));
@@ -632,7 +650,8 @@ if (!canWrite || !col) { if (!col) banner("قاعدة البيانات غير م
 const fd = new FormData(f); const title = (fd.get("title") || "").toString().trim(); if (!title) return;
 const kind = f.dataset.kind;
 const data = { kind, title, due: day, done: false, doneAt: null, createdAt: Date.now(), note: "", priority: Number(fd.get("priority") || 0) };
-if (kind === "task" || kind === "top") data.ttype = (fd.get("ttype") || "tech").toString();
+if (kind === "task" || kind === "top" || kind === "backlog") data.ttype = (fd.get("ttype") || "tech").toString();
+if (kind === "backlog") { data.kind = "task"; data.due = null; data.status = "todo"; data.star = false; data.project = (fd.get("project") || "").toString().trim(); }
 if (kind === "top") { data.kind = "task"; data.star = true; data.status = "todo"; data.project = ""; }
 data.owner = viewUid || (ME && ME.id) || ""; if (ME && data.owner !== ME.id) data.assignedBy = ME.id;
 if (kind === "meeting") data.time = (fd.get("time") || "").toString();
@@ -645,12 +664,15 @@ const inp = document.querySelector(`form.addrow[data-kind="${kind}"] input[name=
 });
 $("#view").addEventListener("click", async e => {
 const tf = e.target.closest("[data-tf]"); if (tf) { tfilter = tf.dataset.tf; render(); return; }
+const bf = e.target.closest("[data-bf]"); if (bf) { bfilter = bf.dataset.bf; render(); return; }
 const b = e.target.closest("[data-a]"); if (!b) return; const a = b.dataset.a;
 if (a === "copy") { try { await navigator.clipboard.writeText(reportText()); toast("نُسخ الملخص — الصقه في واتساب أو الإيميل"); } catch { banner("تعذّر النسخ تلقائياً في هذا المتصفح."); } return; }
 const x = find(b.dataset.id); if (!x || !canWrite || !own(x)) return; if (isMgr && ["toggle","calMeet","remind"].includes(a)) return;
 if (a === "toggle") { const d = !x.done; if (d) toast("أحسنت ✓ تم إنجاز المهمة"); await upd(x.id, { done: d, doneAt: d ? Date.now() : null }); }
 else if (a === "star") { const s = !x.star; if (s && forDay(day).filter(y => y.kind === "task" && y.star && !y.done).length >= 6) toast("تنبيه: عندك أكثر من 6 مهام مهمة");
 await upd(x.id, { star: s, kind: "task" }); toast(s ? "أُضيفت لأهم 6 مهام" : "أُزيلت من أهم 6"); }
+else if (a === "today") { await upd(x.id, { due: today() }); toast("اتنقلت لمهام النهارده"); }
+else if (a === "unsched") { open = null; await upd(x.id, { due: null }); toast("رجعت للمهام العامة"); }
 else if (a === "tomorrow") { await upd(x.id, { due: iso(addDays(new Date(), 1)) }); toast("نُقلت إلى بكرة"); }
 else if (a === "more") { open = open === x.id ? null : x.id; confirmDel = null; render(); }
 else if (a === "del") { confirmDel = x.id; render(); }
@@ -682,7 +704,7 @@ if (el.dataset.a === "upload") { const fl = [...el.files]; el.value = ""; if (fl
 if (el.dataset.l) return;
 if (el.dataset.a === "status") { await upd(x.id, { status: el.value }); return; }
 const f = el.dataset.f; if (!f || f === "remTime") return;
-if (f === "due") await upd(x.id, { due: el.value || x.due });
+if (f === "due") { const was = x.due; await upd(x.id, { due: el.value || x.due }); if (!was && el.value) toast("اتجدولت ليوم " + nice(el.value) + " — هتظهر في صفحة اليوم ده تلقائياً"); }
 else if (f === "priority") await upd(x.id, { priority: Number(el.value) });
 else if ((x[f] || "") !== el.value.trim()) await upd(x.id, { [f]: el.value.trim() });
 });
@@ -833,7 +855,7 @@ function teamView(){
   const lateAll = us.flatMap(u => statsFor(u.id).lateList.map(x => ({ ...x, who: u.name }))).sort((a, b) => a.due.localeCompare(b.due)).slice(0, 30);
   return `<div class="panel"><h3>إسناد مهمة سريعة</h3><form class="frm" id="assignForm"><select name="owner">${us.map(u => `<option value="${u.id}">${esc(u.name)}</option>`).join("")}</select>
     <input class="grow" name="title" placeholder="المهمة…" required><input type="date" name="due" value="${today()}"><select name="ttype"><option value="tech">فنية</option><option value="admin">إدارية</option><option value="fin">مالية</option></select>
-    <select name="priority"><option value="0">عادية</option><option value="1">مهمة</option><option value="2">عاجلة</option></select><label style="font-size:13px"><input type="checkbox" name="star"> من أهم 6</label><button class="btn">إسناد</button></form></div>
+    <select name="priority"><option value="0">عادية</option><option value="1">مهمة</option><option value="2">عاجلة</option></select><label style="font-size:13px"><input type="checkbox" name="star"> من أهم 6</label><label style="font-size:13px"><input type="checkbox" name="nodate"> بدون تاريخ (مهام عامة)</label><button class="btn">إسناد</button></form></div>
     <div class="team">${cards || '<div class="empty">لا يوجد مستخدمين</div>'}</div>
     <div class="panel"><h3>المتأخرات على مستوى الفريق</h3>${lateAll.length ? `<div class="tblwrap"><table class="utable"><tr><th>المهمة</th><th>المسؤول</th><th>من يوم</th></tr>${lateAll.map(x => `<tr><td>${esc(x.title)}</td><td>${esc(x.who)}</td><td>${esc(nice(x.due))}</td></tr>`).join("")}</table></div>` : '<div class="empty" style="padding:8px;text-align:start">لا يوجد متأخرات 👌</div>'}</div>`;
 }
@@ -850,7 +872,7 @@ function usersView(){
 async function refreshUsers(){ try { const us = await api("listUsers"); USERS = us; setChip(); render(); } catch (x) { banner((x && x.message) || "تعذّر تحميل المستخدمين", true); } }
 $("#view").addEventListener("submit", async e => {
   if (e.target.id === "assignForm") { e.preventDefault(); const fd = new FormData(e.target); const g = k => (fd.get(k) || "").toString();
-    const data = { kind: "task", title: g("title").trim(), due: g("due") || today(), done: false, doneAt: null, createdAt: Date.now(), note: "", priority: Number(g("priority") || 0), ttype: g("ttype"), status: "todo", project: "", star: !!fd.get("star"), owner: g("owner") }; if (data.owner !== ME.id) data.assignedBy = ME.id;
+    const data = { kind: "task", title: g("title").trim(), due: fd.get("nodate") ? null : (g("due") || today()), done: false, doneAt: null, createdAt: Date.now(), note: "", priority: Number(g("priority") || 0), ttype: g("ttype"), status: "todo", project: "", star: !!fd.get("star"), owner: g("owner") }; if (data.owner !== ME.id) data.assignedBy = ME.id;
     if (!data.title) return; try { await col.doc().set(data); toast("أُسندت المهمة لـ " + uname(data.owner)); e.target.reset(); } catch (x) { handleWriteErr(x); } }
   if (e.target.id === "addUserForm") { e.preventDefault(); const fd = new FormData(e.target); const g = k => (fd.get(k) || "").toString();
     try { USERS = await api("addUser", g("username"), g("name"), g("role"), g("password")); toast("أُضيف المستخدم"); setChip(); render(); } catch (x) { banner((x && x.message) || "تعذّر الإضافة", true); } }
