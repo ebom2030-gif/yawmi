@@ -305,6 +305,16 @@ nav.tabs button[aria-selected="true"] .c{background:rgba(255,255,255,.18);color:
 @media (max-width:900px){.dk,.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.sk{grid-template-columns:repeat(3,minmax(0,1fr))}.pgrid.g3{grid-template-columns:1fr}}
 @media (max-width:760px){.pgrid,.pform,.alerts{grid-template-columns:1fr}.dwrap{flex-direction:column}}
 @media print{.hero,.stats,nav.tabs,#banner,.toast,.pbr,.bk,.addr,.rm,.dochead,#ptaskForm,.tfilter,.auth,.hint,[data-mkclaim]{display:none!important}body{background:#fff;padding:0}.pband{box-shadow:none;-webkit-print-color-adjust:exact;print-color-adjust:exact}.panel,.kpi{box-shadow:none;break-inside:avoid}.pdetail input,.pdetail select,.pdetail textarea{border:0!important;background:none!important;padding:2px!important;-webkit-appearance:none;appearance:none}}
+.spc{display:inline-flex;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:99px;padding:2px}.spc button{border:0;background:none;color:#c9d2e8;font-size:12.5px;font-weight:700;padding:4px 12px;border-radius:99px}.spc button[aria-pressed="true"]{background:var(--gold2);color:#14213d}
+body.private .hero{background:radial-gradient(1200px 300px at 85% -40%,rgba(111,208,207,.25),transparent 60%),linear-gradient(135deg,#0d3534 0%,#175452 100%)}body.private .hero:after{background:linear-gradient(90deg,transparent,#6fd0cf,#1f8a8a,#6fd0cf,transparent)}body.private .spc button[aria-pressed="true"]{background:#6fd0cf;color:#0d3534}body.private nav.tabs button[aria-selected="true"]{background:#175452}
+.spcban{margin-top:14px;font-size:13.5px;background:var(--teal-soft);color:var(--teal);border:1px solid var(--teal);border-radius:12px;padding:10px 14px}
+.role.own{background:rgba(228,199,127,.25);border-color:rgba(228,199,127,.5)}
+.ptab th.pc,.ptab td.pc{text-align:center;font-size:12px}.ptab td{vertical-align:middle}.ptab small.un{display:block;color:var(--mut);font-size:11.5px}.ptab tr.off td{opacity:.55}.uct{white-space:nowrap}
+.uav{width:30px;height:30px;border-radius:9px;display:inline-grid;place-items:center;font-weight:800;color:#fff;background:var(--navy2);margin-inline-end:8px;float:right}.uav.r-owner{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#14213d}.uav.r-member{background:var(--mut)}
+.tag.owner{background:var(--gold-soft);color:var(--gold);border:1px solid var(--gold2)}
+.pk{font-weight:800;color:var(--mut)}.pk.on{color:var(--done)}
+.sw{position:relative;display:inline-block;width:38px;height:22px;cursor:pointer}.sw input{opacity:0;width:0;height:0;position:absolute}.sw i{position:absolute;inset:0;border-radius:99px;background:var(--line);transition:background .2s}.sw i:after{content:"";position:absolute;top:3px;right:3px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .2s}.sw input:checked+i{background:var(--done)}.sw input:checked+i:after{transform:translateX(-16px)}.sw input:focus-visible+i{outline:2px solid var(--gold);outline-offset:2px}
+.rolehint{margin-top:10px;font-size:12.5px;color:var(--ink2);background:var(--surface2);border-radius:10px;padding:8px 12px}.permleg{margin:12px 0 0;padding-inline-start:18px;font-size:12.5px;color:var(--ink2);line-height:1.9}
 .sec-task{--acc:var(--gold);--acc-soft:var(--gold-soft)}
 .sec>h3 .cap{font-size:11.5px;font-weight:800;color:var(--ink2);background:var(--surface2);border:1px solid var(--line);border-radius:99px;padding:1px 8px;margin-inline-start:6px}.sec>h3 .cap.over{color:var(--late);border-color:var(--late)}
 .sec-backlog{--acc:#8a6d3b;--acc-soft:var(--gold-soft)}
@@ -333,7 +343,7 @@ nav.tabs button[aria-selected="true"] .c{background:rgba(255,255,255,.18);color:
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="ylg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0d68f"/><stop offset="1" stop-color="#c29a3e"/></linearGradient><linearGradient id="ylb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22335a"/><stop offset="1" stop-color="#14213d"/></linearGradient></defs><symbol id="yl" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="url(#ylb)"/><g stroke="#e4c77f" stroke-width="3.2" stroke-linecap="round"><path d="M32 11v6"/><path d="M17.2 17.2l4.2 4.2"/><path d="M46.8 17.2l-4.2 4.2"/><path d="M11 32h6"/><path d="M47 32h6"/></g><path d="M16 44a16 16 0 0 1 32 0z" fill="url(#ylg)"/><path d="M24.5 36.5l5 5 10-10.5" fill="none" stroke="#14213d" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 48h42" stroke="#e4c77f" stroke-width="3.2" stroke-linecap="round"/></symbol></svg>
 
 <header class="hero"><div class="hero-in">
-<div><div class="brandbar"><svg class="logo" role="img" aria-label="شعار يومي"><use href="#yl"/></svg><div><h1>يومي <span class="en">Yawmi</span></h1><div class="tagline">رتّب يومك… وتابع فريقك</div></div></div><div class="date" id="todayLbl"></div><div class="hero-tools"><span class="role" id="roleChip"></span><select id="viewSel" hidden aria-label="عرض مهام"></select><button class="hbtn" id="pwBtn" hidden>حسابي</button><button class="hbtn" id="logoutBtn" hidden>خروج</button></div></div>
+<div><div class="brandbar"><svg class="logo" role="img" aria-label="شعار يومي"><use href="#yl"/></svg><div><h1>يومي <span class="en">Yawmi</span></h1><div class="tagline">رتّب يومك… وتابع فريقك</div></div></div><div class="date" id="todayLbl"></div><div class="hero-tools"><span class="role" id="roleChip"></span><select id="viewSel" hidden aria-label="عرض مهام"></select><span class="spc" id="spc" hidden><button data-space="w">🏢 العمل</button><button data-space="p">🔒 <span id="spName">أعمالي الخاصة</span></button></span><button class="hbtn" id="pwBtn" hidden>حسابي</button><button class="hbtn" id="logoutBtn" hidden>خروج</button></div></div>
 <div class="ringwrap"><div class="ringlbl"><b id="ringTxt">إنجاز اليوم</b><span id="ringSub">لا توجد مهام بعد</span></div><div class="ring" id="ring"><div id="ringPct">0%</div></div></div>
 </div></header>
 <div class="wrap">
@@ -345,6 +355,7 @@ nav.tabs button[aria-selected="true"] .c{background:rgba(255,255,255,.18);color:
 <div class="stat done"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="tx"><span class="n" id="sDone">0</span><span class="l">أُنجزت هذا الأسبوع</span><span class="bar"><i id="sBar" style="width:0"></i></span></span></div>
 </section>
 <div class="banner" id="banner" hidden></div>
+<div class="spcban" id="spcBanner" hidden></div>
 <nav class="tabs" role="tablist">
 <button role="tab" data-tab="day" aria-selected="true">صفحة اليوم</button>
 <button role="tab" data-tab="backlog" aria-selected="false">المهام العامة<span class="c" id="cBk">0</span></button>
@@ -397,19 +408,26 @@ const TTYPE = { tech:"فنية", admin:"إدارية", fin:"مالية" };
 const API = "https://script.google.com/macros/s/AKfycbwgvjkn2Op3hg-sSwxMi3PJO4MmIot0udoa8FXKOGTK9LBjqKuGtqlLYY1FaAkMwnI9/exec";
 let TOKEN = ""; try { TOKEN = localStorage.getItem("tasks_token") || ""; } catch {}
 let ME = null, USERS = [], viewUid = "", allItems = [], PROJECTS = [];
-const isAdmin = () => !!ME && ME.role === "admin";
+const can = k => !!ME && (ME.role === "owner" || !!(ME.perms || {})[k]);
+const isAdmin = () => can("team");
+const ROLEL = { owner: "المالك", admin: "مدير", member: "مستخدم" };
+const PERML = [["team","متابعة الفريق","يشوف مهام كل الموظفين ولوحة الفريق ويعدّل عليها"],["assign","إسناد المهام","يسند مهام لأي موظف"],["projects","مشاهدة المشاريع","يشوف صفحة المشاريع والأرقام المالية"],["projectsEdit","تعديل المشاريع","يضيف ويعدّل ويحذف مشاريع ودفعات وملفات"],["users","إدارة المستخدمين","يضيف مستخدمين ويوقفهم ويغيّر كلمات المرور"]];
+let SPACE = "w"; try { SPACE = localStorage.getItem("yawmi_space") === "p" ? "p" : "w"; } catch {}
+const PRIV = () => SPACE === "p";
+const spName = () => (ME && ME.prefs && ME.prefs.spaceName) || "أعمالي الخاصة";
 const uname = id => (USERS.find(u => u.id === id) || {}).name || "";
-const own = x => isAdmin() || (!!ME && x.owner === ME.id);
-const canDel = x => isAdmin() || !x.assignedBy || (!!ME && x.assignedBy === ME.id);
+const own = x => (!!ME && x.owner === ME.id) || (!PRIV() && can("team"));
+const canDel = x => can("team") || !x.assignedBy || (!!ME && x.assignedBy === ME.id);
 let ROLE = "", MGR = "المدير"; let isMgr = false, isDemo = false;
 const ROLL = new Set(["top","follow","admin","task"]); // meetings don't roll over
 let items = [], notes = {};
 let db = null, col = null, mcp = null, assets = null, canWrite = false;
 let tfilter = "all", bfilter = "all";
 let tab = "day", page = "1", day = today(), open = null, confirmDel = null;
-function setChip(){ const c = $("#roleChip"); c.textContent = ME ? ME.name + " · " + (isAdmin() ? "مدير" : "مستخدم") : "جارٍ التحميل…"; c.className = "role" + (isAdmin() ? "" : " mgr");
-$("#logoutBtn").hidden = !ME; $("#pwBtn").hidden = !ME || isDemo; if (ME) $("#logoutBtn").textContent = isDemo ? "خروج من العرض" : "خروج"; $("#tabTeam").hidden = !isAdmin(); $("#tabProj").hidden = !isAdmin(); $("#tabUsers").hidden = !isAdmin();
-const s = $("#viewSel"); s.hidden = !isAdmin() || USERS.filter(u => u.active).length < 2;
+function setChip(){ const c = $("#roleChip"); c.textContent = ME ? ME.name + " · " + (ROLEL[ME.role] || "مستخدم") : "جارٍ التحميل…"; c.className = "role" + (ME && ME.role === "owner" ? " own" : ME && ME.role === "admin" ? "" : " mgr");
+$("#logoutBtn").hidden = !ME; $("#pwBtn").hidden = !ME || isDemo; if (ME) $("#logoutBtn").textContent = isDemo ? "خروج من العرض" : "خروج"; $("#tabTeam").hidden = !can("team") || PRIV(); $("#tabProj").hidden = !(can("projects") || PRIV()); $("#tabUsers").hidden = !can("users") || PRIV();
+document.body.classList.toggle("private", PRIV()); const sp = $("#spc"); if (sp) { sp.hidden = !ME; $("#spName").textContent = spName(); sp.querySelectorAll("[data-space]").forEach(b => b.setAttribute("aria-pressed", b.dataset.space === SPACE)); }
+const s = $("#viewSel"); s.hidden = !can("team") || PRIV() || USERS.filter(u => u.active).length < 2;
 if (!s.hidden) s.innerHTML = USERS.filter(u => u.active).map(u => `<option value="${u.id}" ${u.id === viewUid ? "selected" : ""}>${u.id === ME.id ? "مهامي" : "مهام: " + esc(u.name)}</option>`).join(""); }
 setChip();
 $("#todayLbl").innerHTML = (() => { const d = new Date(); return `<b>${DAYN[d.getDay()]} ${gFmtY.format(d)}</b> · <span>${esc(hij(d))}</span>`; })();
@@ -645,7 +663,7 @@ Object.keys(g).sort().forEach(d => { h += `<div class="grp"><h3>${esc(nice(d))}<
 } else if (tab === "projects") h = projectsView();
 else if (tab === "team") h = teamView(); else if (tab === "users") h = usersView(); else h = report();
 if (ME && viewUid && viewUid !== ME.id && tab !== "team" && tab !== "users" && tab !== "projects") h = `<div class="viewing">👁 أنت تشاهد مهام: ${esc(uname(viewUid))} — أي مهمة تضيفها هنا تُسند له<button data-view="${ME.id}">رجوع لمهامي</button></div>` + h;
-if (render.busy) { setTimeout(render, 0); return; } render.busy = true; try { $("#view").innerHTML = h; } finally { render.busy = false; }
+if (render.busy) { setTimeout(render, 0); return; } render.busy = true; try { $("#view").innerHTML = h; if (tab === "projects" && projOpen && !pEdit()) document.querySelectorAll(".pdetail input,.pdetail select,.pdetail textarea,.pdetail button:not([data-pback]):not([data-pprint])").forEach(x => { x.disabled = true; if (x.matches("[data-psave],[data-pdel],[data-add],[data-mkclaim],.rm")) x.hidden = true; }); } finally { render.busy = false; }
 if (open) { const f = document.querySelector(`[data-f="note"][data-id="${open}"]`); }
 }
 function backlogView(){
@@ -788,8 +806,8 @@ function setReadOnly(ro){ canWrite = !ro; $("#roBadge").hidden = !ro; render(); 
 setInterval(() => { if (render.d !== today()) { const was = render.d; render.d = today(); if (day === was) day = today(); render(); } }, 60000); render.d = today();
 render();
 // ---------- Google Apps Script data layer ----------
-const DEMO_ME = { id: "demo", username: "demo", name: "زائر (نسخة عرض)", role: "admin", active: true };
-let demoUsers = [DEMO_ME, { id: "demo_u1", username: "ahmed", name: "أحمد (مستخدم تجريبي)", role: "member", active: true }];
+const DEMO_ME = { id: "demo", username: "demo", name: "زائر (نسخة عرض)", role: "owner", active: true, perms: { team: true, assign: true, projects: true, projectsEdit: true, users: true }, prefs: {} };
+let demoUsers = [DEMO_ME, { id: "demo_u1", username: "ahmed", name: "أحمد (مدير تجريبي)", role: "admin", active: true, perms: { team: true, assign: true, projects: true, projectsEdit: true, users: false } }, { id: "demo_u2", username: "sara", name: "سارة (مستخدم تجريبي)", role: "member", active: true, perms: {} }];
 function demoApi(fn, args){
   if (fn === "getAll") return { me: DEMO_ME, users: demoUsers.map(u => ({ ...u })), items: [], notes: {}, projects: [] };
   if (fn === "saveProject" || fn === "deleteProject") return true;
@@ -797,7 +815,7 @@ function demoApi(fn, args){
   if (fn === "listUsers") return demoUsers.map(u => ({ ...u }));
   if (fn === "addUser") { const [username, name, role] = args; if (!username || !name) throw new Error("أكمل البيانات"); demoUsers.push({ id: "demo_" + rid(), username: String(username).toLowerCase(), name, role: role === "admin" ? "admin" : "member", active: true }); return demoUsers.map(u => ({ ...u })); }
   if (fn === "sendDigest") throw new Error("الإرسال مش متاح في نسخة العرض");
-  if (fn === "updateUser") { const [id, patch] = args; const u = demoUsers.find(x => x.id === id); if (u) { if (patch.role) u.role = patch.role; if (patch.active !== undefined) u.active = patch.active; if (patch.name) u.name = patch.name; if (patch.email !== undefined) u.email = patch.email; if (patch.phone !== undefined) u.phone = String(patch.phone).replace(/[^0-9]/g, ""); if (patch.prefs) u.prefs = patch.prefs; } return demoUsers.map(u => ({ ...u })); }
+  if (fn === "updateUser") { const [id, patch] = args; const u = demoUsers.find(x => x.id === id); if (u) { if (patch.role) u.role = patch.role; if (patch.active !== undefined) u.active = patch.active; if (patch.name) u.name = patch.name; if (patch.email !== undefined) u.email = patch.email; if (patch.phone !== undefined) u.phone = String(patch.phone).replace(/[^0-9]/g, ""); if (patch.prefs) u.prefs = { ...(u.prefs || {}), ...patch.prefs }; if (patch.perms) u.perms = { ...patch.perms }; if (patch.role) { u.role = patch.role; u.perms = patch.role === "admin" ? { team: true, assign: true, projects: true, projectsEdit: true, users: false } : {}; } } return demoUsers.map(u => ({ ...u })); }
   if (fn === "logout") { try { location.href = location.pathname; } catch {} return true; }
   return true;
 }
@@ -813,7 +831,7 @@ const strip = o => { const r = { ...o }; delete r.id; return r; };
 async function call(fn, ...args){ if (isDemo && fn !== "getAll") return fn === "uploadFile" ? { kind: "link", url: "#", name: args[0] + " (عرض)" } : (fn === "addCalendar" ? { id: "" } : true); pending++; try { return await api(fn, ...args); } catch (e) { console.error(e); setTimeout(() => { load.done = false; load(); }, 400); throw { code: "unavailable", message: String(e && e.message || e) }; } finally { pending--; } }
 const itemsCol = {
 doc(id){ id = id || rid(); return { id,
-async set(data){ store[id] = { ...data }; emit(); await call("saveItem", { id, ...data }); },
+async set(data){ if (PRIV()) { data.space = "p"; data.owner = ME.id; delete data.assignedBy; } store[id] = { ...data }; emit(); await call("saveItem", { id, ...data }); },
 async update(data){ store[id] = { ...(store[id] || {}), ...data }; emit(); await call("saveItem", { id, ...store[id] }); },
 async delete(){ delete store[id]; emit(); await call("deleteItem", id); } }; },
 onSnapshot(fn){ listeners.push(fn); fn(snap(store)); return () => {}; }
@@ -829,7 +847,7 @@ if (pending || (isDemo && load.done)) return; load.done = true;
 try { const r = await api("getAll"); if (pending) return;
 ME = r.me; USERS = r.users || []; PROJECTS = r.projects || []; if (!viewUid || !USERS.some(u => u.id === viewUid)) viewUid = ME.id; canWrite = true; setChip();
 store = {}; (r.items || []).forEach(o => store[o.id] = strip(o)); noteStore = r.notes || {};
-emit(); emitN(); if (!isDemo && ME && !ME.email && !askedProfile) { askedProfile = true; setTimeout(() => showAuth("profile", "أهلاً " + ME.name + " 👋 — ضيف إيميلك ورقم جوالك عشان توصلك التذكيرات وملخص يومك."), 400); }
+spaceBanner(); emit(); emitN(); if (!isDemo && ME && !ME.email && !askedProfile) { askedProfile = true; setTimeout(() => showAuth("profile", "أهلاً " + ME.name + " 👋 — ضيف إيميلك ورقم جوالك عشان توصلك التذكيرات وملخص يومك."), 400); }
 banner(isDemo ? "نسخة عرض فاضية للتجربة: جرّب إضافة مهام ومستخدمين وإسناد — لا شيء يُحفظ، وبتتمسح لما تقفل الصفحة." : isMgr ? `وضع ${MGR}: تقدر تشوف المهام وتضيف مهام جديدة في «أهم 6 مهام» و«جدول المهام».` : "");
 } catch (e) { banner("تعذّر تحميل البيانات: " + ((e && e.message) || "تأكد من الاتصال ثم أعد تحميل الصفحة."), true); }
 }
@@ -848,7 +866,7 @@ document.addEventListener("visibilitychange", () => { if (document.visibilitySta
 })();
 
 function setToken(t){ if (isDemo) { TOKEN = t || ""; return; } TOKEN = t || ""; try { if (TOKEN) localStorage.setItem("tasks_token", TOKEN); else localStorage.removeItem("tasks_token"); } catch {} }
-function applyView(doRender){ items = allItems.filter(x => (x.owner || (ME && ME.id)) === (viewUid || (ME && ME.id))); if (doRender) render(); }
+function applyView(doRender){ const uid = PRIV() ? (ME && ME.id) : (viewUid || (ME && ME.id)); items = allItems.filter(x => (x.owner || (ME && ME.id)) === uid && ((x.space === "p") === PRIV())); if (doRender) render(); }
 function showAuth(mode, msg){
   const a = $("#auth"); a.hidden = false; $("#authErr").style.color = ""; $("#authErr").textContent = mode === "profile" ? "" : (msg || "");
   const f = $("#authFields"); a.dataset.mode = mode; $("#demoBtn").hidden = mode !== "login";
@@ -858,7 +876,7 @@ function showAuth(mode, msg){
     f.innerHTML = '<label>كلمة المرور الجديدة<input name="password" type="password" autocomplete="new-password" required minlength="6"></label><label>تأكيد كلمة المرور<input name="password2" type="password" autocomplete="new-password" required></label><button type="button" class="btn ghost" id="authCancel">إلغاء</button>'; $("#authBtn").textContent = "حفظ"; }
   else if (mode === "profile") { const pr = ME.prefs || {}; $("#authTitle").textContent = "حسابي"; $("#authSub").textContent = msg ? "" : "بياناتك عشان توصلك التذكيرات والإشعارات";
     if (msg) { $("#authErr").textContent = ""; $("#authSub").textContent = msg; }
-    f.innerHTML = `<label>الاسم<input name="name" value="${esc(ME.name)}" required></label><label>الإيميل<input name="email" type="email" dir="ltr" value="${esc(ME.email || "")}" placeholder="name@company.com" autocomplete="email"></label><label>رقم الجوال<input name="phone" type="tel" dir="ltr" value="${esc(ME.phone ? "+" + ME.phone : "")}" placeholder="05xxxxxxxx" autocomplete="tel"></label><hr>
+    f.innerHTML = `<label>الاسم<input name="name" value="${esc(ME.name)}" required></label><label>الإيميل<input name="email" type="email" dir="ltr" value="${esc(ME.email || "")}" placeholder="name@company.com" autocomplete="email"></label><label>رقم الجوال<input name="phone" type="tel" dir="ltr" value="${esc(ME.phone ? "+" + ME.phone : "")}" placeholder="05xxxxxxxx" autocomplete="tel"></label><label>اسم مساحتك الخاصة 🔒<input name="spaceName" value="${esc(spName())}" maxlength="40"></label><hr>
     <label class="chk"><input type="checkbox" name="daily" ${pr.daily !== false ? "checked" : ""}> ملخص مهام اليوم على الإيميل كل صباح (٧:٣٠)</label>
     <label class="chk"><input type="checkbox" name="assign" ${pr.assign !== false ? "checked" : ""}> إيميل لما حد يسند لي مهمة</label>
     <label class="chk"><input type="checkbox" name="cal" ${pr.cal !== false ? "checked" : ""}> إضافة الاجتماعات والتذكيرات لتقويمي تلقائياً</label>
@@ -878,14 +896,18 @@ $("#authForm").addEventListener("submit", async e => {
   $("#authBtn").disabled = true; err("");
   try {
     if (mode === "pw") { await api("updateUser", ME.id, { password: g("password") }); $("#auth").hidden = true; toast("تم تغيير كلمة المرور"); }
-    else if (mode === "profile") { const r = await api("updateUser", ME.id, { name: g("name").trim(), email: g("email").trim(), phone: g("phone").trim(), prefs: { daily: !!fd.get("daily"), assign: !!fd.get("assign"), cal: !!fd.get("cal") } });
-      const mine = (r || []).find(u => u.id === ME.id); if (mine) Object.assign(ME, mine); if (isAdmin()) USERS = r; setChip(); render(); $("#auth").hidden = true; toast("تم حفظ بياناتك"); }
+    else if (mode === "profile") { const r = await api("updateUser", ME.id, { name: g("name").trim(), email: g("email").trim(), phone: g("phone").trim(), prefs: { daily: !!fd.get("daily"), assign: !!fd.get("assign"), cal: !!fd.get("cal"), spaceName: g("spaceName").trim() || "أعمالي الخاصة" } });
+      const mine = (r || []).find(u => u.id === ME.id); if (mine) Object.assign(ME, mine); if (can("users")) USERS = r; setChip(); spaceBanner(); render(); $("#auth").hidden = true; toast("تم حفظ بياناتك"); }
     else { const r = mode === "setup" ? await api("setup", g("username"), g("name"), g("password")) : await api("login", g("username"), g("password"));
       setToken(r.token); ME = r.user; viewUid = ME.id; $("#auth").hidden = true; load.done = false; await load(); toast("أهلاً " + ME.name); }
   } catch (x) { err((x && x.message) || "حدث خطأ"); } finally { $("#authBtn").disabled = false; }
 });
 $("#logoutBtn").onclick = async () => { try { await api("logout"); } catch {} setToken(""); ME = null; USERS = []; allItems = []; items = []; store = {}; setChip(); render(); showAuth("login"); };
 $("#pwBtn").onclick = () => showAuth("profile");
+$("#spc").addEventListener("click", e => { const b = e.target.closest("[data-space]"); if (!b || b.dataset.space === SPACE) return; SPACE = b.dataset.space; try { localStorage.setItem("yawmi_space", SPACE); } catch {}
+  if (PRIV() && ["team","users"].includes(tab)) tab = "day"; if (tab === "projects" && !PRIV() && !can("projects")) tab = "day"; projOpen = null; projDraft = null;
+  document.querySelectorAll("nav.tabs button").forEach(x => x.setAttribute("aria-selected", x.dataset.tab === tab)); setChip(); applyView(true); spaceBanner(); toast(PRIV() ? "🔒 " + spName() + " — محدش يشوف اللي هنا غيرك" : "🏢 مساحة العمل"); });
+function spaceBanner(){ const b = $("#spcBanner"); if (b) b.hidden = !PRIV(); if (b) b.innerHTML = `🔒 أنت في <b>${esc(spName())}</b> — المهام والمشاريع هنا خاصة بيك ومحدش يشوفها، حتى المديرين.`; }
 $("#viewSel").onchange = e => { viewUid = e.target.value; tab = "day"; document.querySelectorAll("nav.tabs button").forEach(x => x.setAttribute("aria-selected", x.dataset.tab === "day")); applyView(true); };
 document.addEventListener("click", e => { const b = e.target.closest("[data-view]"); if (!b) return; viewUid = b.dataset.view; tab = "day"; day = today();
   document.querySelectorAll("nav.tabs button").forEach(x => x.setAttribute("aria-selected", x.dataset.tab === "day")); setChip(); applyView(true); window.scrollTo({ top: 0, behavior: "smooth" }); });
@@ -896,17 +918,17 @@ async function boot(){
   try { const s = await api("setupStatus"); showAuth(s.needsSetup ? "setup" : "login"); } catch (x) { showAuth("login", (x && x.message) || ""); }
 }
 function statsFor(uid){
-  const t = today(), ws = iso(weekStart()); const mine = allItems.filter(x => (x.owner || ME.id) === uid && x.kind !== "meeting");
+  const t = today(), ws = iso(weekStart()); const mine = allItems.filter(x => (x.owner || ME.id) === uid && x.kind !== "meeting" && x.space !== "p");
   const open = mine.filter(x => !x.done && x.due && x.due <= t); const late = open.filter(x => x.due < t);
   const wait = mine.filter(x => !x.done && (x.kind === "follow" || x.status === "waiting")).length;
   const doneW = mine.filter(x => x.done && x.doneAt && iso(new Date(x.doneAt)) >= ws).length;
   const base = doneW + open.length; return { open: open.length, late: late.length, wait, doneW, pct: base ? Math.round(doneW / base * 100) : 0, lateList: late };
 }
-function waLink(u){ const t = today(); const open = allItems.filter(x => (x.owner || ME.id) === u.id && !x.done && x.kind !== "meeting" && x.due && x.due <= t);
+function waLink(u){ const t = today(); const open = allItems.filter(x => (x.owner || ME.id) === u.id && x.space !== "p" && !x.done && x.kind !== "meeting" && x.due && x.due <= t);
   const msg = `السلام عليكم ${u.name}،\nمهامك المفتوحة اليوم (${open.length}):\n` + open.slice(0, 15).map(x => "• " + x.title + (x.due < t ? " (متأخرة)" : "")).join("\n") + `\n\n${location.origin + location.pathname}`;
   return "https:\/\/wa.me/" + u.phone + "?text=" + encodeURIComponent(msg); }
 function teamView(){
-  if (!isAdmin()) return "";
+  if (!can("team")) return "";
   const us = USERS.filter(u => u.active);
   const cards = us.map(u => { const s = statsFor(u.id); const ini = (u.name || "?").trim().charAt(0);
     return `<div class="ucard"><div class="top"><span class="av">${esc(ini)}</span><div class="nm"><b>${esc(u.name)}</b><small>${u.role === "admin" ? "مدير" : "مستخدم"}</small></div></div>
@@ -916,21 +938,25 @@ function teamView(){
     <button class="btn ghost" data-view="${u.id}">عرض مهامه وإسناد مهمة</button>
     ${u.email || u.phone ? `<div class="acts2">${u.phone ? `<a class="wa" href="${waLink(u)}" target="_blank" rel="noopener">💬 واتساب</a>` : ""}${u.email ? `<button data-digest="${u.id}">✉️ ابعت ملخصه</button>` : ""}</div>` : ""}</div>`; }).join("");
   const lateAll = us.flatMap(u => statsFor(u.id).lateList.map(x => ({ ...x, who: u.name }))).sort((a, b) => a.due.localeCompare(b.due)).slice(0, 30);
-  return `<div class="panel"><h3>إسناد مهمة سريعة</h3><form class="frm" id="assignForm"><select name="owner">${us.map(u => `<option value="${u.id}">${esc(u.name)}</option>`).join("")}</select>
+  return `${can("assign") ? "" : "<!--"}<div class="panel"><h3>إسناد مهمة سريعة</h3><form class="frm" id="assignForm"><select name="owner">${us.map(u => `<option value="${u.id}">${esc(u.name)}</option>`).join("")}</select>
     <input class="grow" name="title" placeholder="المهمة…" required><input type="date" name="due" value="${today()}"><select name="ttype"><option value="tech">فنية</option><option value="admin">إدارية</option><option value="fin">مالية</option></select>
-    <select name="priority"><option value="0">عادية</option><option value="1">مهمة</option><option value="2">عاجلة</option></select><label style="font-size:13px"><input type="checkbox" name="star"> أولوية ★</label><label style="font-size:13px"><input type="checkbox" name="nodate"> بدون تاريخ (مهام عامة)</label><button class="btn">إسناد</button></form></div>
+    <select name="priority"><option value="0">عادية</option><option value="1">مهمة</option><option value="2">عاجلة</option></select><label style="font-size:13px"><input type="checkbox" name="star"> أولوية ★</label><label style="font-size:13px"><input type="checkbox" name="nodate"> بدون تاريخ (مهام عامة)</label><button class="btn">إسناد</button></form></div>${can("assign") ? "" : "-->"}
     <div class="team">${cards || '<div class="empty">لا يوجد مستخدمين</div>'}</div>
     <div class="panel"><h3>المتأخرات على مستوى الفريق</h3>${lateAll.length ? `<div class="tblwrap"><table class="utable"><tr><th>المهمة</th><th>المسؤول</th><th>من يوم</th></tr>${lateAll.map(x => `<tr><td>${esc(x.title)}</td><td>${esc(x.who)}</td><td>${esc(nice(x.due))}</td></tr>`).join("")}</table></div>` : '<div class="empty" style="padding:8px;text-align:start">لا يوجد متأخرات 👌</div>'}</div>`;
 }
 function usersView(){
-  if (!isAdmin()) return "";
+  if (!can("users")) return "";
+  const O = ME.role === "owner";
+  const rows = USERS.slice().sort((a, b) => ({ owner: 0, admin: 1, member: 2 }[a.role] - { owner: 0, admin: 1, member: 2 }[b.role])).map(u => { const self = u.id === ME.id, isO = u.role === "owner", editable = !self && !isO && (O || u.role === "member");
+    return `<tr class="${u.active ? "" : "off"}"><td><span class="uav r-${u.role}">${esc((u.name || "?").trim().charAt(0))}</span><b>${esc(u.name)}</b>${self ? " <small>(أنت)</small>" : ""}<small class="un" dir="ltr">${esc(u.username || "")}</small></td>
+    <td>${isO ? '<span class="tag owner">👑 المالك</span>' : O ? `<select data-urole="${u.id}"><option value="member" ${u.role !== "admin" ? "selected" : ""}>مستخدم</option><option value="admin" ${u.role === "admin" ? "selected" : ""}>مدير</option></select>` : `<span class="tag ${u.role === "admin" ? "admin" : "member"}">${ROLEL[u.role]}</span>`}</td>
+    ${PERML.map(([k]) => `<td class="pc">${isO ? '<span class="pk on">✓</span>' : O ? `<label class="sw"><input type="checkbox" data-uperm="${u.id}" data-k="${k}" ${(u.perms || {})[k] ? "checked" : ""}><i></i></label>` : `<span class="pk ${(u.perms || {})[k] ? "on" : ""}">${(u.perms || {})[k] ? "✓" : "—"}</span>`}</td>`).join("")}
+    <td class="uct">${u.active ? '<span class="tag member">مفعّل</span>' : '<span class="tag off">موقوف</span>'}${editable ? ` <button data-uact="${u.id}">${u.active ? "إيقاف" : "تفعيل"}</button> <button data-upw="${u.id}">كلمة مرور جديدة</button>` : ""}</td></tr>`; }).join("");
   return `<div class="panel"><h3>إضافة مستخدم</h3><form class="frm" id="addUserForm"><input name="name" placeholder="الاسم" required><input name="username" placeholder="اسم المستخدم (إنجليزي)" required autocomplete="off">
-    <input name="password" type="password" placeholder="كلمة المرور (6+)" required minlength="6" autocomplete="new-password"><select name="role"><option value="member">مستخدم</option><option value="admin">مدير</option></select><button class="btn">إضافة</button></form></div>
-    <div class="panel"><h3>المستخدمين</h3><div class="tblwrap"><table class="utable"><tr><th>الاسم</th><th>اسم المستخدم</th><th>الإيميل / الجوال</th><th>الصلاحية</th><th>الحالة</th><th></th></tr>
-    ${USERS.map(u => `<tr><td><b>${esc(u.name)}</b>${u.id === ME.id ? " <small>(أنت)</small>" : ""}</td><td dir="ltr" style="text-align:start">${esc(u.username || "")}</td><td dir="ltr" style="text-align:start;font-size:12.5px">${u.email ? esc(u.email) : '<span style="color:var(--late)">— لم يُضف</span>'}${u.phone ? "<br>+" + esc(u.phone) : ""}</td>
-    <td>${u.id === ME.id ? '<span class="tag admin">مدير</span>' : `<select data-urole="${u.id}"><option value="member" ${u.role !== "admin" ? "selected" : ""}>مستخدم</option><option value="admin" ${u.role === "admin" ? "selected" : ""}>مدير</option></select>`}</td>
-    <td>${u.active ? '<span class="tag member">مفعّل</span>' : '<span class="tag off">موقوف</span>'}</td>
-    <td>${u.id === ME.id ? "" : `<button data-uact="${u.id}">${u.active ? "إيقاف" : "تفعيل"}</button> <button data-upw="${u.id}">كلمة مرور جديدة</button>`}</td></tr>`).join("")}</table></div></div>`;
+    <input name="password" type="password" placeholder="كلمة المرور (6+)" required minlength="6" autocomplete="new-password"><select name="role"><option value="member">مستخدم</option>${O ? '<option value="admin">مدير</option>' : ""}</select><button class="btn">إضافة</button></form>
+    <div class="rolehint"><b>المالك</b> (انت): كل الصلاحيات ومحدش يقدر يغيّرها · <b>مدير</b>: بياخد صلاحيات المتابعة والإسناد والمشاريع افتراضياً · <b>مستخدم</b>: مهامه بس. وتقدر تفتح أو تقفل أي صلاحية لأي شخص من الجدول تحت.</div></div>
+    <div class="panel"><h3>المستخدمين والصلاحيات ${O ? "" : '<small>(توزيع الصلاحيات للمالك فقط)</small>'}</h3><div class="tblwrap"><table class="utable ptab"><tr><th>المستخدم</th><th>الدور</th>${PERML.map(([k, l, d]) => `<th class="pc" title="${d}">${l}</th>`).join("")}<th>الحالة</th></tr>${rows}</table></div>
+    <ul class="permleg">${PERML.map(([k, l, d]) => `<li><b>${l}:</b> ${d}</li>`).join("")}<li><b>🔒 ${esc(spName())}:</b> مساحة خاصة لكل مستخدم — محدش يشوفها غير صاحبها، حتى المالك.</li></ul></div>`;
 }
 async function refreshUsers(){ try { const us = await api("listUsers"); USERS = us; setChip(); render(); } catch (x) { banner((x && x.message) || "تعذّر تحميل المستخدمين", true); } }
 $("#view").addEventListener("submit", async e => {
@@ -952,7 +978,9 @@ $("#view").addEventListener("click", async e => {
 });
 $("#view").addEventListener("click", async e => { const b = e.target.closest("[data-digest]"); if (!b) return; b.disabled = true;
   try { const r = await api("sendDigest", b.dataset.digest); toast("اتبعت الملخص لـ " + r.to); } catch (x) { banner((x && x.message) || "تعذّر الإرسال", true); } finally { b.disabled = false; } });
-$("#view").addEventListener("change", async e => { const s = e.target.closest("[data-urole]"); if (!s) return; try { USERS = await api("updateUser", s.dataset.urole, { role: s.value }); toast("تم تحديث الصلاحية"); setChip(); } catch (x) { banner((x && x.message) || "خطأ", true); } });
+$("#view").addEventListener("change", async e => { const pc = e.target.closest("[data-uperm]"); if (!pc) return; const u = USERS.find(x => x.id === pc.dataset.uperm); if (!u) return;
+  const perms = { ...(u.perms || {}), [pc.dataset.k]: pc.checked }; try { USERS = await api("updateUser", u.id, { perms }); toast("اتحدثت صلاحيات " + u.name); render(); } catch (x) { banner((x && x.message) || "خطأ", true); render(); } });
+$("#view").addEventListener("change", async e => { const s = e.target.closest("[data-urole]"); if (!s) return; try { USERS = await api("updateUser", s.dataset.urole, { role: s.value }); toast("اتغيّر الدور"); setChip(); render(); } catch (x) { banner((x && x.message) || "خطأ", true); } });
 
 // ---------- projects ----------
 const PST = [["quote","عرض سعر","mut"],["contract","مرحلة التعاقد","wait"],["active","جاري العمل","doing"],["hold","متوقف","late"],["done","منتهي","done"]];
@@ -994,11 +1022,13 @@ const PICON = { box: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
   trend: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>',
   doc: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/></svg>',
   alert: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l10 18H2z"/><path d="M12 10v4M12 17h.01"/></svg>' };
-function newProject(){ return { id: rid(), v2: 1, name: "", client: "", type: PTYPES[0], status: "contract", start: today(), end: "", price: "", agreed: "", taxMode: "ex", vat: 15, desc: "",
+function newProject(){ return { id: rid(), v2: 1, space: PRIV() ? "p" : "", name: "", client: "", type: PTYPES[0], status: "contract", start: today(), end: "", price: "", agreed: "", taxMode: "ex", vat: 15, desc: "",
   phases: [{ name: "دفعة مقدمة", pct: 20, due: "", status: "todo" }, { name: "المرحلة الأولى", pct: 40, due: "", status: "todo" }, { name: "التسليم النهائي", pct: 40, due: "", status: "todo" }],
   claims: [], expenses: [], docs: [], log: [], notes: "", createdAt: Date.now() }; }
+const PV = () => PROJECTS.filter(p => (p.space === "p") === PRIV());
+const pEdit = () => PRIV() || can("projectsEdit");
 function projectsView(){
-  if (!isAdmin()) return `<div class="empty">صفحة المشاريع للمدير فقط</div>`;
+  if (!PRIV() && !can("projects")) return `<div class="empty">ليس لديك صلاحية مشاهدة المشاريع</div>`;
   if (projOpen) { if (!projDraft) { const p = PROJECTS.find(x => x.id === projOpen); if (!p) { projOpen = null; return projectsView(); } projDraft = pmig(JSON.parse(JSON.stringify(p))); } return projectDetail(projDraft); }
   return projDash() + projList();
 }
@@ -1009,7 +1039,7 @@ function donut(segs, total, center, sub){
   return `<svg viewBox="0 0 140 140" class="donut"><circle r="${R}" cx="70" cy="70" fill="none" stroke="var(--surface2)" stroke-width="18"/>${arcs}<text x="70" y="68" text-anchor="middle" class="dc">${center}</text><text x="70" y="88" text-anchor="middle" class="ds">${sub}</text></svg>`;
 }
 function projDash(){
-  const P = PROJECTS.map(p => ({ p, c: pcalc(p) })); const con = P.filter(x => x.p.status !== "quote");
+  const P = PV().map(p => ({ p, c: pcalc(p) })); const con = P.filter(x => x.p.status !== "quote");
   const sum = (a, f) => a.reduce((s, x) => s + f(x), 0);
   const T = sum(con, x => x.c.T), paid = sum(con, x => x.c.paid), exp = sum(con, x => x.c.exp), A = sum(con, x => x.c.A);
   const quotes = P.filter(x => x.p.status === "quote"), qVal = sum(quotes, x => x.c.P.T || x.c.T), active = P.filter(x => x.p.status === "active").length;
@@ -1042,7 +1072,7 @@ function projDash(){
     if (x.p.end && x.p.status === "active" && x.p.end < today()) alerts.push({ w: 2, t: `تجاوز تاريخ الانتهاء المتوقع (${nice(x.p.end)})`, p: x.p }); });
   alerts.sort((a, b) => b.w - a.w);
   const al = alerts.length ? `<ul class="alerts">${alerts.slice(0, 6).map(a => `<li class="${a.w > 1 ? "hi" : ""}" data-popen="${a.p.id}"><b>${esc(a.p.name)}</b> · ${esc(a.t)}</li>`).join("")}</ul>` : `<div class="empty" style="padding:10px">لا توجد تنبيهات 👌</div>`;
-  return `<div class="phead"><div><h2>المشاريع</h2><div class="sub">لوحة مؤشرات العقود والتحصيل والربحية · ${esc(gFmtY.format(new Date()))}</div></div><button class="btn gold" data-pnew>+ مشروع جديد</button></div>${big}
+  return `<div class="phead"><div><h2>المشاريع</h2><div class="sub">${PRIV() ? "🔒 مشاريعك الخاصة · " : ""}لوحة مؤشرات العقود والتحصيل والربحية · ${esc(gFmtY.format(new Date()))}</div></div>${pEdit() ? `<button class="btn gold" data-pnew>+ مشروع جديد</button>` : `<span class="tag member">عرض فقط</span>`}</div>${big}
   <div class="pgrid g3">
     <div class="panel"><h3>المشاريع حسب الحالة</h3>${stat}</div>
     <div class="panel"><h3>قيمة العقود حسب النوع</h3>${byType}</div>
@@ -1055,18 +1085,18 @@ function projDash(){
   <div class="panel"><h3>تنبيهات المواعيد</h3>${al}</div>`;
 }
 function projList(){
-  const q = projQ.trim(); let L = PROJECTS.map(p => ({ p, c: pcalc(p) }));
+  const q = projQ.trim(); const PP = PV(); let L = PP.map(p => ({ p, c: pcalc(p) }));
   if (projF !== "all") L = L.filter(x => x.p.status === projF);
   if (q) L = L.filter(x => [x.p.name, x.p.client, x.p.type].join(" ").includes(q));
   L.sort((a, b) => (b.p.start || "").localeCompare(a.p.start || ""));
-  const chips = [["all", `الكل (${PROJECTS.length})`], ...PST.map(([k, l]) => [k, `${l} (${PROJECTS.filter(p => p.status === k).length})`])].map(([k, l]) => `<button type="button" class="chip" data-pf-filter="${k}" aria-pressed="${projF === k}">${l}</button>`).join("");
+  const chips = [["all", `الكل (${PP.length})`], ...PST.map(([k, l]) => [k, `${l} (${PP.filter(p => p.status === k).length})`])].map(([k, l]) => `<button type="button" class="chip" data-pf-filter="${k}" aria-pressed="${projF === k}">${l}</button>`).join("");
   const rows = L.map(({ p, c }) => { const st = PSTL[p.status] || PSTL.contract; return `<tr data-popen="${p.id}" style="--sc:${PCOL[st.c]}"><td class="pn"><b>${esc(p.name)}</b><small>${esc(p.client || "—")}</small></td><td><span class="tchip">${esc(p.type || "—")}</span></td>
     <td>${spill(st.l, st.c)}</td><td class="nw">${p.start ? esc(gFmtY.format(parse(p.start))) : "—"}</td><td class="n"><b>${money(c.T)}</b><small>قبل الضريبة ${money(c.A)}</small></td>
     <td><div class="mini"><i style="width:${Math.min(c.col, 1) * 100}%"></i></div><small>${pct(c.col)} · ${kmoney(c.paid)}</small></td>
     <td><div class="mini g"><i style="width:${Math.min(c.prog, 100)}%"></i></div><small>${Math.round(c.prog)}%</small></td><td class="go">‹</td></tr>`; }).join("");
   return `<div class="panel"><div class="plbar"><h3>قائمة المشاريع</h3><input type="search" id="projSearch" placeholder="بحث باسم المشروع أو الجهة…" value="${esc(projQ)}"></div><div class="tfilter" style="border:0;padding:0 0 10px">${chips}</div>
   ${L.length ? `<div class="tblwrap"><table class="ptable plist"><tr><th>المشروع / الجهة</th><th>النوع</th><th>الحالة</th><th>البداية</th><th>الإجمالي شامل الضريبة</th><th>التحصيل</th><th>الإنجاز</th><th></th></tr>${rows}</table></div>`
-  : `<div class="empty"><b>${PROJECTS.length ? "لا نتائج" : "لا توجد مشاريع بعد"}</b>${PROJECTS.length ? "" : "دوس «+ مشروع جديد» وابدأ."}</div>`}</div>`;
+  : `<div class="empty"><b>${PP.length ? "لا نتائج" : "لا توجد مشاريع بعد"}</b>${PP.length || !pEdit() ? "" : "دوس «+ مشروع جديد» وابدأ."}</div>`}</div>`;
 }
 // ----- new project modal -----
 function openPModal(){ projModal = newProject(); let m = $("#pmodal"); if (!m) { m = document.createElement("div"); m.id = "pmodal"; m.className = "auth"; document.body.appendChild(m); bindPModal(m); } m.hidden = false; drawPModal(); setTimeout(() => { const n = m.querySelector('[name="name"]'); if (n) n.focus(); }, 50); }
@@ -1089,7 +1119,7 @@ function bindPModal(m){
   m.addEventListener("submit", async e => { e.preventDefault(); sync(); const p = projModal; if (!p.name.trim()) { $("#pmErr").textContent = "اكتب اسم المشروع"; return; }
     p.log = [{ date: today(), kind: "ملاحظة مهمة", subject: "إنشاء المشروع", details: `${PSTL[p.status].l} · ${p.type}` }];
     const b = m.querySelector(".btn.gold"); b.disabled = true;
-    try { await api("saveProject", p); PROJECTS.push(JSON.parse(JSON.stringify(p))); m.hidden = true; projModal = null; projOpen = p.id; projDraft = null; projDirty = false; toast("اتعمل المشروع ✓ — كمّل التفاصيل"); render(); window.scrollTo({ top: 0 }); }
+    try { p.createdBy = ME.id; await api("saveProject", p); PROJECTS.push(JSON.parse(JSON.stringify(p))); m.hidden = true; projModal = null; projOpen = p.id; projDraft = null; projDirty = false; toast("اتعمل المشروع ✓ — كمّل التفاصيل"); render(); window.scrollTo({ top: 0 }); }
     catch (x) { $("#pmErr").textContent = (x && x.message) || "تعذّر الحفظ"; } finally { b.disabled = false; } });
 }
 // ----- detail -----
