@@ -10,7 +10,7 @@
 <title>مهام العمل</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap">
 
 
 <style>
@@ -34,7 +34,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer}
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .wrap{max-width:1040px;margin:0 auto}
- 
+/* hero */
 .hero{margin-inline:-16px;padding:22px 16px 64px;background:radial-gradient(1200px 300px at 85% -40%,rgba(228,199,127,.28),transparent 60%),linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);color:#fff;position:relative;overflow:hidden}
 .hero:after{content:"";position:absolute;inset-inline:0;bottom:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold2),var(--gold),var(--gold2),transparent)}
 .hero-in{max-width:1040px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
@@ -49,7 +49,7 @@ button{cursor:pointer}
 .ring{--p:0;width:84px;height:84px;border-radius:50%;background:conic-gradient(var(--gold2) calc(var(--p)*1%),rgba(255,255,255,.14) 0);display:grid;place-items:center;transition:--p .6s}
 .ring>div{width:66px;height:66px;border-radius:50%;background:var(--navy);display:grid;place-items:center;font-weight:800;font-size:18px}
 .ringlbl{font-size:13px;color:#c9d2e8;line-height:1.4}.ringlbl b{display:block;color:#fff;font-size:15px}
- 
+/* stats */
 .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:-44px;position:relative;z-index:1}
 .stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;display:flex;gap:12px;align-items:center;box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s}
 .stat:hover{transform:translateY(-2px);box-shadow:var(--shadow-h)}
@@ -62,14 +62,14 @@ button{cursor:pointer}
 .stat.late .n{color:var(--late)}.stat.done .n{color:var(--done)}.stat.wait .n{color:var(--wait)}
 .bar{height:5px;background:var(--surface2);border-radius:9px;overflow:hidden;margin-top:6px}
 .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--done),#4cc38a);border-radius:9px;transition:width .6s}
- 
+/* tabs */
 nav.tabs{display:inline-flex;gap:4px;margin-block:22px 4px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px;box-shadow:var(--shadow);max-width:100%;overflow-x:auto}
 nav.tabs button{background:none;border:0;padding:8px 16px;font-weight:700;color:var(--ink2);border-radius:9px;white-space:nowrap;transition:background .2s,color .2s}
 nav.tabs button:hover{background:var(--surface2)}
 nav.tabs button[aria-selected="true"]{background:var(--navy);color:#fff}
 nav.tabs .c{font-size:11.5px;background:var(--gold-soft);color:var(--gold);border-radius:99px;padding:1px 7px;margin-inline-start:6px;font-variant-numeric:tabular-nums}
 nav.tabs button[aria-selected="true"] .c{background:rgba(255,255,255,.18);color:#fff}
- 
+/* day nav */
 .daynav{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-block:18px 6px}
 .daynav .nb{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 14px;font-weight:700;color:var(--ink2);transition:all .2s}
 .daynav .nb:hover{border-color:var(--gold);color:var(--ink);transform:translateY(-1px)}
@@ -82,7 +82,7 @@ nav.tabs button[aria-selected="true"] .c{background:rgba(255,255,255,.18);color:
 .pages button:hover{border-color:var(--gold)}
 .pages button[aria-selected="true"]{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;border-color:transparent;box-shadow:var(--shadow)}
 .pages .c{font-size:12px;background:rgba(127,140,170,.2);border-radius:99px;padding:1px 8px;font-variant-numeric:tabular-nums}
- 
+/* sections */
 .sheet{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .sec{--acc:var(--gold);--acc-soft:var(--gold-soft);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow);border-top:4px solid var(--acc);animation:rise .35s ease both}
 .sec.full{grid-column:1/-1}
@@ -151,7 +151,7 @@ nav.tabs button[aria-selected="true"] .c{background:rgba(255,255,255,.18);color:
 .grp{margin-block:20px 8px;display:flex;align-items:baseline;gap:10px}
 .grp h3{margin:0;font-size:15px;font-weight:800}
 .grp small{color:var(--mut);font-size:12.5px}
- 
+/* report */
 .report{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow);margin-top:16px}
 .report h2{margin:0 0 4px;font-size:20px}
 .report .sub{color:var(--mut);font-size:13px;margin-bottom:14px}
@@ -168,7 +168,7 @@ nav.tabs button[aria-selected="true"] .c{background:rgba(255,255,255,.18);color:
 .btn{border:0;border-radius:10px;padding:9px 16px;font-weight:700;background:var(--navy);color:#fff}
 .btn.ghost{background:var(--surface);color:var(--ink2);border:1px solid var(--line)}
 .btn.ghost:hover{border-color:var(--gold);color:var(--ink)}
- 
+/* files */
 .files{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
 .fchip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);border-radius:9px;padding:3px 4px 3px 9px;font-size:12.5px;max-width:100%}
 .fchip a{color:var(--ink);text-decoration:none;display:inline-flex;gap:6px;align-items:center;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -183,7 +183,7 @@ nav.tabs button[aria-selected="true"] .c{background:rgba(255,255,255,.18);color:
 .upbtn{border:1px solid var(--gold);color:var(--gold);background:var(--surface);border-radius:8px;padding:4px 10px;font-size:12.5px;font-weight:700;cursor:pointer}
 .attach small{color:var(--mut);flex:1 1 100%}
 .confirm{display:inline-flex;gap:6px;align-items:center;font-size:12.5px;color:var(--late)}
- 
+/* banner & toast */
 .banner{margin-top:14px;font-size:13.5px;background:var(--gold-soft);color:var(--ink);border:1px solid var(--gold2);border-radius:12px;padding:10px 14px;display:flex;gap:8px;align-items:center}
 .banner:before{content:"ℹ";font-weight:800;color:var(--gold)}
 .banner.err{background:var(--late-soft);border-color:var(--late);color:var(--late)}
@@ -198,12 +198,58 @@ nav.tabs button[aria-selected="true"] .c{background:rgba(255,255,255,.18);color:
 .task[data-lead="1"]{grid-template-columns:auto auto 1fr auto}
 @media (max-width:760px){.task[data-lead="1"]{grid-template-columns:auto auto 1fr}.more{grid-column:1/-1}}
 
+
+.pill.fin{background:var(--done-soft);color:var(--done)}
+.pill.asg{background:var(--violet-soft);color:var(--violet)}
+.hero-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}
+.hero-tools .role{margin-top:0}
+.hbtn{border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;border-radius:99px;padding:5px 12px;font-size:12.5px;font-weight:700}
+.hbtn:hover{background:rgba(255,255,255,.18)}
+#viewSel{border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.1);color:#fff;border-radius:99px;padding:5px 10px;font-size:12.5px;font-weight:700}
+#viewSel option{color:#131c33}
+.viewing{margin-top:14px;display:flex;align-items:center;gap:10px;background:var(--violet-soft);color:var(--violet);border:1px solid var(--violet);border-radius:12px;padding:10px 14px;font-weight:700;font-size:13.5px}
+.viewing button{margin-inline-start:auto;border:1px solid var(--violet);background:var(--surface);color:var(--violet);border-radius:8px;padding:4px 10px;font-weight:700}
+/* login */
+.auth{position:fixed;inset:0;z-index:100;background:radial-gradient(900px 400px at 80% -10%,rgba(228,199,127,.25),transparent 60%),linear-gradient(135deg,var(--navy),var(--navy2));display:grid;place-items:center;padding:16px}
+.auth-card{width:100%;max-width:380px;background:var(--surface);border-radius:18px;padding:26px 24px;box-shadow:0 30px 80px rgba(0,0,0,.35);animation:rise .35s ease both}
+.auth-card h2{margin:0 0 4px;font-size:22px;display:flex;align-items:center;gap:10px}
+.auth-card h2 i{width:9px;height:22px;border-radius:3px;background:linear-gradient(var(--gold2),var(--gold));display:inline-block}
+.auth-card p{margin:0 0 18px;color:var(--mut);font-size:13.5px}
+.auth-card label{display:block;font-size:13px;font-weight:700;color:var(--ink2);margin-bottom:12px}
+.auth-card input{display:block;width:100%;margin-top:5px;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:10px 12px;font-size:15px}
+.auth-card input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-soft)}
+.auth-card .btn{width:100%;padding:11px;font-size:15px;margin-top:6px}
+.auth-err{color:var(--late);font-size:13px;min-height:18px;margin-top:8px}
+/* team */
+.team{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-top:16px}
+.ucard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px;transition:transform .2s,box-shadow .2s;animation:rise .35s ease both}
+.ucard:hover{transform:translateY(-3px);box-shadow:var(--shadow-h)}
+.ucard .top{display:flex;align-items:center;gap:10px}
+.av{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--navy),var(--navy2));flex:none}
+.ucard .nm b{display:block;font-size:15px}.ucard .nm small{color:var(--mut)}
+.ustats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center}
+.ustats div{background:var(--surface2);border-radius:9px;padding:6px 2px}
+.ustats b{display:block;font-size:17px;font-variant-numeric:tabular-nums}.ustats small{font-size:11px;color:var(--mut)}
+.ustats .l b{color:var(--late)}.ustats .w b{color:var(--wait)}.ustats .d b{color:var(--done)}
+.ucard .btn{padding:7px 12px;font-size:13px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow);margin-top:16px}
+.panel h3{margin:0 0 12px;font-size:16px}
+.frm{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.frm input,.frm select{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:8px 10px;font-size:14px}
+.frm input.grow{flex:1;min-width:180px}
+.utable{width:100%;border-collapse:collapse;font-size:14px}
+.utable th{text-align:start;color:var(--mut);font-weight:700;font-size:12.5px;padding:8px;border-bottom:1px solid var(--line)}
+.utable td{padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
+.utable button,.utable select{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:4px 9px;font-size:12.5px}
+.tag{border-radius:99px;padding:1px 9px;font-size:12px;font-weight:700}
+.tag.admin{background:var(--gold-soft);color:var(--gold)}.tag.member{background:var(--doing-soft);color:var(--doing)}.tag.off{background:var(--late-soft);color:var(--late)}
+.tblwrap{overflow-x:auto}
 </style>
 </head>
 <body>
 
 <header class="hero"><div class="hero-in">
-<div><h1><i></i>مهام العمل</h1><div class="date" id="todayLbl"></div><span class="role" id="roleChip"></span></div>
+<div><h1><i></i>مهام العمل</h1><div class="date" id="todayLbl"></div><div class="hero-tools"><span class="role" id="roleChip"></span><select id="viewSel" hidden aria-label="عرض مهام"></select><button class="hbtn" id="pwBtn" hidden>تغيير كلمة المرور</button><button class="hbtn" id="logoutBtn" hidden>خروج</button></div></div>
 <div class="ringwrap"><div class="ringlbl"><b id="ringTxt">إنجاز اليوم</b><span id="ringSub">لا توجد مهام بعد</span></div><div class="ring" id="ring"><div id="ringPct">0%</div></div></div>
 </div></header>
 <div class="wrap">
@@ -219,6 +265,8 @@ nav.tabs button[aria-selected="true"] .c{background:rgba(255,255,255,.18);color:
 <button role="tab" data-tab="day" aria-selected="true">صفحة اليوم</button>
 <button role="tab" data-tab="upcoming" aria-selected="false">القادمة<span class="c" id="cUp">0</span></button>
 <button role="tab" data-tab="report" aria-selected="false">ملخص الأسبوع</button>
+<button role="tab" data-tab="team" aria-selected="false" id="tabTeam" hidden>لوحة الفريق</button>
+<button role="tab" data-tab="users" aria-selected="false" id="tabUsers" hidden>المستخدمين</button>
 </nav>
 <div id="dayWrap">
 <div class="daynav">
@@ -237,6 +285,7 @@ nav.tabs button[aria-selected="true"] .c{background:rgba(255,255,255,.18);color:
 </div>
 <datalist id="projList"></datalist>
 <div class="toast" id="toast" hidden></div>
+<div class="auth" id="auth" hidden><form class="auth-card" id="authForm" autocomplete="on"><h2><i></i><span id="authTitle">تسجيل الدخول</span></h2><p id="authSub">ادخل باسم المستخدم وكلمة المرور</p><div id="authFields"></div><button class="btn" id="authBtn">دخول</button><div class="auth-err" id="authErr"></div><button type="button" class="btn ghost" id="demoBtn" style="margin-top:10px;width:100%">جرّب نسخة العرض (بدون حساب)</button></form></div>
 <script>
 (() => {
 const $ = s => document.querySelector(s);
@@ -258,15 +307,24 @@ const d = parse(s); return `${DAYN[d.getDay()]} ${gFmt.format(d)}`; };
 const weekStart = () => { const d = new Date(); d.setHours(0,0,0,0); return addDays(d, -d.getDay()); };
 const STATUS = {todo:"جديدة", doing:"جاري العمل", waiting:"بانتظار رد"};
 const KIND = { top:"أهم 6 مهام ★", meeting:"الاجتماعات والمواعيد", follow:"متابعات — بانتظار رد", admin:"مهام إدارية", task:"جدول المهام" };
-const TTYPE = { tech:"فنية", admin:"إدارية" };
+const TTYPE = { tech:"فنية", admin:"إدارية", fin:"مالية" };
 const API = "https://script.google.com/macros/s/AKfycbwgvjkn2Op3hg-sSwxMi3PJO4MmIot0udoa8FXKOGTK9LBjqKuGtqlLYY1FaAkMwnI9/exec";
-const KEY = new URLSearchParams(location.search).get("k") || ""; let ROLE = "", MGR = "المدير"; let isMgr = false, isDemo = false; const own = x => !isMgr || x.addedBy === "manager";
-const ROLL = new Set(["top","follow","admin","task"]); 
+let TOKEN = ""; try { TOKEN = localStorage.getItem("tasks_token") || ""; } catch {}
+let ME = null, USERS = [], viewUid = "", allItems = [];
+const isAdmin = () => !!ME && ME.role === "admin";
+const uname = id => (USERS.find(u => u.id === id) || {}).name || "";
+const own = x => isAdmin() || (!!ME && x.owner === ME.id);
+const canDel = x => isAdmin() || !x.assignedBy || (!!ME && x.assignedBy === ME.id);
+let ROLE = "", MGR = "المدير"; let isMgr = false, isDemo = false;
+const ROLL = new Set(["top","follow","admin","task"]); // meetings don't roll over
 let items = [], notes = {};
 let db = null, col = null, mcp = null, assets = null, canWrite = false;
 let tfilter = "all";
 let tab = "day", page = "1", day = today(), open = null, confirmDel = null;
-function setChip(){ $("#roleChip").textContent = !ROLE ? "جارٍ التحميل…" : isDemo ? "نسخة عرض" : isMgr ? "وضع " + MGR : "صلاحيات كاملة"; $("#roleChip").className = "role" + (isDemo ? " demo" : isMgr ? " mgr" : ""); }
+function setChip(){ const c = $("#roleChip"); c.textContent = ME ? ME.name + " · " + (isAdmin() ? "مدير" : "مستخدم") : "جارٍ التحميل…"; c.className = "role" + (isAdmin() ? "" : " mgr");
+$("#logoutBtn").hidden = !ME; $("#pwBtn").hidden = !ME || isDemo; if (ME) $("#logoutBtn").textContent = isDemo ? "خروج من العرض" : "خروج"; $("#tabTeam").hidden = !isAdmin(); $("#tabUsers").hidden = !isAdmin();
+const s = $("#viewSel"); s.hidden = !isAdmin() || USERS.filter(u => u.active).length < 2;
+if (!s.hidden) s.innerHTML = USERS.filter(u => u.active).map(u => `<option value="${u.id}" ${u.id === viewUid ? "selected" : ""}>${u.id === ME.id ? "مهامي" : "مهام: " + esc(u.name)}</option>`).join(""); }
 setChip();
 $("#todayLbl").innerHTML = (() => { const d = new Date(); return `<b>${DAYN[d.getDay()]} ${gFmtY.format(d)}</b> · <span>${esc(hij(d))}</span>`; })();
 function toast(m, err){ const t = $("#toast"); t.textContent = m; t.className = "toast" + (err ? " err" : ""); t.hidden = false; clearTimeout(toast.h); toast.h = setTimeout(() => t.hidden = true, 2600); }
@@ -277,7 +335,7 @@ else if (err && err.code === "quota_exceeded") banner("امتلأت قاعدة �
 else { const msg = "تعذّر الحفظ: " + ((err && err.message) || "تأكد من الاتصال وحاول مرة أخرى."); banner(msg, true); toast("لم يتم الحفظ — شوف الرسالة فوق", true); }
 }
 async function upd(id, data){ if (!col) return; try { await col.doc(id).update(data); } catch (e) { handleWriteErr(e); } }
-
+// ---------- calendar ----------
 function calLink(x){
 const time = x.time || x.reminder?.time || "09:00"; const [h,m] = time.split(":").map(Number);
 const d = x.due.replace(/-/g,""); const e = new Date(2000,0,1,h,m+30);
@@ -308,31 +366,31 @@ else if (c === "tool_error") msg = "رفض التقويم إنشاء الحدث:
 banner(msg); await upd(x.id, { reminder: { time, state: "link" } });
 }
 }
-
+// ---------- data for a day ----------
 function forDay(d){
 const t = today();
 return items.filter(x => {
 if (x.due === d) return true;
-
+// automatic rollover: unfinished items from earlier days show on today
 return d === t && ROLL.has(x.kind) && !x.done && x.due && x.due < t;
 });
 }
 const sortItems = arr => arr.slice().sort((a,b) => (a.done - b.done) || ((a.due < b.due) ? -1 : (a.due > b.due) ? 1 : 0) || ((b.priority||0)-(a.priority||0)) || (a.createdAt - b.createdAt));
-
+// ---------- row ----------
 const CHECK = '<svg viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l3 3 6-7"/></svg>';
 function row(x, i){
 const t = today();
 const late = !x.done && x.due && x.due < t && ROLL.has(x.kind);
 const pills = [];
 if (x.kind === "task" && x.star && page === "2" && tab === "day") pills.push(`<span class="pill rem">★ من أهم 6</span>`);
-if ((x.kind === "task" || x.kind === "top") && x.ttype) pills.push(`<span class="pill ${x.ttype === "admin" ? "adm" : "tech"}">${TTYPE[x.ttype]}</span>`);
+if ((x.kind === "task" || x.kind === "top") && x.ttype) pills.push(`<span class="pill ${({admin:"adm",fin:"fin"})[x.ttype] || "tech"}">${TTYPE[x.ttype] || ""}</span>`);
 if (x.kind === "task" && x.project) pills.push(`<span class="pill proj">${esc(x.project)}</span>`);
 if (late) { const n = daysBetween(x.due, t); pills.push(`<span class="pill late">مرحّلة من ${esc(nice(x.due))}${n > 1 ? ` · ${n} أيام` : ""}</span>`); }
 if (x.kind === "follow" && x.from) pills.push(`<span class="pill wait">من: ${esc(x.from)}</span>`);
 if (x.kind === "task" && x.status === "doing" && !x.done) pills.push(`<span class="pill doing">جاري العمل</span>`);
 if (x.kind === "task" && x.status === "waiting" && !x.done) pills.push(`<span class="pill wait">بانتظار رد</span>`);
 if (x.priority === 2 && !x.done) pills.push(`<span class="pill late">عاجلة</span>`);
-if (x.addedBy === "manager") pills.push(`<span class="pill doing">👤 أضافها ${esc(MGR)}</span>`);
+if (x.assignedBy && x.assignedBy !== x.owner) pills.push(`<span class="pill asg">📌 أسندها ${esc(uname(x.assignedBy) || "المدير")}</span>`);
 if (x.reminder && !x.done && x.reminder.state === "added") pills.push(`<span class="pill rem">⏰ ${esc(x.reminder.time)} · في التقويم</span>`);
 if (x.done && x.doneAt && iso(new Date(x.doneAt)) !== x.due) pills.push(`<span class="pill done">أُنجزت ${esc(nice(iso(new Date(x.doneAt))))}</span>`);
 let acts = "";
@@ -365,13 +423,13 @@ ${(mcp || assets) ? `<label class="upbtn">رفع ملف<input type="file" data-a
 <small>${mcp ? `الملفات تُرفع على Google Drive في فولدر <a href="${DRIVE_URL}" target="_blank" rel="noopener">«المهام»</a> — Word وExcel وPDF وDWG وغيرها.` : assets ? "ارفع PDF أو صور مباشرة، أو أضف رابط الملف." : "أضف رابط الملف من Drive أو OneDrive."}</small>
 </div>
 ${confirmDel === x.id ? `<span class="confirm">حذف نهائي؟ <button data-a="delyes" data-id="${x.id}">نعم</button><button data-a="delno" data-id="${x.id}">لا</button></span>`
-: `<button data-a="del" data-id="${x.id}" class="del">حذف</button>`}
+: (canDel(x) ? `<button data-a="del" data-id="${x.id}" class="del">حذف</button>` : "")}
 </div>`;
 }
 const lead = x.kind === "meeting" ? `<span class="time">${esc(x.time || "—")}</span>` : (x.kind === "top" || x.kind === "task") ? `<span class="num">${i+1}</span>` : "";
 const cls = ["task","compact", x.done ? "isdone" : "", !x.done && x.priority === 2 ? "hi" : "", !x.done && x.priority === 1 ? "mid" : ""].join(" ");
 return `<div class="${cls}" data-lead="${lead ? 1 : 0}">
-<button class="tick" data-a="toggle" data-id="${x.id}" aria-label="${x.done?"إرجاع":"تمت"}" ${canWrite && !isMgr?"":"disabled"}>${CHECK}</button>
+<button class="tick" data-a="toggle" data-id="${x.id}" aria-label="${x.done?"إرجاع":"تمت"}" ${canWrite && own(x)?"":"disabled"}>${CHECK}</button>
 ${lead}
 <div><div class="tt" data-id="${x.id}" ${canWrite && own(x) && !x.done ? 'contenteditable="true" spellcheck="false"' : ""}>${esc(x.title)}</div>
 ${pills.length ? `<div class="meta">${pills.join("")}</div>` : ""}
@@ -445,8 +503,8 @@ let add = "";
 if (canWrite && (!isMgr || kind === "task" || kind === "top")) {
 if (kind === "meeting") add = `<form class="addrow" data-kind="meeting"><input type="time" name="time" value="10:00" aria-label="الوقت"><input name="title" placeholder="مع / الموضوع…" aria-label="الاجتماع"><button>+</button></form>`;
 else if (kind === "follow") add = `<form class="addrow" data-kind="follow"><input name="title" placeholder="الموضوع…" aria-label="الموضوع"><input class="sm" name="from" placeholder="من" aria-label="من"><button>+</button></form>`;
-else if (kind === "task") add = `<form class="addrow" data-kind="task"><input name="title" placeholder="اكتب مهمة واضغط Enter…" aria-label="مهمة"><input class="sm" name="project" list="projList" placeholder="المشروع" aria-label="المشروع"><select name="ttype" aria-label="نوع المهمة"><option value="tech">فنية</option><option value="admin">إدارية</option></select><select name="priority" aria-label="الأولوية"><option value="0">عادية</option><option value="1">مهمة</option><option value="2">عاجلة</option></select><button>+</button></form>`;
-else add = `<form class="addrow" data-kind="${kind}"><input name="title" placeholder="${kind === "top" ? "أضف مهمة مهمة…" : "أضف مهمة إدارية…"}" aria-label="${KIND[kind]}">${kind === "top" ? '<select name="ttype" aria-label="نوع المهمة"><option value="tech">فنية</option><option value="admin">إدارية</option></select>' : ""}<button>+</button></form>`;
+else if (kind === "task") add = `<form class="addrow" data-kind="task"><input name="title" placeholder="اكتب مهمة واضغط Enter…" aria-label="مهمة"><input class="sm" name="project" list="projList" placeholder="المشروع" aria-label="المشروع"><select name="ttype" aria-label="نوع المهمة"><option value="tech">فنية</option><option value="admin">إدارية</option><option value="fin">مالية</option></select><select name="priority" aria-label="الأولوية"><option value="0">عادية</option><option value="1">مهمة</option><option value="2">عاجلة</option></select><button>+</button></form>`;
+else add = `<form class="addrow" data-kind="${kind}"><input name="title" placeholder="${kind === "top" ? "أضف مهمة مهمة…" : "أضف مهمة إدارية…"}" aria-label="${KIND[kind]}">${kind === "top" ? '<select name="ttype" aria-label="نوع المهمة"><option value="tech">فنية</option><option value="admin">إدارية</option><option value="fin">مالية</option></select>' : ""}<button>+</button></form>`;
 }
 return `<section class="sec sec-${kind} ${extra?.full ? "full" : ""}">${head}${extra?.filter || ""}${body}${add}</section>`;
 }
@@ -483,20 +541,21 @@ ${section("top", top, { full: true, empty: "أهم ما يجب إنجازه ال
 ${section("meeting", by("meeting").sort((a,b) => (a.time||"").localeCompare(b.time||"")), { empty: "لا اجتماعات" })}
 ${section("follow", by("follow"), { empty: "لا متابعات" })}
 ${section("admin", by("admin"), { empty: "لا مهام إدارية" })}
-${isMgr || isDemo ? "" : `<section class="sec sec-notes"><h3>ملاحظات</h3><textarea class="notes" id="notes" ${canWrite ? "" : "readonly"} placeholder="${canWrite ? "اكتب ملاحظاتك هنا…" : ""}">${esc(notes[day] || "")}</textarea><div class="saved" id="savedLbl"></div></section>`}
+${!ME || viewUid !== ME.id ? "" : `<section class="sec sec-notes"><h3>ملاحظات</h3><textarea class="notes" id="notes" ${canWrite ? "" : "readonly"} placeholder="${canWrite ? "اكتب ملاحظاتك هنا…" : ""}">${esc(notes[day] || "")}</textarea><div class="saved" id="savedLbl"></div></section>`}
 </div>`;
 } else {
 const all = by("task"); const shown = tfilter === "all" ? all : all.filter(x => (x.ttype || "tech") === tfilter);
 const cnt = k => all.filter(x => !x.done && (x.ttype || "tech") === k).length;
 h = `<div class="sheet">${section("task", shown, { full: true, empty: tfilter === "all" ? "لا مهام في الجدول لهذا اليوم" : "لا مهام من هذا النوع",
-filter: `<div class="tfilter">عرض: ${[["all","الكل"],["tech",`فنية (${cnt("tech")})`],["admin",`إدارية (${cnt("admin")})`]].map(([k,l]) => `<button type="button" class="chip" data-tf="${k}" aria-pressed="${tfilter===k}">${l}</button>`).join("")}</div>` })}</div>`;
+filter: `<div class="tfilter">عرض: ${[["all","الكل"],["tech",`فنية (${cnt("tech")})`],["admin",`إدارية (${cnt("admin")})`],["fin",`مالية (${cnt("fin")})`]].map(([k,l]) => `<button type="button" class="chip" data-tf="${k}" aria-pressed="${tfilter===k}">${l}</button>`).join("")}</div>` })}</div>`;
 }
 } else if (tab === "upcoming") {
 const up = sortItems(items.filter(x => !x.done && x.due && x.due > t));
 if (!up.length) h = `<div class="list"><div class="empty"><b>لا توجد بنود قادمة</b>انتقل لأي يوم قادم من «صفحة اليوم» وأضف فيه.</div></div>`;
 else { const g = {}; up.forEach(x => (g[x.due] ||= []).push(x));
 Object.keys(g).sort().forEach(d => { h += `<div class="grp"><h3>${esc(nice(d))}</h3><small>${esc(gFmtY.format(parse(d)))}</small></div><div class="list">${g[d].map((x,i) => row(x,i).replace('<div class="tt"', `<div class="tt" title="${KIND[x.kind]}"`)).join("")}</div>`; }); }
-} else h = report();
+} else if (tab === "team") h = teamView(); else if (tab === "users") h = usersView(); else h = report();
+if (ME && viewUid && viewUid !== ME.id && tab !== "team" && tab !== "users") h = `<div class="viewing">👁 أنت تشاهد مهام: ${esc(uname(viewUid))} — أي مهمة تضيفها هنا تُسند له<button data-view="${ME.id}">رجوع لمهامي</button></div>` + h;
 $("#view").innerHTML = h;
 if (open) { const f = document.querySelector(`[data-f="note"][data-id="${open}"]`); }
 }
@@ -524,7 +583,7 @@ return `<div class="report">
 <div class="rbox"><h4>بانتظار رد</h4>${li(waiting, x => x.from ? "· " + esc(x.from) : "")}</div>
 <div class="rbox"><h4>باقي الأسبوع</h4>${li(rest, x => "· " + esc(nice(x.due)))}</div>
 <div class="rbox"><h4>اجتماعات الأسبوع</h4>${li(meets, x => "· " + esc(nice(x.due)) + " " + esc(x.time || ""))}</div>
-<div class="rbox" style="grid-column:1/-1"><h4>الإنجاز حسب نوع المهمة</h4>${["tech","admin"].map(k => { const d = done.filter(x => (x.kind === "task" || x.kind === "top") && (x.ttype || "tech") === k).length, p = pend.filter(x => (x.kind === "task" || x.kind === "top") && (x.ttype || "tech") === k && x.due && x.due <= we).length, n = d + p;
+<div class="rbox" style="grid-column:1/-1"><h4>الإنجاز حسب نوع المهمة</h4>${["tech","admin","fin"].map(k => { const d = done.filter(x => (x.kind === "task" || x.kind === "top") && (x.ttype || "tech") === k).length, p = pend.filter(x => (x.kind === "task" || x.kind === "top") && (x.ttype || "tech") === k && x.due && x.due <= we).length, n = d + p;
 return `<div class="projrow"><span class="nm">${TTYPE[k]}</span><span class="b"><i style="width:${n ? Math.round(d/n*100) : 0}%"></i></span><span class="v">${d}/${n}</span></div>`; }).join("")}</div>
 <div class="rbox" style="grid-column:1/-1"><h4>الإنجاز حسب المشروع</h4>${Object.keys(byP).length ? Object.entries(byP).map(([k,v]) =>
 `<div class="projrow"><span class="nm">${esc(k)}</span><span class="b"><i style="width:${Math.round(v.d/v.n*100)}%"></i></span><span class="v">${v.d}/${v.n}</span></div>`).join("") : `<div class="empty" style="padding:6px 0;text-align:start">لا يوجد</div>`}</div>
@@ -556,7 +615,7 @@ const kind = f.dataset.kind;
 const data = { kind, title, due: day, done: false, doneAt: null, createdAt: Date.now(), note: "", priority: Number(fd.get("priority") || 0) };
 if (kind === "task" || kind === "top") data.ttype = (fd.get("ttype") || "tech").toString();
 if (kind === "top") { data.kind = "task"; data.star = true; data.status = "todo"; data.project = ""; }
-data.addedBy = isMgr ? "manager" : "owner";
+data.owner = viewUid || (ME && ME.id) || ""; if (ME && data.owner !== ME.id) data.assignedBy = ME.id;
 if (kind === "meeting") data.time = (fd.get("time") || "").toString();
 if (kind === "follow") data.from = (fd.get("from") || "").toString().trim();
 if (kind === "task") { data.project = (fd.get("project") || "").toString().trim(); data.status = "todo"; }
@@ -578,7 +637,7 @@ else if (a === "del") { confirmDel = x.id; render(); }
 else if (a === "delno") { confirmDel = null; render(); }
 else if (a === "delyes") { confirmDel = open = null; try { await col.doc(x.id).delete(); toast("حُذف");
 if (assets) for (const f of (x.files || [])) if (f.kind === "file") { try { await assets.delete(f.id); } catch {} } } catch (err) { handleWriteErr(err); } }
-else if (a === "calMeet") { addToCalendar(x, x.time); }
+else if (a === "calMeet") { window.open(calLink(x), "_blank"); }
 else if (a === "addlink") {
 const n = document.querySelector(`[data-l="name"][data-id="${x.id}"]`), u = document.querySelector(`[data-l="url"][data-id="${x.id}"]`);
 let url = (u?.value || "").trim(); if (!url) { u?.focus(); return; } if (!/^https?:[\/][\/]/i.test(url)) url = "https:\/\/" + url;
@@ -592,7 +651,7 @@ const files = x.files.filter((_, j) => j !== i); await upd(x.id, { files });
 if (f.kind === "file" && assets) { try { await assets.delete(f.id); } catch {} }
 toast("أُزيل المرفق");
 }
-else if (a === "remind") { const time = document.querySelector(`[data-f="remTime"][data-id="${x.id}"]`)?.value || "09:00"; addToCalendar(x, time); }
+else if (a === "remind") { const time = document.querySelector(`[data-f="remTime"][data-id="${x.id}"]`)?.value || "09:00"; window.open(calLink({ ...x, reminder: { time } }), "_blank"); }
 });
 $("#view").addEventListener("change", async e => {
 const el = e.target;
@@ -625,7 +684,18 @@ function setReadOnly(ro){ canWrite = !ro; $("#roBadge").hidden = !ro; render(); 
 setInterval(() => { if (render.d !== today()) { const was = render.d; render.d = today(); if (day === was) day = today(); render(); } }, 60000); render.d = today();
 render();
 // ---------- Google Apps Script data layer ----------
-const api = async (fn, ...args) => { const r = await fetch(API, { method: "POST", body: JSON.stringify({ k: KEY, fn, args }), credentials: "omit" }); if (!r.ok) throw new Error("خطأ في الاتصال (" + r.status + ")"); const j = await r.json(); if (!j.ok) throw new Error(j.error || "خطأ غير معروف"); return j.data; };
+const DEMO_ME = { id: "demo", username: "demo", name: "زائر (نسخة عرض)", role: "admin", active: true };
+let demoUsers = [DEMO_ME, { id: "demo_u1", username: "ahmed", name: "أحمد (مستخدم تجريبي)", role: "member", active: true }];
+function demoApi(fn, args){
+  if (fn === "getAll") return { me: DEMO_ME, users: demoUsers.map(u => ({ ...u })), items: [], notes: {} };
+  if (fn === "listUsers") return demoUsers.map(u => ({ ...u }));
+  if (fn === "addUser") { const [username, name, role] = args; if (!username || !name) throw new Error("أكمل البيانات"); demoUsers.push({ id: "demo_" + rid(), username: String(username).toLowerCase(), name, role: role === "admin" ? "admin" : "member", active: true }); return demoUsers.map(u => ({ ...u })); }
+  if (fn === "updateUser") { const [id, patch] = args; const u = demoUsers.find(x => x.id === id); if (u) { if (patch.role) u.role = patch.role; if (patch.active !== undefined) u.active = patch.active; if (patch.name) u.name = patch.name; } return demoUsers.map(u => ({ ...u })); }
+  if (fn === "logout") { try { location.href = location.pathname; } catch {} return true; }
+  return true;
+}
+function startDemo(){ isDemo = true; TOKEN = "demo"; ME = null; viewUid = ""; $("#auth").hidden = true; load.done = false; load(); }
+const api = async (fn, ...args) => { if (isDemo) return demoApi(fn, args); const r = await fetch(API, { method: "POST", body: JSON.stringify({ t: TOKEN, fn, args }), credentials: "omit" }); if (!r.ok) throw new Error("خطأ في الاتصال (" + r.status + ")"); const j = await r.json(); if (!j.ok) { if (/سجّل الدخول|انتهت الجلسة|غير مفعّل/.test(j.error || "")) { setToken(""); showAuth("login", j.error); } throw new Error(j.error || "خطأ غير معروف"); } return j.data; };
 let store = {}, noteStore = {}, listeners = [], noteListeners = [], pending = 0;
 const snap = obj => ({ docs: Object.entries(obj).map(([id, v]) => ({ id, data: () => v })) });
 const emit = () => listeners.forEach(f => f(snap(store)));
@@ -646,26 +716,116 @@ collection(p){ return p === "items" ? itemsCol : notesCol; },
 doc(path){ const d = path.split("/")[1]; return { async set(v){ noteStore[d] = v.text; await call("saveNote", d, v.text); } }; }
 };
 async function load(){
+if (!TOKEN) return;
 if (pending || (isDemo && load.done)) return; load.done = true;
 try { const r = await api("getAll"); if (pending) return;
-if (r.role && r.role !== ROLE) { ROLE = r.role; MGR = r.mgr || MGR; isMgr = ROLE === "manager"; isDemo = ROLE === "viewer"; canWrite = true; setChip(); }
+ME = r.me; USERS = r.users || []; if (!viewUid || !USERS.some(u => u.id === viewUid)) viewUid = ME.id; canWrite = true; setChip();
 store = {}; (r.items || []).forEach(o => store[o.id] = strip(o)); noteStore = r.notes || {};
-emit(); emitN(); banner(isDemo ? "نسخة عرض: تقدر تجرّب كل حاجة، بس أي إضافة أو تعديل هنا مش بيتحفظ في الملف الأصلي." : isMgr ? `وضع ${MGR}: تقدر تشوف المهام وتضيف مهام جديدة في «أهم 6 مهام» و«جدول المهام».` : "");
+emit(); emitN(); banner(isDemo ? "نسخة عرض فاضية للتجربة: جرّب إضافة مهام ومستخدمين وإسناد — لا شيء يُحفظ، وبتتمسح لما تقفل الصفحة." : isMgr ? `وضع ${MGR}: تقدر تشوف المهام وتضيف مهام جديدة في «أهم 6 مهام» و«جدول المهام».` : "");
 } catch (e) { banner("تعذّر تحميل البيانات: " + ((e && e.message) || "تأكد من الاتصال ثم أعد تحميل الصفحة."), true); }
 }
 (() => {
 db = gdb; col = itemsCol;
-col.onSnapshot(s => { items = s.docs.map(d => { const v = { id: d.id, ...d.data() }; if (v.kind === "top") { v.kind = "task"; v.star = true; } return v; }); keepFocus(render); });
+col.onSnapshot(s => { allItems = s.docs.map(d => { const v = { id: d.id, ...d.data() }; if (v.kind === "top") { v.kind = "task"; v.star = true; } return v; }); applyView(false); keepFocus(render); });
 db.collection("notes").onSnapshot(s => { const fresh = {}; s.docs.forEach(d => fresh[d.id] = d.data().text || "");
 const ta = $("#notes"); const typing = ta && document.activeElement === ta;
 notes = typing ? { ...fresh, [day]: notes[day] } : fresh; if (!typing) keepFocus(render); });
 mcp = { callTool(server, tool, input){ if (server === "Google Calendar") return call("addCalendar", input).then(p => ({ payload: p }));
 return Promise.reject({ code: "bad_request" }); }, listTools: async () => ({}) };
 assets = null; fileArgs = false;
-load();
+boot();
 setInterval(() => { if (document.visibilityState === "visible") load(); }, 90000);
 document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") load(); });
 })();
+
+function setToken(t){ if (isDemo) { TOKEN = t || ""; return; } TOKEN = t || ""; try { if (TOKEN) localStorage.setItem("tasks_token", TOKEN); else localStorage.removeItem("tasks_token"); } catch {} }
+function applyView(doRender){ items = allItems.filter(x => (x.owner || (ME && ME.id)) === (viewUid || (ME && ME.id))); if (doRender) render(); }
+function showAuth(mode, msg){
+  const a = $("#auth"); a.hidden = false; $("#authErr").textContent = msg || "";
+  const f = $("#authFields"); a.dataset.mode = mode; $("#demoBtn").hidden = mode !== "login";
+  if (mode === "setup") { $("#authTitle").textContent = "إعداد حساب المدير"; $("#authSub").textContent = "أول مرة: اعمل حسابك كمدير للنظام. مهامك الحالية هتتنقل على الحساب ده.";
+    f.innerHTML = '<label>الاسم<input name="name" required></label><label>اسم المستخدم (إنجليزي)<input name="username" autocomplete="username" required></label><label>كلمة المرور<input name="password" type="password" autocomplete="new-password" required minlength="6"></label><label>تأكيد كلمة المرور<input name="password2" type="password" autocomplete="new-password" required></label>'; $("#authBtn").textContent = "إنشاء الحساب"; }
+  else if (mode === "pw") { $("#authTitle").textContent = "تغيير كلمة المرور"; $("#authSub").textContent = "اكتب كلمة المرور الجديدة (6 أحرف على الأقل)";
+    f.innerHTML = '<label>كلمة المرور الجديدة<input name="password" type="password" autocomplete="new-password" required minlength="6"></label><label>تأكيد كلمة المرور<input name="password2" type="password" autocomplete="new-password" required></label><button type="button" class="btn ghost" id="authCancel">إلغاء</button>'; $("#authBtn").textContent = "حفظ"; }
+  else { $("#authTitle").textContent = "تسجيل الدخول"; $("#authSub").textContent = "ادخل باسم المستخدم وكلمة المرور";
+    f.innerHTML = '<label>اسم المستخدم<input name="username" autocomplete="username" required></label><label>كلمة المرور<input name="password" type="password" autocomplete="current-password" required></label>'; $("#authBtn").textContent = "دخول"; }
+  setTimeout(() => { const i = f.querySelector("input"); if (i) i.focus(); }, 50);
+}
+$("#auth").addEventListener("click", e => { if (e.target.id === "authCancel") $("#auth").hidden = true; });
+$("#authForm").addEventListener("submit", async e => {
+  e.preventDefault(); const mode = $("#auth").dataset.mode; const fd = new FormData(e.target); const g = k => (fd.get(k) || "").toString();
+  const err = m => { $("#authErr").textContent = m; };
+  if ((mode === "setup" || mode === "pw") && g("password") !== g("password2")) return err("كلمتا المرور غير متطابقتين");
+  $("#authBtn").disabled = true; err("");
+  try {
+    if (mode === "pw") { await api("updateUser", ME.id, { password: g("password") }); $("#auth").hidden = true; toast("تم تغيير كلمة المرور"); }
+    else { const r = mode === "setup" ? await api("setup", g("username"), g("name"), g("password")) : await api("login", g("username"), g("password"));
+      setToken(r.token); ME = r.user; viewUid = ME.id; $("#auth").hidden = true; load.done = false; await load(); toast("أهلاً " + ME.name); }
+  } catch (x) { err((x && x.message) || "حدث خطأ"); } finally { $("#authBtn").disabled = false; }
+});
+$("#logoutBtn").onclick = async () => { try { await api("logout"); } catch {} setToken(""); ME = null; USERS = []; allItems = []; items = []; store = {}; setChip(); render(); showAuth("login"); };
+$("#pwBtn").onclick = () => showAuth("pw");
+$("#viewSel").onchange = e => { viewUid = e.target.value; tab = "day"; document.querySelectorAll("nav.tabs button").forEach(x => x.setAttribute("aria-selected", x.dataset.tab === "day")); applyView(true); };
+document.addEventListener("click", e => { const b = e.target.closest("[data-view]"); if (!b) return; viewUid = b.dataset.view; tab = "day"; day = today();
+  document.querySelectorAll("nav.tabs button").forEach(x => x.setAttribute("aria-selected", x.dataset.tab === "day")); setChip(); applyView(true); window.scrollTo({ top: 0, behavior: "smooth" }); });
+$("#demoBtn").onclick = () => { history.replaceState(null, "", location.pathname + "?demo"); startDemo(); };
+async function boot(){
+  if (/[?&]demo\b/.test(location.search)) { startDemo(); return; }
+  if (TOKEN) { load(); return; }
+  try { const s = await api("setupStatus"); showAuth(s.needsSetup ? "setup" : "login"); } catch (x) { showAuth("login", (x && x.message) || ""); }
+}
+function statsFor(uid){
+  const t = today(), ws = iso(weekStart()); const mine = allItems.filter(x => (x.owner || ME.id) === uid && x.kind !== "meeting");
+  const open = mine.filter(x => !x.done && x.due && x.due <= t); const late = open.filter(x => x.due < t);
+  const wait = mine.filter(x => !x.done && (x.kind === "follow" || x.status === "waiting")).length;
+  const doneW = mine.filter(x => x.done && x.doneAt && iso(new Date(x.doneAt)) >= ws).length;
+  const base = doneW + open.length; return { open: open.length, late: late.length, wait, doneW, pct: base ? Math.round(doneW / base * 100) : 0, lateList: late };
+}
+function teamView(){
+  if (!isAdmin()) return "";
+  const us = USERS.filter(u => u.active);
+  const cards = us.map(u => { const s = statsFor(u.id); const ini = (u.name || "?").trim().charAt(0);
+    return `<div class="ucard"><div class="top"><span class="av">${esc(ini)}</span><div class="nm"><b>${esc(u.name)}</b><small>${u.role === "admin" ? "مدير" : "مستخدم"}</small></div></div>
+    <div class="ustats"><div><b>${s.open}</b><small>مفتوحة</small></div><div class="l"><b>${s.late}</b><small>متأخرة</small></div><div class="w"><b>${s.wait}</b><small>بانتظار رد</small></div><div class="d"><b>${s.doneW}</b><small>أُنجزت</small></div></div>
+    <div class="bar"><i style="width:${s.pct}%"></i></div>
+    <button class="btn ghost" data-view="${u.id}">عرض مهامه وإسناد مهمة</button></div>`; }).join("");
+  const lateAll = us.flatMap(u => statsFor(u.id).lateList.map(x => ({ ...x, who: u.name }))).sort((a, b) => a.due.localeCompare(b.due)).slice(0, 30);
+  return `<div class="panel"><h3>إسناد مهمة سريعة</h3><form class="frm" id="assignForm"><select name="owner">${us.map(u => `<option value="${u.id}">${esc(u.name)}</option>`).join("")}</select>
+    <input class="grow" name="title" placeholder="المهمة…" required><input type="date" name="due" value="${today()}"><select name="ttype"><option value="tech">فنية</option><option value="admin">إدارية</option><option value="fin">مالية</option></select>
+    <select name="priority"><option value="0">عادية</option><option value="1">مهمة</option><option value="2">عاجلة</option></select><label style="font-size:13px"><input type="checkbox" name="star"> من أهم 6</label><button class="btn">إسناد</button></form></div>
+    <div class="team">${cards || '<div class="empty">لا يوجد مستخدمين</div>'}</div>
+    <div class="panel"><h3>المتأخرات على مستوى الفريق</h3>${lateAll.length ? `<div class="tblwrap"><table class="utable"><tr><th>المهمة</th><th>المسؤول</th><th>من يوم</th></tr>${lateAll.map(x => `<tr><td>${esc(x.title)}</td><td>${esc(x.who)}</td><td>${esc(nice(x.due))}</td></tr>`).join("")}</table></div>` : '<div class="empty" style="padding:8px;text-align:start">لا يوجد متأخرات 👌</div>'}</div>`;
+}
+function usersView(){
+  if (!isAdmin()) return "";
+  return `<div class="panel"><h3>إضافة مستخدم</h3><form class="frm" id="addUserForm"><input name="name" placeholder="الاسم" required><input name="username" placeholder="اسم المستخدم (إنجليزي)" required autocomplete="off">
+    <input name="password" type="password" placeholder="كلمة المرور (6+)" required minlength="6" autocomplete="new-password"><select name="role"><option value="member">مستخدم</option><option value="admin">مدير</option></select><button class="btn">إضافة</button></form></div>
+    <div class="panel"><h3>المستخدمين</h3><div class="tblwrap"><table class="utable"><tr><th>الاسم</th><th>اسم المستخدم</th><th>الصلاحية</th><th>الحالة</th><th></th></tr>
+    ${USERS.map(u => `<tr><td><b>${esc(u.name)}</b>${u.id === ME.id ? " <small>(أنت)</small>" : ""}</td><td dir="ltr" style="text-align:start">${esc(u.username || "")}</td>
+    <td>${u.id === ME.id ? '<span class="tag admin">مدير</span>' : `<select data-urole="${u.id}"><option value="member" ${u.role !== "admin" ? "selected" : ""}>مستخدم</option><option value="admin" ${u.role === "admin" ? "selected" : ""}>مدير</option></select>`}</td>
+    <td>${u.active ? '<span class="tag member">مفعّل</span>' : '<span class="tag off">موقوف</span>'}</td>
+    <td>${u.id === ME.id ? "" : `<button data-uact="${u.id}">${u.active ? "إيقاف" : "تفعيل"}</button> <button data-upw="${u.id}">كلمة مرور جديدة</button>`}</td></tr>`).join("")}</table></div></div>`;
+}
+async function refreshUsers(){ try { const us = await api("listUsers"); USERS = us; setChip(); render(); } catch (x) { banner((x && x.message) || "تعذّر تحميل المستخدمين", true); } }
+$("#view").addEventListener("submit", async e => {
+  if (e.target.id === "assignForm") { e.preventDefault(); const fd = new FormData(e.target); const g = k => (fd.get(k) || "").toString();
+    const data = { kind: "task", title: g("title").trim(), due: g("due") || today(), done: false, doneAt: null, createdAt: Date.now(), note: "", priority: Number(g("priority") || 0), ttype: g("ttype"), status: "todo", project: "", star: !!fd.get("star"), owner: g("owner") }; if (data.owner !== ME.id) data.assignedBy = ME.id;
+    if (!data.title) return; try { await col.doc().set(data); toast("أُسندت المهمة لـ " + uname(data.owner)); e.target.reset(); } catch (x) { handleWriteErr(x); } }
+  if (e.target.id === "addUserForm") { e.preventDefault(); const fd = new FormData(e.target); const g = k => (fd.get(k) || "").toString();
+    try { USERS = await api("addUser", g("username"), g("name"), g("role"), g("password")); toast("أُضيف المستخدم"); setChip(); render(); } catch (x) { banner((x && x.message) || "تعذّر الإضافة", true); } }
+}, true);
+$("#view").addEventListener("click", async e => {
+  const a = e.target.closest("[data-uact]"), p = e.target.closest("[data-upw]"); if (!a && !p) return;
+  const id = (a || p).dataset[a ? "uact" : "upw"]; const u = USERS.find(x => x.id === id); if (!u) return;
+  try {
+    if (a) { USERS = await api("updateUser", id, { active: !u.active }); toast(u.active ? "تم إيقاف الحساب" : "تم تفعيل الحساب"); }
+    else { const box = document.createElement("span"); box.className = "frm"; box.innerHTML = `<input type="password" placeholder="كلمة المرور الجديدة" minlength="6" autocomplete="new-password"><button>حفظ</button>`; p.replaceWith(box);
+      box.querySelector("input").focus(); box.querySelector("button").onclick = async () => { const pw = box.querySelector("input").value; try { USERS = await api("updateUser", id, { password: pw }); toast("تم تغيير كلمة المرور"); render(); } catch (x) { banner((x && x.message) || "خطأ", true); } }; return; }
+    setChip(); render();
+  } catch (x) { banner((x && x.message) || "خطأ", true); }
+});
+$("#view").addEventListener("change", async e => { const s = e.target.closest("[data-urole]"); if (!s) return; try { USERS = await api("updateUser", s.dataset.urole, { role: s.value }); toast("تم تحديث الصلاحية"); setChip(); } catch (x) { banner((x && x.message) || "خطأ", true); } });
+
 // re-render without losing the cursor in an add field
 function keepFocus(fn){
 const a = document.activeElement; let sel = null;
