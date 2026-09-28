@@ -244,12 +244,18 @@ nav.tabs button[aria-selected="true"] .c{background:rgba(255,255,255,.18);color:
 .tag{border-radius:99px;padding:1px 9px;font-size:12px;font-weight:700}
 .tag.admin{background:var(--gold-soft);color:var(--gold)}.tag.member{background:var(--doing-soft);color:var(--doing)}.tag.off{background:var(--late-soft);color:var(--late)}
 .tblwrap{overflow-x:auto}
+.auth-card .chk{display:flex;align-items:center;gap:8px;font-weight:600;margin-bottom:8px}
+.auth-card .chk input{display:inline-block;width:auto;margin:0}
+.auth-card .row2{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}.auth-card .row2 .btn{flex:1;width:auto}
+.auth-card hr{border:0;border-top:1px solid var(--line);margin:6px 0 12px}
+.ucard .acts2{display:flex;gap:6px;flex-wrap:wrap}.ucard .acts2 a,.ucard .acts2 button{flex:1;text-align:center;text-decoration:none;font-size:12.5px;padding:6px 8px;border-radius:9px;border:1px solid var(--line);background:var(--surface);color:var(--ink2);font-weight:700}
+.ucard .acts2 a.wa{color:#1f8a4c;border-color:#bfe5cf}.ucard .contact{font-size:12px;color:var(--mut);direction:ltr;text-align:right}
 </style>
 </head>
 <body>
 
 <header class="hero"><div class="hero-in">
-<div><h1><i></i>مهام العمل</h1><div class="date" id="todayLbl"></div><div class="hero-tools"><span class="role" id="roleChip"></span><select id="viewSel" hidden aria-label="عرض مهام"></select><button class="hbtn" id="pwBtn" hidden>تغيير كلمة المرور</button><button class="hbtn" id="logoutBtn" hidden>خروج</button></div></div>
+<div><h1><i></i>مهام العمل</h1><div class="date" id="todayLbl"></div><div class="hero-tools"><span class="role" id="roleChip"></span><select id="viewSel" hidden aria-label="عرض مهام"></select><button class="hbtn" id="pwBtn" hidden>حسابي</button><button class="hbtn" id="logoutBtn" hidden>خروج</button></div></div>
 <div class="ringwrap"><div class="ringlbl"><b id="ringTxt">إنجاز اليوم</b><span id="ringSub">لا توجد مهام بعد</span></div><div class="ring" id="ring"><div id="ringPct">0%</div></div></div>
 </div></header>
 <div class="wrap">
@@ -391,7 +397,7 @@ if (x.kind === "task" && x.status === "doing" && !x.done) pills.push(`<span clas
 if (x.kind === "task" && x.status === "waiting" && !x.done) pills.push(`<span class="pill wait">بانتظار رد</span>`);
 if (x.priority === 2 && !x.done) pills.push(`<span class="pill late">عاجلة</span>`);
 if (x.assignedBy && x.assignedBy !== x.owner) pills.push(`<span class="pill asg">📌 أسندها ${esc(uname(x.assignedBy) || "المدير")}</span>`);
-if (x.reminder && !x.done && x.reminder.state === "added") pills.push(`<span class="pill rem">⏰ ${esc(x.reminder.time)} · في التقويم</span>`);
+if (x.calId && !x.done) pills.push(`<span class="pill rem">📅 في التقويم${x.kind !== "meeting" && x.reminder?.time ? " · " + esc(x.reminder.time) : ""}</span>`);
 if (x.done && x.doneAt && iso(new Date(x.doneAt)) !== x.due) pills.push(`<span class="pill done">أُنجزت ${esc(nice(iso(new Date(x.doneAt))))}</span>`);
 let acts = "";
 if (canWrite && own(x)) {
@@ -399,7 +405,6 @@ if (!x.done) {
 if (x.kind === "task") acts += `<button data-a="star" data-id="${x.id}" title="${x.star ? "إزالة من أهم 6" : "إضافة لأهم 6"}" aria-pressed="${!!x.star}" style="${x.star ? "color:var(--gold);border-color:var(--gold)" : ""}">${x.star ? "★" : "☆"}</button>`;
 if (x.kind === "task") acts += `<select data-a="status" data-id="${x.id}" aria-label="الحالة">${Object.keys(STATUS).map(s => `<option value="${s}" ${ (x.status||"todo")===s?"selected":""}>${STATUS[s]}</option>`).join("")}</select>`;
 if (x.kind !== "meeting") acts += `<button data-a="tomorrow" data-id="${x.id}">لبكرة</button>`;
-if (x.kind === "meeting" && x.time && (!x.reminder || x.reminder.state !== "added")) acts += `<button data-a="calMeet" data-id="${x.id}">⏰ للتقويم</button>`;
 if (x.reminder && x.reminder.state === "link") acts += `<a href="${esc(calLink(x))}" target="_blank" rel="noopener">أضف للتقويم</a>`;
 }
 acts += `<button data-a="more" data-id="${x.id}" aria-expanded="${open===x.id}" title="تفاصيل ومرفقات">📎 …</button>`;
@@ -413,7 +418,7 @@ ${x.kind === "task" ? `<label>المشروع <input data-f="project" data-id="${
 <label>الأولوية <select data-f="priority" data-id="${x.id}">${[0,1,2].map(p => `<option value="${p}" ${(x.priority||0)===p?"selected":""}>${["عادية","مهمة","عاجلة"][p]}</option>`).join("")}</select></label>` : ""}
 ${x.kind === "task" || x.kind === "top" ? `<label>النوع <select data-f="ttype" data-id="${x.id}"><option value="">—</option>${Object.keys(TTYPE).map(k => `<option value="${k}" ${x.ttype===k?"selected":""}>${TTYPE[k]}</option>`).join("")}</select></label>` : ""}
 ${x.kind === "follow" ? `<label>من <input data-f="from" data-id="${x.id}" value="${esc(x.from)}" style="width:130px"></label>` : ""}
-${!isMgr && x.kind !== "meeting" && x.due && !x.done ? `<label>تذكير <input type="time" data-f="remTime" data-id="${x.id}" value="${x.reminder?.time || "09:00"}"></label><button data-a="remind" data-id="${x.id}">أضف للتقويم</button>` : ""}
+${!isMgr && x.kind !== "meeting" && x.due && !x.done ? `<label>تذكير <input type="time" data-f="remTime" data-id="${x.id}" value="${x.reminder?.time || "09:00"}"></label><button data-a="remind" data-id="${x.id}">${x.calId ? "تحديث التذكير" : "⏰ ذكّرني (تقويم)"}</button>${x.calId ? `<button data-a="unremind" data-id="${x.id}">إلغاء التذكير</button>` : ""}` : ""}
 <textarea data-f="note" data-id="${x.id}" placeholder="ملاحظة…">${esc(x.note)}</textarea>
 <div class="attach"><span class="lbl">المرفقات</span>
 ${(mcp || assets) ? `<label class="upbtn">رفع ملف<input type="file" data-a="upload" data-id="${x.id}" multiple hidden></label>` : ""}
@@ -621,6 +626,7 @@ if (kind === "follow") data.from = (fd.get("from") || "").toString().trim();
 if (kind === "task") { data.project = (fd.get("project") || "").toString().trim(); data.status = "todo"; }
 if (kind === "top" && forDay(day).filter(x => x.kind === "task" && x.star && !x.done).length >= 6) toast("تنبيه: عندك أكثر من 6 مهام مهمة");
 try { await col.doc().set(data); } catch (err) { handleWriteErr(err); return; }
+if (kind === "meeting" && !isDemo) setTimeout(load, 300);
 const inp = document.querySelector(`form.addrow[data-kind="${kind}"] input[name="title"]`); if (inp) inp.focus();
 });
 $("#view").addEventListener("click", async e => {
@@ -651,7 +657,8 @@ const files = x.files.filter((_, j) => j !== i); await upd(x.id, { files });
 if (f.kind === "file" && assets) { try { await assets.delete(f.id); } catch {} }
 toast("أُزيل المرفق");
 }
-else if (a === "remind") { const time = document.querySelector(`[data-f="remTime"][data-id="${x.id}"]`)?.value || "09:00"; window.open(calLink({ ...x, reminder: { time } }), "_blank"); }
+else if (a === "remind") { const time = document.querySelector(`[data-f="remTime"][data-id="${x.id}"]`)?.value || "09:00"; await upd(x.id, { reminder: { time, state: "auto" } }); toast(isDemo ? "في النسخة الحقيقية بيتضاف للتقويم ويوصلك تذكير" : "اتضاف للتقويم — هيوصلك تذكير " + time); if (!isDemo) { load.done = false; load(); } }
+else if (a === "unremind") { await upd(x.id, { reminder: null }); toast("اتلغى التذكير"); if (!isDemo) load(); }
 });
 $("#view").addEventListener("change", async e => {
 const el = e.target;
@@ -690,12 +697,14 @@ function demoApi(fn, args){
   if (fn === "getAll") return { me: DEMO_ME, users: demoUsers.map(u => ({ ...u })), items: [], notes: {} };
   if (fn === "listUsers") return demoUsers.map(u => ({ ...u }));
   if (fn === "addUser") { const [username, name, role] = args; if (!username || !name) throw new Error("أكمل البيانات"); demoUsers.push({ id: "demo_" + rid(), username: String(username).toLowerCase(), name, role: role === "admin" ? "admin" : "member", active: true }); return demoUsers.map(u => ({ ...u })); }
-  if (fn === "updateUser") { const [id, patch] = args; const u = demoUsers.find(x => x.id === id); if (u) { if (patch.role) u.role = patch.role; if (patch.active !== undefined) u.active = patch.active; if (patch.name) u.name = patch.name; } return demoUsers.map(u => ({ ...u })); }
+  if (fn === "sendDigest") throw new Error("الإرسال مش متاح في نسخة العرض");
+  if (fn === "updateUser") { const [id, patch] = args; const u = demoUsers.find(x => x.id === id); if (u) { if (patch.role) u.role = patch.role; if (patch.active !== undefined) u.active = patch.active; if (patch.name) u.name = patch.name; if (patch.email !== undefined) u.email = patch.email; if (patch.phone !== undefined) u.phone = String(patch.phone).replace(/[^0-9]/g, ""); if (patch.prefs) u.prefs = patch.prefs; } return demoUsers.map(u => ({ ...u })); }
   if (fn === "logout") { try { location.href = location.pathname; } catch {} return true; }
   return true;
 }
 function startDemo(){ isDemo = true; TOKEN = "demo"; ME = null; viewUid = ""; $("#auth").hidden = true; load.done = false; load(); }
 const api = async (fn, ...args) => { if (isDemo) return demoApi(fn, args); const r = await fetch(API, { method: "POST", body: JSON.stringify({ t: TOKEN, fn, args }), credentials: "omit" }); if (!r.ok) throw new Error("خطأ في الاتصال (" + r.status + ")"); const j = await r.json(); if (!j.ok) { if (/سجّل الدخول|انتهت الجلسة|غير مفعّل/.test(j.error || "")) { setToken(""); showAuth("login", j.error); } throw new Error(j.error || "خطأ غير معروف"); } return j.data; };
+let askedProfile = false;
 let store = {}, noteStore = {}, listeners = [], noteListeners = [], pending = 0;
 const snap = obj => ({ docs: Object.entries(obj).map(([id, v]) => ({ id, data: () => v })) });
 const emit = () => listeners.forEach(f => f(snap(store)));
@@ -721,7 +730,8 @@ if (pending || (isDemo && load.done)) return; load.done = true;
 try { const r = await api("getAll"); if (pending) return;
 ME = r.me; USERS = r.users || []; if (!viewUid || !USERS.some(u => u.id === viewUid)) viewUid = ME.id; canWrite = true; setChip();
 store = {}; (r.items || []).forEach(o => store[o.id] = strip(o)); noteStore = r.notes || {};
-emit(); emitN(); banner(isDemo ? "نسخة عرض فاضية للتجربة: جرّب إضافة مهام ومستخدمين وإسناد — لا شيء يُحفظ، وبتتمسح لما تقفل الصفحة." : isMgr ? `وضع ${MGR}: تقدر تشوف المهام وتضيف مهام جديدة في «أهم 6 مهام» و«جدول المهام».` : "");
+emit(); emitN(); if (!isDemo && ME && !ME.email && !askedProfile) { askedProfile = true; setTimeout(() => showAuth("profile", "أهلاً " + ME.name + " 👋 — ضيف إيميلك ورقم جوالك عشان توصلك التذكيرات وملخص يومك."), 400); }
+banner(isDemo ? "نسخة عرض فاضية للتجربة: جرّب إضافة مهام ومستخدمين وإسناد — لا شيء يُحفظ، وبتتمسح لما تقفل الصفحة." : isMgr ? `وضع ${MGR}: تقدر تشوف المهام وتضيف مهام جديدة في «أهم 6 مهام» و«جدول المهام».` : "");
 } catch (e) { banner("تعذّر تحميل البيانات: " + ((e && e.message) || "تأكد من الاتصال ثم أعد تحميل الصفحة."), true); }
 }
 (() => {
@@ -741,17 +751,27 @@ document.addEventListener("visibilitychange", () => { if (document.visibilitySta
 function setToken(t){ if (isDemo) { TOKEN = t || ""; return; } TOKEN = t || ""; try { if (TOKEN) localStorage.setItem("tasks_token", TOKEN); else localStorage.removeItem("tasks_token"); } catch {} }
 function applyView(doRender){ items = allItems.filter(x => (x.owner || (ME && ME.id)) === (viewUid || (ME && ME.id))); if (doRender) render(); }
 function showAuth(mode, msg){
-  const a = $("#auth"); a.hidden = false; $("#authErr").textContent = msg || "";
+  const a = $("#auth"); a.hidden = false; $("#authErr").style.color = ""; $("#authErr").textContent = mode === "profile" ? "" : (msg || "");
   const f = $("#authFields"); a.dataset.mode = mode; $("#demoBtn").hidden = mode !== "login";
   if (mode === "setup") { $("#authTitle").textContent = "إعداد حساب المدير"; $("#authSub").textContent = "أول مرة: اعمل حسابك كمدير للنظام. مهامك الحالية هتتنقل على الحساب ده.";
     f.innerHTML = '<label>الاسم<input name="name" required></label><label>اسم المستخدم (إنجليزي)<input name="username" autocomplete="username" required></label><label>كلمة المرور<input name="password" type="password" autocomplete="new-password" required minlength="6"></label><label>تأكيد كلمة المرور<input name="password2" type="password" autocomplete="new-password" required></label>'; $("#authBtn").textContent = "إنشاء الحساب"; }
   else if (mode === "pw") { $("#authTitle").textContent = "تغيير كلمة المرور"; $("#authSub").textContent = "اكتب كلمة المرور الجديدة (6 أحرف على الأقل)";
     f.innerHTML = '<label>كلمة المرور الجديدة<input name="password" type="password" autocomplete="new-password" required minlength="6"></label><label>تأكيد كلمة المرور<input name="password2" type="password" autocomplete="new-password" required></label><button type="button" class="btn ghost" id="authCancel">إلغاء</button>'; $("#authBtn").textContent = "حفظ"; }
+  else if (mode === "profile") { const pr = ME.prefs || {}; $("#authTitle").textContent = "حسابي"; $("#authSub").textContent = msg ? "" : "بياناتك عشان توصلك التذكيرات والإشعارات";
+    if (msg) { $("#authErr").textContent = ""; $("#authSub").textContent = msg; }
+    f.innerHTML = `<label>الاسم<input name="name" value="${esc(ME.name)}" required></label><label>الإيميل<input name="email" type="email" dir="ltr" value="${esc(ME.email || "")}" placeholder="name@company.com" autocomplete="email"></label><label>رقم الجوال<input name="phone" type="tel" dir="ltr" value="${esc(ME.phone ? "+" + ME.phone : "")}" placeholder="05xxxxxxxx" autocomplete="tel"></label><hr>
+    <label class="chk"><input type="checkbox" name="daily" ${pr.daily !== false ? "checked" : ""}> ملخص مهام اليوم على الإيميل كل صباح (٧:٣٠)</label>
+    <label class="chk"><input type="checkbox" name="assign" ${pr.assign !== false ? "checked" : ""}> إيميل لما حد يسند لي مهمة</label>
+    <label class="chk"><input type="checkbox" name="cal" ${pr.cal !== false ? "checked" : ""}> إضافة الاجتماعات والتذكيرات لتقويمي تلقائياً</label>
+    <div class="row2"><button type="button" class="btn ghost" id="testMail">إرسال إيميل تجربة</button><button type="button" class="btn ghost" id="goPw">تغيير كلمة المرور</button><button type="button" class="btn ghost" id="authCancel">إلغاء</button></div>`; $("#authBtn").textContent = "حفظ"; }
   else { $("#authTitle").textContent = "تسجيل الدخول"; $("#authSub").textContent = "ادخل باسم المستخدم وكلمة المرور";
     f.innerHTML = '<label>اسم المستخدم<input name="username" autocomplete="username" required></label><label>كلمة المرور<input name="password" type="password" autocomplete="current-password" required></label>'; $("#authBtn").textContent = "دخول"; }
   setTimeout(() => { const i = f.querySelector("input"); if (i) i.focus(); }, 50);
 }
-$("#auth").addEventListener("click", e => { if (e.target.id === "authCancel") $("#auth").hidden = true; });
+$("#auth").addEventListener("click", async e => { if (e.target.id === "authCancel") $("#auth").hidden = true;
+  if (e.target.id === "goPw") showAuth("pw");
+  if (e.target.id === "testMail") { if (isDemo) { $("#authErr").textContent = "الإرسال مش متاح في نسخة العرض"; return; } if (!ME.email) { $("#authErr").textContent = "احفظ إيميلك الأول"; return; }
+    e.target.disabled = true; try { const r = await api("sendDigest"); $("#authErr").style.color = "var(--done)"; $("#authErr").textContent = "اتبعت إيميل لـ " + r.to + " — شوف الوارد (أو الـ Spam)"; } catch (x) { $("#authErr").style.color = ""; $("#authErr").textContent = (x && x.message) || "تعذّر الإرسال"; } finally { e.target.disabled = false; } } });
 $("#authForm").addEventListener("submit", async e => {
   e.preventDefault(); const mode = $("#auth").dataset.mode; const fd = new FormData(e.target); const g = k => (fd.get(k) || "").toString();
   const err = m => { $("#authErr").textContent = m; };
@@ -759,12 +779,14 @@ $("#authForm").addEventListener("submit", async e => {
   $("#authBtn").disabled = true; err("");
   try {
     if (mode === "pw") { await api("updateUser", ME.id, { password: g("password") }); $("#auth").hidden = true; toast("تم تغيير كلمة المرور"); }
+    else if (mode === "profile") { const r = await api("updateUser", ME.id, { name: g("name").trim(), email: g("email").trim(), phone: g("phone").trim(), prefs: { daily: !!fd.get("daily"), assign: !!fd.get("assign"), cal: !!fd.get("cal") } });
+      const mine = (r || []).find(u => u.id === ME.id); if (mine) Object.assign(ME, mine); if (isAdmin()) USERS = r; setChip(); render(); $("#auth").hidden = true; toast("تم حفظ بياناتك"); }
     else { const r = mode === "setup" ? await api("setup", g("username"), g("name"), g("password")) : await api("login", g("username"), g("password"));
       setToken(r.token); ME = r.user; viewUid = ME.id; $("#auth").hidden = true; load.done = false; await load(); toast("أهلاً " + ME.name); }
   } catch (x) { err((x && x.message) || "حدث خطأ"); } finally { $("#authBtn").disabled = false; }
 });
 $("#logoutBtn").onclick = async () => { try { await api("logout"); } catch {} setToken(""); ME = null; USERS = []; allItems = []; items = []; store = {}; setChip(); render(); showAuth("login"); };
-$("#pwBtn").onclick = () => showAuth("pw");
+$("#pwBtn").onclick = () => showAuth("profile");
 $("#viewSel").onchange = e => { viewUid = e.target.value; tab = "day"; document.querySelectorAll("nav.tabs button").forEach(x => x.setAttribute("aria-selected", x.dataset.tab === "day")); applyView(true); };
 document.addEventListener("click", e => { const b = e.target.closest("[data-view]"); if (!b) return; viewUid = b.dataset.view; tab = "day"; day = today();
   document.querySelectorAll("nav.tabs button").forEach(x => x.setAttribute("aria-selected", x.dataset.tab === "day")); setChip(); applyView(true); window.scrollTo({ top: 0, behavior: "smooth" }); });
@@ -781,6 +803,9 @@ function statsFor(uid){
   const doneW = mine.filter(x => x.done && x.doneAt && iso(new Date(x.doneAt)) >= ws).length;
   const base = doneW + open.length; return { open: open.length, late: late.length, wait, doneW, pct: base ? Math.round(doneW / base * 100) : 0, lateList: late };
 }
+function waLink(u){ const t = today(); const open = allItems.filter(x => (x.owner || ME.id) === u.id && !x.done && x.kind !== "meeting" && x.due && x.due <= t);
+  const msg = `السلام عليكم ${u.name}،\nمهامك المفتوحة اليوم (${open.length}):\n` + open.slice(0, 15).map(x => "• " + x.title + (x.due < t ? " (متأخرة)" : "")).join("\n") + `\n\n${location.origin + location.pathname}`;
+  return "https:\/\/wa.me/" + u.phone + "?text=" + encodeURIComponent(msg); }
 function teamView(){
   if (!isAdmin()) return "";
   const us = USERS.filter(u => u.active);
@@ -788,7 +813,9 @@ function teamView(){
     return `<div class="ucard"><div class="top"><span class="av">${esc(ini)}</span><div class="nm"><b>${esc(u.name)}</b><small>${u.role === "admin" ? "مدير" : "مستخدم"}</small></div></div>
     <div class="ustats"><div><b>${s.open}</b><small>مفتوحة</small></div><div class="l"><b>${s.late}</b><small>متأخرة</small></div><div class="w"><b>${s.wait}</b><small>بانتظار رد</small></div><div class="d"><b>${s.doneW}</b><small>أُنجزت</small></div></div>
     <div class="bar"><i style="width:${s.pct}%"></i></div>
-    <button class="btn ghost" data-view="${u.id}">عرض مهامه وإسناد مهمة</button></div>`; }).join("");
+    ${u.email || u.phone ? `<div class="contact">${esc(u.email || "")}${u.phone ? (u.email ? " · " : "") + "+" + esc(u.phone) : ""}</div>` : `<div class="contact" style="color:var(--late);direction:rtl">لم يضف إيميل/جوال بعد</div>`}
+    <button class="btn ghost" data-view="${u.id}">عرض مهامه وإسناد مهمة</button>
+    ${u.email || u.phone ? `<div class="acts2">${u.phone ? `<a class="wa" href="${waLink(u)}" target="_blank" rel="noopener">💬 واتساب</a>` : ""}${u.email ? `<button data-digest="${u.id}">✉️ ابعت ملخصه</button>` : ""}</div>` : ""}</div>`; }).join("");
   const lateAll = us.flatMap(u => statsFor(u.id).lateList.map(x => ({ ...x, who: u.name }))).sort((a, b) => a.due.localeCompare(b.due)).slice(0, 30);
   return `<div class="panel"><h3>إسناد مهمة سريعة</h3><form class="frm" id="assignForm"><select name="owner">${us.map(u => `<option value="${u.id}">${esc(u.name)}</option>`).join("")}</select>
     <input class="grow" name="title" placeholder="المهمة…" required><input type="date" name="due" value="${today()}"><select name="ttype"><option value="tech">فنية</option><option value="admin">إدارية</option><option value="fin">مالية</option></select>
@@ -800,8 +827,8 @@ function usersView(){
   if (!isAdmin()) return "";
   return `<div class="panel"><h3>إضافة مستخدم</h3><form class="frm" id="addUserForm"><input name="name" placeholder="الاسم" required><input name="username" placeholder="اسم المستخدم (إنجليزي)" required autocomplete="off">
     <input name="password" type="password" placeholder="كلمة المرور (6+)" required minlength="6" autocomplete="new-password"><select name="role"><option value="member">مستخدم</option><option value="admin">مدير</option></select><button class="btn">إضافة</button></form></div>
-    <div class="panel"><h3>المستخدمين</h3><div class="tblwrap"><table class="utable"><tr><th>الاسم</th><th>اسم المستخدم</th><th>الصلاحية</th><th>الحالة</th><th></th></tr>
-    ${USERS.map(u => `<tr><td><b>${esc(u.name)}</b>${u.id === ME.id ? " <small>(أنت)</small>" : ""}</td><td dir="ltr" style="text-align:start">${esc(u.username || "")}</td>
+    <div class="panel"><h3>المستخدمين</h3><div class="tblwrap"><table class="utable"><tr><th>الاسم</th><th>اسم المستخدم</th><th>الإيميل / الجوال</th><th>الصلاحية</th><th>الحالة</th><th></th></tr>
+    ${USERS.map(u => `<tr><td><b>${esc(u.name)}</b>${u.id === ME.id ? " <small>(أنت)</small>" : ""}</td><td dir="ltr" style="text-align:start">${esc(u.username || "")}</td><td dir="ltr" style="text-align:start;font-size:12.5px">${u.email ? esc(u.email) : '<span style="color:var(--late)">— لم يُضف</span>'}${u.phone ? "<br>+" + esc(u.phone) : ""}</td>
     <td>${u.id === ME.id ? '<span class="tag admin">مدير</span>' : `<select data-urole="${u.id}"><option value="member" ${u.role !== "admin" ? "selected" : ""}>مستخدم</option><option value="admin" ${u.role === "admin" ? "selected" : ""}>مدير</option></select>`}</td>
     <td>${u.active ? '<span class="tag member">مفعّل</span>' : '<span class="tag off">موقوف</span>'}</td>
     <td>${u.id === ME.id ? "" : `<button data-uact="${u.id}">${u.active ? "إيقاف" : "تفعيل"}</button> <button data-upw="${u.id}">كلمة مرور جديدة</button>`}</td></tr>`).join("")}</table></div></div>`;
@@ -824,6 +851,8 @@ $("#view").addEventListener("click", async e => {
     setChip(); render();
   } catch (x) { banner((x && x.message) || "خطأ", true); }
 });
+$("#view").addEventListener("click", async e => { const b = e.target.closest("[data-digest]"); if (!b) return; b.disabled = true;
+  try { const r = await api("sendDigest", b.dataset.digest); toast("اتبعت الملخص لـ " + r.to); } catch (x) { banner((x && x.message) || "تعذّر الإرسال", true); } finally { b.disabled = false; } });
 $("#view").addEventListener("change", async e => { const s = e.target.closest("[data-urole]"); if (!s) return; try { USERS = await api("updateUser", s.dataset.urole, { role: s.value }); toast("تم تحديث الصلاحية"); setChip(); } catch (x) { banner((x && x.message) || "خطأ", true); } });
 
 // re-render without losing the cursor in an add field
