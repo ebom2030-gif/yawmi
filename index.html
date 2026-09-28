@@ -4,7 +4,7 @@
 <script>window.onerror=function(m,s,l,c){document.addEventListener("DOMContentLoaded",function(){});var d=document.createElement("pre");d.style.cssText="color:#b00;white-space:pre-wrap;direction:ltr;font-size:12px";d.textContent="ERR: "+m+" @"+l+":"+c;(document.body||document.documentElement).prepend(d);};</script>
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#14213d">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23f0d68f'/%3E%3Cstop offset='1' stop-color='%23c29a3e'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2322335a'/%3E%3Cstop offset='1' stop-color='%2314213d'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23b)'/%3E%3Cg stroke='%23e4c77f' stroke-width='3.2' stroke-linecap='round'%3E%3Cpath d='M32 11v6'/%3E%3Cpath d='M17.2 17.2l4.2 4.2'/%3E%3Cpath d='M46.8 17.2l-4.2 4.2'/%3E%3Cpath d='M11 32h6'/%3E%3Cpath d='M47 32h6'/%3E%3C/g%3E%3Cpath d='M16 44a16 16 0 0 1 32 0z' fill='url(%23g)'/%3E%3Cpath d='M24.5 36.5l5 5 10-10.5' fill='none' stroke='%2314213d' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M11 48h42' stroke='%23e4c77f' stroke-width='3.2' stroke-linecap='round'/%3E%3C/svg%3E">
@@ -312,6 +312,64 @@ button[data-udel][data-sure="1"]{background:var(--late);color:#fff;border-color:
 @media(max-width:560px){.cp{grid-template-columns:1fr 1fr}.cp .rm{grid-column:span 2}#cliForm .two{grid-template-columns:1fr}}
 .cfromp,.cproj{margin:4px 0 10px;padding-inline-start:18px;font-size:13px;line-height:1.9}.cfromp a.wa{text-decoration:none}
 .ptools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}.ptools input{flex:1;min-width:200px;border:1px solid var(--line);border-radius:10px;padding:8px 12px;font:inherit}.ptools .chips{display:flex;gap:6px;flex-wrap:wrap}
+
+/* ===== App shell: sidebar + slim header ===== */
+body{padding:0!important}
+.app{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh}
+.main{min-width:0;padding-inline:22px;padding-bottom:60px}
+.main .hero{margin-inline:-22px;padding:22px 22px 64px}
+.main .hero-in{max-width:1080px}.main .wrap{max-width:1080px}
+.side{position:sticky;top:0;height:100vh;overflow-y:auto;background:linear-gradient(180deg,#101a33 0%,#14213d 55%,#1a2a4d 100%);color:#dfe5f2;padding:18px 14px;display:flex;flex-direction:column;gap:14px;border-inline-end:1px solid rgba(228,199,127,.18);z-index:60}
+.sbrand{display:flex;align-items:center;gap:10px;padding:2px 6px 14px;border-bottom:1px solid rgba(228,199,127,.2)}
+.sbrand .logo{width:42px;height:42px;border-radius:12px;box-shadow:0 0 0 1.5px rgba(228,199,127,.5)}
+.sbrand b{display:block;font-size:22px;font-weight:800;color:#fff;line-height:1.1}.sbrand span{font-size:11px;letter-spacing:3px;color:var(--gold2);font-weight:800}
+.sclose{display:none;margin-inline-start:auto;background:rgba(255,255,255,.08);border:0;color:#fff;width:34px;height:34px;border-radius:10px;font-size:15px;cursor:pointer}
+.side .spc{display:flex;width:100%}.side .spc button{flex:1}
+.side nav.tabs{display:flex;flex-direction:column;gap:2px;margin:0;background:none;border:0;box-shadow:none;padding:0;overflow:visible;max-width:none}
+.ngrp{display:flex;flex-direction:column;gap:2px}.ngrp[hidden]{display:none}
+.ngl{font-size:11px;font-weight:800;color:#7f8bab;letter-spacing:.5px;padding:12px 12px 4px}
+.side nav.tabs button{display:flex;align-items:center;gap:10px;width:100%;text-align:start;padding:9px 12px;color:#c9d2e8;border-radius:10px;font-weight:600;font-size:14.5px;background:none}
+.side nav.tabs button[hidden]{display:none}
+.side nav.tabs button i,.bnav i,.menub svg{display:grid;place-items:center;width:20px;height:20px;flex:none}
+.side nav.tabs svg,.bnav svg,.menub svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.side nav.tabs button:hover{background:rgba(255,255,255,.06);color:#fff}
+.side nav.tabs button[aria-selected="true"]{background:linear-gradient(90deg,rgba(228,199,127,.06),rgba(228,199,127,.18));color:#fff;box-shadow:inset -3px 0 0 var(--gold2)}
+.side nav.tabs button[aria-selected="true"] i{color:var(--gold2)}
+.side nav.tabs .c{margin-inline-start:auto;background:rgba(255,255,255,.1);color:#e8ecf5}.side nav.tabs .c.new{background:var(--gold2);color:#14213d;font-weight:800;font-size:10.5px}
+.sfoot{margin-top:auto;border-top:1px solid rgba(255,255,255,.1);padding-top:12px;display:grid;gap:8px}
+.sfoot .role{margin:0;justify-self:start;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sbtns{display:flex;gap:6px;flex-wrap:wrap}.sbtns .hbtn{flex:1}.sver{font-size:10.5px;color:#6f7b9b}
+body.private .side{background:linear-gradient(180deg,#0a2a29,#0d3534 55%,#175452)}body.private .side nav.tabs button[aria-selected="true"]{box-shadow:inset -3px 0 0 #6fd0cf}body.private .side nav.tabs button[aria-selected="true"] i{color:#6fd0cf}
+.htl{display:flex;align-items:center;gap:12px}.htl h1{font-size:26px!important;margin:0}.htr{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.menub{display:none;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#fff;width:40px;height:40px;border-radius:12px;place-items:center;cursor:pointer}
+.sback{display:none}
+body:not([data-tab="day"]):not([data-tab="backlog"]):not([data-tab="upcoming"]) .stats{display:none}
+body:not([data-tab="day"]):not([data-tab="backlog"]):not([data-tab="upcoming"]) .main .hero{padding-bottom:26px}
+body:not([data-tab="day"]) .ringwrap{display:none}
+.bnav{display:none}
+.main .phead>div>h2{display:none}.main .phead .sub{font-size:14px;color:var(--ink2);margin-top:4px}
+body:not([data-tab="day"]):not([data-tab="backlog"]):not([data-tab="upcoming"]):not([data-tab="report"]) #viewSel{display:none}
+.side .spc button{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-inline:8px}
+@media (max-width:1000px){
+ .app{display:block}.main{padding-inline:14px;padding-bottom:96px}.main .hero{margin-inline:-14px;padding:14px 14px 60px}
+ .side{position:fixed;inset-block:0;inset-inline-start:0;width:290px;max-width:86vw;height:100%;transform:translateX(105%);transition:transform .25s ease;box-shadow:0 0 40px rgba(0,0,0,.35);z-index:210}
+ body.sideopen .side{transform:none}.sback{position:fixed;inset:0;background:rgba(8,14,30,.5);z-index:205}body.sideopen .sback{display:block}
+ .sclose,.menub{display:inline-grid}.htl h1{font-size:21px!important}
+ .bnav{display:flex;position:fixed;bottom:0;inset-inline:0;z-index:150;background:var(--surface);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px));box-shadow:0 -8px 24px rgba(20,33,61,.08)}
+ .bnav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:0;color:var(--mut);font-size:11px;font-weight:700;padding:4px 0;cursor:pointer;position:relative}
+ .bnav button[hidden]{display:none}.bnav button.on{color:var(--navy)}.bnav button.on:before{content:"";position:absolute;top:-6px;width:26px;height:3px;border-radius:0 0 3px 3px;background:var(--gold)}
+ .updbar{bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+}
+@media print{.side,.bnav,.sback,.menub{display:none!important}.app{display:block}.main{padding:0}}
+/* ===== AI page ===== */
+.aihero{display:grid;grid-template-columns:1.4fr 1fr;gap:12px;margin:14px 0}.aihero>div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 16px;font-size:13.5px}.aihero ol{margin:6px 0 0;padding-inline-start:18px;line-height:1.9}.aitip{background:var(--gold-soft)!important;border-color:var(--gold2)!important;color:var(--ink2)}
+.aigrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.aicard{display:flex;flex-direction:column;align-items:flex-start;gap:5px;text-align:start;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;cursor:pointer;transition:transform .15s,box-shadow .15s,border-color .15s;color:var(--ink);font:inherit}
+.aicard:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:var(--gold2)}.aiic{font-size:22px}.aicard b{font-size:15px}.aicard small{color:var(--ink2);font-size:12.5px;line-height:1.6}.aimeta{font-size:11px;color:var(--mut);margin-top:auto}.aigo{font-size:12.5px;font-weight:800;color:var(--gold)}
+#aiCard{max-width:720px;margin:20px auto}#aiCard label{display:grid;gap:4px;font-size:13px;font-weight:700;margin-bottom:8px}#aiCard input,#aiCard select,#aiCard textarea{border:1px solid var(--line);border-radius:10px;padding:8px 10px;font:inherit;background:var(--surface);color:var(--ink);min-width:0}
+.aivars{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}#aiOut{background:var(--surface2)!important;font-size:13px;line-height:1.7}
+.aiact{display:flex;gap:8px;flex-wrap:wrap}.aiact a.btn{text-decoration:none;display:inline-flex;align-items:center}
+@media(max-width:640px){.aivars,.aihero{grid-template-columns:1fr}}
 .ploc{color:#e4c77f;text-decoration:none}.ploc:hover{text-decoration:underline}
 .tchip{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:7px;background:var(--surface2);color:var(--ink2);border:1px solid var(--line);white-space:nowrap}
 .n{font-variant-numeric:tabular-nums;text-align:left;white-space:nowrap}.nw{white-space:nowrap;font-size:12.5px;color:var(--ink2)}.mutd{color:var(--mut)}
@@ -376,9 +434,23 @@ body.private .hero{background:radial-gradient(1200px 300px at 85% -40%,rgba(111,
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="ylg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0d68f"/><stop offset="1" stop-color="#c29a3e"/></linearGradient><linearGradient id="ylb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22335a"/><stop offset="1" stop-color="#14213d"/></linearGradient></defs><symbol id="yl" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="url(#ylb)"/><g stroke="#e4c77f" stroke-width="3.2" stroke-linecap="round"><path d="M32 11v6"/><path d="M17.2 17.2l4.2 4.2"/><path d="M46.8 17.2l-4.2 4.2"/><path d="M11 32h6"/><path d="M47 32h6"/></g><path d="M16 44a16 16 0 0 1 32 0z" fill="url(#ylg)"/><path d="M24.5 36.5l5 5 10-10.5" fill="none" stroke="#14213d" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 48h42" stroke="#e4c77f" stroke-width="3.2" stroke-linecap="round"/></symbol></svg>
 
+<div class="app">
+<aside class="side" id="side" aria-label="القائمة الرئيسية">
+<div class="sbrand"><svg class="logo" role="img" aria-label="شعار يومي"><use href="#yl"/></svg><div><b>يومي</b><span>YAWMI</span></div><button type="button" class="sclose" id="sideClose" aria-label="إغلاق القائمة">✕</button></div>
+<span class="spc" id="spc" hidden><button data-space="w">🏢 العمل</button><button data-space="p">🔒 <span id="spName">أعمالي الخاصة</span></button></span>
+<nav class="tabs" role="tablist" aria-label="الصفحات">
+<div class="ngrp"><div class="ngl">المهام</div><button role="tab" data-tab="day" aria-selected="true"><i><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M8 2v4M16 2v4M3 10h18"/><path d="M9 15l2 2 4-4"/></svg></i><span>صفحة اليوم</span></button><button role="tab" data-tab="backlog" aria-selected="false"><i><svg viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg></i><span>المهام العامة</span><span class="c" id="cBk">0</span></button><button role="tab" data-tab="upcoming" aria-selected="false"><i><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></i><span>القادمة</span><span class="c" id="cUp">0</span></button><button role="tab" data-tab="report" aria-selected="false"><i><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15v3M11 11v7M15 7v11M19 12v6"/></svg></i><span>ملخص الأسبوع</span></button></div>
+<div class="ngrp"><div class="ngl">الأعمال</div><button role="tab" data-tab="projects" aria-selected="false" id="tabProj" hidden><i><svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-5h6v5M9 9h.01M15 9h.01M9 12.5h.01M15 12.5h.01"/></svg></i><span>المشاريع</span></button><button role="tab" data-tab="clients" aria-selected="false" id="tabCli" hidden><i><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg></i><span>العملاء والجهات</span></button></div>
+<div class="ngrp"><div class="ngl">الأدوات</div><button role="tab" data-tab="ai" aria-selected="false" id="tabAi" hidden><i><svg viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg></i><span>مساعد الذكاء الاصطناعي</span><span class="c new">جديد</span></button></div>
+<div class="ngrp"><div class="ngl">الإدارة</div><button role="tab" data-tab="team" aria-selected="false" id="tabTeam" hidden><i><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/></svg></i><span>لوحة الفريق</span></button><button role="tab" data-tab="users" aria-selected="false" id="tabUsers" hidden><i><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></i><span>المستخدمين والصلاحيات</span></button></div>
+</nav>
+<div class="sfoot"><span class="role" id="roleChip"></span><div class="sbtns"><button class="hbtn" id="installBtn" hidden>📲 ثبّت التطبيق</button><button class="hbtn" id="pwBtn" hidden>⚙️ حسابي</button><button class="hbtn" id="logoutBtn" hidden>خروج</button></div><div class="sver">Yawmi · يومي — رتّب يومك وتابع فريقك</div></div>
+</aside>
+<div class="sback" id="sideBack"></div>
+<div class="main">
 <header class="hero"><div class="hero-in">
-<div><div class="brandbar"><svg class="logo" role="img" aria-label="شعار يومي"><use href="#yl"/></svg><div><h1>يومي <span class="en">Yawmi</span></h1><div class="tagline">رتّب يومك… وتابع فريقك</div></div></div><div class="date" id="todayLbl"></div><div class="hero-tools"><span class="role" id="roleChip"></span><select id="viewSel" hidden aria-label="عرض مهام"></select><span class="spc" id="spc" hidden><button data-space="w">🏢 العمل</button><button data-space="p">🔒 <span id="spName">أعمالي الخاصة</span></button></span><button class="hbtn" id="installBtn" hidden>📲 ثبّت التطبيق</button><button class="hbtn" id="pwBtn" hidden>حسابي</button><button class="hbtn" id="logoutBtn" hidden>خروج</button></div></div>
-<div class="ringwrap"><div class="ringlbl"><b id="ringTxt">إنجاز اليوم</b><span id="ringSub">لا توجد مهام بعد</span></div><div class="ring" id="ring"><div id="ringPct">0%</div></div></div>
+<div class="htl"><button type="button" class="menub" id="menuBtn" aria-label="فتح القائمة"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><div><h1 id="pgTitle">صفحة اليوم</h1><div class="date" id="todayLbl"></div></div></div>
+<div class="htr"><select id="viewSel" hidden aria-label="عرض مهام"></select><div class="ringwrap"><div class="ringlbl"><b id="ringTxt">إنجاز اليوم</b><span id="ringSub">لا توجد مهام بعد</span></div><div class="ring" id="ring"><div id="ringPct">0%</div></div></div></div>
 </div></header>
 <div class="wrap">
 <span class="ro" id="roBadge" hidden></span>
@@ -390,15 +462,6 @@ body.private .hero{background:radial-gradient(1200px 300px at 85% -40%,rgba(111,
 </section>
 <div class="banner" id="banner" hidden></div>
 <div class="spcban" id="spcBanner" hidden></div>
-<nav class="tabs" role="tablist">
-<button role="tab" data-tab="day" aria-selected="true">صفحة اليوم</button>
-<button role="tab" data-tab="backlog" aria-selected="false">المهام العامة<span class="c" id="cBk">0</span></button>
-<button role="tab" data-tab="projects" aria-selected="false" id="tabProj" hidden>المشاريع</button><button role="tab" data-tab="clients" aria-selected="false" id="tabCli" hidden>العملاء والجهات</button>
-<button role="tab" data-tab="upcoming" aria-selected="false">القادمة<span class="c" id="cUp">0</span></button>
-<button role="tab" data-tab="report" aria-selected="false">ملخص الأسبوع</button>
-<button role="tab" data-tab="team" aria-selected="false" id="tabTeam" hidden>لوحة الفريق</button>
-<button role="tab" data-tab="users" aria-selected="false" id="tabUsers" hidden>المستخدمين</button>
-</nav>
 <div id="dayWrap">
 <div class="daynav">
 <button class="nb" id="prevDay" aria-label="اليوم السابق">‹ السابق</button>
@@ -414,10 +477,13 @@ body.private .hero{background:radial-gradient(1200px 300px at 85% -40%,rgba(111,
 </div>
 <main id="view"></main>
 </div>
+</div></div>
+<nav class="bnav" id="bnav" aria-label="تنقل سريع"><button type="button" data-bt="day"><i><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M8 2v4M16 2v4M3 10h18"/><path d="M9 15l2 2 4-4"/></svg></i><span>اليوم</span></button><button type="button" data-bt="projects"><i><svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-5h6v5M9 9h.01M15 9h.01M9 12.5h.01M15 12.5h.01"/></svg></i><span>المشاريع</span></button><button type="button" data-bt="clients"><i><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg></i><span>العملاء</span></button><button type="button" data-bt="ai"><i><svg viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg></i><span>الذكاء</span></button><button type="button" data-more><i><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></i><span>المزيد</span></button></nav>
 <datalist id="projList"></datalist><datalist id="cliList"></datalist>
 <div class="toast" id="toast" hidden></div>
 <div class="updbar" id="actBar" hidden><span id="actMsg"></span><a id="actLink" class="wabtn" target="_blank" rel="noopener"></a><button type="button" class="x" onclick="this.parentNode.hidden=true" aria-label="إغلاق">✕</button></div>
 <div class="updbar" id="updBar" hidden>✨ فيه نسخة جديدة من يومي <button type="button" id="updBtn">تحديث</button></div>
+<div class="ihelp cbox" id="aiBox" hidden><div class="card" id="aiCard"></div></div>
 <div class="ihelp cbox" id="cliBox" hidden><form class="card" id="cliForm"></form></div>
 <div class="ihelp" id="payBox" hidden><form class="card" id="payForm"></form></div>
 <div class="ihelp" id="iHelp" hidden><div class="card"><h3>📲 ثبّت يومي على جهازك</h3>
@@ -468,7 +534,7 @@ let db = null, col = null, mcp = null, assets = null, canWrite = false;
 let tfilter = "all", bfilter = "all";
 let tab = "day", page = "1", day = today(), open = null, confirmDel = null;
 function setChip(){ const c = $("#roleChip"); c.textContent = ME ? ME.name + " · " + (ROLEL[ME.role] || "مستخدم") : "جارٍ التحميل…"; c.className = "role" + (ME && ME.role === "owner" ? " own" : ME && ME.role === "admin" ? "" : " mgr");
-$("#logoutBtn").hidden = !ME; $("#pwBtn").hidden = !ME || isDemo; if (ME) $("#logoutBtn").textContent = isDemo ? "خروج من العرض" : "خروج"; $("#tabTeam").hidden = !can("team") || PRIV(); $("#tabProj").hidden = !(can("projects") || PRIV()); $("#tabCli").hidden = !(can("projects") || PRIV()); $("#tabUsers").hidden = !can("users") || PRIV();
+$("#logoutBtn").hidden = !ME; $("#pwBtn").hidden = !ME || isDemo; if (ME) $("#logoutBtn").textContent = isDemo ? "خروج من العرض" : "خروج"; $("#tabTeam").hidden = !can("team") || PRIV(); $("#tabProj").hidden = !(can("projects") || PRIV()); $("#tabCli").hidden = !(can("projects") || PRIV()); $("#tabAi").hidden = !ME; $("#tabUsers").hidden = !can("users") || PRIV();
 document.body.classList.toggle("private", PRIV()); const sp = $("#spc"); if (sp) { sp.hidden = !ME; $("#spName").textContent = spName(); sp.querySelectorAll("[data-space]").forEach(b => b.setAttribute("aria-pressed", b.dataset.space === SPACE)); }
 const s = $("#viewSel"); s.hidden = !can("team") || PRIV() || USERS.filter(u => u.active).length < 2;
 if (!s.hidden) s.innerHTML = USERS.filter(u => u.active).map(u => `<option value="${u.id}" ${u.id === viewUid ? "selected" : ""}>${u.id === ME.id ? "مهامي" : "مهام: " + esc(u.name)}</option>`).join(""); }
@@ -656,7 +722,17 @@ else add = `<form class="addrow" data-kind="${kind}"><input name="title" placeho
 return `<section class="sec sec-${kind} ${extra?.full ? "full" : ""}">${head}${extra?.filter || ""}${body}${add}</section>`;
 }
 // ---------- render ----------
+// ----- الواجهة: القائمة الجانبية والتنقل -----
+const TITLES = { day: "صفحة اليوم", backlog: "المهام العامة", upcoming: "المهام القادمة", report: "ملخص الأسبوع", projects: "المشاريع", clients: "العملاء والجهات", ai: "مساعد الذكاء الاصطناعي", team: "لوحة الفريق", users: "المستخدمين والصلاحيات" };
+function shellSync(){ document.body.dataset.tab = tab; const t = $("#pgTitle"); if (t) t.textContent = TITLES[tab] || "";
+  document.querySelectorAll(".ngrp").forEach(g => g.hidden = ![...g.querySelectorAll("[data-tab]")].some(b => !b.hidden));
+  document.querySelectorAll("#bnav [data-bt]").forEach(b => { const sb = document.querySelector(`nav.tabs [data-tab="${b.dataset.bt}"]`); b.hidden = !sb || sb.hidden; b.classList.toggle("on", b.dataset.bt === tab); }); }
+const sideOpen = v => document.body.classList.toggle("sideopen", v);
+$("#menuBtn").onclick = () => sideOpen(true); $("#sideClose").onclick = () => sideOpen(false); $("#sideBack").onclick = () => sideOpen(false);
+$("nav.tabs").addEventListener("click", e => { if (e.target.closest("[data-tab]")) { sideOpen(false); window.scrollTo({ top: 0 }); } });
+$("#bnav").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; if (b.hasAttribute("data-more")) { sideOpen(true); return; } const sb = document.querySelector(`nav.tabs [data-tab="${b.dataset.bt}"]`); if (sb) sb.click(); });
 function render(){
+shellSync();
 const t = today(); const ws = iso(weekStart()), we = iso(addDays(weekStart(), 6));
 const todays = forDay(t).filter(x => x.kind !== "meeting");
 const openToday = todays.filter(x => !x.done);
@@ -706,8 +782,9 @@ else { const g = {}; up.forEach(x => (g[x.due] ||= []).push(x));
 Object.keys(g).sort().forEach(d => { h += `<div class="grp"><h3>${esc(nice(d))}</h3><small>${esc(gFmtY.format(parse(d)))}</small></div><div class="list">${g[d].map((x,i) => row(x,i).replace('<div class="tt"', `<div class="tt" title="${KIND[x.kind]}"`)).join("")}</div>`; }); }
 } else if (tab === "projects") h = projectsView();
 else if (tab === "clients") h = clientsView();
+else if (tab === "ai") h = aiView();
 else if (tab === "team") h = teamView(); else if (tab === "users") h = usersView(); else h = report();
-if (ME && viewUid && viewUid !== ME.id && tab !== "team" && tab !== "users" && tab !== "projects" && tab !== "clients") h = `<div class="viewing">👁 أنت تشاهد مهام: ${esc(uname(viewUid))} — أي مهمة تضيفها هنا تُسند له<button data-view="${ME.id}">رجوع لمهامي</button></div>` + h;
+if (ME && viewUid && viewUid !== ME.id && tab !== "team" && tab !== "users" && tab !== "projects" && tab !== "clients" && tab !== "ai") h = `<div class="viewing">👁 أنت تشاهد مهام: ${esc(uname(viewUid))} — أي مهمة تضيفها هنا تُسند له<button data-view="${ME.id}">رجوع لمهامي</button></div>` + h;
 if (render.busy) { setTimeout(render, 0); return; } render.busy = true; try { $("#view").innerHTML = h; if (tab === "projects" && projOpen && !pEdit()) document.querySelectorAll(".pdetail input,.pdetail select,.pdetail textarea,.pdetail button:not([data-pback]):not([data-pprint]):not(.cbtns button)").forEach(x => { x.disabled = true; if (x.matches("[data-psave],[data-pdel],[data-add],[data-mkclaim],.rm")) x.hidden = true; }); } finally { render.busy = false; }
 if (open) { const f = document.querySelector(`[data-f="note"][data-id="${open}"]`); }
 }
@@ -1385,6 +1462,128 @@ function projInput(el){
   else return false;
   return true;
 }
+// ----- مساعد الذكاء الاصطناعي -----
+const AICAT = [["arch","التصميم المعماري","📐"],["study","دراسات المشاريع والتطوير","📊"],["site","الإشراف والتنفيذ","🦺"],["docs","العروض والعقود والمراسلات","📝"],["mkt","التسويق والعرض","🎯"],["img","صور ومنظورات (AI Images)","🖼️"]];
+const PROMPTS = [
+{ c:"arch", t:"برنامج المساحات (Space Program)", d:"جدول مساحات تفصيلي لأي مشروع حسب الأرض والاشتراطات", p:`أنت معماري خبير في السوق السعودي. جهّز "برنامج مساحات" تفصيلي لمشروع {{نوع المشروع}} في {{الموقع}}.
+بيانات الأرض: المساحة {{مساحة الأرض}} م²، عدد الأدوار المسموح {{عدد الأدوار}}، نسبة البناء {{نسبة البناء}}.
+الفئة المستهدفة: {{الفئة المستهدفة}}.
+المطلوب:
+1) جدول بالفراغات الرئيسية والثانوية (الاسم، العدد، المساحة لكل وحدة، الإجمالي، الدور).
+2) إجمالي المساحات البيعية/التأجيرية مقابل مساحات الخدمات والحركة (نسبة الكفاءة).
+3) متطلبات المواقف حسب اشتراطات البلديات السعودية.
+4) ملاحظات تصميمية أساسية وأي اشتراطات لازم أراجعها مع البلدية أو كود البناء السعودي (SBC).
+اعرض النتيجة في جداول منظمة وبالعربي.` },
+{ c:"arch", t:"فكرة تصميمية + 3 بدائل", d:"Design Concept مع 3 بدائل وتقييمهم", p:`أنت مصمم معماري حائز على جوائز. اقترح فكرة تصميمية (Concept) لمشروع {{نوع المشروع}} باسم "{{اسم المشروع}}" في {{الموقع}}.
+المعطيات: {{المعطيات والمتطلبات}}.
+المطلوب:
+- 3 بدائل تصميمية مختلفة (الفكرة، مصدر الإلهام، التوزيع العام، الواجهات والمواد، الاستدامة والتكيف مع المناخ).
+- جدول مقارنة بين البدائل (التكلفة التقريبية، سهولة التنفيذ، القيمة التسويقية، الاستدامة).
+- توصيتك للبديل الأفضل ولماذا.
+- كلمات مفتاحية للمود بورد (Mood board).` },
+{ c:"arch", t:"مراجعة تصميم مقابل الاشتراطات", d:"قائمة تحقق للاشتراطات البلدية والدفاع المدني والكود", p:`راجع تصميم {{نوع المبنى}} في مدينة {{المدينة}} وجهّز قائمة تحقق (Checklist) شاملة قبل التقديم للبلدية.
+وصف التصميم: {{وصف التصميم}}.
+غطِّ: الارتدادات ونسب البناء والارتفاعات، المواقف، اشتراطات الدفاع المدني (مخارج الطوارئ، مسافات الهروب)، الوصول الشامل لذوي الإعاقة، كود البناء السعودي SBC (الإنشائي والطاقة)، الأنظمة الخاصة بالمنطقة إن وجدت.
+اعرض النتيجة في جدول: البند | المتطلب | الحالة المتوقعة | ملاحظة. ونبّهني على البنود اللي لازم أتأكد منها من المصدر الرسمي لأنها بتتغير.` },
+{ c:"arch", t:"مواصفات فنية لبند", d:"Specifications احترافية لأي بند (تشطيبات، واجهات…)", p:`اكتب مواصفات فنية (Technical Specifications) احترافية لبند: {{البند}} في مشروع {{نوع المشروع}}.
+المستوى المطلوب: {{مستوى التشطيب}}.
+قسّمها: عام، المواد والمعايير (ASTM/BS/SASO حسب المناسب)، طريقة التنفيذ، الفحص والاستلام، الضمانات، البدائل المعتمدة.
+الصياغة رسمية وجاهزة للإدراج في كراسة الشروط.` },
+{ c:"study", t:"دراسة جدوى مبدئية", d:"Pre-Feasibility: التكاليف والإيرادات والعائد", p:`أنت مستشار تطوير عقاري في السعودية. جهّز دراسة جدوى مبدئية لمشروع {{نوع المشروع}} في {{الموقع}}.
+المعطيات: مساحة الأرض {{مساحة الأرض}} م²، سعر المتر للأرض {{سعر المتر}} ريال، مسطحات البناء المتوقعة {{مسطحات البناء}} م².
+المطلوب في جداول:
+1) تكاليف التطوير (الأرض، البناء لكل م² حسب المستوى، التصميم والإشراف، الرسوم والتراخيص، التمويل، طوارئ).
+2) الإيرادات المتوقعة (بيع أو تأجير) بافتراضات واضحة من السوق.
+3) المؤشرات: هامش الربح، العائد على التكلفة، فترة الاسترداد، IRR تقريبي.
+4) تحليل حساسية (±10% في الأسعار والتكاليف).
+5) المخاطر وتوصيتك.
+اذكر كل الافتراضات بوضوح عشان أعدّلها بأرقام السوق الفعلية.` },
+{ c:"study", t:"تحليل الموقع (Site Analysis)", d:"تحليل شامل للموقع + SWOT", p:`اعمل تحليل موقع (Site Analysis) لأرض في {{الموقع}} مخصصة لـ {{نوع المشروع}}.
+معلومات إضافية: {{معلومات الموقع}}.
+غطِّ: الوصولية والطرق، الخدمات المحيطة، الاتجاهات والمناخ والشمس والرياح، الإطلالات، الضوضاء، الاستعمالات المجاورة، الفرص والتهديدات.
+واختم بتحليل SWOT في جدول، وتوصيات تؤثر على التصميم والتوجيه.` },
+{ c:"study", t:"أفضل استخدام للأرض (HBU)", d:"Highest & Best Use: إيه أنسب مشروع للأرض", p:`عندي أرض في {{الموقع}} مساحتها {{مساحة الأرض}} م² والاستعمال المسموح {{الاستعمال المسموح}}.
+حلّل "أفضل وأعلى استخدام" (Highest & Best Use) وقارن بين 4 بدائل على الأقل (سكني، تجاري، فندقي، مختلط… حسب المسموح):
+المسموح نظاماً، الممكن فنياً، المجدي مالياً، الأعلى قيمة.
+اعرض جدول مقارنة بالتكلفة والإيراد والعائد التقريبي، وتوصيتك النهائية مع المبررات.` },
+{ c:"study", t:"تحليل السوق والمنافسين", d:"العرض والطلب والأسعار والمشاريع المنافسة", p:`جهّز تحليل سوق لمشروع {{نوع المشروع}} في {{الموقع}} يستهدف {{الفئة المستهدفة}}.
+المطلوب: حجم الطلب واتجاهاته، المشاريع المنافسة القائمة والمخطط لها (الأنواع وليس بالضرورة الأسماء)، نطاقات الأسعار أو الإيجارات المتوقعة، الفجوات في السوق، ميزة تنافسية مقترحة لمشروعنا.
+وضّح أي أرقام تقديرية ومصادر ممكن أتحقق منها (الهيئة العامة للإحصاء، وزارة الشؤون البلدية، تقارير الشركات العقارية).` },
+{ c:"site", t:"تقرير إشراف أسبوعي", d:"تقرير زيارة موقع رسمي من ملاحظاتك", p:`حوّل ملاحظاتي من زيارة الموقع لتقرير إشراف أسبوعي رسمي لمشروع "{{اسم المشروع}}" (العميل: {{العميل}}).
+ملاحظاتي: {{ملاحظات الزيارة}}
+الأقسام: ملخص تنفيذي، الأعمال المنجزة، نسبة الإنجاز مقابل المخطط، الملاحظات الفنية والمخالفات، السلامة، المواد المعتمدة/المرفوضة، المطلوب من المقاول ومواعيده، التوصيات.
+اكتبه بلغة رسمية مناسبة لمكتب إشراف هندسي.` },
+{ c:"site", t:"خطة تعافي من التأخير", d:"تحليل أسباب التأخير وخطة استدراك", p:`المشروع "{{اسم المشروع}}" متأخر {{مدة التأخير}} عن الجدول. الأسباب المبدئية: {{أسباب التأخير}}.
+جهّز: تحليل الأسباب (مسؤولية مقاول/مالك/ظروف)، خطة تعافي (Recovery Plan) بإجراءات محددة ومسؤوليات وتواريخ، الموارد الإضافية المطلوبة، والأنشطة الحرجة اللي لازم نتابعها أسبوعياً.
+واقترح صيغة خطاب رسمي للمقاول يطلب تقديم الخطة.` },
+{ c:"site", t:"الرد على أمر تغيير / مطالبة مقاول", d:"دراسة فنية وتعاقدية لطلب المقاول", p:`المقاول قدّم {{نوع الطلب}} في مشروع "{{اسم المشروع}}" بقيمة {{القيمة}} ريال. تفاصيل الطلب: {{تفاصيل الطلب}}.
+ادرسه كاستشاري إشراف: هل له أساس تعاقدي؟ هل الكميات والأسعار منطقية؟ إيه المستندات الناقصة؟
+واكتب مسودة رد رسمي (قبول/رفض/طلب استيفاء) بلغة مهنية محايدة.` },
+{ c:"docs", t:"عرض سعر خدمات هندسية", d:"عرض سعر تصميم/إشراف احترافي بالمراحل", p:`اكتب عرض سعر احترافي من مكتب استشارات هندسية لخدمات {{نوع المشروع}} لمشروع "{{اسم المشروع}}" في {{الموقع}} لصالح {{العميل}}.
+قيمة الأتعاب: {{قيمة العقد}}.
+الأقسام: خطاب تقديم، نطاق العمل تفصيلياً، المخرجات لكل مرحلة، الجدول الزمني، الأتعاب ودفعات السداد بالنسب مربوطة بالمراحل، ما لا يشمله العرض، الشروط العامة، مدة صلاحية العرض.
+الصياغة رسمية بالعربية الفصحى.` },
+{ c:"docs", t:"خطاب رسمي", d:"خطاب لجهة أو عميل بصياغة رسمية", p:`اكتب خطاباً رسمياً من {{الجهة المرسلة}} إلى {{الجهة المرسل إليها}} بخصوص: {{الموضوع}}.
+النقاط الأساسية: {{النقاط}}.
+الصياغة رسمية مختصرة وواضحة، مع رقم مرجعي وتاريخ ومكان للتوقيع.` },
+{ c:"docs", t:"محضر اجتماع", d:"حوّل ملاحظاتك لمحضر منظّم بالمهام", p:`حوّل ملاحظات الاجتماع دي لمحضر اجتماع رسمي لمشروع "{{اسم المشروع}}":
+{{ملاحظات الاجتماع}}
+الأقسام: الحضور، جدول الأعمال، ما تم مناقشته، القرارات، جدول المهام (المهمة | المسؤول | الموعد)، موعد الاجتماع القادم.` },
+{ c:"mkt", t:"نص تسويقي لمشروع", d:"بروشور / منشورات سوشيال / إعلان", p:`اكتب محتوى تسويقي لمشروع {{نوع المشروع}} "{{اسم المشروع}}" في {{الموقع}} يستهدف {{الفئة المستهدفة}}.
+المميزات: {{المميزات}}.
+المطلوب: عنوان رئيسي قوي + 3 بدائل، نص بروشور (150 كلمة)، 5 منشورات قصيرة للسوشيال ميديا بهاشتاقات، ونص إعلان قصير.
+النبرة: فاخرة واحترافية مناسبة للسوق السعودي.` },
+{ c:"mkt", t:"بروفايل شركة / سابقة أعمال", d:"وصف احترافي لمشروع في ملف الشركة", p:`اكتب وصفاً احترافياً لمشروع "{{اسم المشروع}}" ({{نوع المشروع}}) في {{الموقع}} لإدراجه في بروفايل الشركة وسابقة الأعمال.
+دورنا في المشروع: {{دورنا}}. أرقام مهمة: {{أرقام المشروع}}.
+المطلوب: فقرة عربية (80 كلمة) + ترجمة إنجليزية احترافية + 3 نقاط تبرز القيمة المضافة.` },
+{ c:"img", t:"منظور خارجي (Midjourney / DALL·E)", d:"برومبت بالإنجليزي لصورة معمارية واقعية", p:`Photorealistic architectural exterior render of a {{نوع المبنى بالإنجليزي}} in {{المدينة بالإنجليزي}}, Saudi Arabia, {{الطراز}} style, {{المواد}} facade, golden hour lighting, lush landscaping with palm trees, people for scale, shot on a 24mm lens, ultra detailed, 8k, architectural photography --ar 16:9` },
+{ c:"img", t:"تصميم داخلي (Interior)", d:"برومبت لصورة داخلية فاخرة", p:`Luxury interior design of a {{نوع الفراغ بالإنجليزي}}, {{الطراز}} style with subtle Saudi/Najdi motifs, {{الألوان}} color palette, natural light, warm ambient lighting, high-end materials (marble, oak, brass), photorealistic, editorial interior photography, 8k --ar 3:2` }
+];
+
+let aiCat = "all", aiQ = "", aiCur = null, aiVals = {};
+const aiVars = p => [...new Set([...String(p).matchAll(/\{\{(.+?)\}\}/g)].map(m => m[1].trim()))];
+const aiFill = (p, v) => String(p).replace(/\{\{(.+?)\}\}/g, (m, k) => (v[k.trim()] || "").trim() || "[" + k.trim() + "]");
+function myPrompts(){ try { return JSON.parse(localStorage.getItem("yawmi_myprompts") || "[]"); } catch { return []; } }
+function setMyPrompts(a){ try { localStorage.setItem("yawmi_myprompts", JSON.stringify(a)); } catch {} }
+function aiAll(){ return PROMPTS.map((x, i) => ({ ...x, id: "b" + i })).concat(myPrompts().map(x => ({ ...x, c: "mine", mine: true }))); }
+function aiView(){
+  const all = aiAll(), q = normN(aiQ); let L = all.filter(x => aiCat === "all" || x.c === aiCat); if (q) L = L.filter(x => normN(x.t + " " + x.d + " " + x.p).includes(q));
+  const cats = [["all", "الكل", "✨"], ...AICAT, ...(myPrompts().length ? [["mine", "برومبتاتي", "⭐"]] : [])];
+  const chips = cats.map(([k, l, ic]) => `<button type="button" class="chip" data-aicat="${k}" aria-pressed="${aiCat === k}">${ic} ${l} <small>${k === "all" ? all.length : all.filter(x => x.c === k).length}</small></button>`).join("");
+  const cc = Object.fromEntries(AICAT.map(([k, l, ic]) => [k, { l, ic }]));
+  const cards = L.map(x => `<button type="button" class="aicard" data-aiopen="${x.id}"><span class="aiic">${(cc[x.c] || { ic: "⭐" }).ic}</span><b>${esc(x.t)}</b><small>${esc(x.d || "")}</small><span class="aimeta">${esc((cc[x.c] || { l: "برومبتاتي" }).l)} · ${aiVars(x.p).length} بيانات</span><span class="aigo">استخدم ←</span></button>`).join("");
+  return `<div class="phead"><div><h2>مساعد الذكاء الاصطناعي</h2><div class="sub">برومبتات جاهزة ومجرّبة للمعماريين ودراسة المشاريع — اختار البرومبت، املا البيانات (أو اختار مشروع يملاها لوحده)، وافتحه في Claude أو ChatGPT</div></div><button class="btn gold" data-ainew>+ برومبت خاص بيك</button></div>
+  <div class="aihero"><div><b>إزاي تستخدمه؟</b><ol><li>اختار البرومبت المناسب</li><li>املا الخانات — أو اختار مشروع من «يومي» يملاها تلقائياً</li><li>دوس «افتح في Claude» أو «انسخ» والصقه في أي أداة ذكاء اصطناعي</li></ol></div><div class="aitip">💡 نصيحة: كل ما البيانات أدق، النتيجة أحسن. وراجع دايماً أي أرقام أو اشتراطات من مصدرها الرسمي.</div></div>
+  <div class="panel"><div class="ptools"><input id="aiSearch" placeholder="🔎 دوّر في البرومبتات…" value="${esc(aiQ)}"><div class="chips">${chips}</div></div>
+  ${L.length ? `<div class="aigrid">${cards}</div>` : `<div class="empty"><b>لا نتائج</b></div>`}</div>`;
+}
+function aiOpen(id){ const x = aiAll().find(y => y.id === id); if (!x) return; aiCur = x; aiVals = {}; aiDraw(); $("#aiBox").hidden = false; }
+function aiFromProject(p){ const c = pcalc(p); const city = String(p.loc || "").split(/[—\-،,]/)[0].trim();
+  return { "اسم المشروع": p.name, "العميل": p.client, "الموقع": p.loc, "المدينة": city, "نوع المشروع": ptLabel(p), "قيمة العقد": c.T ? money(c.T) + " ريال شامل الضريبة" : "" }; }
+function aiDraw(){ const x = aiCur; const vars = aiVars(x.p); const P = PV();
+  $("#aiCard").innerHTML = `<h3>${esc(x.t)}</h3><div class="sub" style="margin-bottom:8px">${esc(x.d || "")}</div>
+  ${P.length && vars.some(v => ["اسم المشروع","العميل","الموقع","نوع المشروع","المدينة","قيمة العقد"].includes(v)) ? `<label class="aip">📂 املا من مشروع<select id="aiProj"><option value="">— اختار مشروع —</option>${P.map(p => `<option value="${p.id}">${esc(p.name)}</option>`).join("")}</select></label>` : ""}
+  <div class="aivars">${vars.map(v => `<label>${esc(v)}${/ملاحظات|تفاصيل|وصف|المعطيات|النقاط|المميزات|معلومات|أسباب/.test(v) ? `<textarea data-aiv="${esc(v)}" rows="3">${esc(aiVals[v] || "")}</textarea>` : `<input data-aiv="${esc(v)}" value="${esc(aiVals[v] || "")}">`}</label>`).join("")}</div>
+  <label class="aip">البرومبت الجاهز<textarea id="aiOut" rows="9" readonly>${esc(aiFill(x.p, aiVals))}</textarea></label>
+  <div class="aiact"><a class="btn gold" id="aiClaude" target="_blank" rel="noopener">✨ افتح في Claude</a><a class="btn ghost" id="aiGpt" target="_blank" rel="noopener">افتح في ChatGPT</a><button type="button" class="btn ghost" id="aiCopy">📋 نسخ</button>${x.mine ? `<button type="button" class="btn ghost danger" id="aiDel">حذف</button>` : ""}<button type="button" class="btn ghost" id="aiClose">إغلاق</button></div>`;
+  aiLinks(); }
+function aiLinks(){ const t = aiFill(aiCur.p, aiVals); const o = $("#aiOut"); if (o) o.value = t; const c = $("#aiClaude"), g = $("#aiGpt"); if (c) c.href = "https://claude.ai/new?q=" + encodeURIComponent(t); if (g) g.href = "https://chatgpt.com/?q=" + encodeURIComponent(t); }
+async function aiCopyText(t){ try { await navigator.clipboard.writeText(t); } catch { const ta = document.createElement("textarea"); ta.value = t; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove(); } toast("📋 اتنسخ البرومبت — الصقه في أي أداة ذكاء اصطناعي"); }
+$("#aiBox").addEventListener("input", e => { const v = e.target.dataset.aiv; if (v !== undefined) { aiVals[v] = e.target.value; aiLinks(); } });
+$("#aiBox").addEventListener("change", e => { if (e.target.id !== "aiProj") return; const p = PROJECTS.find(x => x.id === e.target.value); if (!p) return; const f = aiFromProject(p); Object.keys(f).forEach(k => { if (f[k]) aiVals[k] = f[k]; }); aiDraw(); const s = $("#aiProj"); if (s) s.value = p.id; toast("اتملت البيانات من «" + p.name + "»"); });
+$("#aiBox").addEventListener("click", e => { const t = e.target;
+  if (t.id === "aiBox" || t.id === "aiClose") { $("#aiBox").hidden = true; return; }
+  if (t.id === "aiCopy") { aiCopyText(aiFill(aiCur.p, aiVals)); return; }
+  if (t.id === "aiDel") { setMyPrompts(myPrompts().filter(y => y.id !== aiCur.id)); $("#aiBox").hidden = true; render(); toast("اتحذف البرومبت"); return; }
+  if (t.id === "aiSaveNew") { const tt = ($("#aiNT").value || "").trim(), pp = ($("#aiNP").value || "").trim(); if (!tt || !pp) { toast("اكتب العنوان والبرومبت", true); return; }
+    const a = myPrompts(); a.push({ id: "m" + rid(), t: tt, d: ($("#aiND").value || "").trim(), p: pp }); setMyPrompts(a); $("#aiBox").hidden = true; aiCat = "mine"; render(); toast("اتحفظ البرومبت ⭐"); } });
+$("#view").addEventListener("click", e => { if (tab !== "ai") return;
+  const c = e.target.closest("[data-aicat]"); if (c) { aiCat = c.dataset.aicat; render(); return; }
+  const o = e.target.closest("[data-aiopen]"); if (o) { aiOpen(o.dataset.aiopen); return; }
+  if (e.target.closest("[data-ainew]")) { $("#aiCard").innerHTML = `<h3>⭐ برومبت خاص بيك</h3><div class="sub" style="margin-bottom:8px">اكتب البرومبت وحط أي بيانات متغيرة بين قوسين مزدوجين، مثلاً: {{اسم المشروع}} أو {{المساحة}} — وهتظهرلك كخانات تملاها كل مرة. (بيتحفظ على الجهاز ده)</div>
+    <div class="aivars"><label>العنوان<input id="aiNT"></label><label>وصف قصير<input id="aiND"></label></div><label class="aip">البرومبت<textarea id="aiNP" rows="8" placeholder="مثال: اكتب تقرير عن {{اسم المشروع}} في {{الموقع}}…"></textarea></label>
+    <div class="aiact"><button type="button" class="btn gold" id="aiSaveNew">حفظ</button><button type="button" class="btn ghost" id="aiClose">إلغاء</button></div>`; $("#aiBox").hidden = false; } });
+$("#view").addEventListener("input", e => { if (tab !== "ai" || e.target.id !== "aiSearch") return; aiQ = e.target.value; const pos = e.target.selectionStart; render(); const s = $("#aiSearch"); if (s) { s.focus(); s.setSelectionRange(pos, pos); } });
 // ----- العملاء والجهات -----
 const CCAT = [["client","عميل","#c29a3e"],["dev","مطور عقاري","#2f63b5"],["eng","مكتب هندسي / استشاري","#1f8a8a"],["partner","مكتب متعاون / شريك","#2c8a60"],["hotel","مشغّل فنادق","#6a4fb3"],["contractor","مقاول","#a07412"],["gov","جهة حكومية","#22335a"],["supplier","مورد","#8b94aa"],["other","أخرى","#8b94aa"]];
 const CCATL = Object.fromEntries(CCAT.map(([k, l, c]) => [k, { l, c }]));
