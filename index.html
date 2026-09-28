@@ -296,6 +296,13 @@ button[data-udel][data-sure="1"]{background:var(--late);color:#fff;border-color:
 .ptable,.etable,.ftable{width:100%;border-collapse:collapse;font-size:13.5px}.ptable th,.etable th{text-align:start;font-size:11.5px;color:var(--mut);font-weight:700;padding:9px 6px;border-bottom:1px solid var(--line);white-space:nowrap;text-transform:none}
 .ptable td{padding:11px 6px;border-bottom:1px solid var(--line);vertical-align:middle}.ptable tr[data-popen]{cursor:pointer;transition:background .15s}.ptable tr[data-popen]:hover{background:var(--surface2)}.ptable td small{display:block;color:var(--mut);font-size:11.5px;font-weight:500}
 .plist tr[data-popen] td:first-child{box-shadow:inset -4px 0 0 var(--sc)}.plist .pn b{font-size:14.5px}.ptable.compact td{padding:8px 6px}.go{color:var(--mut);font-size:20px;text-align:center}
+.mk{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:12px}.mkc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:3px;min-width:0}.mkc .kl{font-size:12.5px;color:var(--ink2);font-weight:700}.mkc b{font-size:20px;font-variant-numeric:tabular-nums;color:var(--ink)}.mkc.cur b{font-size:23px;color:var(--navy)}.mkc small{font-size:11.5px;color:var(--mut)}.mkc.cur{border:1.5px solid var(--gold);background:linear-gradient(180deg,var(--gold-soft),var(--surface))}.mkc .up{color:var(--done);font-weight:800}.mkc .down{color:var(--late);font-weight:800}
+@media(max-width:760px){.mk{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.vc.cur .vb i{background:linear-gradient(var(--navy2),var(--navy))}.vc.cur .vl{color:var(--ink);font-weight:800}
+.tpick{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 10px}.tpick label{display:flex;align-items:center;gap:5px;border:1.5px solid var(--line);border-radius:10px;padding:5px 10px;font-size:12.5px;cursor:pointer;background:var(--surface)}.tpick label:has(input:checked){border-color:var(--gold);background:var(--gold-soft);font-weight:700}.tpick input{margin:0}.lbl{font-size:13px;font-weight:700;margin-top:6px}.lbl small{font-weight:400;color:var(--mut)}.pwide{grid-column:1/-1}
+.paybtn{display:inline-block;margin-inline-start:6px;border:0;border-radius:8px;padding:3px 9px;font-size:12px;font-weight:800;background:var(--done);color:#fff;cursor:pointer;white-space:nowrap}.rcpt{display:inline-block;margin-inline-start:6px;font-size:12px;text-decoration:none;white-space:nowrap}
+#payForm label{display:grid;gap:4px;font-size:13px;font-weight:700;margin-bottom:8px}#payForm input{border:1px solid var(--line);border-radius:10px;padding:8px 10px;font:inherit}#payForm h3{margin:0 0 6px}
+.ploc{color:#e4c77f;text-decoration:none}.ploc:hover{text-decoration:underline}
 .tchip{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:7px;background:var(--surface2);color:var(--ink2);border:1px solid var(--line);white-space:nowrap}
 .n{font-variant-numeric:tabular-nums;text-align:left;white-space:nowrap}.nw{white-space:nowrap;font-size:12.5px;color:var(--ink2)}.mutd{color:var(--mut)}
 .mini{height:6px;background:var(--surface2);border-radius:9px;overflow:hidden;width:96px}.mini i{display:block;height:100%;background:var(--done);border-radius:9px}.mini.g i{background:var(--gold)}.mini.w{width:100%;margin-top:6px}
@@ -401,6 +408,7 @@ body.private .hero{background:radial-gradient(1200px 300px at 85% -40%,rgba(111,
 <div class="toast" id="toast" hidden></div>
 <div class="updbar" id="actBar" hidden><span id="actMsg"></span><a id="actLink" class="wabtn" target="_blank" rel="noopener"></a><button type="button" class="x" onclick="this.parentNode.hidden=true" aria-label="إغلاق">✕</button></div>
 <div class="updbar" id="updBar" hidden>✨ فيه نسخة جديدة من يومي <button type="button" id="updBtn">تحديث</button></div>
+<div class="ihelp" id="payBox" hidden><form class="card" id="payForm"></form></div>
 <div class="ihelp" id="iHelp" hidden><div class="card"><h3>📲 ثبّت يومي على جهازك</h3>
 <div class="os">آيفون / آيباد (Safari):</div><ol><li>افتح الرابط في <b>Safari</b></li><li>دوس زر المشاركة <b>⬆︎</b> تحت</li><li>اختار <b>«إضافة إلى الشاشة الرئيسية»</b> ثم <b>إضافة</b></li></ol>
 <div class="os">أندرويد (Chrome):</div><ol><li>دوس <b>⋮</b> فوق</li><li>اختار <b>«تثبيت التطبيق»</b> أو «إضافة إلى الشاشة الرئيسية»</li></ol>
@@ -1091,9 +1099,13 @@ const PST = [["quote","عرض سعر","mut"],["contract","مرحلة التعا�
 const PSTL = Object.fromEntries(PST.map(([k,l,c]) => [k, { l, c }]));
 const PCOL = { mut: "#8b94aa", wait: "#c9962b", doing: "#2f63b5", late: "#c2453b", done: "#2c8a60" };
 const PTYPES = ["إشراف عام ITC","مستشار معماري AOR","تصميم معماري","إشراف هندسي","إدارة مشاريع","تطوير عقاري","دراسات واستشارات","تصميم داخلي","أخرى"];
+const ptypes = p => (p.types && p.types.length) ? p.types : (p.type ? String(p.type).split(" + ").filter(Boolean) : []);
+const ptLabel = p => ptypes(p).join(" + ") || "أخرى";
+const mapURL = p => { const m = String(p.map || "").trim(); if (/^https?:\/\//i.test(m)) return m; const q = m || String(p.loc || "").trim(); return q ? "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q) : ""; };
+const tpick = (p, attr) => `<div class="tpick">${PTYPES.concat(ptypes(p).filter(t => !PTYPES.includes(t))).map(t => `<label><input type="checkbox" ${attr} value="${esc(t)}" ${ptypes(p).includes(t) ? "checked" : ""}><span>${esc(t)}</span></label>`).join("")}</div>`;
 const PHST = [["todo","لم تبدأ"],["doing","جارية"],["done","منجزة"]];
 const DOCCAT = ["عقد","عرض سعر","اعتمادات","مطالبة","تحويل / إيصال دفع","مراسلات","مخططات","محضر اجتماع","أخرى"];
-const LOGK = ["مراسلة واردة","مراسلة صادرة","اجتماع","قرار / اعتماد","إنهاء مرحلة","ملاحظة مهمة"];
+const LOGK = ["مراسلة واردة","مراسلة صادرة","اجتماع","قرار / اعتماد","إنهاء مرحلة","تحصيل دفعة","ملاحظة مهمة"];
 const EXCAT = ["رواتب وأتعاب","مقاولين باطن","مواد وطباعة","رسوم حكومية","مواصلات وسفر","أخرى"];
 let docCat = "عقد", docF = "all";
 let projOpen = null, projDraft = null, projDirty = false, projQ = "", projF = "all", projSaveT = null, projSaving = false, projModal = null;
@@ -1126,7 +1138,7 @@ const PICON = { box: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
   trend: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>',
   doc: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/></svg>',
   alert: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l10 18H2z"/><path d="M12 10v4M12 17h.01"/></svg>' };
-function newProject(){ return { id: rid(), v2: 1, space: PRIV() ? "p" : "", name: "", client: "", type: PTYPES[0], status: "contract", start: today(), end: "", price: "", agreed: "", taxMode: "ex", vat: 15, desc: "",
+function newProject(){ return { id: rid(), v2: 1, space: PRIV() ? "p" : "", name: "", client: "", type: PTYPES[0], types: [PTYPES[0]], loc: "", map: "", status: "contract", start: today(), end: "", price: "", agreed: "", taxMode: "ex", vat: 15, desc: "",
   phases: [{ name: "دفعة مقدمة", pct: 20, due: "", status: "todo" }, { name: "المرحلة الأولى", pct: 40, due: "", status: "todo" }, { name: "التسليم النهائي", pct: 40, due: "", status: "todo" }],
   claims: [], expenses: [], docs: [], log: [], notes: "", createdAt: Date.now() }; }
 const PV = () => PROJECTS.filter(p => (p.space === "p") === PRIV());
@@ -1160,30 +1172,41 @@ function projDash(){
     <div class="${lateN ? "bad" : ""}"><span>مطالبات متأخرة</span><b>${lateN}</b></div><div><span>متوسط الإنجاز</span><b>${Math.round(con.length ? sum(con, x => x.c.prog) / con.length : 0)}%</b></div></div>`;
   const segs = PST.map(([k, l, c]) => ({ l, c: PCOL[c], v: P.filter(x => x.p.status === k).length }));
   const stat = `<div class="dwrap">${donut(segs, Math.max(P.length, 1), P.length, "مشروع")}<ul class="dleg">${segs.map(s => `<li><i style="background:${s.c}"></i>${s.l}<b>${s.v}</b></li>`).join("")}</ul></div>`;
-  const types = [...new Set(P.map(x => x.p.type || "أخرى"))].map(t => ({ t, v: sum(con.filter(x => (x.p.type || "أخرى") === t), x => x.c.T), n: P.filter(x => (x.p.type || "أخرى") === t).length })).sort((a, b) => b.v - a.v);
+  const types = [...new Set(P.map(x => ptLabel(x.p)))].map(t => ({ t, v: sum(con.filter(x => ptLabel(x.p) === t), x => x.c.T), n: P.filter(x => ptLabel(x.p) === t).length })).sort((a, b) => b.v - a.v);
   const maxTy = Math.max(1, ...types.map(x => x.v));
   const byType = types.length ? types.map(x => `<div class="hb" title="${esc(x.t)}: ${money(x.v)} ر.س"><span class="hl">${esc(x.t)} <small>(${x.n})</small></span><span class="ht"><i style="width:${x.v / maxTy * 100}%;background:var(--navy2)"></i></span><b>${kmoney(x.v)}</b></div>`).join("") : `<div class="empty" style="padding:10px">لا توجد بيانات</div>`;
   const top = con.slice().sort((a, b) => b.c.T - a.c.T).slice(0, 8); const maxT = Math.max(1, ...top.map(x => x.c.T));
   const colBars = top.length ? top.map(x => `<div class="hb2" data-popen="${x.p.id}" title="${esc(x.p.name)} — محصّل ${money(x.c.paid)} من ${money(x.c.T)} ر.س"><span class="hl">${esc(x.p.name)}</span>
     <span class="ht" style="width:${Math.max(x.c.T / maxT * 100, 8)}%"><i class="f-done" style="width:${x.c.col * 100}%"></i><i class="f-rest" style="width:${(1 - x.c.col) * 100}%"></i></span><b>${pct(x.c.col)}</b></div>`).join("") : `<div class="empty" style="padding:10px">لا توجد عقود بعد</div>`;
   const now = new Date(); const months = []; for (let i = 11; i >= 0; i--) { const d = new Date(now.getFullYear(), now.getMonth() - i, 1); months.push({ k: `${d.getFullYear()}-${pad(d.getMonth() + 1)}`, l: new Intl.DateTimeFormat("ar-EG-u-nu-latn", { month: "short" }).format(d), v: 0 }); }
-  P.forEach(x => x.p.claims.forEach(c => { if (num(c.paid) && c.paidDate) { const m = months.find(m => m.k === c.paidDate.slice(0, 7)); if (m) m.v += num(c.paid); } }));
+  months.forEach(m => { m.net = 0; m.e = 0; m.n = 0; });
+  P.forEach(x => { const r = x.c.rate; x.p.claims.forEach(c => { const d = c.paidDate || c.date; if (num(c.paid) && d) { const m = months.find(m => m.k === String(d).slice(0, 7)); if (m) { m.v += num(c.paid); m.net += num(c.paid) / (1 + r); m.n++; } } });
+    x.p.expenses.forEach(ex => { if (num(ex.amount) && ex.date) { const m = months.find(m => m.k === String(ex.date).slice(0, 7)); if (m) m.e += num(ex.amount); } }); });
+  const cur = months[11], prev = months[10], yr = String(now.getFullYear()), ytd = months.filter(m => m.k.startsWith(yr)), ytdV = ytd.reduce((s, m) => s + m.v, 0), avgV = Math.round(months.reduce((s, m) => s + m.v, 0) / 12);
+  const fmL = d => new Intl.DateTimeFormat("ar-EG-u-nu-latn", { month: "long" }).format(d);
+  const dPct = prev.v ? (cur.v - prev.v) / prev.v : null;
+  const delta = dPct === null ? (cur.v ? `<small class="up">▲ أول دخل بعد شهر فاضي</small>` : `<small>مفيش تحصيل الشهر ده لسه</small>`) : `<small class="${dPct >= 0 ? "up" : "down"}">${dPct >= 0 ? "▲" : "▼"} ${Math.abs(Math.round(dPct * 100))}% عن ${fmL(new Date(now.getFullYear(), now.getMonth() - 1, 1))}</small>`;
+  const income = `<div class="mk">
+    <div class="mkc cur"><span class="kl">💰 دخل ${fmL(now)} (المحصّل)</span><b>${SAR(cur.v)}</b>${delta}<small>قبل الضريبة ${kmoney(cur.net)} · مصاريف ${kmoney(cur.e)} · صافي ${kmoney(cur.net - cur.e)}</small></div>
+    <div class="mkc"><span class="kl">${fmL(new Date(now.getFullYear(), now.getMonth() - 1, 1))} (الشهر الماضي)</span><b>${SAR(prev.v)}</b><small>قبل الضريبة ${kmoney(prev.net)} · مصاريف ${kmoney(prev.e)}</small></div>
+    <div class="mkc"><span class="kl">من بداية ${yr}</span><b>${SAR(ytdV)}</b><small>${ytd.length} شهر · صافي ${kmoney(ytd.reduce((s, m) => s + m.net - m.e, 0))}</small></div>
+    <div class="mkc"><span class="kl">متوسط الدخل الشهري</span><b>${SAR(avgV)}</b><small>آخر 12 شهر · مطالبات مفتوحة ${kmoney(dueSum)}</small></div></div>`;
   const maxM = Math.max(1, ...months.map(m => m.v));
-  const cols = months.map(m => `<div class="vc" title="${m.l}: ${money(m.v)} ر.س"><span class="vv">${m.v ? kmoney(m.v) : ""}</span><span class="vb"><i style="height:${m.v / maxM * 100}%"></i></span><span class="vl">${m.l}</span></div>`).join("");
+  const cols = months.map((m, i) => `<div class="vc ${i === 11 ? "cur" : ""}" title="${m.l}: محصّل ${money(m.v)} ر.س · قبل الضريبة ${money(m.net)} · مصاريف ${money(m.e)}"><span class="vv">${m.v ? kmoney(m.v) : ""}</span><span class="vb"><i style="height:${m.v / maxM * 100}%"></i></span><span class="vl">${m.l}</span></div>`).join("");
   const dueT = due.length ? `<div class="tblwrap"><table class="ptable compact"><tr><th>المشروع</th><th>المرحلة</th><th>المستحق</th><th>منذ</th><th>الحالة</th></tr>${due.slice(0, 8).map(c => `<tr data-popen="${c.p.id}"><td><b>${esc(c.p.name)}</b></td><td>${esc(c.phase || c.inv || "—")}</td><td class="n">${money(c.inc - c.pd)}</td><td class="nw">${c.date ? c.age + " يوم" : "—"}</td><td>${spill(...CLST[c.st])}</td></tr>`).join("")}</table></div>` : `<div class="empty" style="padding:10px">لا توجد مطالبات مستحقة 👌</div>`;
   const alerts = [];
   con.forEach(x => { x.c.ph.forEach(ph => { if (ph.due && ph.status !== "done" && ph.due <= iso(addDays(new Date(), 14))) alerts.push({ w: ph.due < today() ? 2 : 1, t: `مرحلة «${ph.name}» ${ph.due < today() ? "فات موعدها" : "مستحقة"} ${nice(ph.due)}`, p: x.p }); });
     if (x.p.end && x.p.status === "active" && x.p.end < today()) alerts.push({ w: 2, t: `تجاوز تاريخ الانتهاء المتوقع (${nice(x.p.end)})`, p: x.p }); });
   alerts.sort((a, b) => b.w - a.w);
   const al = alerts.length ? `<ul class="alerts">${alerts.slice(0, 6).map(a => `<li class="${a.w > 1 ? "hi" : ""}" data-popen="${a.p.id}"><b>${esc(a.p.name)}</b> · ${esc(a.t)}</li>`).join("")}</ul>` : `<div class="empty" style="padding:10px">لا توجد تنبيهات 👌</div>`;
-  return `<div class="phead"><div><h2>المشاريع</h2><div class="sub">${PRIV() ? "🔒 مشاريعك الخاصة · " : ""}لوحة مؤشرات العقود والتحصيل والربحية · ${esc(gFmtY.format(new Date()))}</div></div>${pEdit() ? `<button class="btn gold" data-pnew>+ مشروع جديد</button>` : `<span class="tag member">عرض فقط</span>`}</div>${big}
+  return `<div class="phead"><div><h2>المشاريع</h2><div class="sub">${PRIV() ? "🔒 مشاريعك الخاصة · " : ""}لوحة مؤشرات العقود والتحصيل والربحية · ${esc(gFmtY.format(new Date()))}</div></div>${pEdit() ? `<button class="btn gold" data-pnew>+ مشروع جديد</button>` : `<span class="tag member">عرض فقط</span>`}</div>${big}${income}
   <div class="pgrid g3">
     <div class="panel"><h3>المشاريع حسب الحالة</h3>${stat}</div>
     <div class="panel"><h3>قيمة العقود حسب النوع</h3>${byType}</div>
     <div class="panel"><h3>التحصيل لكل مشروع</h3><div class="lg"><span><i class="f-done"></i>محصّل</span><span><i class="f-rest"></i>متبقي</span></div>${colBars}</div>
   </div>
   <div class="pgrid">
-    <div class="panel"><h3>التحصيل الشهري — آخر 12 شهر</h3><div class="vchart">${cols}</div></div>
+    <div class="panel"><h3>الدخل الشهري (المحصّل) — آخر 12 شهر <small>الشهر الحالي باللون الكحلي</small></h3><div class="vchart">${cols}</div></div>
     <div class="panel"><h3>المطالبات المستحقة <small>${due.length} مطالبة · ${kmoney(dueSum)} ر.س</small></h3>${dueT}</div>
   </div>
   <div class="panel"><h3>تنبيهات المواعيد</h3>${al}</div>`;
@@ -1191,10 +1214,10 @@ function projDash(){
 function projList(){
   const q = projQ.trim(); const PP = PV(); let L = PP.map(p => ({ p, c: pcalc(p) }));
   if (projF !== "all") L = L.filter(x => x.p.status === projF);
-  if (q) L = L.filter(x => [x.p.name, x.p.client, x.p.type].join(" ").includes(q));
+  if (q) L = L.filter(x => [x.p.name, x.p.client, ptLabel(x.p), x.p.loc || ""].join(" ").includes(q));
   L.sort((a, b) => (b.p.start || "").localeCompare(a.p.start || ""));
   const chips = [["all", `الكل (${PP.length})`], ...PST.map(([k, l]) => [k, `${l} (${PP.filter(p => p.status === k).length})`])].map(([k, l]) => `<button type="button" class="chip" data-pf-filter="${k}" aria-pressed="${projF === k}">${l}</button>`).join("");
-  const rows = L.map(({ p, c }) => { const st = PSTL[p.status] || PSTL.contract; return `<tr data-popen="${p.id}" style="--sc:${PCOL[st.c]}"><td class="pn"><b>${esc(p.name)}</b><small>${esc(p.client || "—")}</small></td><td><span class="tchip">${esc(p.type || "—")}</span></td>
+  const rows = L.map(({ p, c }) => { const st = PSTL[p.status] || PSTL.contract; return `<tr data-popen="${p.id}" style="--sc:${PCOL[st.c]}"><td class="pn"><b>${esc(p.name)}</b><small>${esc(p.client || "—")}</small></td><td><span class="tchip">${esc(ptLabel(p))}</span>${p.loc ? `<small>📍 ${esc(p.loc)}</small>` : ""}</td>
     <td>${spill(st.l, st.c)}</td><td class="nw">${p.start ? esc(gFmtY.format(parse(p.start))) : "—"}</td><td class="n"><b>${money(c.T)}</b><small>قبل الضريبة ${money(c.A)}</small></td>
     <td><div class="mini"><i style="width:${Math.min(c.col, 1) * 100}%"></i></div><small>${pct(c.col)} · ${kmoney(c.paid)}</small></td>
     <td><div class="mini g"><i style="width:${Math.min(c.prog, 100)}%"></i></div><small>${Math.round(c.prog)}%</small></td><td class="go">‹</td></tr>`; }).join("");
@@ -1207,21 +1230,21 @@ function openPModal(){ projModal = newProject(); let m = $("#pmodal"); if (!m) {
 function drawPModal(){ const p = projModal, m = $("#pmodal"); const c = pcalc(p); const val = p.status === "quote" ? p.price : p.agreed;
   m.innerHTML = `<form class="auth-card pm" id="pmForm"><h2><i></i>مشروع جديد</h2><p>البيانات الأساسية — باقي التفاصيل (المراحل والدفعات والملفات) من صفحة المشروع</p>
   <label>اسم المشروع *<input name="name" required value="${esc(p.name)}"></label><label>الجهة / العميل<input name="client" value="${esc(p.client)}"></label>
-  <div class="two"><label>نوع المشروع<select name="type">${PTYPES.map(t => `<option ${p.type === t ? "selected" : ""}>${t}</option>`).join("")}</select></label>
-  <label>الحالة<select name="status">${PST.map(([k, l]) => `<option value="${k}" ${p.status === k ? "selected" : ""}>${l}</option>`).join("")}</select></label></div>
+  <div class="lbl">نوع المشروع <small>(تقدر تختار أكتر من نوع، مثلاً تصميم + إشراف)</small></div>${tpick(p, 'name="types"')}
+  <label>الموقع (المدينة / الحي)<input name="loc" value="${esc(p.loc || "")}" placeholder="مثال: مكة — العزيزية"></label>
+  <div class="two"><label>الحالة<select name="status">${PST.map(([k, l]) => `<option value="${k}" ${p.status === k ? "selected" : ""}>${l}</option>`).join("")}</select></label><label>تاريخ البداية<input name="start" type="date" value="${esc(p.start)}"></label></div>
   <div class="two"><label>${p.status === "quote" ? "قيمة العرض" : "القيمة المتفق عليها"}<input name="val" type="number" step="0.01" value="${esc(val)}"></label>
   <label>القيمة المدخلة<select name="taxMode"><option value="ex" ${p.taxMode !== "inc" ? "selected" : ""}>غير شاملة الضريبة</option><option value="inc" ${p.taxMode === "inc" ? "selected" : ""}>شاملة الضريبة</option></select></label></div>
   <div class="vbox" id="pmCalc">${vbox(c.status === "quote" ? c.P : (p.status === "quote" ? c.P : { A: c.A, V: c.V, T: c.T }), c.rate)}</div>
-  <label>تاريخ البداية<input name="start" type="date" value="${esc(p.start)}"></label>
   <button class="btn gold">إنشاء وفتح صفحة المشروع</button><button type="button" class="btn ghost" data-pmclose style="margin-top:8px;width:100%">إلغاء</button><div class="auth-err" id="pmErr"></div></form>`; }
 function vbox(x, r){ return `<div><span>قبل الضريبة</span><b>${money(x.A)}</b></div><div><span>الضريبة ${Math.round(r * 100)}%</span><b>${money(x.V)}</b></div><div class="t"><span>الإجمالي</span><b>${money(x.T)}</b></div>`; }
 function bindPModal(m){
-  const sync = () => { const f = $("#pmForm"); if (!f) return; const fd = new FormData(f); const p = projModal; ["name","client","type","status","taxMode","start"].forEach(k => p[k] = (fd.get(k) || "").toString());
+  const sync = () => { const f = $("#pmForm"); if (!f) return; const fd = new FormData(f); const p = projModal; ["name","client","status","taxMode","start","loc"].forEach(k => p[k] = (fd.get(k) || "").toString()); p.types = fd.getAll("types").map(String); p.type = p.types.join(" + ") || "أخرى";
     const v = fd.get("val"); if (p.status === "quote") { p.price = v === "" ? "" : num(v); p.agreed = ""; } else { p.agreed = v === "" ? "" : num(v); p.price = p.agreed; } const c = pcalc(p); $("#pmCalc").innerHTML = vbox(p.status === "quote" ? c.P : c, c.rate); };
   m.addEventListener("input", sync); m.addEventListener("change", e => { sync(); if (e.target.name === "status") { drawPModal(); } });
   m.addEventListener("click", e => { if (e.target.closest("[data-pmclose]") || e.target === m) { m.hidden = true; projModal = null; } });
   m.addEventListener("submit", async e => { e.preventDefault(); sync(); const p = projModal; if (!p.name.trim()) { $("#pmErr").textContent = "اكتب اسم المشروع"; return; }
-    p.log = [{ date: today(), kind: "ملاحظة مهمة", subject: "إنشاء المشروع", details: `${PSTL[p.status].l} · ${p.type}` }];
+    p.log = [{ date: today(), kind: "ملاحظة مهمة", subject: "إنشاء المشروع", details: `${PSTL[p.status].l} · ${ptLabel(p)}${p.loc ? " · " + p.loc : ""}` }];
     p.createdBy = ME.id; bgSaveProject(p); m.hidden = true; projModal = null; projOpen = p.id; projDraft = null; projDirty = false; toast("اتعمل المشروع ✓ — كمّل التفاصيل"); render(); window.scrollTo({ top: 0 }); });
 }
 // ----- detail -----
@@ -1238,7 +1261,7 @@ function projectDetail(p){
     <td><input data-row="claims" data-i="${i}" data-k="inv" value="${esc(x.inv || "")}" placeholder="رقم" class="sm"></td><td><input type="date" data-row="claims" data-i="${i}" data-k="date" value="${esc(x.date || "")}"></td>
     <td><input class="nn" type="number" step="0.01" data-row="claims" data-i="${i}" data-k="amount" value="${esc(x.amount ?? "")}"></td><td class="n mutd" data-c="clv${i}">${money(x.vat)}</td>
     <td><input class="nn" type="number" step="0.01" data-row="claims" data-i="${i}" data-k="paid" value="${esc(x.paid ?? "")}"></td><td><input type="date" data-row="claims" data-i="${i}" data-k="paidDate" value="${esc(x.paidDate || "")}"></td>
-    <td data-c="cls${i}">${spill(...CLST[x.st])}</td><td><button class="rm" data-rm="claims" data-i="${i}" title="حذف">×</button></td></tr>`).join("");
+    <td data-c="cls${i}">${spill(...CLST[x.st])}${x.inc && x.st !== "paid" ? `<button type="button" class="paybtn" data-pay="${i}">✓ تم التحويل</button>` : ""}${x.receipt && x.receipt.url ? `<a class="rcpt" href="${esc(x.receipt.url)}" target="_blank" rel="noopener">🧾 الإيصال</a>` : ""}</td><td><button class="rm" data-rm="claims" data-i="${i}" title="حذف">×</button></td></tr>`).join("");
   const exRows = p.expenses.map((x, i) => `<tr><td><input data-row="expenses" data-i="${i}" data-k="desc" value="${esc(x.desc || "")}" placeholder="البند"></td>
     <td><select data-row="expenses" data-i="${i}" data-k="cat">${EXCAT.map(k => `<option ${x.cat === k ? "selected" : ""}>${k}</option>`).join("")}</select></td>
     <td><input type="date" data-row="expenses" data-i="${i}" data-k="date" value="${esc(x.date || "")}"></td><td><input class="nn" type="number" step="0.01" data-row="expenses" data-i="${i}" data-k="amount" value="${esc(x.amount ?? "")}"></td>
@@ -1247,8 +1270,8 @@ function projectDetail(p){
   const byCat = EXCAT.map(k => [k, p.expenses.filter(x => x.cat === k).reduce((s, x) => s + num(x.amount), 0)]).filter(x => x[1]); const maxCat = Math.max(1, ...byCat.map(x => x[1]));
   const docs = p.docs.map((d, i) => ({ d, i })).filter(({ d }) => docF === "all" || d.cat === docF).sort((a, b) => (b.d.at || 0) - (a.d.at || 0));
   return `<div class="pdetail">
-  <div class="pband" style="--sc:${PCOL[st.c]}"><div class="pbl"><button class="bk" data-pback title="كل المشاريع">→</button><div><div class="pbt"><h2 data-c="title">${esc(p.name || "مشروع جديد")}</h2>${spill(st.l, st.c)}<span class="tchip">${esc(p.type || "")}</span></div>
-    <div class="pbm">${esc(p.client || "—")} · بداية ${p.start ? esc(gFmtY.format(parse(p.start))) : "—"}${p.end ? " · الانتهاء المتوقع " + esc(gFmtY.format(parse(p.end))) : ""}</div></div></div>
+  <div class="pband" style="--sc:${PCOL[st.c]}"><div class="pbl"><button class="bk" data-pback title="كل المشاريع">→</button><div><div class="pbt"><h2 data-c="title">${esc(p.name || "مشروع جديد")}</h2>${spill(st.l, st.c)}${ptypes(p).map(t => `<span class="tchip">${esc(t)}</span>`).join("")}</div>
+    <div class="pbm">${esc(p.client || "—")}${p.loc || p.map ? ` · <a class="ploc" href="${esc(mapURL(p))}" target="_blank" rel="noopener">📍 ${esc(p.loc || "الموقع على الخريطة")}</a>` : ""} · بداية ${p.start ? esc(gFmtY.format(parse(p.start))) : "—"}${p.end ? " · الانتهاء المتوقع " + esc(gFmtY.format(parse(p.end))) : ""}</div></div></div>
     <div class="pbr"><span class="saved-st" id="psaveState">${projDirty ? "تعديلات غير محفوظة…" : "✓ محفوظ"}</span><button class="btn gold" data-psave>حفظ والعودة للمشاريع</button><button class="btn ghost" data-pprint>طباعة / PDF</button><button class="btn ghost danger" data-pdel>حذف</button></div></div>
   <div class="kpis k8">
     ${kpi("الإجمالي شامل الضريبة", `<span data-c="T">${SAR(c.T)}</span>`, `قبل الضريبة <span data-c="A">${money(c.A)}</span> · ضريبة <span data-c="V">${money(c.V)}</span>`, "gold")}
@@ -1264,7 +1287,9 @@ function projectDetail(p){
     ${inp("name", "اسم المشروع *")}${inp("client", "الجهة / العميل")}
     ${inp("cname", "مسؤول التواصل")}${inp("cphone", "جوال التواصل", "tel", 'dir="ltr" placeholder="05xxxxxxxx"')}${inp("cemail", "إيميل التواصل", "email", 'dir="ltr" placeholder="name@company.com"')}
     <div class="cbtns"><button type="button" class="wa" data-pwa>💬 واتساب</button><button type="button" data-pmail>✉️ إيميل</button><button type="button" data-pcall>📞 اتصال</button></div>
-    <label>نوع المشروع<select data-pf="type">${PTYPES.concat(PTYPES.includes(p.type) || !p.type ? [] : [p.type]).map(t => `<option ${p.type === t ? "selected" : ""}>${esc(t)}</option>`).join("")}</select></label>
+    <div class="pwide"><div class="lbl">نوع المشروع <small>(اختار كل الخدمات اللي في المشروع)</small></div>${tpick(p, "data-ptype")}</div>
+    ${inp("loc", "الموقع (المدينة / الحي / العنوان)")}${inp("map", "رابط اللوكيشن (Google Maps)", "url", 'dir="ltr" placeholder="https://maps.app.goo.gl/…"')}
+    <div class="cbtns"><button type="button" data-pmap>📍 افتح على الخريطة</button><button type="button" data-pgeo>📡 موقعي الحالي</button></div>
     <label>الحالة<select data-pf="status">${PST.map(([k, l]) => `<option value="${k}" ${p.status === k ? "selected" : ""}>${l}</option>`).join("")}</select></label>
     ${inp("start", "تاريخ البداية", "date")}${inp("end", "تاريخ الانتهاء المتوقع", "date")}
     <label>المبالغ المدخلة<select data-pf="taxMode"><option value="ex" ${p.taxMode !== "inc" ? "selected" : ""}>غير شاملة الضريبة (تُضاف الضريبة)</option><option value="inc" ${p.taxMode === "inc" ? "selected" : ""}>شاملة الضريبة</option></select></label>
@@ -1347,6 +1372,30 @@ function projInput(el){
   else return false;
   return true;
 }
+// ----- تسجيل تحويل مطالبة -----
+let payIdx = -1;
+function openPay(i){ const p = projDraft; if (!p) return; const c = pcalc(p).cl[i]; if (!c) return; payIdx = i; const rest = Math.max(Math.round((c.inc - c.pd) * 100) / 100, 0);
+  $("#payForm").innerHTML = `<h3>✓ تسجيل تحويل</h3><div style="font-size:13px;color:var(--ink2);margin-bottom:8px">${esc(p.name)} · ${esc(c.phase || c.inv || "مطالبة")} · قيمة المطالبة <b>${money(c.inc)}</b> ر.س${c.pd ? ` · اتحصّل قبل كده ${money(c.pd)}` : ""}</div>
+    <label>المبلغ المحوَّل<input name="amt" type="number" step="0.01" required value="${rest}"></label>
+    <label>تاريخ التحويل<input name="date" type="date" required value="${today()}"></label>
+    <label>صورة / PDF التحويل <small style="color:var(--mut)">(اختياري — من الموبايل تقدر تصوّر الإيصال)</small><input name="file" type="file" accept="image/*,application/pdf"></label>
+    <div class="auth-err" id="payErr"></div>
+    <div class="row2"><button class="btn gold" id="payOk">تم ✓</button><button type="button" class="btn ghost" id="payCancel">إلغاء</button></div>`;
+  $("#payBox").hidden = false; }
+$("#payBox").addEventListener("click", e => { if (e.target.id === "payBox" || e.target.id === "payCancel") $("#payBox").hidden = true; });
+$("#payForm").addEventListener("submit", async e => { e.preventDefault(); const p = projDraft; if (!p || payIdx < 0) return; const r = p.claims[payIdx]; if (!r) return;
+  const fd = new FormData(e.target), amt = num(fd.get("amt")), date = String(fd.get("date") || today()), file = fd.get("file"); const errEl = $("#payErr");
+  if (!(amt > 0)) { errEl.textContent = "اكتب المبلغ"; return; } const btn = $("#payOk"); btn.disabled = true;
+  try {
+    if (file && file.size) { if (file.size > 20 * 1024 * 1024) throw new Error("الملف أكبر من 20 ميجا"); if (!String(p.name || "").trim()) throw new Error("اكتب اسم المشروع الأول");
+      errEl.style.color = "var(--ink2)"; errEl.textContent = "جارٍ رفع الإيصال…"; const ext = (file.name.split(".").pop() || "").toLowerCase();
+      const up = await api("uploadFile", "تحويل - " + (r.phase || r.inv || "مطالبة") + " - " + date + "." + (ext || "jpg"), file.type || MIME[ext] || "application/octet-stream", await b64(file), "المشاريع/" + p.name.trim());
+      r.receipt = { url: up.url, name: file.name, at: Date.now() };
+      p.docs.push({ kind: up.kind || "drive", id: up.id || "", url: up.url, name: "تحويل - " + (r.phase || r.inv || "مطالبة") + " - " + date, size: file.size, cat: "تحويل / إيصال دفع", at: Date.now(), by: ME.name, note: money(amt) + " ر.س" }); }
+    r.paid = Math.round((num(r.paid) + amt) * 100) / 100; r.paidDate = date;
+    p.log.push({ date, kind: "تحصيل دفعة", subject: "تحويل " + money(amt) + " ر.س", details: (r.phase || r.inv || "مطالبة") + (r.receipt ? " — الإيصال مرفوع" : "") });
+    $("#payBox").hidden = true; projDirty = true; render(); projSaveNow(); toast("✓ اتسجّل التحويل — واتضاف لدخل الشهر");
+  } catch (x) { errEl.style.color = ""; errEl.textContent = (x && x.message) || "تعذّر الرفع"; } finally { btn.disabled = false; } });
 function bgSaveProject(p, n = 0){ const copy = JSON.parse(JSON.stringify(p)); copy.updatedAt = copy.updatedAt && n ? copy.updatedAt : Date.now(); const i = PROJECTS.findIndex(x => x.id === copy.id); if (i < 0) PROJECTS.push(copy); else if (!n || (PROJECTS[i].updatedAt || 0) <= copy.updatedAt) PROJECTS[i] = copy; else return;
   if (isDemo) return; bg("saveProject", copy).then(() => saveCache()).catch(x => { if (n < 3) setTimeout(() => bgSaveProject(copy, n + 1), 3000 * (n + 1)); else banner("⚠ تعذّر حفظ المشروع «" + copy.name + "»: " + ((x && x.message) || "خطأ"), true); }); }
 function pState(t){ const s = $("#psaveState"); if (s) s.textContent = t; }
@@ -1369,6 +1418,8 @@ function makeClaim(i, auto){
   p.log.push({ date: today(), kind: "إنهاء مرحلة", subject: `${auto ? "إنهاء " : "مطالبة "}«${ph.name}»`, details: `صدرت مطالبة بقيمة ${money(amt)} ر.س شامل الضريبة (${num(ph.pct)}%)` });
   toast(`🔔 صدرت مطالبة «${ph.name}» بقيمة ${money(amt)} ر.س`);
 }
+$("#view").addEventListener("change", e => { const t = e.target.closest("[data-ptype]"); if (!t || !projDraft) return; const set = new Set(ptypes(projDraft)); if (t.checked) set.add(t.value); else set.delete(t.value);
+  projDraft.types = PTYPES.filter(x => set.has(x)).concat([...set].filter(x => !PTYPES.includes(x))); projDraft.type = projDraft.types.join(" + "); projTouch(); render(); });
 $("#view").addEventListener("input", e => { if (tab !== "projects") return; if (e.target.id === "projSearch") { projQ = e.target.value; const pos = e.target.selectionStart; render(); const s = $("#projSearch"); if (s) { s.focus(); s.setSelectionRange(pos, pos); } return; } if (e.target.tagName === "SELECT") return; if (projInput(e.target)) { projRecalc(); projTouch(); } });
 $("#view").addEventListener("change", async e => { if (tab !== "projects" || !projDraft) return;
   if (e.target.id === "docCat") { docCat = e.target.value; return; }
@@ -1404,6 +1455,11 @@ $("#view").addEventListener("click", async e => {
     projTouch(); render(); return; }
   const rm = e.target.closest("[data-rm]"); if (rm) { projDraft[rm.dataset.rm].splice(+rm.dataset.i, 1); projTouch(); render(); return; }
   if (e.target.closest("[data-pprint]")) { window.print(); return; }
+  if (e.target.closest("[data-pay]")) { openPay(+e.target.closest("[data-pay]").dataset.pay); return; }
+  if (e.target.closest("[data-pmap]")) { const u = mapURL(projDraft); if (!u) { toast("اكتب الموقع أو الصق رابط اللوكيشن الأول", true); return; } window.open(u, "_blank", "noopener"); return; }
+  if (e.target.closest("[data-pgeo]")) { if (!navigator.geolocation) { toast("المتصفح مش بيدعم تحديد الموقع", true); return; } toast("جارٍ تحديد موقعك…");
+    navigator.geolocation.getCurrentPosition(pos => { if (!projDraft) return; const la = pos.coords.latitude.toFixed(6), lo = pos.coords.longitude.toFixed(6); projDraft.map = `https://maps.google.com/?q=${la},${lo}`; projTouch(); render(); toast("📍 اتسجّل موقعك الحالي كلوكيشن للمشروع"); },
+      () => toast("مقدرتش أحدد الموقع — اسمح للمتصفح بالوصول للموقع", true), { enableHighAccuracy: true, timeout: 15000 }); return; }
   if (e.target.closest("[data-pwa],[data-pmail],[data-pcall]")) { const p = projDraft, hi = `السلام عليكم${p.cname ? " " + p.cname : ""}،\nبخصوص مشروع «${p.name}»:\n`;
     if (e.target.closest("[data-pwa]")) { const u = waURL(p.cphone, hi); if (!u) { toast("اكتب جوال التواصل الأول", true); return; } window.open(u, "_blank", "noopener"); }
     else if (e.target.closest("[data-pmail]")) { if (!/@/.test(p.cemail || "")) { toast("اكتب إيميل التواصل الأول", true); return; } location.href = "mailto:" + p.cemail.trim() + "?subject=" + encodeURIComponent("مشروع " + p.name) + "&body=" + encodeURIComponent(hi); }
