@@ -302,6 +302,16 @@ button[data-udel][data-sure="1"]{background:var(--late);color:#fff;border-color:
 .tpick{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 10px}.tpick label{display:flex;align-items:center;gap:5px;border:1.5px solid var(--line);border-radius:10px;padding:5px 10px;font-size:12.5px;cursor:pointer;background:var(--surface)}.tpick label:has(input:checked){border-color:var(--gold);background:var(--gold-soft);font-weight:700}.tpick input{margin:0}.lbl{font-size:13px;font-weight:700;margin-top:6px}.lbl small{font-weight:400;color:var(--mut)}.pwide{grid-column:1/-1}
 .paybtn{display:inline-block;margin-inline-start:6px;border:0;border-radius:8px;padding:3px 9px;font-size:12px;font-weight:800;background:var(--done);color:#fff;cursor:pointer;white-space:nowrap}.rcpt{display:inline-block;margin-inline-start:6px;font-size:12px;text-decoration:none;white-space:nowrap}
 #payForm label{display:grid;gap:4px;font-size:13px;font-weight:700;margin-bottom:8px}#payForm input{border:1px solid var(--line);border-radius:10px;padding:8px 10px;font:inherit}#payForm h3{margin:0 0 6px}
+.ccat{display:inline-block;font-size:11.5px;font-weight:800;padding:2px 9px;border-radius:7px;color:var(--cc);border:1px solid var(--cc);background:color-mix(in srgb,var(--cc) 10%,transparent);white-space:nowrap}.crel{display:block;color:var(--mut);font-size:11px;margin-top:2px}
+.autob{font-size:10.5px;font-weight:700;color:var(--teal);background:var(--teal-soft);border-radius:6px;padding:1px 6px;white-space:nowrap}
+.ctable tr[data-copen]{cursor:pointer}.ctable tr[data-copen]:hover td{background:var(--surface2)}.cm{display:block;font-size:13px}.cm2{color:var(--mut);font-size:11.5px}
+.cacts{white-space:nowrap}.cacts a{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:9px;border:1px solid var(--line);text-decoration:none;margin-inline-start:4px;background:var(--surface)}.cacts a.wa{border-color:#25d366;background:rgba(37,211,102,.08)}
+.cbox{align-items:start;overflow-y:auto}.cbox .card{max-width:560px;margin:20px auto}.cbox fieldset{border:0;padding:0;margin:0;min-width:0}
+#cliForm label{display:grid;gap:4px;font-size:13px;font-weight:700;margin-bottom:8px}#cliForm input,#cliForm select,#cliForm textarea{border:1px solid var(--line);border-radius:10px;padding:8px 10px;font:inherit;background:var(--surface);color:var(--ink);min-width:0}#cliForm h3{margin:0 0 10px}#cliForm .two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.cpeople{display:grid;gap:6px}.cp{display:grid;grid-template-columns:1.2fr 1fr 1fr 1.3fr auto;gap:4px}.cp input{border:1px solid var(--line);border-radius:8px;padding:6px 8px;font:inherit;font-size:12.5px;min-width:0}
+@media(max-width:560px){.cp{grid-template-columns:1fr 1fr}.cp .rm{grid-column:span 2}#cliForm .two{grid-template-columns:1fr}}
+.cfromp,.cproj{margin:4px 0 10px;padding-inline-start:18px;font-size:13px;line-height:1.9}.cfromp a.wa{text-decoration:none}
+.ptools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}.ptools input{flex:1;min-width:200px;border:1px solid var(--line);border-radius:10px;padding:8px 12px;font:inherit}.ptools .chips{display:flex;gap:6px;flex-wrap:wrap}
 .ploc{color:#e4c77f;text-decoration:none}.ploc:hover{text-decoration:underline}
 .tchip{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:7px;background:var(--surface2);color:var(--ink2);border:1px solid var(--line);white-space:nowrap}
 .n{font-variant-numeric:tabular-nums;text-align:left;white-space:nowrap}.nw{white-space:nowrap;font-size:12.5px;color:var(--ink2)}.mutd{color:var(--mut)}
@@ -383,7 +393,7 @@ body.private .hero{background:radial-gradient(1200px 300px at 85% -40%,rgba(111,
 <nav class="tabs" role="tablist">
 <button role="tab" data-tab="day" aria-selected="true">صفحة اليوم</button>
 <button role="tab" data-tab="backlog" aria-selected="false">المهام العامة<span class="c" id="cBk">0</span></button>
-<button role="tab" data-tab="projects" aria-selected="false" id="tabProj" hidden>المشاريع</button>
+<button role="tab" data-tab="projects" aria-selected="false" id="tabProj" hidden>المشاريع</button><button role="tab" data-tab="clients" aria-selected="false" id="tabCli" hidden>العملاء والجهات</button>
 <button role="tab" data-tab="upcoming" aria-selected="false">القادمة<span class="c" id="cUp">0</span></button>
 <button role="tab" data-tab="report" aria-selected="false">ملخص الأسبوع</button>
 <button role="tab" data-tab="team" aria-selected="false" id="tabTeam" hidden>لوحة الفريق</button>
@@ -404,10 +414,11 @@ body.private .hero{background:radial-gradient(1200px 300px at 85% -40%,rgba(111,
 </div>
 <main id="view"></main>
 </div>
-<datalist id="projList"></datalist>
+<datalist id="projList"></datalist><datalist id="cliList"></datalist>
 <div class="toast" id="toast" hidden></div>
 <div class="updbar" id="actBar" hidden><span id="actMsg"></span><a id="actLink" class="wabtn" target="_blank" rel="noopener"></a><button type="button" class="x" onclick="this.parentNode.hidden=true" aria-label="إغلاق">✕</button></div>
 <div class="updbar" id="updBar" hidden>✨ فيه نسخة جديدة من يومي <button type="button" id="updBtn">تحديث</button></div>
+<div class="ihelp cbox" id="cliBox" hidden><form class="card" id="cliForm"></form></div>
 <div class="ihelp" id="payBox" hidden><form class="card" id="payForm"></form></div>
 <div class="ihelp" id="iHelp" hidden><div class="card"><h3>📲 ثبّت يومي على جهازك</h3>
 <div class="os">آيفون / آيباد (Safari):</div><ol><li>افتح الرابط في <b>Safari</b></li><li>دوس زر المشاركة <b>⬆︎</b> تحت</li><li>اختار <b>«إضافة إلى الشاشة الرئيسية»</b> ثم <b>إضافة</b></li></ol>
@@ -439,7 +450,7 @@ const KIND = { top:"أهم 6 مهام ★", meeting:"الاجتماعات وال
 const TTYPE = { tech:"فنية", admin:"إدارية", fin:"مالية" };
 const API = "https://script.google.com/macros/s/AKfycbwgvjkn2Op3hg-sSwxMi3PJO4MmIot0udoa8FXKOGTK9LBjqKuGtqlLYY1FaAkMwnI9/exec";
 let TOKEN = ""; try { TOKEN = localStorage.getItem("tasks_token") || ""; } catch {}
-let ME = null, USERS = [], viewUid = "", allItems = [], PROJECTS = [];
+let ME = null, USERS = [], viewUid = "", allItems = [], PROJECTS = [], CONTACTS = [];
 const can = k => !!ME && (ME.role === "owner" || !!(ME.perms || {})[k]);
 const isAdmin = () => can("team");
 const ROLEL = { owner: "المالك", admin: "مدير", member: "مستخدم" };
@@ -457,7 +468,7 @@ let db = null, col = null, mcp = null, assets = null, canWrite = false;
 let tfilter = "all", bfilter = "all";
 let tab = "day", page = "1", day = today(), open = null, confirmDel = null;
 function setChip(){ const c = $("#roleChip"); c.textContent = ME ? ME.name + " · " + (ROLEL[ME.role] || "مستخدم") : "جارٍ التحميل…"; c.className = "role" + (ME && ME.role === "owner" ? " own" : ME && ME.role === "admin" ? "" : " mgr");
-$("#logoutBtn").hidden = !ME; $("#pwBtn").hidden = !ME || isDemo; if (ME) $("#logoutBtn").textContent = isDemo ? "خروج من العرض" : "خروج"; $("#tabTeam").hidden = !can("team") || PRIV(); $("#tabProj").hidden = !(can("projects") || PRIV()); $("#tabUsers").hidden = !can("users") || PRIV();
+$("#logoutBtn").hidden = !ME; $("#pwBtn").hidden = !ME || isDemo; if (ME) $("#logoutBtn").textContent = isDemo ? "خروج من العرض" : "خروج"; $("#tabTeam").hidden = !can("team") || PRIV(); $("#tabProj").hidden = !(can("projects") || PRIV()); $("#tabCli").hidden = !(can("projects") || PRIV()); $("#tabUsers").hidden = !can("users") || PRIV();
 document.body.classList.toggle("private", PRIV()); const sp = $("#spc"); if (sp) { sp.hidden = !ME; $("#spName").textContent = spName(); sp.querySelectorAll("[data-space]").forEach(b => b.setAttribute("aria-pressed", b.dataset.space === SPACE)); }
 const s = $("#viewSel"); s.hidden = !can("team") || PRIV() || USERS.filter(u => u.active).length < 2;
 if (!s.hidden) s.innerHTML = USERS.filter(u => u.active).map(u => `<option value="${u.id}" ${u.id === viewUid ? "selected" : ""}>${u.id === ME.id ? "مهامي" : "مهام: " + esc(u.name)}</option>`).join(""); }
@@ -657,6 +668,7 @@ const base = doneWeek.length + items.filter(x => !x.done && x.kind !== "meeting"
 $("#sBar").style.width = base ? Math.round(doneWeek.length / base * 100) + "%" : "0";
 const upN = items.filter(x => !x.done && x.due && x.due > t).length; $("#cUp").textContent = upN;
 $("#cBk").textContent = items.filter(x => !x.done && !x.due && x.kind !== "meeting").length;
+{ const cl = $("#cliList"); if (cl) cl.innerHTML = [...new Set(CONTACTS.map(c => c.name).concat(PROJECTS.map(p => p.client)).filter(Boolean))].map(n => `<option value="${esc(n)}">`).join(""); }
 $("#projList").innerHTML = [...new Set(PROJECTS.map(p => p.name).concat(items.map(x => x.project)).filter(Boolean))].map(p => `<option value="${esc(p)}">`).join("");
 $("#dayWrap").hidden = tab !== "day";
 let h = "";
@@ -693,8 +705,9 @@ if (!up.length) h = `<div class="list"><div class="empty"><b>لا توجد بن�
 else { const g = {}; up.forEach(x => (g[x.due] ||= []).push(x));
 Object.keys(g).sort().forEach(d => { h += `<div class="grp"><h3>${esc(nice(d))}</h3><small>${esc(gFmtY.format(parse(d)))}</small></div><div class="list">${g[d].map((x,i) => row(x,i).replace('<div class="tt"', `<div class="tt" title="${KIND[x.kind]}"`)).join("")}</div>`; }); }
 } else if (tab === "projects") h = projectsView();
+else if (tab === "clients") h = clientsView();
 else if (tab === "team") h = teamView(); else if (tab === "users") h = usersView(); else h = report();
-if (ME && viewUid && viewUid !== ME.id && tab !== "team" && tab !== "users" && tab !== "projects") h = `<div class="viewing">👁 أنت تشاهد مهام: ${esc(uname(viewUid))} — أي مهمة تضيفها هنا تُسند له<button data-view="${ME.id}">رجوع لمهامي</button></div>` + h;
+if (ME && viewUid && viewUid !== ME.id && tab !== "team" && tab !== "users" && tab !== "projects" && tab !== "clients") h = `<div class="viewing">👁 أنت تشاهد مهام: ${esc(uname(viewUid))} — أي مهمة تضيفها هنا تُسند له<button data-view="${ME.id}">رجوع لمهامي</button></div>` + h;
 if (render.busy) { setTimeout(render, 0); return; } render.busy = true; try { $("#view").innerHTML = h; if (tab === "projects" && projOpen && !pEdit()) document.querySelectorAll(".pdetail input,.pdetail select,.pdetail textarea,.pdetail button:not([data-pback]):not([data-pprint]):not(.cbtns button)").forEach(x => { x.disabled = true; if (x.matches("[data-psave],[data-pdel],[data-add],[data-mkclaim],.rm")) x.hidden = true; }); } finally { render.busy = false; }
 if (open) { const f = document.querySelector(`[data-f="note"][data-id="${open}"]`); }
 }
@@ -865,7 +878,7 @@ const syncUI = () => document.body.classList.toggle("syncing", pending > 0 || !!
 async function bg(fn, ...args){ pending++; syncUI(); try { return await api(fn, ...args); } finally { pending--; syncUI(); } }
 async function call(fn, ...args){ if (isDemo && fn !== "getAll") return fn === "uploadFile" ? { kind: "link", url: "#", name: args[0] + " (عرض)" } : (fn === "addCalendar" ? { id: "" } : true); pending++; syncUI(); try { return await api(fn, ...args); } catch (e) { console.error(e); setTimeout(() => { load.done = false; load(); }, 400); throw { code: "unavailable", message: String(e && e.message || e) }; } finally { pending--; syncUI(); } }
 const CK = "yawmi_cache";
-function saveCache(){ if (isDemo || !TOKEN || !ME) return; try { localStorage.setItem(CK, JSON.stringify({ u: ME.id, at: Date.now(), r: { me: ME, users: USERS, projects: PROJECTS, notes: noteStore, items: Object.entries(store).map(([id, v]) => ({ id, ...v })) } })); } catch {} }
+function saveCache(){ if (isDemo || !TOKEN || !ME) return; try { localStorage.setItem(CK, JSON.stringify({ u: ME.id, at: Date.now(), r: { me: ME, users: USERS, projects: PROJECTS, contacts: CONTACTS, notes: noteStore, items: Object.entries(store).map(([id, v]) => ({ id, ...v })) } })); } catch {} }
 function readCache(uid){ try { const c = JSON.parse(localStorage.getItem(CK) || "null"); return c && c.r && c.r.me && (!uid || c.u === uid) ? c.r : null; } catch { return null; } }
 function clearCache(){ try { localStorage.removeItem(CK); } catch {} }
 document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") saveCache(); });
@@ -875,7 +888,7 @@ const IDLE = 30 * 60000; let lastAct = Date.now();
 function touch(force){ const n = Date.now(); if (force || n - lastAct > 15000) { lastAct = n; try { localStorage.setItem("yawmi_last", String(n)); } catch {} } else lastAct = n; }
 ["pointerdown", "keydown", "wheel", "touchstart", "scroll"].forEach(ev => addEventListener(ev, () => touch(), { passive: true, capture: true }));
 function idleLock(){ if (isDemo || !TOKEN) return; saveCache(); const tk = TOKEN; fetch(API, { method: "POST", body: JSON.stringify({ t: tk, fn: "logout", args: [] }), credentials: "omit" }).catch(() => {});
-  setToken(""); ME = null; USERS = []; allItems = []; items = []; store = {}; PROJECTS = []; setChip(); render(); showAuth("login", "🔒 اتقفلت الجلسة بعد 30 دقيقة بدون نشاط — ادخل تاني. (الإشعارات والتذكيرات شغالة عادي)");
+  setToken(""); ME = null; USERS = []; allItems = []; items = []; store = {}; PROJECTS = []; CONTACTS = []; setChip(); render(); showAuth("login", "🔒 اتقفلت الجلسة بعد 30 دقيقة بدون نشاط — ادخل تاني. (الإشعارات والتذكيرات شغالة عادي)");
   let un = ""; try { un = localStorage.getItem("yawmi_user") || ""; } catch {} const i = $("#authForm").querySelector('[name="username"]'); if (i && un) { i.value = un; setTimeout(() => { const p = $("#authForm").querySelector('[name="password"]'); if (p) p.focus(); }, 80); } }
 function idleCheck(){ if (!TOKEN || isDemo) return; let l = lastAct; try { l = Math.max(l, Number(localStorage.getItem("yawmi_last") || 0)); } catch {} if (Date.now() - l > IDLE) idleLock(); }
 setInterval(idleCheck, 30000); document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") idleCheck(); });
@@ -904,7 +917,7 @@ try { const r = await api("getAll"); if (pending) return; applyData(r); saveCach
 finally { load.busy = false; syncUI(); }
 }
 function applyData(r){
-ME = r.me; USERS = r.users || []; PROJECTS = r.projects || []; if (!viewUid || !USERS.some(u => u.id === viewUid)) viewUid = ME.id; canWrite = true; setChip();
+ME = r.me; USERS = r.users || []; PROJECTS = r.projects || []; CONTACTS = r.contacts || []; if (!viewUid || !USERS.some(u => u.id === viewUid)) viewUid = ME.id; canWrite = true; setChip();
 store = {}; (r.items || []).forEach(o => store[o.id] = strip(o)); noteStore = r.notes || {};
 spaceBanner(); emit(); emitN(); if (!isDemo && ME && !ME.email && !askedProfile) { askedProfile = true; setTimeout(() => showAuth("profile", "أهلاً " + ME.name + " 👋 — ضيف إيميلك ورقم جوالك عشان توصلك التذكيرات وملخص يومك."), 400); }
 banner(isDemo ? "نسخة عرض فاضية للتجربة: جرّب إضافة مهام ومستخدمين وإسناد — لا شيء يُحفظ، وبتتمسح لما تقفل الصفحة." : isMgr ? `وضع ${MGR}: تقدر تشوف المهام وتضيف مهام جديدة في «أهم 6 مهام» و«جدول المهام».` : "");
@@ -987,7 +1000,7 @@ $("#authForm").addEventListener("submit", async e => {
 $("#logoutBtn").onclick = async () => { if (isDemo) { try { await api("logout"); } catch {} } else { const tk = TOKEN; fetch(API, { method: "POST", body: JSON.stringify({ t: tk, fn: "logout", args: [] }), credentials: "omit" }).catch(() => {}); } setToken(""); clearCache(); ME = null; USERS = []; allItems = []; items = []; store = {}; setChip(); render(); showAuth("login"); };
 $("#pwBtn").onclick = () => showAuth("profile");
 $("#spc").addEventListener("click", e => { const b = e.target.closest("[data-space]"); if (!b || b.dataset.space === SPACE) return; SPACE = b.dataset.space; try { localStorage.setItem("yawmi_space", SPACE); } catch {}
-  if (PRIV() && ["team","users"].includes(tab)) tab = "day"; if (tab === "projects" && !PRIV() && !can("projects")) tab = "day"; projOpen = null; projDraft = null;
+  if (PRIV() && ["team","users"].includes(tab)) tab = "day"; if ((tab === "projects" || tab === "clients") && !PRIV() && !can("projects")) tab = "day"; projOpen = null; projDraft = null;
   document.querySelectorAll("nav.tabs button").forEach(x => x.setAttribute("aria-selected", x.dataset.tab === tab)); setChip(); applyView(true); spaceBanner(); toast(PRIV() ? "🔒 " + spName() + " — محدش يشوف اللي هنا غيرك" : "🏢 مساحة العمل"); });
 function spaceBanner(){ const b = $("#spcBanner"); if (b) b.hidden = !PRIV(); if (b) b.innerHTML = `🔒 أنت في <b>${esc(spName())}</b> — المهام والمشاريع هنا خاصة بيك ومحدش يشوفها، حتى المديرين.`; }
 $("#viewSel").onchange = e => { viewUid = e.target.value; tab = "day"; document.querySelectorAll("nav.tabs button").forEach(x => x.setAttribute("aria-selected", x.dataset.tab === "day")); applyView(true); };
@@ -1229,7 +1242,7 @@ function projList(){
 function openPModal(){ projModal = newProject(); let m = $("#pmodal"); if (!m) { m = document.createElement("div"); m.id = "pmodal"; m.className = "auth"; document.body.appendChild(m); bindPModal(m); } m.hidden = false; drawPModal(); setTimeout(() => { const n = m.querySelector('[name="name"]'); if (n) n.focus(); }, 50); }
 function drawPModal(){ const p = projModal, m = $("#pmodal"); const c = pcalc(p); const val = p.status === "quote" ? p.price : p.agreed;
   m.innerHTML = `<form class="auth-card pm" id="pmForm"><h2><i></i>مشروع جديد</h2><p>البيانات الأساسية — باقي التفاصيل (المراحل والدفعات والملفات) من صفحة المشروع</p>
-  <label>اسم المشروع *<input name="name" required value="${esc(p.name)}"></label><label>الجهة / العميل<input name="client" value="${esc(p.client)}"></label>
+  <label>اسم المشروع *<input name="name" required value="${esc(p.name)}"></label><label>الجهة / العميل<input name="client" list="cliList" value="${esc(p.client)}"></label>
   <div class="lbl">نوع المشروع <small>(تقدر تختار أكتر من نوع، مثلاً تصميم + إشراف)</small></div>${tpick(p, 'name="types"')}
   <label>الموقع (المدينة / الحي)<input name="loc" value="${esc(p.loc || "")}" placeholder="مثال: مكة — العزيزية"></label>
   <div class="two"><label>الحالة<select name="status">${PST.map(([k, l]) => `<option value="${k}" ${p.status === k ? "selected" : ""}>${l}</option>`).join("")}</select></label><label>تاريخ البداية<input name="start" type="date" value="${esc(p.start)}"></label></div>
@@ -1284,7 +1297,7 @@ function projectDetail(p){
     ${kpi("السعر المقترح", `<span data-c="PT">${SAR(c.P.T)}</span>`, "شامل الضريبة")}
   </div>
   <div class="panel"><h3>البيانات الأساسية</h3><div class="pform">
-    ${inp("name", "اسم المشروع *")}${inp("client", "الجهة / العميل")}
+    ${inp("name", "اسم المشروع *")}${inp("client", "الجهة / العميل", "", 'list="cliList"')}
     ${inp("cname", "مسؤول التواصل")}${inp("cphone", "جوال التواصل", "tel", 'dir="ltr" placeholder="05xxxxxxxx"')}${inp("cemail", "إيميل التواصل", "email", 'dir="ltr" placeholder="name@company.com"')}
     <div class="cbtns"><button type="button" class="wa" data-pwa>💬 واتساب</button><button type="button" data-pmail>✉️ إيميل</button><button type="button" data-pcall>📞 اتصال</button></div>
     <div class="pwide"><div class="lbl">نوع المشروع <small>(اختار كل الخدمات اللي في المشروع)</small></div>${tpick(p, "data-ptype")}</div>
@@ -1372,6 +1385,100 @@ function projInput(el){
   else return false;
   return true;
 }
+// ----- العملاء والجهات -----
+const CCAT = [["client","عميل","#c29a3e"],["dev","مطور عقاري","#2f63b5"],["eng","مكتب هندسي / استشاري","#1f8a8a"],["partner","مكتب متعاون / شريك","#2c8a60"],["hotel","مشغّل فنادق","#6a4fb3"],["contractor","مقاول","#a07412"],["gov","جهة حكومية","#22335a"],["supplier","مورد","#8b94aa"],["other","أخرى","#8b94aa"]];
+const CCATL = Object.fromEntries(CCAT.map(([k, l, c]) => [k, { l, c }]));
+const CREL = { current: "عميل حالي", past: "تعاملنا قبل كده", lead: "فرصة محتملة", partner: "متعاون معانا" };
+let cliQ = "", cliF = "all", cliEdit = null;
+const normN = x => String(x || "").trim().replace(/\s+/g, " ").toLowerCase();
+const CV = () => CONTACTS.filter(c => (c.space === "p") === PRIV());
+function clientsAll(){
+  const map = new Map();
+  CV().forEach(c => map.set(normN(c.name), { ...c, people: (c.people || []).slice(), saved: true, projects: [] }));
+  PV().forEach(p => { const k = normN(p.client); if (!k) return; let e = map.get(k);
+    if (!e) { e = { id: "", name: String(p.client).trim(), cat: "client", rel: "current", people: [], city: "", saved: false, projects: [] }; map.set(k, e); }
+    e.projects.push(p); if (!e.saved && !e.city && p.loc) e.city = p.loc; });
+  return [...map.values()].map(e => { let T = 0, paid = 0; e.projects.forEach(p => { if (p.status !== "quote") { const c = pcalc(p); T += c.T; paid += c.paid; } });
+    const fromP = e.projects.filter(p => p.cname || p.cphone || p.cemail).map(p => ({ name: p.cname || "", title: "من مشروع: " + p.name, phone: p.cphone || "", email: p.cemail || "", auto: true }))
+      .filter(x => !e.people.some(y => (x.phone && normPh(y.phone) === normPh(x.phone)) || (x.email && y.email === x.email)));
+    const main = e.people[0] || fromP[0] || {}; return { ...e, fromP, T, paid, mphone: e.phone || main.phone || "", memail: e.email || main.email || "", mname: main.name || "" }; });
+}
+function clientsView(){
+  if (!PRIV() && !can("projects")) return `<div class="empty">ليس لديك صلاحية مشاهدة العملاء والجهات</div>`;
+  const all = clientsAll(); const q = normN(cliQ);
+  let L = all.filter(e => cliF === "all" || e.cat === cliF);
+  if (q) L = L.filter(e => normN([e.name, e.city, e.country, e.mname, e.mphone, e.memail, e.notes, (CCATL[e.cat] || {}).l, ...(e.people || []).map(x => x.name + " " + x.title)].join(" ")).includes(q));
+  L.sort((a, b) => b.T - a.T || a.name.localeCompare(b.name, "ar"));
+  const chips = [["all", `الكل (${all.length})`], ...CCAT.filter(([k]) => all.some(e => e.cat === k)).map(([k, l]) => [k, `${l} (${all.filter(e => e.cat === k).length})`])]
+    .map(([k, l]) => `<button type="button" class="chip" data-cf="${k}" aria-pressed="${cliF === k}">${l}</button>`).join("");
+  const withP = all.filter(e => e.projects.length), tot = all.reduce((s, e) => s + e.T, 0);
+  const rows = L.map(e => { const cc = CCATL[e.cat] || CCATL.other; const wa = e.mphone ? waURL(e.mphone, "السلام عليكم" + (e.mname ? " " + e.mname : "") + "،\n") : "";
+    return `<tr data-copen="${esc(e.saved ? e.id : "n:" + e.name)}"><td class="pn"><b>${esc(e.name)}</b>${e.saved ? "" : ' <span class="autob">من المشاريع</span>'}<small>${esc([e.city, e.country].filter(Boolean).join(" · ") || "—")}</small></td>
+      <td><span class="ccat" style="--cc:${cc.c}">${esc(cc.l)}</span>${e.rel ? `<small class="crel">${esc(CREL[e.rel] || "")}</small>` : ""}</td>
+      <td>${e.mname ? `<b class="cm">${esc(e.mname)}</b>` : ""}<small dir="ltr" class="cm2">${esc(e.mphone ? "+" + normPh(e.mphone) : "")}${e.memail ? " · " + esc(e.memail) : ""}</small></td>
+      <td class="n">${e.projects.length ? `${e.projects.length} <small>مشروع</small><br><small>${kmoney(e.T)} ر.س</small>` : "—"}</td>
+      <td class="cacts">${wa ? `<a class="wa" href="${wa}" target="_blank" rel="noopener" title="واتساب" data-stop>💬</a>` : ""}${e.memail ? `<a href="mailto:${esc(e.memail)}" title="إيميل" data-stop>✉️</a>` : ""}${e.mphone ? `<a href="tel:+${normPh(e.mphone)}" title="اتصال" data-stop>📞</a>` : ""}${e.web ? `<a href="${esc(/^https?:/i.test(e.web) ? e.web : "https://" + e.web)}" target="_blank" rel="noopener" title="الموقع" data-stop>🌐</a>` : ""}</td></tr>`; }).join("");
+  return `<div class="phead"><div><h2>العملاء والجهات</h2><div class="sub">${PRIV() ? "🔒 جهاتك الخاصة · " : ""}قاعدة بيانات العملاء والمطورين والمكاتب والجهات المتعاونة — العملاء بيتضافوا تلقائياً من المشاريع</div></div>
+    <div class="row2">${pEdit() ? `<button class="btn gold" data-cnew>+ جهة جديدة</button>` : ""}<button class="btn ghost" data-cexport>⬇ تصدير Excel</button></div></div>
+  <div class="mk"><div class="mkc cur"><span class="kl">إجمالي الجهات</span><b>${all.length}</b><small>${all.filter(e => e.saved).length} مسجّلة · ${all.filter(e => !e.saved).length} من المشاريع</small></div>
+    <div class="mkc"><span class="kl">عملاء عندهم مشاريع</span><b>${withP.length}</b><small>قيمة العقود ${kmoney(tot)} ر.س</small></div>
+    <div class="mkc"><span class="kl">مطورين عقاريين</span><b>${all.filter(e => e.cat === "dev").length}</b><small>مكاتب هندسية ${all.filter(e => e.cat === "eng").length}</small></div>
+    <div class="mkc"><span class="kl">فرص محتملة</span><b>${all.filter(e => e.rel === "lead").length}</b><small>متعاونين ${all.filter(e => e.rel === "partner" || e.cat === "partner").length}</small></div></div>
+  <div class="panel"><div class="ptools"><input id="cliSearch" placeholder="🔎 دوّر بالاسم، المدينة، الشخص، الرقم…" value="${esc(cliQ)}"><div class="chips">${chips}</div></div>
+  ${L.length ? `<div class="tblwrap"><table class="ptable ctable"><tr><th>الجهة</th><th>النوع</th><th>جهة الاتصال</th><th>المشاريع</th><th></th></tr>${rows}</table></div>` : `<div class="empty"><b>${all.length ? "لا نتائج" : "لسه مفيش جهات"}</b>${all.length ? "" : "أي عميل تكتبه في مشروع هيظهر هنا تلقائياً، أو دوس «+ جهة جديدة»."}</div>`}</div>`;
+}
+function openCli(key){
+  const all = clientsAll(); let e = key && key.startsWith("n:") ? all.find(x => !x.saved && x.name === key.slice(2)) : all.find(x => x.id === key);
+  if (!e) e = { id: "", name: "", cat: "client", rel: "lead", people: [], saved: false, projects: [], fromP: [] };
+  cliEdit = { ...JSON.parse(JSON.stringify({ ...e, projects: undefined, fromP: undefined })), _projects: e.projects.map(p => p.id), _fromP: e.fromP || [] };
+  if (!cliEdit.people.length) cliEdit.people = cliEdit._fromP.length ? [] : [{ name: "", title: "", phone: "", email: "" }];
+  drawCli(); $("#cliBox").hidden = false; }
+function drawCli(){ const c = cliEdit, ro = !pEdit(); const P = c._projects.map(id => PROJECTS.find(p => p.id === id)).filter(Boolean);
+  $("#cliForm").innerHTML = `<h3>${c.saved ? "🏢 " + esc(c.name) : c.name ? "🏢 " + esc(c.name) + ' <span class="autob">من المشاريع — احفظها عشان تكمّل بياناتها</span>' : "➕ جهة جديدة"}</h3>
+  <fieldset ${ro ? "disabled" : ""}>
+  <label>اسم الجهة / الشركة *<input name="name" required value="${esc(c.name)}"></label>
+  <div class="two"><label>النوع<select name="cat">${CCAT.map(([k, l]) => `<option value="${k}" ${c.cat === k ? "selected" : ""}>${l}</option>`).join("")}</select></label>
+  <label>العلاقة<select name="rel">${Object.entries(CREL).map(([k, l]) => `<option value="${k}" ${c.rel === k ? "selected" : ""}>${l}</option>`).join("")}</select></label></div>
+  <div class="two"><label>الدولة<input name="country" value="${esc(c.country || "")}" placeholder="السعودية"></label><label>المدينة<input name="city" value="${esc(c.city || "")}" placeholder="مكة"></label></div>
+  <div class="two"><label>هاتف الجهة<input name="phone" type="tel" dir="ltr" value="${esc(c.phone || "")}"></label><label>إيميل الجهة<input name="email" type="email" dir="ltr" value="${esc(c.email || "")}"></label></div>
+  <label>الموقع الإلكتروني<input name="web" dir="ltr" value="${esc(c.web || "")}" placeholder="www.company.com"></label>
+  <div class="lbl">الأشخاص للتواصل</div>
+  <div class="cpeople">${c.people.map((x, i) => `<div class="cp"><input data-pp="${i}" data-k="name" placeholder="الاسم" value="${esc(x.name || "")}"><input data-pp="${i}" data-k="title" placeholder="المنصب" value="${esc(x.title || "")}"><input data-pp="${i}" data-k="phone" type="tel" dir="ltr" placeholder="الجوال" value="${esc(x.phone || "")}"><input data-pp="${i}" data-k="email" type="email" dir="ltr" placeholder="الإيميل" value="${esc(x.email || "")}"><button type="button" class="rm" data-pprm="${i}">×</button></div>`).join("")}</div>
+  <button type="button" class="linkbtn" data-ppadd>+ إضافة شخص</button>
+  ${c._fromP.length ? `<div class="lbl">من بيانات المشاريع</div><ul class="cfromp">${c._fromP.map(x => `<li><b>${esc(x.name || "—")}</b> <small>${esc(x.title)}</small> <span dir="ltr">${esc(x.phone ? "+" + normPh(x.phone) : "")} ${esc(x.email || "")}</span>${x.phone ? ` <a class="wa" href="${waURL(x.phone, "السلام عليكم " + (x.name || "") + "،\n")}" target="_blank" rel="noopener">💬</a>` : ""}</li>`).join("")}</ul>` : ""}
+  <label>ملاحظات<textarea name="notes" rows="3" placeholder="مجال الشغل، مشاريع ممكن نتعاون فيها، آخر تواصل…">${esc(c.notes || "")}</textarea></label>
+  </fieldset>
+  ${P.length ? `<div class="lbl">المشاريع (${P.length})</div><ul class="cproj">${P.map(p => { const k = pcalc(p); return `<li><button type="button" class="linkbtn" data-cpopen="${p.id}">${esc(p.name)}</button> <small>${esc((PSTL[p.status] || {}).l || "")} · ${kmoney(k.T)} ر.س · محصّل ${pct(k.col)}</small></li>`; }).join("")}</ul>` : ""}
+  <div class="auth-err" id="cliErr"></div>
+  <div class="row2">${ro ? "" : `<button class="btn gold">حفظ</button>`}${c.saved && !ro ? `<button type="button" class="btn ghost danger" data-cdel>حذف</button>` : ""}<button type="button" class="btn ghost" data-cclose>إغلاق</button></div>`; }
+function cliSync(){ const f = $("#cliForm"); if (!f || !cliEdit) return; const fd = new FormData(f); ["name","cat","rel","country","city","phone","email","web","notes"].forEach(k => { if (fd.has(k)) cliEdit[k] = String(fd.get(k) || ""); });
+  f.querySelectorAll("[data-pp]").forEach(i => { const r = cliEdit.people[+i.dataset.pp]; if (r) r[i.dataset.k] = i.value; }); }
+$("#cliBox").addEventListener("input", cliSync);
+$("#cliBox").addEventListener("click", e => { const t = e.target;
+  if (t.id === "cliBox" || t.closest("[data-cclose]")) { $("#cliBox").hidden = true; cliEdit = null; return; }
+  if (t.closest("[data-ppadd]")) { cliSync(); cliEdit.people.push({ name: "", title: "", phone: "", email: "" }); drawCli(); return; }
+  if (t.closest("[data-pprm]")) { cliSync(); cliEdit.people.splice(+t.closest("[data-pprm]").dataset.pprm, 1); drawCli(); return; }
+  if (t.closest("[data-cpopen]")) { const id = t.closest("[data-cpopen]").dataset.cpopen; $("#cliBox").hidden = true; cliEdit = null; tab = "projects"; projOpen = id; projDraft = null; projDirty = false;
+    document.querySelectorAll("nav.tabs button").forEach(x => x.setAttribute("aria-selected", x.dataset.tab === tab)); render(); window.scrollTo({ top: 0 }); return; }
+  if (t.closest("[data-cdel]")) { const b = t.closest("[data-cdel]"); if (b.dataset.sure !== "1") { b.dataset.sure = "1"; b.textContent = "تأكيد الحذف؟"; return; }
+    const id = cliEdit.id, gone = CONTACTS.find(x => x.id === id); CONTACTS = CONTACTS.filter(x => x.id !== id); $("#cliBox").hidden = true; cliEdit = null; render(); toast("اتحذفت الجهة");
+    bg("deleteContact", id).then(saveCache).catch(x => { if (gone) CONTACTS.push(gone); render(); banner((x && x.message) || "تعذّر الحذف", true); }); } });
+$("#cliForm").addEventListener("submit", e => { e.preventDefault(); cliSync(); const c = cliEdit; if (!c || !String(c.name || "").trim()) { $("#cliErr").textContent = "اكتب اسم الجهة"; return; }
+  const dup = CV().find(x => x.id !== c.id && normN(x.name) === normN(c.name)); if (dup) { $("#cliErr").textContent = "في جهة مسجّلة بنفس الاسم"; return; }
+  const obj = { id: c.id || rid(), name: c.name.trim(), cat: c.cat, rel: c.rel, country: c.country || "", city: c.city || "", phone: c.phone || "", email: (c.email || "").trim(), web: (c.web || "").trim(), notes: c.notes || "",
+    people: c.people.filter(x => x.name || x.phone || x.email), space: PRIV() ? "p" : "", createdAt: c.createdAt || Date.now(), updatedAt: Date.now() };
+  const i = CONTACTS.findIndex(x => x.id === obj.id); const before = i >= 0 ? CONTACTS[i] : null; if (i >= 0) CONTACTS[i] = obj; else CONTACTS.push(obj);
+  $("#cliBox").hidden = true; cliEdit = null; render(); toast("اتحفظت الجهة ✓");
+  if (!isDemo) bg("saveContact", obj).then(saveCache).catch(x => { if (before) CONTACTS[CONTACTS.indexOf(obj)] = before; else CONTACTS = CONTACTS.filter(y => y !== obj); render(); banner("ماتحفظتش الجهة: " + ((x && x.message) || "خطأ"), true); }); });
+function exportClients(){ const all = clientsAll(); const H = ["الجهة","النوع","العلاقة","الدولة","المدينة","هاتف الجهة","إيميل الجهة","الموقع","جهة الاتصال","المنصب","جوال الشخص","إيميل الشخص","عدد المشاريع","قيمة العقود","المحصّل","ملاحظات","المصدر"];
+  const q = v => `"${String(v ?? "").replace(/"/g, '""')}"`; const lines = [H.map(q).join(",")];
+  all.forEach(e => { const ppl = (e.people || []).concat(e.fromP || []); (ppl.length ? ppl : [{}]).forEach((x, j) => lines.push([e.name, (CCATL[e.cat] || {}).l, CREL[e.rel] || "", e.country, e.city, e.phone, e.email, e.web, x.name, x.title, x.phone, x.email, j ? "" : e.projects.length, j ? "" : Math.round(e.T), j ? "" : Math.round(e.paid), j ? "" : e.notes, e.saved ? "مسجّلة" : "من المشاريع"].map(q).join(","))); });
+  const url = URL.createObjectURL(new Blob(["\ufeff" + lines.join("\r\n")], { type: "text/csv;charset=utf-8" })); const a = document.createElement("a"); a.href = url; a.download = "يومي - العملاء والجهات - " + today() + ".csv"; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 2000); toast("اتصدّر الملف — يفتح على Excel"); }
+$("#view").addEventListener("click", e => { if (tab !== "clients") return; if (e.target.closest("[data-stop]")) return;
+  const f = e.target.closest("[data-cf]"); if (f) { cliF = f.dataset.cf; render(); return; }
+  if (e.target.closest("[data-cnew]")) { openCli(""); return; } if (e.target.closest("[data-cexport]")) { exportClients(); return; }
+  const r = e.target.closest("[data-copen]"); if (r) openCli(r.dataset.copen); });
+$("#view").addEventListener("input", e => { if (tab !== "clients" || e.target.id !== "cliSearch") return; cliQ = e.target.value; const pos = e.target.selectionStart; render(); const s = $("#cliSearch"); if (s) { s.focus(); s.setSelectionRange(pos, pos); } });
 // ----- تسجيل تحويل مطالبة -----
 let payIdx = -1;
 function openPay(i){ const p = projDraft; if (!p) return; const c = pcalc(p).cl[i]; if (!c) return; payIdx = i; const rest = Math.max(Math.round((c.inc - c.pd) * 100) / 100, 0);
