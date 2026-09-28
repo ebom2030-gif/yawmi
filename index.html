@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<script>window.onerror=function(m,s,l,c){document.addEventListener("DOMContentLoaded",function(){});var d=document.createElement("pre");d.style.cssText="color:#b00;white-space:pre-wrap;direction:ltr;font-size:12px";d.textContent="ERR: "+m+" @"+l+":"+c;(document.body||document.documentElement).prepend(d);};</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#14213d">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%2314213d%27/%3E%3Cpath d=%27M18 33l9 9 19-20%27 stroke=%27%23e4c77f%27 stroke-width=%277%27 fill=%27none%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E">
+<title>مهام العمل</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&amp;display=swap">
+
+
+<style>
+:root{
+--bg:#f3f5f9;--surface:#ffffff;--surface2:#f0f3f8;--ink:#131c33;--ink2:#48526b;--mut:#8b94aa;--line:#e1e6ef;
+--navy:#14213d;--navy2:#22335a;--navy-ink:#ffffff;--gold:#c29a3e;--gold2:#e4c77f;--gold-soft:#f8f0dc;
+--done:#2c8a60;--done-soft:#e2f3ea;--late:#c2453b;--late-soft:#fbe7e4;--wait:#a07412;--wait-soft:#fbf1d8;
+--doing:#2f63b5;--doing-soft:#e4edfb;--violet:#6a4fb3;--violet-soft:#eee9fb;--teal:#1f8a8a;--teal-soft:#e0f4f3;
+--shadow:0 1px 2px rgba(20,33,61,.05),0 8px 24px rgba(20,33,61,.07);--shadow-h:0 2px 4px rgba(20,33,61,.07),0 14px 32px rgba(20,33,61,.12);
+--r:14px;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+--bg:#0c1222;--surface:#141c30;--surface2:#1b2540;--ink:#e9edf6;--ink2:#b3bdd3;--mut:#7c88a4;--line:#26314f;
+--navy:#1d2c52;--navy2:#2a3d6d;--gold:#d8b35e;--gold2:#e9cd8b;--gold-soft:#342c1b;--done:#63c796;--done-soft:#173327;
+--late:#ee8a80;--late-soft:#3b2124;--wait:#e0bd62;--wait-soft:#362e1a;--doing:#8db5f2;--doing-soft:#1b2c4b;
+--violet:#b3a0ef;--violet-soft:#2a2346;--teal:#6fd0cf;--teal-soft:#15312f;--shadow:none;--shadow-h:0 8px 24px rgba(0,0,0,.35);color-scheme:dark}}
+[hidden]{display:none!important}
+*{box-sizing:border-box}
+html{direction:rtl}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Tajawal","Segoe UI",Tahoma,sans-serif;font-size:15px;line-height:1.55;padding-inline:16px;padding-block:0 60px}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.wrap{max-width:1040px;margin:0 auto}
+ 
+.hero{margin-inline:-16px;padding:22px 16px 64px;background:radial-gradient(1200px 300px at 85% -40%,rgba(228,199,127,.28),transparent 60%),linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);color:#fff;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;inset-inline:0;bottom:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold2),var(--gold),var(--gold2),transparent)}
+.hero-in{max-width:1040px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.hero h1{margin:0;font-size:28px;font-weight:800;letter-spacing:-.3px;display:flex;align-items:center;gap:10px}
+.hero h1 i{width:10px;height:26px;border-radius:3px;background:linear-gradient(var(--gold2),var(--gold));display:inline-block}
+.hero .date{margin-top:4px;font-size:14px;color:#c9d2e8}
+.hero .date b{color:#fff;font-weight:700}
+.hero .date span{color:var(--gold2)}
+.role{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;padding:5px 12px;border-radius:99px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);color:#fff;margin-top:10px}
+.role.mgr{background:rgba(143,181,242,.18)}.role.demo{background:rgba(228,199,127,.2)}
+.ringwrap{display:flex;align-items:center;gap:14px}
+.ring{--p:0;width:84px;height:84px;border-radius:50%;background:conic-gradient(var(--gold2) calc(var(--p)*1%),rgba(255,255,255,.14) 0);display:grid;place-items:center;transition:--p .6s}
+.ring>div{width:66px;height:66px;border-radius:50%;background:var(--navy);display:grid;place-items:center;font-weight:800;font-size:18px}
+.ringlbl{font-size:13px;color:#c9d2e8;line-height:1.4}.ringlbl b{display:block;color:#fff;font-size:15px}
+ 
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:-44px;position:relative;z-index:1}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;display:flex;gap:12px;align-items:center;box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s}
+.stat:hover{transform:translateY(-2px);box-shadow:var(--shadow-h)}
+.stat .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;flex:none;background:var(--doing-soft);color:var(--doing)}
+.stat .ic svg{width:22px;height:22px}
+.stat.late .ic{background:var(--late-soft);color:var(--late)}.stat.wait .ic{background:var(--wait-soft);color:var(--wait)}.stat.done .ic{background:var(--done-soft);color:var(--done)}
+.stat .tx{display:flex;flex-direction:column;min-width:0;flex:1}
+.stat .n{font-size:26px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.05}
+.stat .l{font-size:12.5px;color:var(--ink2)}
+.stat.late .n{color:var(--late)}.stat.done .n{color:var(--done)}.stat.wait .n{color:var(--wait)}
+.bar{height:5px;background:var(--surface2);border-radius:9px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--done),#4cc38a);border-radius:9px;transition:width .6s}
+ 
+nav.tabs{display:inline-flex;gap:4px;margin-block:22px 4px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px;box-shadow:var(--shadow);max-width:100%;overflow-x:auto}
+nav.tabs button{background:none;border:0;padding:8px 16px;font-weight:700;color:var(--ink2);border-radius:9px;white-space:nowrap;transition:background .2s,color .2s}
+nav.tabs button:hover{background:var(--surface2)}
+nav.tabs button[aria-selected="true"]{background:var(--navy);color:#fff}
+nav.tabs .c{font-size:11.5px;background:var(--gold-soft);color:var(--gold);border-radius:99px;padding:1px 7px;margin-inline-start:6px;font-variant-numeric:tabular-nums}
+nav.tabs button[aria-selected="true"] .c{background:rgba(255,255,255,.18);color:#fff}
+ 
+.daynav{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-block:18px 6px}
+.daynav .nb{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 14px;font-weight:700;color:var(--ink2);transition:all .2s}
+.daynav .nb:hover{border-color:var(--gold);color:var(--ink);transform:translateY(-1px)}
+.daynav .dl{flex:1;min-width:200px;text-align:center}
+.daynav .dl b{display:block;font-size:20px;font-weight:800}
+.daynav .dl span{font-size:13px;color:var(--gold);font-weight:500}
+.daynav input[type=date]{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:7px 9px}
+.pages{display:flex;gap:8px;margin-block:12px 16px}
+.pages button{flex:1;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 12px;font-weight:700;color:var(--ink2);display:flex;justify-content:center;gap:8px;align-items:center;transition:all .2s}
+.pages button:hover{border-color:var(--gold)}
+.pages button[aria-selected="true"]{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;border-color:transparent;box-shadow:var(--shadow)}
+.pages .c{font-size:12px;background:rgba(127,140,170,.2);border-radius:99px;padding:1px 8px;font-variant-numeric:tabular-nums}
+ 
+.sheet{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.sec{--acc:var(--gold);--acc-soft:var(--gold-soft);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow);border-top:4px solid var(--acc);animation:rise .35s ease both}
+.sec.full{grid-column:1/-1}
+.sec-meeting{--acc:var(--doing);--acc-soft:var(--doing-soft)}.sec-follow{--acc:var(--wait);--acc-soft:var(--wait-soft)}
+.sec-admin{--acc:var(--violet);--acc-soft:var(--violet-soft)}.sec-task{--acc:var(--navy2);--acc-soft:var(--surface2)}.sec-notes{--acc:var(--teal);--acc-soft:var(--teal-soft)}
+.sec>h3{margin:0;padding:12px 16px;font-size:15px;font-weight:800;color:var(--ink);display:flex;justify-content:space-between;align-items:center;gap:8px;border-bottom:1px solid var(--line)}
+.sec>h3:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--acc);box-shadow:0 0 0 4px var(--acc-soft);margin-inline-end:4px;flex:none}
+.sec>h3{justify-content:flex-start}
+.sec>h3 small{margin-inline-start:auto;font-weight:700;color:var(--acc);background:var(--acc-soft);font-size:11.5px;padding:2px 9px;border-radius:99px}
+.sec>h3 i{font-style:normal}
+.sec .list{border:0;border-radius:0}
+@keyframes rise{from{opacity:.001;transform:translateY(6px)}to{opacity:1;transform:none}}
+.list{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.task{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:start;padding:12px 16px;border-bottom:1px solid var(--line);transition:background .2s}
+.task:hover{background:var(--surface2)}
+.task:last-child{border-bottom:0}
+.task.hi{box-shadow:inset -4px 0 0 var(--late)}
+.task.mid{box-shadow:inset -4px 0 0 var(--gold)}
+.task.compact{padding:10px 14px;gap:10px}
+.tick{width:24px;height:24px;border-radius:50%;border:2px solid #b7bfd1;background:var(--surface);margin-top:1px;display:grid;place-items:center;padding:0;transition:all .25s cubic-bezier(.3,1.6,.5,1)}
+.tick:hover:not(:disabled){border-color:var(--done);transform:scale(1.12)}
+.tick:disabled{cursor:default;opacity:.7}
+.tick svg{width:14px;height:14px;opacity:0;transform:scale(.4);transition:all .25s}
+.task.isdone .tick{background:var(--done);border-color:var(--done)}
+.task.isdone .tick svg{opacity:1;transform:none}
+.tt{font-weight:600;font-size:15px;word-break:break-word;border-radius:6px;padding:0 3px;margin:0 -3px;transition:color .3s}
+.task.isdone .tt{text-decoration:line-through;text-decoration-color:var(--mut);color:var(--mut);font-weight:500}
+.tt[contenteditable="true"]:hover{background:var(--surface)}
+.num{font-variant-numeric:tabular-nums;font-size:11.5px;font-weight:800;color:var(--acc,var(--mut));background:var(--acc-soft,var(--surface2));min-width:22px;height:22px;border-radius:7px;display:grid;place-items:center;margin-top:1px}
+.time{font-variant-numeric:tabular-nums;font-weight:800;color:var(--doing);background:var(--doing-soft);border-radius:8px;padding:1px 8px;font-size:13px;margin-top:1px}
+.meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;font-size:12px;color:var(--ink2);align-items:center}
+.pill{border-radius:99px;padding:1px 9px;font-weight:600;white-space:nowrap}
+.pill.proj{background:var(--surface2);color:var(--ink2);border:1px solid var(--line)}
+.pill.late{background:var(--late-soft);color:var(--late)}.pill.wait{background:var(--wait-soft);color:var(--wait)}
+.pill.doing{background:var(--doing-soft);color:var(--doing)}.pill.done{background:var(--done-soft);color:var(--done)}
+.pill.rem{background:var(--gold-soft);color:var(--gold)}.pill.tech{background:var(--teal-soft);color:var(--teal)}.pill.adm{background:var(--violet-soft);color:var(--violet)}
+.note{margin-top:6px;font-size:13px;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:6px 10px;white-space:pre-wrap;border-inline-start:3px solid var(--line)}
+.acts{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;max-width:280px;opacity:.75;transition:opacity .2s}
+.task:hover .acts{opacity:1}
+.acts select,.acts button{border:1px solid var(--line);background:var(--surface);border-radius:8px;font-size:12.5px;padding:4px 9px;color:var(--ink2);transition:all .15s}
+.acts button:hover,.acts select:hover{border-color:var(--gold);color:var(--ink)}
+.acts .del:hover{border-color:var(--late);color:var(--late)}
+.acts a{font-size:12.5px;color:var(--gold);padding:4px 8px;text-decoration:none;border:1px solid var(--gold-soft);border-radius:8px}
+.more{grid-column:2/-1;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13px;background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:10px 12px;animation:rise .25s ease both}
+.more input,.more textarea,.more select{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:5px 8px;font-size:13px}
+.more textarea{flex:1 1 100%;min-height:56px;resize:vertical}
+.more button{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:5px 10px;font-size:12.5px}
+.more .del{color:var(--late);border-color:var(--late-soft)}
+.addrow{display:flex;gap:6px;padding:10px 12px;border-top:1px dashed var(--line);background:linear-gradient(0deg,var(--acc-soft),transparent 140%)}
+.addrow input{flex:1;min-width:0;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 10px;font-size:14.5px;transition:border-color .2s,box-shadow .2s}
+.addrow input:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 3px var(--acc-soft)}
+.addrow input.sm{flex:0 0 100px}
+.addrow input[type=time]{flex:0 0 108px}
+.addrow select{border:1px solid var(--line);background:var(--surface);border-radius:10px;font-size:13px;padding:4px 8px}
+.addrow button{border:0;background:var(--acc);color:#fff;border-radius:10px;padding:0 14px;font-weight:800;font-size:18px;transition:transform .15s,filter .15s}
+.addrow button:hover{transform:scale(1.06);filter:brightness(1.1)}
+.sec-task .addrow button,.sec-top .addrow button{background:var(--navy)}
+.empty{padding:26px 18px;text-align:center;color:var(--mut)}
+.empty b{display:block;color:var(--ink2);font-size:15px;margin-bottom:4px}
+.notes{flex:1;min-height:170px;border:0;background:transparent;padding:12px 16px;resize:vertical;font-size:14.5px;line-height:1.9;background-image:repeating-linear-gradient(to bottom,transparent 0,transparent calc(1.9em - 1px),var(--line) calc(1.9em - 1px),var(--line) 1.9em);background-attachment:local}
+.notes:focus{outline:none}
+.saved{font-size:12px;color:var(--mut);padding:0 16px 8px}
+.tfilter{display:flex;gap:6px;padding:10px 14px;border-bottom:1px solid var(--line);align-items:center;font-size:13px;color:var(--mut)}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:4px 12px;font-size:13px;color:var(--ink2);transition:all .15s}
+.chip[aria-pressed="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
+.grp{margin-block:20px 8px;display:flex;align-items:baseline;gap:10px}
+.grp h3{margin:0;font-size:15px;font-weight:800}
+.grp small{color:var(--mut);font-size:12.5px}
+ 
+.report{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow);margin-top:16px}
+.report h2{margin:0 0 4px;font-size:20px}
+.report .sub{color:var(--mut);font-size:13px;margin-bottom:14px}
+.rgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.rbox{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--surface2)}
+.rbox h4{margin:0 0 6px;font-size:13.5px;color:var(--gold);font-weight:800}
+.rbox ul{margin:0;padding-inline-start:18px;font-size:14px}
+.rbox li{margin-block:3px}.rbox li small{color:var(--mut)}
+.projrow{display:flex;align-items:center;gap:10px;font-size:13.5px;margin-block:7px}
+.projrow .nm{width:120px;flex:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.projrow .b{flex:1;height:9px;background:var(--surface);border-radius:9px;overflow:hidden;border:1px solid var(--line)}
+.projrow .b i{display:block;height:100%;background:linear-gradient(90deg,var(--done),#4cc38a)}
+.projrow .v{font-variant-numeric:tabular-nums;color:var(--ink2);width:52px;text-align:left}
+.btn{border:0;border-radius:10px;padding:9px 16px;font-weight:700;background:var(--navy);color:#fff}
+.btn.ghost{background:var(--surface);color:var(--ink2);border:1px solid var(--line)}
+.btn.ghost:hover{border-color:var(--gold);color:var(--ink)}
+ 
+.files{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.fchip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);border-radius:9px;padding:3px 4px 3px 9px;font-size:12.5px;max-width:100%}
+.fchip a{color:var(--ink);text-decoration:none;display:inline-flex;gap:6px;align-items:center;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fchip a:hover{color:var(--gold)}
+.fchip .ic{font-size:10.5px;font-weight:800;border-radius:5px;padding:1px 5px;background:var(--surface2);color:var(--ink2);flex:none}
+.fchip .ic.pdf{background:var(--late-soft);color:var(--late)}.fchip .ic.img{background:var(--doing-soft);color:var(--doing)}.fchip .ic.lnk{background:var(--gold-soft);color:var(--gold)}
+.fchip button{border:0;background:none;color:var(--mut);padding:0 5px;font-size:13px}
+.fchip button:hover{color:var(--late)}
+.attach{flex:1 1 100%;display:flex;flex-wrap:wrap;gap:6px;align-items:center;border-top:1px dashed var(--line);padding-top:8px}
+.attach .lbl{font-weight:700;color:var(--ink2)}
+.attach input[type=url],.attach input.ln{width:170px}
+.upbtn{border:1px solid var(--gold);color:var(--gold);background:var(--surface);border-radius:8px;padding:4px 10px;font-size:12.5px;font-weight:700;cursor:pointer}
+.attach small{color:var(--mut);flex:1 1 100%}
+.confirm{display:inline-flex;gap:6px;align-items:center;font-size:12.5px;color:var(--late)}
+ 
+.banner{margin-top:14px;font-size:13.5px;background:var(--gold-soft);color:var(--ink);border:1px solid var(--gold2);border-radius:12px;padding:10px 14px;display:flex;gap:8px;align-items:center}
+.banner:before{content:"ℹ";font-weight:800;color:var(--gold)}
+.banner.err{background:var(--late-soft);border-color:var(--late);color:var(--late)}
+.banner.err:before{content:"!";color:var(--late)}
+.toast{position:fixed;top:calc(16px + env(safe-area-inset-top,0px));inset-inline-start:50%;transform:translateX(50%);background:var(--navy);color:#fff;padding:10px 18px;border-radius:12px;font-size:14px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.25);z-index:50;animation:drop .3s ease both}
+.toast.err{background:var(--late)}
+@keyframes drop{from{opacity:0;transform:translate(50%,-10px)}to{opacity:1;transform:translate(50%,0)}}
+.ro{display:none}
+@media (max-width:760px){.sheet{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.rgrid{grid-template-columns:1fr}
+.task{grid-template-columns:auto 1fr}.acts{grid-column:1/-1;justify-content:flex-start;max-width:none;opacity:1}.hero h1{font-size:23px}.ring{width:70px;height:70px}.ring>div{width:54px;height:54px;font-size:15px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.task[data-lead="1"]{grid-template-columns:auto auto 1fr auto}
+@media (max-width:760px){.task[data-lead="1"]{grid-template-columns:auto auto 1fr}.more{grid-column:1/-1}}
+
+</style>
+</head>
+<body>
+
+<header class="hero"><div class="hero-in">
+<div><h1><i></i>مهام العمل</h1><div class="date" id="todayLbl"></div><span class="role" id="roleChip"></span></div>
+<div class="ringwrap"><div class="ringlbl"><b id="ringTxt">إنجاز اليوم</b><span id="ringSub">لا توجد مهام بعد</span></div><div class="ring" id="ring"><div id="ringPct">0%</div></div></div>
+</div></header>
+<div class="wrap">
+<span class="ro" id="roBadge" hidden></span>
+<section class="stats" aria-label="ملخص">
+<div class="stat"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M8 2v4M16 2v4M3 10h18"/></svg></span><span class="tx"><span class="n" id="sToday">0</span><span class="l">مفتوحة اليوم</span></span></div>
+<div class="stat late"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 8v4l3 2"/></svg></span><span class="tx"><span class="n" id="sLate">0</span><span class="l">مرحّلة من أيام سابقة</span></span></div>
+<div class="stat wait"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span class="tx"><span class="n" id="sWait">0</span><span class="l">بانتظار رد</span></span></div>
+<div class="stat done"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="tx"><span class="n" id="sDone">0</span><span class="l">أُنجزت هذا الأسبوع</span><span class="bar"><i id="sBar" style="width:0"></i></span></span></div>
+</section>
+<div class="banner" id="banner" hidden></div>
+<nav class="tabs" role="tablist">
+<button role="tab" data-tab="day" aria-selected="true">صفحة اليوم</button>
+<button role="tab" data-tab="upcoming" aria-selected="false">القادمة<span class="c" id="cUp">0</span></button>
+<button role="tab" data-tab="report" aria-selected="false">ملخص الأسبوع</button>
+</nav>
+<div id="dayWrap">
+<div class="daynav">
+<button class="nb" id="prevDay" aria-label="اليوم السابق">‹ السابق</button>
+<div class="dl"><b id="dayName"></b><span id="dayHijri"></span></div>
+<button class="nb" id="nextDay" aria-label="اليوم التالي">التالي ›</button>
+<button class="nb" id="goToday">اليوم</button>
+<input type="date" id="pickDay" aria-label="اذهب لتاريخ">
+</div>
+<div class="pages" role="tablist">
+<button role="tab" data-page="1" aria-selected="true">الصفحة 1 · أهم الأمور<span class="c" id="c1">0</span></button>
+<button role="tab" data-page="2" aria-selected="false">الصفحة 2 · جدول المهام<span class="c" id="c2">0</span></button>
+</div>
+</div>
+<main id="view"></main>
+</div>
+<datalist id="projList"></datalist>
+<div class="toast" id="toast" hidden></div>
+<script>
+(() => {
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const pad = n => String(n).padStart(2,"0");
+const iso = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const parse = s => { const [y,m,d] = s.split("-").map(Number); return new Date(y, m-1, d); };
+const addDays = (d,n) => { const x = new Date(d); x.setDate(x.getDate()+n); return x; };
+const today = () => iso(new Date());
+const daysBetween = (a,b) => Math.round((parse(b)-parse(a))/864e5);
+const DAYN = ["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
+const gFmt = new Intl.DateTimeFormat("ar-EG-u-nu-latn",{day:"numeric",month:"long"});
+const gFmtY = new Intl.DateTimeFormat("ar-EG-u-nu-latn",{day:"numeric",month:"long",year:"numeric"});
+let hFmt; try { hFmt = new Intl.DateTimeFormat("ar-SA-u-ca-islamic-umalqura-nu-latn",{day:"numeric",month:"long",year:"numeric"}); } catch { hFmt = null; }
+const hij = d => hFmt ? hFmt.format(d) : "";
+const nice = s => { const diff = daysBetween(today(), s);
+if (diff === 0) return "اليوم"; if (diff === 1) return "بكرة"; if (diff === 2) return "بعد بكرة"; if (diff === -1) return "أمس";
+const d = parse(s); return `${DAYN[d.getDay()]} ${gFmt.format(d)}`; };
+const weekStart = () => { const d = new Date(); d.setHours(0,0,0,0); return addDays(d, -d.getDay()); };
+const STATUS = {todo:"جديدة", doing:"جاري العمل", waiting:"بانتظار رد"};
+const KIND = { top:"أهم 6 مهام ★", meeting:"الاجتماعات والمواعيد", follow:"متابعات — بانتظار رد", admin:"مهام إدارية", task:"جدول المهام" };
+const TTYPE = { tech:"فنية", admin:"إدارية" };
+const API = "https://script.google.com/macros/s/AKfycbwgvjkn2Op3hg-sSwxMi3PJO4MmIot0udoa8FXKOGTK9LBjqKuGtqlLYY1FaAkMwnI9/exec";
+const KEY = new URLSearchParams(location.search).get("k") || ""; let ROLE = "", MGR = "المدير"; let isMgr = false, isDemo = false; const own = x => !isMgr || x.addedBy === "manager";
+const ROLL = new Set(["top","follow","admin","task"]); 
+let items = [], notes = {};
+let db = null, col = null, mcp = null, assets = null, canWrite = false;
+let tfilter = "all";
+let tab = "day", page = "1", day = today(), open = null, confirmDel = null;
+function setChip(){ $("#roleChip").textContent = !ROLE ? "جارٍ التحميل…" : isDemo ? "نسخة عرض" : isMgr ? "وضع " + MGR : "صلاحيات كاملة"; $("#roleChip").className = "role" + (isDemo ? " demo" : isMgr ? " mgr" : ""); }
+setChip();
+$("#todayLbl").innerHTML = (() => { const d = new Date(); return `<b>${DAYN[d.getDay()]} ${gFmtY.format(d)}</b> · <span>${esc(hij(d))}</span>`; })();
+function toast(m, err){ const t = $("#toast"); t.textContent = m; t.className = "toast" + (err ? " err" : ""); t.hidden = false; clearTimeout(toast.h); toast.h = setTimeout(() => t.hidden = true, 2600); }
+function banner(m, err){ const b = $("#banner"); b.textContent = m || ""; b.className = "banner" + (err ? " err" : ""); b.hidden = !m; }
+function handleWriteErr(err){
+if (err && err.code === "invalid_argument") { setReadOnly(true); banner("ليس لديك صلاحية التعديل — هذه الصفحة للاطلاع فقط."); }
+else if (err && err.code === "quota_exceeded") banner("امتلأت قاعدة البيانات. احذف بعض البنود المنجزة القديمة ثم حاول مجدداً.");
+else { const msg = "تعذّر الحفظ: " + ((err && err.message) || "تأكد من الاتصال وحاول مرة أخرى."); banner(msg, true); toast("لم يتم الحفظ — شوف الرسالة فوق", true); }
+}
+async function upd(id, data){ if (!col) return; try { await col.doc(id).update(data); } catch (e) { handleWriteErr(e); } }
+
+function calLink(x){
+const time = x.time || x.reminder?.time || "09:00"; const [h,m] = time.split(":").map(Number);
+const d = x.due.replace(/-/g,""); const e = new Date(2000,0,1,h,m+30);
+const q = new URLSearchParams({ action:"TEMPLATE", text:x.title, details: x.project ? `المشروع: ${x.project}` : "",
+dates:`${d}T${pad(h)}${pad(m)}00/${d}T${pad(e.getHours())}${pad(e.getMinutes())}00`, ctz:"Asia/Riyadh" });
+return "https:\/\/calendar.google.com/calendar/render?" + q.toString();
+}
+async function addToCalendar(x, time){
+if (!x.due) return;
+if (!mcp) { await upd(x.id, { reminder: { time, state: "link" } }); toast("استخدم زر «أضف للتقويم» بجانب البند"); return; }
+const [h,m] = time.split(":").map(Number); const e = new Date(2000,0,1,h,m+(x.kind === "meeting" ? 60 : 30));
+try {
+const r = await mcp.callTool("Google Calendar", "create_event", {
+summary: x.title, description: (x.project ? `المشروع: ${x.project}\n` : "") + "من صفحة مهام العمل",
+startTime: `${x.due}T${pad(h)}:${pad(m)}:00+03:00`, endTime: `${x.due}T${pad(e.getHours())}:${pad(e.getMinutes())}:00+03:00`,
+timeZone: "Asia/Riyadh", overrideReminders: [{ method: "popup", minutes: x.kind === "meeting" ? 15 : 10 }],
+availability: x.kind === "meeting" ? "AVAILABILITY_BUSY" : "AVAILABILITY_FREE"
+});
+const p = r && r.payload; const eid = p && typeof p === "object" ? (p.id || p.eventId || (p.event && p.event.id) || "") : "";
+await upd(x.id, { reminder: { time, state: "added", eventId: String(eid || "") } });
+toast("أُضيف تذكير في Google Calendar");
+} catch (err) {
+const c = err && err.code; let msg = "تعذّر إضافة التذكير — استخدم زر «أضف للتقويم» بجانب البند.";
+if (c === "server_not_connected") msg = "تعذّر الوصول للتقويم. استخدم زر «أضف للتقويم».";
+else if (c === "needs_reauth") msg = "أعد ربط Google Calendar من إعدادات claude.ai ← Connectors.";
+else if (c === "not_in_manifest") msg = "لم تسمح للصفحة بالوصول للتقويم. استخدم زر «أضف للتقويم» بجانب البند.";
+else if (c === "tool_error") msg = "رفض التقويم إنشاء الحدث: " + (err.message || "");
+banner(msg); await upd(x.id, { reminder: { time, state: "link" } });
+}
+}
+
+function forDay(d){
+const t = today();
+return items.filter(x => {
+if (x.due === d) return true;
+
+return d === t && ROLL.has(x.kind) && !x.done && x.due && x.due < t;
+});
+}
+const sortItems = arr => arr.slice().sort((a,b) => (a.done - b.done) || ((a.due < b.due) ? -1 : (a.due > b.due) ? 1 : 0) || ((b.priority||0)-(a.priority||0)) || (a.createdAt - b.createdAt));
+
+const CHECK = '<svg viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l3 3 6-7"/></svg>';
+function row(x, i){
+const t = today();
+const late = !x.done && x.due && x.due < t && ROLL.has(x.kind);
+const pills = [];
+if (x.kind === "task" && x.star && page === "2" && tab === "day") pills.push(`<span class="pill rem">★ من أهم 6</span>`);
+if ((x.kind === "task" || x.kind === "top") && x.ttype) pills.push(`<span class="pill ${x.ttype === "admin" ? "adm" : "tech"}">${TTYPE[x.ttype]}</span>`);
+if (x.kind === "task" && x.project) pills.push(`<span class="pill proj">${esc(x.project)}</span>`);
+if (late) { const n = daysBetween(x.due, t); pills.push(`<span class="pill late">مرحّلة من ${esc(nice(x.due))}${n > 1 ? ` · ${n} أيام` : ""}</span>`); }
+if (x.kind === "follow" && x.from) pills.push(`<span class="pill wait">من: ${esc(x.from)}</span>`);
+if (x.kind === "task" && x.status === "doing" && !x.done) pills.push(`<span class="pill doing">جاري العمل</span>`);
+if (x.kind === "task" && x.status === "waiting" && !x.done) pills.push(`<span class="pill wait">بانتظار رد</span>`);
+if (x.priority === 2 && !x.done) pills.push(`<span class="pill late">عاجلة</span>`);
+if (x.addedBy === "manager") pills.push(`<span class="pill doing">👤 أضافها ${esc(MGR)}</span>`);
+if (x.reminder && !x.done && x.reminder.state === "added") pills.push(`<span class="pill rem">⏰ ${esc(x.reminder.time)} · في التقويم</span>`);
+if (x.done && x.doneAt && iso(new Date(x.doneAt)) !== x.due) pills.push(`<span class="pill done">أُنجزت ${esc(nice(iso(new Date(x.doneAt))))}</span>`);
+let acts = "";
+if (canWrite && own(x)) {
+if (!x.done) {
+if (x.kind === "task") acts += `<button data-a="star" data-id="${x.id}" title="${x.star ? "إزالة من أهم 6" : "إضافة لأهم 6"}" aria-pressed="${!!x.star}" style="${x.star ? "color:var(--gold);border-color:var(--gold)" : ""}">${x.star ? "★" : "☆"}</button>`;
+if (x.kind === "task") acts += `<select data-a="status" data-id="${x.id}" aria-label="الحالة">${Object.keys(STATUS).map(s => `<option value="${s}" ${ (x.status||"todo")===s?"selected":""}>${STATUS[s]}</option>`).join("")}</select>`;
+if (x.kind !== "meeting") acts += `<button data-a="tomorrow" data-id="${x.id}">لبكرة</button>`;
+if (x.kind === "meeting" && x.time && (!x.reminder || x.reminder.state !== "added")) acts += `<button data-a="calMeet" data-id="${x.id}">⏰ للتقويم</button>`;
+if (x.reminder && x.reminder.state === "link") acts += `<a href="${esc(calLink(x))}" target="_blank" rel="noopener">أضف للتقويم</a>`;
+}
+acts += `<button data-a="more" data-id="${x.id}" aria-expanded="${open===x.id}" title="تفاصيل ومرفقات">📎 …</button>`;
+}
+let more = "";
+if (open === x.id && canWrite && own(x)) {
+more = `<div class="more">
+<label>التاريخ <input type="date" data-f="due" data-id="${x.id}" value="${x.due || ""}"></label>
+${x.kind === "meeting" ? `<label>الوقت <input type="time" data-f="time" data-id="${x.id}" value="${x.time || ""}"></label>` : ""}
+${x.kind === "task" ? `<label>المشروع <input data-f="project" data-id="${x.id}" value="${esc(x.project)}" list="projList" style="width:130px"></label>
+<label>الأولوية <select data-f="priority" data-id="${x.id}">${[0,1,2].map(p => `<option value="${p}" ${(x.priority||0)===p?"selected":""}>${["عادية","مهمة","عاجلة"][p]}</option>`).join("")}</select></label>` : ""}
+${x.kind === "task" || x.kind === "top" ? `<label>النوع <select data-f="ttype" data-id="${x.id}"><option value="">—</option>${Object.keys(TTYPE).map(k => `<option value="${k}" ${x.ttype===k?"selected":""}>${TTYPE[k]}</option>`).join("")}</select></label>` : ""}
+${x.kind === "follow" ? `<label>من <input data-f="from" data-id="${x.id}" value="${esc(x.from)}" style="width:130px"></label>` : ""}
+${!isMgr && x.kind !== "meeting" && x.due && !x.done ? `<label>تذكير <input type="time" data-f="remTime" data-id="${x.id}" value="${x.reminder?.time || "09:00"}"></label><button data-a="remind" data-id="${x.id}">أضف للتقويم</button>` : ""}
+<textarea data-f="note" data-id="${x.id}" placeholder="ملاحظة…">${esc(x.note)}</textarea>
+<div class="attach"><span class="lbl">المرفقات</span>
+${(mcp || assets) ? `<label class="upbtn">رفع ملف<input type="file" data-a="upload" data-id="${x.id}" multiple hidden></label>` : ""}
+<input class="ln" data-l="name" data-id="${x.id}" placeholder="اسم الرابط (مثلاً: عقد التصميم)">
+<input type="url" data-l="url" data-id="${x.id}" placeholder="https:\/\/… رابط OneDrive / Drive">
+<button data-a="addlink" data-id="${x.id}">إضافة رابط</button>
+<small>${mcp ? `الملفات تُرفع على Google Drive في فولدر <a href="${DRIVE_URL}" target="_blank" rel="noopener">«المهام»</a> — Word وExcel وPDF وDWG وغيرها.` : assets ? "ارفع PDF أو صور مباشرة، أو أضف رابط الملف." : "أضف رابط الملف من Drive أو OneDrive."}</small>
+</div>
+${confirmDel === x.id ? `<span class="confirm">حذف نهائي؟ <button data-a="delyes" data-id="${x.id}">نعم</button><button data-a="delno" data-id="${x.id}">لا</button></span>`
+: `<button data-a="del" data-id="${x.id}" class="del">حذف</button>`}
+</div>`;
+}
+const lead = x.kind === "meeting" ? `<span class="time">${esc(x.time || "—")}</span>` : (x.kind === "top" || x.kind === "task") ? `<span class="num">${i+1}</span>` : "";
+const cls = ["task","compact", x.done ? "isdone" : "", !x.done && x.priority === 2 ? "hi" : "", !x.done && x.priority === 1 ? "mid" : ""].join(" ");
+return `<div class="${cls}" data-lead="${lead ? 1 : 0}">
+<button class="tick" data-a="toggle" data-id="${x.id}" aria-label="${x.done?"إرجاع":"تمت"}" ${canWrite && !isMgr?"":"disabled"}>${CHECK}</button>
+${lead}
+<div><div class="tt" data-id="${x.id}" ${canWrite && own(x) && !x.done ? 'contenteditable="true" spellcheck="false"' : ""}>${esc(x.title)}</div>
+${pills.length ? `<div class="meta">${pills.join("")}</div>` : ""}
+${x.note && open !== x.id ? `<div class="note">${esc(x.note)}</div>` : ""}
+${filesHTML(x)}</div>
+<div class="acts">${acts}</div>${more}</div>`;
+}
+function fileType(f){ const n = (f.name || "").toLowerCase();
+if (f.kind === "link") return ["lnk","رابط"]; if (f.kind === "drive" && /\.(docx?|xlsx?|pptx?|dwg|dxf)$/i.test(f.name||"")) return ["lnk",(f.name.split(".").pop()||"").toUpperCase()]; if ((f.type||"").includes("pdf") || n.endsWith(".pdf")) return ["pdf","PDF"];
+if ((f.type||"").startsWith("image/")) return ["img","صورة"]; return ["","ملف"]; }
+function filesHTML(x){
+const fs = x.files || []; if (!fs.length) return "";
+return `<div class="files">${fs.map((f,i) => { const [c,l] = fileType(f); const href = f.kind === "file" ? "/_blob/" + f.id : f.url;
+return `<span class="fchip"><a href="${esc(href)}" target="_blank" rel="noopener" title="${esc(f.name)}"><span class="ic ${c}">${l}</span>${esc(f.name)}</a>${canWrite ? `<button data-a="rmfile" data-id="${x.id}" data-i="${i}" aria-label="إزالة المرفق">×</button>` : ""}</span>`; }).join("")}</div>`;
+}
+const DRIVE_FOLDER = "1ol-98Mz8EL4sE98_kgpjERAMN1igiiR1";
+const DRIVE_URL = "https:\/\/drive.google.com/drive/folders/" + DRIVE_FOLDER;
+const MIME = { pdf:"application/pdf", doc:"application/msword", docx:"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+xls:"application/vnd.ms-excel", xlsx:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", ppt:"application/vnd.ms-powerpoint",
+pptx:"application/vnd.openxmlformats-officedocument.presentationml.presentation", png:"image/png", jpg:"image/jpeg", jpeg:"image/jpeg",
+gif:"image/gif", webp:"image/webp", txt:"text/plain", csv:"text/csv", dwg:"application/acad", dxf:"application/dxf", zip:"application/zip", rar:"application/vnd.rar" };
+let fileArgs = false, driveOk = null;
+const b64 = f => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(",")[1] || ""); r.onerror = rej; r.readAsDataURL(f); });
+function driveErr(err, name){
+const c = err && err.code;
+if (c === "server_not_connected") return "Google Drive غير مربوط. اربطه من إعدادات claude.ai ← Connectors.";
+if (c === "needs_reauth") return "أعد ربط Google Drive من إعدادات claude.ai ← Connectors.";
+if (c === "not_in_manifest") return "لم تسمح للصفحة باستخدام Google Drive. أعد تحميل الصفحة ووافق على الإذن.";
+if (c === "tool_error") return `رفض Google Drive رفع «${name}»: ${err.message || ""}`;
+if (c === "bad_request") return `تعذّر تجهيز «${name}» للرفع. جرّب ملفاً أصغر أو ارفعه يدوياً على فولدر «المهام» وأضف الرابط.`;
+return `تعذّر رفع «${name}» الآن. حاول مرة أخرى.`;
+}
+async function toDrive(x, file){
+const ext = (file.name.split(".").pop() || "").toLowerCase();
+const type = file.type || MIME[ext] || "application/octet-stream";
+return await call("uploadFile", file.name, type, await b64(file));
+}
+const TEXT_TYPES = { txt:"text/plain", csv:"text/csv", md:"text/markdown", json:"application/json" };
+async function toAssets(file){
+const ext = (file.name.split(".").pop() || "").toLowerCase();
+const opts = TEXT_TYPES[ext] ? { type: TEXT_TYPES[ext] } : (!file.type && ext === "pdf" ? { type: "application/pdf" } : undefined);
+const r = await assets.upload(file, opts);
+return { kind: "file", id: r.id, name: file.name, type: r.contentType, size: r.sizeBytes, at: Date.now() };
+}
+async function uploadFiles(x, list){
+if (!mcp && !assets) { banner("رفع الملفات غير متاح في هذا العرض — أضف رابط الملف بدلاً من ذلك."); return; }
+let files = (x.files || []).slice();
+for (const file of list) {
+if (file.size > 20 * 1024 * 1024) { banner(`«${file.name}» أكبر من 20 ميجا. ارفعه يدوياً على فولدر «المهام» في Drive وأضف رابطه.`); continue; }
+toast(`جارٍ رفع ${file.name}…`);
+let rec = null;
+if (mcp && driveOk !== false) {
+try { rec = await toDrive(x, file); driveOk = true; }
+catch (err) {
+if (err && err.code === "too_big_inline") banner(`«${file.name}» كبير على الرفع من هذا العرض. ارفعه يدوياً على فولدر «المهام» في Drive وأضف رابطه.`);
+else { banner(`تعذّر رفع «${file.name}» الآن. حاول مرة أخرى.`); if (["server_not_connected","needs_reauth","not_in_manifest"].includes(err && err.code)) driveOk = false; }
+}
+}
+if (!rec && assets && driveOk === false) {
+try { rec = await toAssets(file); }
+catch (err) { const c = err && err.code; banner(c === "unsupported_type" ? `بدون Google Drive تُرفع PDF والصور فقط. «${file.name}» يحتاج ربط Drive أو رابط.` : "تعذّر رفع الملف الآن."); }
+}
+if (rec) { files.push(rec); await upd(x.id, { files }); toast(rec.kind === "drive" ? "رُفع على Google Drive ← المهام" : "رُفع " + file.name); }
+}
+}
+function section(kind, arr, extra){
+const open = arr.filter(x => !x.done).length;
+const head = `<h3>${KIND[kind]}<small>${arr.length ? `<i>${arr.length - open}</i> / ${arr.length} منجزة` : ""}</small></h3>`;
+const body = arr.length ? `<div class="list">${arr.map((x,i) => row(x,i)).join("")}</div>` : `<div class="empty" style="padding:14px">${extra?.empty || "لا يوجد"}</div>`;
+let add = "";
+if (canWrite && (!isMgr || kind === "task" || kind === "top")) {
+if (kind === "meeting") add = `<form class="addrow" data-kind="meeting"><input type="time" name="time" value="10:00" aria-label="الوقت"><input name="title" placeholder="مع / الموضوع…" aria-label="الاجتماع"><button>+</button></form>`;
+else if (kind === "follow") add = `<form class="addrow" data-kind="follow"><input name="title" placeholder="الموضوع…" aria-label="الموضوع"><input class="sm" name="from" placeholder="من" aria-label="من"><button>+</button></form>`;
+else if (kind === "task") add = `<form class="addrow" data-kind="task"><input name="title" placeholder="اكتب مهمة واضغط Enter…" aria-label="مهمة"><input class="sm" name="project" list="projList" placeholder="المشروع" aria-label="المشروع"><select name="ttype" aria-label="نوع المهمة"><option value="tech">فنية</option><option value="admin">إدارية</option></select><select name="priority" aria-label="الأولوية"><option value="0">عادية</option><option value="1">مهمة</option><option value="2">عاجلة</option></select><button>+</button></form>`;
+else add = `<form class="addrow" data-kind="${kind}"><input name="title" placeholder="${kind === "top" ? "أضف مهمة مهمة…" : "أضف مهمة إدارية…"}" aria-label="${KIND[kind]}">${kind === "top" ? '<select name="ttype" aria-label="نوع المهمة"><option value="tech">فنية</option><option value="admin">إدارية</option></select>' : ""}<button>+</button></form>`;
+}
+return `<section class="sec sec-${kind} ${extra?.full ? "full" : ""}">${head}${extra?.filter || ""}${body}${add}</section>`;
+}
+// ---------- render ----------
+function render(){
+const t = today(); const ws = iso(weekStart()), we = iso(addDays(weekStart(), 6));
+const todays = forDay(t).filter(x => x.kind !== "meeting");
+const openToday = todays.filter(x => !x.done);
+const late = openToday.filter(x => x.due < t);
+const doneWeek = items.filter(x => x.done && x.doneAt && iso(new Date(x.doneAt)) >= ws && x.kind !== "meeting");
+const waitN = items.filter(x => !x.done && (x.kind === "follow" || (x.kind === "task" && x.status === "waiting"))).length;
+$("#sToday").textContent = openToday.length; $("#sLate").textContent = late.length; $("#sWait").textContent = waitN; $("#sDone").textContent = doneWeek.length;
+const base = doneWeek.length + items.filter(x => !x.done && x.kind !== "meeting" && x.due && x.due <= we).length;
+$("#sBar").style.width = base ? Math.round(doneWeek.length / base * 100) + "%" : "0";
+const upN = items.filter(x => !x.done && x.due && x.due > t).length; $("#cUp").textContent = upN;
+$("#projList").innerHTML = [...new Set(items.map(x => x.project).filter(Boolean))].map(p => `<option value="${esc(p)}">`).join("");
+$("#dayWrap").hidden = tab !== "day";
+let h = "";
+if (tab === "day") {
+const d = parse(day);
+$("#dayName").textContent = `${DAYN[d.getDay()]} ${gFmtY.format(d)}${day === t ? " · اليوم" : ""}`;
+$("#dayHijri").textContent = hij(d);
+$("#pickDay").value = day;
+const list = forDay(day); const by = k => sortItems(list.filter(x => k === "top" ? (x.kind === "task" && x.star) : x.kind === k));
+const p1 = ["top","meeting","follow","admin"].reduce((n,k) => n + by(k).filter(x => !x.done).length, 0);
+$("#c1").textContent = p1; $("#c2").textContent = by("task").filter(x => !x.done).length;
+{ const all = list.filter(x => x.kind !== "meeting"); const dn = all.filter(x => x.done).length; const pc = all.length ? Math.round(dn / all.length * 100) : 0;
+$("#ring").style.setProperty("--p", pc); $("#ringPct").textContent = pc + "%"; $("#ringTxt").textContent = day === t ? "إنجاز اليوم" : "إنجاز " + nice(day);
+$("#ringSub").textContent = all.length ? `${dn} من ${all.length} مهمة` : "لا توجد مهام بعد"; }
+if (page === "1") {
+const top = by("top");
+h = `<div class="sheet">
+${section("top", top, { full: true, empty: "أهم ما يجب إنجازه اليوم — حتى 6 مهام" })}
+${section("meeting", by("meeting").sort((a,b) => (a.time||"").localeCompare(b.time||"")), { empty: "لا اجتماعات" })}
+${section("follow", by("follow"), { empty: "لا متابعات" })}
+${section("admin", by("admin"), { empty: "لا مهام إدارية" })}
+${isMgr || isDemo ? "" : `<section class="sec sec-notes"><h3>ملاحظات</h3><textarea class="notes" id="notes" ${canWrite ? "" : "readonly"} placeholder="${canWrite ? "اكتب ملاحظاتك هنا…" : ""}">${esc(notes[day] || "")}</textarea><div class="saved" id="savedLbl"></div></section>`}
+</div>`;
+} else {
+const all = by("task"); const shown = tfilter === "all" ? all : all.filter(x => (x.ttype || "tech") === tfilter);
+const cnt = k => all.filter(x => !x.done && (x.ttype || "tech") === k).length;
+h = `<div class="sheet">${section("task", shown, { full: true, empty: tfilter === "all" ? "لا مهام في الجدول لهذا اليوم" : "لا مهام من هذا النوع",
+filter: `<div class="tfilter">عرض: ${[["all","الكل"],["tech",`فنية (${cnt("tech")})`],["admin",`إدارية (${cnt("admin")})`]].map(([k,l]) => `<button type="button" class="chip" data-tf="${k}" aria-pressed="${tfilter===k}">${l}</button>`).join("")}</div>` })}</div>`;
+}
+} else if (tab === "upcoming") {
+const up = sortItems(items.filter(x => !x.done && x.due && x.due > t));
+if (!up.length) h = `<div class="list"><div class="empty"><b>لا توجد بنود قادمة</b>انتقل لأي يوم قادم من «صفحة اليوم» وأضف فيه.</div></div>`;
+else { const g = {}; up.forEach(x => (g[x.due] ||= []).push(x));
+Object.keys(g).sort().forEach(d => { h += `<div class="grp"><h3>${esc(nice(d))}</h3><small>${esc(gFmtY.format(parse(d)))}</small></div><div class="list">${g[d].map((x,i) => row(x,i).replace('<div class="tt"', `<div class="tt" title="${KIND[x.kind]}"`)).join("")}</div>`; }); }
+} else h = report();
+$("#view").innerHTML = h;
+if (open) { const f = document.querySelector(`[data-f="note"][data-id="${open}"]`); }
+}
+function report(){
+const t = today(), ws = iso(weekStart()), we = iso(addDays(weekStart(), 6));
+const notMeet = items.filter(x => x.kind !== "meeting");
+const done = notMeet.filter(x => x.done && x.doneAt && iso(new Date(x.doneAt)) >= ws);
+const pend = notMeet.filter(x => !x.done);
+const late = pend.filter(x => x.due && x.due < t);
+const waiting = pend.filter(x => x.kind === "follow" || x.status === "waiting");
+const doing = pend.filter(x => x.status === "doing");
+const rest = pend.filter(x => x.due && x.due >= t && x.due <= we);
+const meets = items.filter(x => x.kind === "meeting" && x.due >= ws && x.due <= we).sort((a,b) => (a.due+a.time).localeCompare(b.due+b.time));
+const byP = {}; notMeet.filter(x => x.kind === "task" && ((x.done && x.doneAt && iso(new Date(x.doneAt)) >= ws) || (!x.done && x.due && x.due <= we))).forEach(x => {
+const k = x.project || "عام"; byP[k] ||= { d: 0, n: 0 }; byP[k].n++; if (x.done) byP[k].d++; });
+const li = (a, f) => a.length ? `<ul>${a.slice(0,40).map(x => `<li>${esc(x.title)}${f ? ` <small>${f(x)}</small>` : ""}</li>`).join("")}</ul>` : `<div class="empty" style="padding:6px 0;text-align:start">لا يوجد</div>`;
+return `<div class="report">
+<h2>ملخص الأسبوع</h2>
+<div class="sub">من ${esc(gFmt.format(weekStart()))} إلى ${esc(gFmtY.format(parse(we)))} · ${done.length} منجزة · ${late.length} متأخرة · ${waiting.length} بانتظار رد</div>
+<button class="btn ghost" data-a="copy" style="margin-bottom:14px">نسخ الملخص كنص</button>
+<div class="rgrid">
+<div class="rbox"><h4>ما تم إنجازه</h4>${li(done, x => x.project ? "· " + esc(x.project) : "")}</div>
+<div class="rbox"><h4>متأخرة ومرحّلة</h4>${li(late, x => "· من " + esc(nice(x.due)))}</div>
+<div class="rbox"><h4>جاري العمل عليها</h4>${li(doing)}</div>
+<div class="rbox"><h4>بانتظار رد</h4>${li(waiting, x => x.from ? "· " + esc(x.from) : "")}</div>
+<div class="rbox"><h4>باقي الأسبوع</h4>${li(rest, x => "· " + esc(nice(x.due)))}</div>
+<div class="rbox"><h4>اجتماعات الأسبوع</h4>${li(meets, x => "· " + esc(nice(x.due)) + " " + esc(x.time || ""))}</div>
+<div class="rbox" style="grid-column:1/-1"><h4>الإنجاز حسب نوع المهمة</h4>${["tech","admin"].map(k => { const d = done.filter(x => (x.kind === "task" || x.kind === "top") && (x.ttype || "tech") === k).length, p = pend.filter(x => (x.kind === "task" || x.kind === "top") && (x.ttype || "tech") === k && x.due && x.due <= we).length, n = d + p;
+return `<div class="projrow"><span class="nm">${TTYPE[k]}</span><span class="b"><i style="width:${n ? Math.round(d/n*100) : 0}%"></i></span><span class="v">${d}/${n}</span></div>`; }).join("")}</div>
+<div class="rbox" style="grid-column:1/-1"><h4>الإنجاز حسب المشروع</h4>${Object.keys(byP).length ? Object.entries(byP).map(([k,v]) =>
+`<div class="projrow"><span class="nm">${esc(k)}</span><span class="b"><i style="width:${Math.round(v.d/v.n*100)}%"></i></span><span class="v">${v.d}/${v.n}</span></div>`).join("") : `<div class="empty" style="padding:6px 0;text-align:start">لا يوجد</div>`}</div>
+</div></div>`;
+}
+function reportText(){
+const t = today(), ws = iso(weekStart()), we = iso(addDays(weekStart(), 6));
+const nm = items.filter(x => x.kind !== "meeting");
+const done = nm.filter(x => x.done && x.doneAt && iso(new Date(x.doneAt)) >= ws), pend = nm.filter(x => !x.done);
+const late = pend.filter(x => x.due && x.due < t), waiting = pend.filter(x => x.kind === "follow" || x.status === "waiting"), rest = pend.filter(x => x.due && x.due >= t && x.due <= we);
+const L = (a, f) => a.length ? a.map(x => "• " + x.title + (x.ttype ? ` [${TTYPE[x.ttype]}]` : "") + (f ? f(x) : "")).join("\n") : "• لا يوجد";
+return `ملخص مهام الأسبوع (${gFmt.format(weekStart())} – ${gFmtY.format(parse(we))})\n\nتم إنجازه (${done.length}):\n${L(done, x => x.project ? " — " + x.project : "")}\n\nبانتظار رد (${waiting.length}):\n${L(waiting, x => x.from ? " — " + x.from : "")}\n\nمتأخرة (${late.length}):\n${L(late)}\n\nباقي الأسبوع (${rest.length}):\n${L(rest, x => " — " + nice(x.due))}`;
+}
+// ---------- interactions ----------
+$("nav.tabs").addEventListener("click", e => { const b = e.target.closest("[data-tab]"); if (!b) return; tab = b.dataset.tab; open = confirmDel = null;
+document.querySelectorAll("nav.tabs button").forEach(x => x.setAttribute("aria-selected", x === b)); render(); });
+document.querySelector(".pages").addEventListener("click", e => { const b = e.target.closest("[data-page]"); if (!b) return; page = b.dataset.page; open = confirmDel = null;
+document.querySelectorAll(".pages button").forEach(x => x.setAttribute("aria-selected", x === b)); render(); });
+$("#prevDay").onclick = () => { day = iso(addDays(parse(day), -1)); open = null; render(); };
+$("#nextDay").onclick = () => { day = iso(addDays(parse(day), 1)); open = null; render(); };
+$("#goToday").onclick = () => { day = today(); open = null; render(); };
+$("#pickDay").onchange = e => { if (e.target.value) { day = e.target.value; open = null; render(); } };
+const find = id => items.find(x => x.id === id);
+$("#view").addEventListener("submit", async e => {
+const f = e.target.closest("form.addrow"); if (!f) return; e.preventDefault();
+if (!canWrite || !col) { if (!col) banner("قاعدة البيانات غير متاحة في هذا العرض — افتح الصفحة من claude.ai."); return; }
+const fd = new FormData(f); const title = (fd.get("title") || "").toString().trim(); if (!title) return;
+const kind = f.dataset.kind;
+const data = { kind, title, due: day, done: false, doneAt: null, createdAt: Date.now(), note: "", priority: Number(fd.get("priority") || 0) };
+if (kind === "task" || kind === "top") data.ttype = (fd.get("ttype") || "tech").toString();
+if (kind === "top") { data.kind = "task"; data.star = true; data.status = "todo"; data.project = ""; }
+data.addedBy = isMgr ? "manager" : "owner";
+if (kind === "meeting") data.time = (fd.get("time") || "").toString();
+if (kind === "follow") data.from = (fd.get("from") || "").toString().trim();
+if (kind === "task") { data.project = (fd.get("project") || "").toString().trim(); data.status = "todo"; }
+if (kind === "top" && forDay(day).filter(x => x.kind === "task" && x.star && !x.done).length >= 6) toast("تنبيه: عندك أكثر من 6 مهام مهمة");
+try { await col.doc().set(data); } catch (err) { handleWriteErr(err); return; }
+const inp = document.querySelector(`form.addrow[data-kind="${kind}"] input[name="title"]`); if (inp) inp.focus();
+});
+$("#view").addEventListener("click", async e => {
+const tf = e.target.closest("[data-tf]"); if (tf) { tfilter = tf.dataset.tf; render(); return; }
+const b = e.target.closest("[data-a]"); if (!b) return; const a = b.dataset.a;
+if (a === "copy") { try { await navigator.clipboard.writeText(reportText()); toast("نُسخ الملخص — الصقه في واتساب أو الإيميل"); } catch { banner("تعذّر النسخ تلقائياً في هذا المتصفح."); } return; }
+const x = find(b.dataset.id); if (!x || !canWrite || !own(x)) return; if (isMgr && ["toggle","calMeet","remind"].includes(a)) return;
+if (a === "toggle") { const d = !x.done; if (d) toast("أحسنت ✓ تم إنجاز المهمة"); await upd(x.id, { done: d, doneAt: d ? Date.now() : null }); }
+else if (a === "star") { const s = !x.star; if (s && forDay(day).filter(y => y.kind === "task" && y.star && !y.done).length >= 6) toast("تنبيه: عندك أكثر من 6 مهام مهمة");
+await upd(x.id, { star: s, kind: "task" }); toast(s ? "أُضيفت لأهم 6 مهام" : "أُزيلت من أهم 6"); }
+else if (a === "tomorrow") { await upd(x.id, { due: iso(addDays(new Date(), 1)) }); toast("نُقلت إلى بكرة"); }
+else if (a === "more") { open = open === x.id ? null : x.id; confirmDel = null; render(); }
+else if (a === "del") { confirmDel = x.id; render(); }
+else if (a === "delno") { confirmDel = null; render(); }
+else if (a === "delyes") { confirmDel = open = null; try { await col.doc(x.id).delete(); toast("حُذف");
+if (assets) for (const f of (x.files || [])) if (f.kind === "file") { try { await assets.delete(f.id); } catch {} } } catch (err) { handleWriteErr(err); } }
+else if (a === "calMeet") { addToCalendar(x, x.time); }
+else if (a === "addlink") {
+const n = document.querySelector(`[data-l="name"][data-id="${x.id}"]`), u = document.querySelector(`[data-l="url"][data-id="${x.id}"]`);
+let url = (u?.value || "").trim(); if (!url) { u?.focus(); return; } if (!/^https?:[\/][\/]/i.test(url)) url = "https:\/\/" + url;
+try { new URL(url); } catch { banner("الرابط غير صحيح."); return; }
+const files = (x.files || []).concat([{ kind: "link", url, name: (n?.value || "").trim() || new URL(url).hostname, at: Date.now() }]);
+await upd(x.id, { files }); toast("أُضيف الرابط");
+}
+else if (a === "rmfile") {
+const i = Number(b.dataset.i); const f = (x.files || [])[i]; if (!f) return;
+const files = x.files.filter((_, j) => j !== i); await upd(x.id, { files });
+if (f.kind === "file" && assets) { try { await assets.delete(f.id); } catch {} }
+toast("أُزيل المرفق");
+}
+else if (a === "remind") { const time = document.querySelector(`[data-f="remTime"][data-id="${x.id}"]`)?.value || "09:00"; addToCalendar(x, time); }
+});
+$("#view").addEventListener("change", async e => {
+const el = e.target;
+if (el.id === "notes") return;
+const x = find(el.dataset.id); if (!x || !canWrite || !own(x)) return;
+if (el.dataset.a === "upload") { const fl = [...el.files]; el.value = ""; if (fl.length) await uploadFiles(x, fl); return; }
+if (el.dataset.l) return;
+if (el.dataset.a === "status") { await upd(x.id, { status: el.value }); return; }
+const f = el.dataset.f; if (!f || f === "remTime") return;
+if (f === "due") await upd(x.id, { due: el.value || x.due });
+else if (f === "priority") await upd(x.id, { priority: Number(el.value) });
+else if ((x[f] || "") !== el.value.trim()) await upd(x.id, { [f]: el.value.trim() });
+});
+$("#view").addEventListener("focusout", async e => {
+const el = e.target; if (!el.classList?.contains("tt") || !el.isContentEditable) return;
+const x = find(el.dataset.id); const v = el.textContent.trim();
+if (x && v && v !== x.title) await upd(x.id, { title: v }); else if (x && !v) el.textContent = x.title;
+});
+$("#view").addEventListener("keydown", e => { if (e.target.classList?.contains("tt") && e.key === "Enter") { e.preventDefault(); e.target.blur(); } });
+// notes autosave (debounced, one write per pause)
+let noteTimer = null;
+$("#view").addEventListener("input", e => {
+if (e.target.id !== "notes" || !canWrite || !db) return;
+const d = day, v = e.target.value; notes[d] = v; $("#savedLbl").textContent = "…";
+clearTimeout(noteTimer); noteTimer = setTimeout(async () => {
+try { await db.doc("notes/" + d).set({ text: v, updatedAt: Date.now() }); const l = $("#savedLbl"); if (l) l.textContent = "حُفظت"; } catch (err) { handleWriteErr(err); }
+}, 900);
+});
+function setReadOnly(ro){ canWrite = !ro; $("#roBadge").hidden = !ro; render(); }
+setInterval(() => { if (render.d !== today()) { const was = render.d; render.d = today(); if (day === was) day = today(); render(); } }, 60000); render.d = today();
+render();
+// ---------- Google Apps Script data layer ----------
+const api = async (fn, ...args) => { const r = await fetch(API, { method: "POST", body: JSON.stringify({ k: KEY, fn, args }), credentials: "omit" }); if (!r.ok) throw new Error("خطأ في الاتصال (" + r.status + ")"); const j = await r.json(); if (!j.ok) throw new Error(j.error || "خطأ غير معروف"); return j.data; };
+let store = {}, noteStore = {}, listeners = [], noteListeners = [], pending = 0;
+const snap = obj => ({ docs: Object.entries(obj).map(([id, v]) => ({ id, data: () => v })) });
+const emit = () => listeners.forEach(f => f(snap(store)));
+const emitN = () => noteListeners.forEach(f => f(snap(Object.fromEntries(Object.entries(noteStore).map(([k, v]) => [k, { text: v }])))));
+const rid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+const strip = o => { const r = { ...o }; delete r.id; return r; };
+async function call(fn, ...args){ if (isDemo && fn !== "getAll") return fn === "uploadFile" ? { kind: "link", url: "#", name: args[0] + " (عرض)" } : (fn === "addCalendar" ? { id: "" } : true); pending++; try { return await api(fn, ...args); } catch (e) { console.error(e); setTimeout(() => { load.done = false; load(); }, 400); throw { code: "unavailable", message: String(e && e.message || e) }; } finally { pending--; } }
+const itemsCol = {
+doc(id){ id = id || rid(); return { id,
+async set(data){ store[id] = { ...data }; emit(); await call("saveItem", { id, ...data }); },
+async update(data){ store[id] = { ...(store[id] || {}), ...data }; emit(); await call("saveItem", { id, ...store[id] }); },
+async delete(){ delete store[id]; emit(); await call("deleteItem", id); } }; },
+onSnapshot(fn){ listeners.push(fn); fn(snap(store)); return () => {}; }
+};
+const notesCol = { onSnapshot(fn){ noteListeners.push(fn); return () => {}; } };
+const gdb = {
+collection(p){ return p === "items" ? itemsCol : notesCol; },
+doc(path){ const d = path.split("/")[1]; return { async set(v){ noteStore[d] = v.text; await call("saveNote", d, v.text); } }; }
+};
+async function load(){
+if (pending || (isDemo && load.done)) return; load.done = true;
+try { const r = await api("getAll"); if (pending) return;
+if (r.role && r.role !== ROLE) { ROLE = r.role; MGR = r.mgr || MGR; isMgr = ROLE === "manager"; isDemo = ROLE === "viewer"; canWrite = true; setChip(); }
+store = {}; (r.items || []).forEach(o => store[o.id] = strip(o)); noteStore = r.notes || {};
+emit(); emitN(); banner(isDemo ? "نسخة عرض: تقدر تجرّب كل حاجة، بس أي إضافة أو تعديل هنا مش بيتحفظ في الملف الأصلي." : isMgr ? `وضع ${MGR}: تقدر تشوف المهام وتضيف مهام جديدة في «أهم 6 مهام» و«جدول المهام».` : "");
+} catch (e) { banner("تعذّر تحميل البيانات: " + ((e && e.message) || "تأكد من الاتصال ثم أعد تحميل الصفحة."), true); }
+}
+(() => {
+db = gdb; col = itemsCol;
+col.onSnapshot(s => { items = s.docs.map(d => { const v = { id: d.id, ...d.data() }; if (v.kind === "top") { v.kind = "task"; v.star = true; } return v; }); keepFocus(render); });
+db.collection("notes").onSnapshot(s => { const fresh = {}; s.docs.forEach(d => fresh[d.id] = d.data().text || "");
+const ta = $("#notes"); const typing = ta && document.activeElement === ta;
+notes = typing ? { ...fresh, [day]: notes[day] } : fresh; if (!typing) keepFocus(render); });
+mcp = { callTool(server, tool, input){ if (server === "Google Calendar") return call("addCalendar", input).then(p => ({ payload: p }));
+return Promise.reject({ code: "bad_request" }); }, listTools: async () => ({}) };
+assets = null; fileArgs = false;
+load();
+setInterval(() => { if (document.visibilityState === "visible") load(); }, 90000);
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") load(); });
+})();
+// re-render without losing the cursor in an add field
+function keepFocus(fn){
+const a = document.activeElement; let sel = null;
+if (a && a.closest && a.closest("form.addrow")) sel = { kind: a.closest("form").dataset.kind, name: a.name, val: a.value };
+if (a && a.isContentEditable) return; // don't clobber inline editing
+if (a && a.id === "notes") { const v = a.value, s = a.selectionStart; fn(); const n = $("#notes"); if (n) { n.value = v; n.focus(); n.setSelectionRange(s, s); } return; }
+fn();
+if (sel) { const f = document.querySelector(`form.addrow[data-kind="${sel.kind}"] [name="${sel.name}"]`); if (f) { if (sel.name !== "title") f.value = sel.val; f.focus(); } }
+}
+})();
+</script>
+</body>
+</html>
