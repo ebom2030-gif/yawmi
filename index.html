@@ -306,7 +306,7 @@ button[data-udel][data-sure="1"]{background:var(--late);color:#fff;border-color:
 .autob{font-size:10.5px;font-weight:700;color:var(--teal);background:var(--teal-soft);border-radius:6px;padding:1px 6px;white-space:nowrap}
 .ctable tr[data-copen]{cursor:pointer}.ctable tr[data-copen]:hover td{background:var(--surface2)}.cm{display:block;font-size:13px}.cm2{color:var(--mut);font-size:11.5px}
 .cacts{white-space:nowrap}.cacts a{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:9px;border:1px solid var(--line);text-decoration:none;margin-inline-start:4px;background:var(--surface)}.cacts a.wa{border-color:#25d366;background:rgba(37,211,102,.08)}
-.cbox{align-items:start;overflow-y:auto}.cbox .card{max-width:560px;margin:20px auto}.cbox fieldset{border:0;padding:0;margin:0;min-width:0}
+.cbox{align-items:start;overflow-y:auto}[data-dd]{cursor:pointer;transition:transform .15s,box-shadow .15s}[data-dd]:hover{transform:translateY(-2px);box-shadow:var(--shadow)}.dkc[data-dd]::after,.mkc[data-dd]::after{content:"التفاصيل ←";position:absolute;inset-inline-end:12px;bottom:8px;font-size:11px;font-weight:700;color:var(--gold);opacity:0;transition:opacity .15s}.dkc[data-dd]:hover::after,.mkc[data-dd]:hover::after{opacity:1}.dkc,.mkc{position:relative}#ddCard{max-width:880px}select[data-row=claims][data-k=phase],input[data-clcustom]{min-width:200px}.ddhd{display:flex;align-items:start;gap:10px;margin-bottom:10px}.ddhd>div{flex:1}.ddhd h3{margin:0}.ptable.dd tr[data-ddp],.ptable.dd tr[data-ddk]{cursor:pointer}.ptable.dd tr[data-ddp]:hover td,.ptable.dd tr[data-ddk]:hover td{background:var(--surface2)}.ddc{display:block;color:var(--mut);font-size:11px}.ddt td{font-weight:800;background:var(--surface2)}.ddh{margin:16px 0 6px;font-size:14px}.cbox .card{max-width:560px;margin:20px auto}.cbox fieldset{border:0;padding:0;margin:0;min-width:0}
 #cliForm label{display:grid;gap:4px;font-size:13px;font-weight:700;margin-bottom:8px}#cliForm input,#cliForm select,#cliForm textarea{border:1px solid var(--line);border-radius:10px;padding:8px 10px;font:inherit;background:var(--surface);color:var(--ink);min-width:0}#cliForm h3{margin:0 0 10px}#cliForm .two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .cpeople{display:grid;gap:6px}.cp{display:grid;grid-template-columns:1.2fr 1fr 1fr 1.3fr auto;gap:4px}.cp input{border:1px solid var(--line);border-radius:8px;padding:6px 8px;font:inherit;font-size:12.5px;min-width:0}
 @media(max-width:560px){.cp{grid-template-columns:1fr 1fr}.cp .rm{grid-column:span 2}#cliForm .two{grid-template-columns:1fr}}
@@ -542,6 +542,7 @@ body.private .hero{background:radial-gradient(1200px 300px at 85% -40%,rgba(111,
 <div class="updbar" id="updBar" hidden>✨ تتوفر نسخة جديدة من يومي <button type="button" id="updBtn">تحديث</button></div>
 <div class="ihelp cbox" id="aiBox" hidden><div class="card" id="aiCard"></div></div>
 <div class="ihelp cbox" id="cliBox" hidden><form class="card" id="cliForm"></form></div>
+<div class="ihelp cbox" id="ddBox" hidden><div class="card" id="ddCard"></div></div>
 <div class="ihelp" id="payBox" hidden><form class="card" id="payForm"></form></div>
 <div class="ihelp" id="iHelp" hidden><div class="card"><h3>📲 ثبّت يومي على جهازك</h3>
 <div class="os">آيفون / آيباد (Safari):</div><ol><li>افتح الرابط في <b>Safari</b></li><li>اضغط زر المشاركة <b>⬆︎</b> تحت</li><li>اختر <b>«إضافة إلى الشاشة الرئيسية»</b> ثم <b>إضافة</b></li></ol>
@@ -1126,6 +1127,57 @@ $("#view").addEventListener("change", async e => { if (tab !== "plan") return; c
   try { IDEAS = await api("saveIdea", { id, title: x.title, desc: x.desc, [s.dataset.ist ? "status" : "cat"]: s.value }); toast("تم التحديث"); render(); } catch (x2) { banner((x2 && x2.message) || "خطأ", true); } });
 $("#view").addEventListener("submit", async e => { if (e.target.id !== "ideaForm") return; e.preventDefault(); const fd = new FormData(e.target); const b = e.target.querySelector("button"); b.disabled = true;
   try { IDEAS = await api("saveIdea", { title: String(fd.get("title") || ""), desc: String(fd.get("desc") || ""), cat: String(fd.get("cat") || "users") }); toast("✓ تمت إضافة الفكرة — شكراً لمشاركتك"); render(); } catch (x) { banner((x && x.message) || "تعذّرت الإضافة", true); b.disabled = false; } });
+// ===== تفاصيل مؤشرات لوحة المشاريع =====
+function ddData(key){
+  const P = PV().map(p => ({ p, c: pcalc(p) })); const con = P.filter(x => x.p.status !== "quote");
+  const S = (a, f) => a.reduce((s, x) => s + f(x), 0);
+  const pays = con.flatMap(x => x.c.cl.filter(c => c.pd).map(c => ({ p: x.p, rate: x.c.rate, d: c.paidDate || c.date || "", ph: c.phase || "", inv: c.inv || "", v: c.pd })));
+  const exps = con.flatMap(x => x.p.expenses.filter(e => num(e.amount)).map(e => ({ p: x.p, d: e.date || "", t: e.desc || "", cat: e.cat || "", v: num(e.amount) })));
+  const openCl = con.flatMap(x => x.c.dueCl.map(c => ({ p: x.p, c })));
+  const pn = x => `<td><b>${esc(x.p.name)}</b>${x.p.client ? `<small class="ddc">${esc(x.p.client)}</small>` : ""}</td>`;
+  const st = p => spill((PSTL[p.status] || PSTL.contract).l, (PSTL[p.status] || PSTL.contract).c);
+  const tb = (head, rows, foot) => rows.length ? `<div class="tblwrap"><table class="ptable compact dd">${`<tr>${head.map(h => `<th>${h}</th>`).join("")}</tr>`}${rows.join("")}${foot ? `<tr class="ddt">${foot}</tr>` : ""}</table></div>` : `<div class="empty" style="padding:14px">لا توجد بيانات</div>`;
+  const payTable = (L, title) => { L = L.slice().sort((a, b) => String(b.d).localeCompare(String(a.d)));
+    return { t: title, s: `${L.length} دفعة · الإجمالي ${money(S(L, x => x.v))} ر.س (قبل الضريبة ${money(S(L, x => x.v / (1 + x.rate)))})`,
+      h: tb(["التاريخ", "المشروع", "المرحلة / الدفعة", "رقم الفاتورة", "المبلغ المحصّل"], L.map(x => `<tr data-ddp="${x.p.id}"><td class="nw">${x.d ? nice(x.d) : "—"}</td>${pn(x)}<td>${esc(x.ph || "—")}</td><td>${esc(x.inv || "—")}</td><td class="n"><b>${money(x.v)}</b></td></tr>`), `<td colspan="4">الإجمالي</td><td class="n">${money(S(L, x => x.v))}</td>`) }; };
+  const mk = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}`, now = new Date(), fmL = d => new Intl.DateTimeFormat("ar-EG-u-nu-latn", { month: "long", year: "numeric" }).format(d);
+  if (key === "contracts" || key === "count" || key === "pretax" || key === "progress" || key === "remaining" || key === "profit") {
+    const L = (key === "count" ? P : con).slice().sort((a, b) => b.c.T - a.c.T);
+    const cfg = {
+      contracts: ["إجمالي قيمة العقود", ["المشروع", "الحالة", "قيمة العقد", "المحصّل", "المتبقي", "نسبة التحصيل"], x => `<td>${st(x.p)}</td><td class="n"><b>${money(x.c.T)}</b></td><td class="n">${money(x.c.paid)}</td><td class="n">${money(x.c.out)}</td><td class="n">${pct(x.c.col)}</td>`, `<td colspan="2">الإجمالي</td><td class="n">${money(S(L, x => x.c.T))}</td><td class="n">${money(S(L, x => x.c.paid))}</td><td class="n">${money(S(L, x => x.c.out))}</td><td></td>`],
+      count: ["جميع المشاريع", ["المشروع", "النوع", "الحالة", "قيمة العقد", "الإنجاز"], x => `<td>${esc(ptLabel(x.p))}</td><td>${st(x.p)}</td><td class="n">${money(x.c.T || x.c.P.T)}</td><td class="n">${Math.round(x.c.prog)}%</td>`, ""],
+      pretax: ["قيمة العقود قبل الضريبة", ["المشروع", "قبل الضريبة", "الضريبة", "الإجمالي شامل"], x => `<td class="n"><b>${money(x.c.A)}</b></td><td class="n">${money(x.c.V)}</td><td class="n">${money(x.c.T)}</td>`, `<td>الإجمالي</td><td class="n">${money(S(L, x => x.c.A))}</td><td class="n">${money(S(L, x => x.c.V))}</td><td class="n">${money(S(L, x => x.c.T))}</td>`],
+      progress: ["نسبة الإنجاز لكل مشروع", ["المشروع", "الحالة", "المراحل المنجزة", "الإنجاز"], x => `<td>${st(x.p)}</td><td class="n">${x.c.ph.filter(y => y.status === "done").length} / ${x.c.ph.length}</td><td class="n"><b>${Math.round(x.c.prog)}%</b></td>`, ""],
+      remaining: ["المتبقي للتحصيل", ["المشروع", "قيمة العقد", "المحصّل", "المتبقي", "مطالبات مفتوحة", "غير مُطالَب به"], x => `<td class="n">${money(x.c.T)}</td><td class="n">${money(x.c.paid)}</td><td class="n"><b>${money(x.c.out)}</b></td><td class="n">${money(S(x.c.dueCl, c => c.inc - c.pd))}</td><td class="n">${money(x.c.unclaimed)}</td>`, `<td>الإجمالي</td><td class="n">${money(S(L, x => x.c.T))}</td><td class="n">${money(S(L, x => x.c.paid))}</td><td class="n">${money(S(L, x => x.c.out))}</td><td class="n">${money(S(openCl, o => o.c.inc - o.c.pd))}</td><td class="n">${money(S(L, x => x.c.unclaimed))}</td>`],
+      profit: ["صافي الربح المتوقع لكل مشروع", ["المشروع", "العقد قبل الضريبة", "المصاريف", "صافي الربح", "الهامش"], x => `<td class="n">${money(x.c.A)}</td><td class="n">${money(x.c.exp)}</td><td class="n"><b>${money(x.c.profit)}</b></td><td class="n">${pct(x.c.margin)}</td>`, `<td>الإجمالي</td><td class="n">${money(S(L, x => x.c.A))}</td><td class="n">${money(S(L, x => x.c.exp))}</td><td class="n">${money(S(L, x => x.c.profit))}</td><td></td>`]
+    }[key];
+    let extra = "";
+    if (key === "remaining" && openCl.length) extra = `<h4 class="ddh">المطالبات المفتوحة</h4>` + tb(["المشروع", "المرحلة / الدفعة", "تاريخ المطالبة", "المستحق", "الحالة"], openCl.sort((a, b) => b.c.age - a.c.age).map(o => `<tr data-ddp="${o.p.id}">${pn(o)}<td>${esc(o.c.phase || o.c.inv || "—")}</td><td class="nw">${o.c.date ? nice(o.c.date) + ` <small>(${o.c.age} يوم)</small>` : "—"}</td><td class="n"><b>${money(o.c.inc - o.c.pd)}</b></td><td>${spill(...CLST[o.c.st])}</td></tr>`));
+    return { t: cfg[0], s: `${L.length} مشروع`, h: tb(cfg[1], L.map(x => `<tr data-ddp="${x.p.id}">${pn(x)}${cfg[2](x)}</tr>`), cfg[3]) + extra };
+  }
+  if (key === "paid") return payTable(pays, "المحصّل — جميع الدفعات المستلمة");
+  if (key === "quotes") { const Q = P.filter(x => x.p.status === "quote"); return { t: "عروض الأسعار القائمة", s: `${Q.length} عرض`, h: tb(["المشروع", "النوع", "قيمة العرض", "تاريخ البدء"], Q.map(x => `<tr data-ddp="${x.p.id}">${pn(x)}<td>${esc(ptLabel(x.p))}</td><td class="n"><b>${money(x.c.P.T || x.c.T)}</b></td><td class="nw">${x.p.start ? nice(x.p.start) : "—"}</td></tr>`), `<td colspan="2">الإجمالي</td><td class="n">${money(S(Q, x => x.c.P.T || x.c.T))}</td><td></td>`) }; }
+  if (key === "expenses") { const L = exps.sort((a, b) => String(b.d).localeCompare(String(a.d))); return { t: "المصاريف", s: `${L.length} بند · ${money(S(L, x => x.v))} ر.س`, h: tb(["التاريخ", "المشروع", "البند", "التصنيف", "المبلغ"], L.map(x => `<tr data-ddp="${x.p.id}"><td class="nw">${x.d ? nice(x.d) : "—"}</td>${pn(x)}<td>${esc(x.t || "—")}</td><td>${esc(x.cat)}</td><td class="n"><b>${money(x.v)}</b></td></tr>`), `<td colspan="4">الإجمالي</td><td class="n">${money(S(L, x => x.v))}</td>`) }; }
+  if (key === "late") { const L = openCl.filter(o => o.c.st === "late"); return { t: "المطالبات المتأخرة (+30 يوماً)", s: `${L.length} مطالبة`, h: tb(["المشروع", "المرحلة / الدفعة", "تاريخ المطالبة", "المستحق"], L.map(o => `<tr data-ddp="${o.p.id}">${pn(o)}<td>${esc(o.c.phase || o.c.inv || "—")}</td><td class="nw">${nice(o.c.date)} <small>(${o.c.age} يوم)</small></td><td class="n"><b>${money(o.c.inc - o.c.pd)}</b></td></tr>`)) }; }
+  if (key === "m0" || key === "m1" || key.startsWith("mon:")) { const d = key.startsWith("mon:") ? new Date(key.slice(4) + "-01T00:00:00") : new Date(now.getFullYear(), now.getMonth() - (key === "m1" ? 1 : 0), 1); const k = mk(d);
+    const r = payTable(pays.filter(x => String(x.d).slice(0, 7) === k), "الدخل المحصّل — " + fmL(d)); const E = exps.filter(x => String(x.d).slice(0, 7) === k);
+    if (E.length) r.h += `<h4 class="ddh">مصاريف الشهر (${money(S(E, x => x.v))} ر.س)</h4>` + tb(["التاريخ", "المشروع", "البند", "المبلغ"], E.map(x => `<tr data-ddp="${x.p.id}"><td class="nw">${nice(x.d)}</td>${pn(x)}<td>${esc(x.t || x.cat)}</td><td class="n">${money(x.v)}</td></tr>`)); return r; }
+  if (key === "ytd") { const y = String(now.getFullYear()); return payTable(pays.filter(x => String(x.d).startsWith(y)), "الدخل المحصّل من بداية " + y); }
+  if (key === "avg") { const M = []; for (let i = 11; i >= 0; i--) { const d = new Date(now.getFullYear(), now.getMonth() - i, 1), k = mk(d), L = pays.filter(x => String(x.d).slice(0, 7) === k); M.push({ k, l: fmL(d), v: S(L, x => x.v), net: S(L, x => x.v / (1 + x.rate)), e: S(exps.filter(x => String(x.d).slice(0, 7) === k), x => x.v), n: L.length }); }
+    return { t: "الدخل الشهري — آخر 12 شهراً", s: `المتوسط ${money(Math.round(S(M, m => m.v) / 12))} ر.س شهرياً · اضغط على أي شهر لعرض دفعاته`, h: tb(["الشهر", "عدد الدفعات", "المحصّل", "قبل الضريبة", "المصاريف", "الصافي"], M.reverse().map(m => `<tr data-ddk="mon:${m.k}"><td><b>${m.l}</b></td><td class="n">${m.n}</td><td class="n"><b>${money(m.v)}</b></td><td class="n">${money(m.net)}</td><td class="n">${money(m.e)}</td><td class="n">${money(m.net - m.e)}</td></tr>`), `<td>الإجمالي</td><td class="n">${S(M, m => m.n)}</td><td class="n">${money(S(M, m => m.v))}</td><td class="n">${money(S(M, m => m.net))}</td><td class="n">${money(S(M, m => m.e))}</td><td class="n">${money(S(M, m => m.net - m.e))}</td>`) }; }
+  return null;
+}
+let ddStack = [];
+function ddShow(key, push){ const r = ddData(key); if (!r) return; if (push) ddStack.push(key); else ddStack = [key];
+  $("#ddCard").innerHTML = `<div class="ddhd">${ddStack.length > 1 ? `<button type="button" class="btn ghost xs" data-ddback>→ رجوع</button>` : ""}<div><h3>${esc(r.t)}</h3><div class="sub">${esc(r.s)}</div></div><button type="button" class="btn ghost xs" data-ddx>إغلاق ✕</button></div>${r.h}<div class="sub" style="margin-top:8px">💡 اضغط على أي صف لفتح المشروع وتفاصيل الدفعات.</div>`;
+  $("#ddBox").hidden = false; }
+$("#view").addEventListener("click", e => { if (tab !== "projects") return; const k = e.target.closest("[data-dd]"); if (k) { e.stopPropagation(); ddShow(k.dataset.dd); } }, true);
+$("#ddBox").addEventListener("click", e => { const t = e.target;
+  if (t.id === "ddBox" || t.closest("[data-ddx]")) { $("#ddBox").hidden = true; return; }
+  if (t.closest("[data-ddback]")) { ddStack.pop(); ddShow(ddStack.pop(), true); return; }
+  const m = t.closest("[data-ddk]"); if (m) { ddShow(m.dataset.ddk, true); return; }
+  const r = t.closest("[data-ddp]"); if (r) { $("#ddBox").hidden = true; claimCustom.clear(); projOpen = r.dataset.ddp; projDraft = null; projDirty = false; render(); window.scrollTo({ top: 0, behavior: "smooth" }); } });
+
 // البحث العام
 { const qi = $("#gq"); let tmr = null;
   qi.addEventListener("input", () => { clearTimeout(tmr); tmr = setTimeout(() => { const v = qi.value.trim(); if (v && tab !== "search") { gprev = tab; tab = "search"; } if (!v && tab === "search") tab = gprev || "home"; gq = v; open = null; setTabUI(); render(); }, 160); });
@@ -1554,6 +1606,14 @@ const SAR = n => `${money(n)} <small class="cur">ر.س</small>`;
 const pct = n => (isFinite(n) ? Math.round(n * 1000) / 10 : 0) + "%";
 const prate = p => (p.vat === "" || p.vat == null ? 15 : num(p.vat)) / 100;
 function parts(x, p){ const r = prate(p); x = num(x); if ((p.taxMode || "ex") === "inc") { const A = x / (1 + r); return { A, V: x - A, T: x }; } return { A: x, V: x * r, T: x * (1 + r) }; }
+const claimCustom = new Set();
+const MONTHLY_RE = /^(أتعاب (الإشراف|إشراف) (عن )?شهر|الدفعة الشهرية رقم)/;
+function claimSugs(p, x, i){ const d = x.date ? new Date(x.date + "T00:00:00") : new Date(); const mn = isNaN(d) ? "" : d.toLocaleDateString("ar-EG-u-nu-latn", { month: "long", year: "numeric" });
+  const n = (p.claims || []).filter((c, j) => j !== i && MONTHLY_RE.test(c.phase || "")).length + 1;
+  const sup = /إشراف/.test((typeof ptLabel === "function" ? ptLabel(p) : "") + " " + (p.type || ""));
+  const monthly = [mn && "أتعاب الإشراف عن شهر " + mn, "الدفعة الشهرية رقم (" + n + ")"].filter(Boolean);
+  const other = ["دفعة مقدمة", "دفعة ربع سنوية", "دفعة ختامية", "المحتجزات (ضمان الأعمال)", "أعمال إضافية / أمر تغيير"];
+  return sup ? monthly.concat(other) : other.slice(0, 1).concat(monthly, other.slice(1)); }
 function pmig(p){ if (!p.v2) { const r = prate(p); (p.claims || []).forEach(c => { if (num(c.amount)) c.amount = Math.round(num(c.amount) * (1 + r) * 100) / 100; }); p.taxMode = p.taxMode || "ex"; p.v2 = 1; } p.phases = p.phases || []; p.claims = p.claims || []; p.expenses = p.expenses || []; p.docs = p.docs || []; p.log = p.log || []; return p; }
 function pcalc(p){
   pmig(p); const rate = prate(p);
@@ -1600,14 +1660,14 @@ function projDash(){
   const due = con.flatMap(x => x.c.dueCl.map(c => ({ ...c, p: x.p }))).sort((a, b) => b.age - a.age), dueSum = due.reduce((s, c) => s + (c.inc - c.pd), 0), lateN = due.filter(c => c.st === "late").length;
   const col = T ? paid / T : 0;
   const big = `<div class="dk">
-    <div class="dkc navy"><span class="dki">${PICON.box}</span><div><span class="kl">إجمالي قيمة العقود</span><b>${SAR(T)}</b><small>${con.length} عقد · ${active} جاري العمل</small></div></div>
-    <div class="dkc"><div class="gauge" style="--p:${Math.round(col * 100)}"><span>${Math.round(col * 100)}%</span></div><div><span class="kl">المحصّل</span><b>${SAR(paid)}</b><small>من قيمة العقود</small></div></div>
-    <div class="dkc"><span class="dki warn">${PICON.clock}</span><div><span class="kl">المتبقي للتحصيل</span><b>${SAR(Math.max(T - paid, 0))}</b><small>منها مطالبات مستحقة ${SAR(dueSum)}</small></div></div>
-    <div class="dkc"><span class="dki good">${PICON.trend}</span><div><span class="kl">صافي الربح المتوقع</span><b>${SAR(A - exp)}</b><small>هامش ${pct(A ? (A - exp) / A : 0)} · مصاريف ${kmoney(exp)}</small></div></div>
+    <div class="dkc navy" data-dd="contracts"><span class="dki">${PICON.box}</span><div><span class="kl">إجمالي قيمة العقود</span><b>${SAR(T)}</b><small>${con.length} عقد · ${active} جاري العمل</small></div></div>
+    <div class="dkc" data-dd="paid"><div class="gauge" style="--p:${Math.round(col * 100)}"><span>${Math.round(col * 100)}%</span></div><div><span class="kl">المحصّل</span><b>${SAR(paid)}</b><small>من قيمة العقود</small></div></div>
+    <div class="dkc" data-dd="remaining"><span class="dki warn">${PICON.clock}</span><div><span class="kl">المتبقي للتحصيل</span><b>${SAR(Math.max(T - paid, 0))}</b><small>منها مطالبات مستحقة ${SAR(dueSum)}</small></div></div>
+    <div class="dkc" data-dd="profit"><span class="dki good">${PICON.trend}</span><div><span class="kl">صافي الربح المتوقع</span><b>${SAR(A - exp)}</b><small>هامش ${pct(A ? (A - exp) / A : 0)} · مصاريف ${kmoney(exp)}</small></div></div>
   </div>
-  <div class="sk"><div><span>عدد المشاريع</span><b>${P.length}</b></div><div><span>عروض أسعار قائمة</span><b>${quotes.length}</b><small>${kmoney(qVal)} ر.س</small></div>
-    <div><span>قيمة العقود قبل الضريبة</span><b>${kmoney(A)}</b></div><div><span>المصاريف</span><b>${kmoney(exp)}</b></div>
-    <div class="${lateN ? "bad" : ""}"><span>مطالبات متأخرة</span><b>${lateN}</b></div><div><span>متوسط الإنجاز</span><b>${Math.round(con.length ? sum(con, x => x.c.prog) / con.length : 0)}%</b></div></div>`;
+  <div class="sk"><div data-dd="count"><span>عدد المشاريع</span><b>${P.length}</b></div><div data-dd="quotes"><span>عروض أسعار قائمة</span><b>${quotes.length}</b><small>${kmoney(qVal)} ر.س</small></div>
+    <div data-dd="pretax"><span>قيمة العقود قبل الضريبة</span><b>${kmoney(A)}</b></div><div data-dd="expenses"><span>المصاريف</span><b>${kmoney(exp)}</b></div>
+    <div data-dd="late" class="${lateN ? "bad" : ""}"><span>مطالبات متأخرة</span><b>${lateN}</b></div><div data-dd="progress"><span>متوسط الإنجاز</span><b>${Math.round(con.length ? sum(con, x => x.c.prog) / con.length : 0)}%</b></div></div>`;
   const segs = PST.map(([k, l, c]) => ({ l, c: PCOL[c], v: P.filter(x => x.p.status === k).length }));
   const stat = `<div class="dwrap">${donut(segs, Math.max(P.length, 1), P.length, "مشروع")}<ul class="dleg">${segs.map(s => `<li><i style="background:${s.c}"></i>${s.l}<b>${s.v}</b></li>`).join("")}</ul></div>`;
   const types = [...new Set(P.map(x => ptLabel(x.p)))].map(t => ({ t, v: sum(con.filter(x => ptLabel(x.p) === t), x => x.c.T), n: P.filter(x => ptLabel(x.p) === t).length })).sort((a, b) => b.v - a.v);
@@ -1625,12 +1685,12 @@ function projDash(){
   const dPct = prev.v ? (cur.v - prev.v) / prev.v : null;
   const delta = dPct === null ? (cur.v ? `<small class="up">▲ أول دخل بعد شهر بلا دخل</small>` : `<small>لا يوجد تحصيل هذا الشهر حتى الآن</small>`) : `<small class="${dPct >= 0 ? "up" : "down"}">${dPct >= 0 ? "▲" : "▼"} ${Math.abs(Math.round(dPct * 100))}% عن ${fmL(new Date(now.getFullYear(), now.getMonth() - 1, 1))}</small>`;
   const income = `<div class="mk">
-    <div class="mkc cur"><span class="kl">💰 دخل ${fmL(now)} (المحصّل)</span><b>${SAR(cur.v)}</b>${delta}<small>قبل الضريبة ${kmoney(cur.net)} · مصاريف ${kmoney(cur.e)} · صافي ${kmoney(cur.net - cur.e)}</small></div>
-    <div class="mkc"><span class="kl">${fmL(new Date(now.getFullYear(), now.getMonth() - 1, 1))} (الشهر الماضي)</span><b>${SAR(prev.v)}</b><small>قبل الضريبة ${kmoney(prev.net)} · مصاريف ${kmoney(prev.e)}</small></div>
-    <div class="mkc"><span class="kl">من بداية ${yr}</span><b>${SAR(ytdV)}</b><small>${ytd.length} شهر · صافي ${kmoney(ytd.reduce((s, m) => s + m.net - m.e, 0))}</small></div>
-    <div class="mkc"><span class="kl">متوسط الدخل الشهري</span><b>${SAR(avgV)}</b><small>آخر 12 شهراً · مطالبات مفتوحة ${kmoney(dueSum)}</small></div></div>`;
+    <div class="mkc cur" data-dd="m0"><span class="kl">💰 دخل ${fmL(now)} (المحصّل)</span><b>${SAR(cur.v)}</b>${delta}<small>قبل الضريبة ${kmoney(cur.net)} · مصاريف ${kmoney(cur.e)} · صافي ${kmoney(cur.net - cur.e)}</small></div>
+    <div class="mkc" data-dd="m1"><span class="kl">${fmL(new Date(now.getFullYear(), now.getMonth() - 1, 1))} (الشهر الماضي)</span><b>${SAR(prev.v)}</b><small>قبل الضريبة ${kmoney(prev.net)} · مصاريف ${kmoney(prev.e)}</small></div>
+    <div class="mkc" data-dd="ytd"><span class="kl">من بداية ${yr}</span><b>${SAR(ytdV)}</b><small>${ytd.length} شهر · صافي ${kmoney(ytd.reduce((s, m) => s + m.net - m.e, 0))}</small></div>
+    <div class="mkc" data-dd="avg"><span class="kl">متوسط الدخل الشهري</span><b>${SAR(avgV)}</b><small>آخر 12 شهراً · مطالبات مفتوحة ${kmoney(dueSum)}</small></div></div>`;
   const maxM = Math.max(1, ...months.map(m => m.v));
-  const cols = months.map((m, i) => `<div class="vc ${i === 11 ? "cur" : ""}" title="${m.l}: محصّل ${money(m.v)} ر.س · قبل الضريبة ${money(m.net)} · مصاريف ${money(m.e)}"><span class="vv">${m.v ? kmoney(m.v) : ""}</span><span class="vb"><i style="height:${m.v / maxM * 100}%"></i></span><span class="vl">${m.l}</span></div>`).join("");
+  const cols = months.map((m, i) => `<div class="vc ${i === 11 ? "cur" : ""}" data-dd="mon:${m.k}" title="${m.l}: محصّل ${money(m.v)} ر.س · قبل الضريبة ${money(m.net)} · مصاريف ${money(m.e)}"><span class="vv">${m.v ? kmoney(m.v) : ""}</span><span class="vb"><i style="height:${m.v / maxM * 100}%"></i></span><span class="vl">${m.l}</span></div>`).join("");
   const dueT = due.length ? `<div class="tblwrap"><table class="ptable compact"><tr><th>المشروع</th><th>المرحلة</th><th>المستحق</th><th>منذ</th><th>الحالة</th></tr>${due.slice(0, 8).map(c => `<tr data-popen="${c.p.id}"><td><b>${esc(c.p.name)}</b></td><td>${esc(c.phase || c.inv || "—")}</td><td class="n">${money(c.inc - c.pd)}</td><td class="nw">${c.date ? c.age + " يوم" : "—"}</td><td>${spill(...CLST[c.st])}</td></tr>`).join("")}</table></div>` : `<div class="empty" style="padding:10px">لا توجد مطالبات مستحقة 👌</div>`;
   const alerts = [];
   con.forEach(x => { x.c.ph.forEach(ph => { if (ph.due && ph.status !== "done" && ph.due <= iso(addDays(new Date(), 14))) alerts.push({ w: ph.due < today() ? 2 : 1, t: `مرحلة «${ph.name}» ${ph.due < today() ? "تجاوزت موعدها" : "مستحقة"} ${nice(ph.due)}`, p: x.p }); });
@@ -1695,7 +1755,8 @@ function projectDetail(p){
     <td>${x.claimed ? spill("صدرت مطالبة", "done") : `<button class="btn ghost xs" data-mkclaim="${i}">إصدار مطالبة</button>`}</td>
     <td><button class="rm" data-rm="phases" data-i="${i}" title="حذف">×</button></td></tr>`).join("");
   const phNames = p.phases.map(x => x.name).filter(Boolean);
-  const clRows = c.cl.map((x, i) => `<tr><td><select data-row="claims" data-i="${i}" data-k="phase"><option value="">—</option>${phNames.map(n => `<option ${x.phase === n ? "selected" : ""}>${esc(n)}</option>`).join("")}</select></td>
+  const clRows = c.cl.map((x, i) => `<tr><td>${claimCustom.has(i) ? `<input data-row="claims" data-i="${i}" data-k="phase" data-clcustom="1" value="${esc(x.phase || "")}" placeholder="اكتب اسم الدفعة…" autofocus>` : (() => { const sg = claimSugs(p, x, i).filter(s => !phNames.includes(s)); const known = phNames.includes(x.phase) || sg.includes(x.phase);
+      return `<select data-row="claims" data-i="${i}" data-k="phase"><option value="">—</option>${x.phase && !known ? `<option selected>${esc(x.phase)}</option>` : ""}${phNames.length ? `<optgroup label="مراحل المشروع">${phNames.map(n => `<option ${x.phase === n ? "selected" : ""}>${esc(n)}</option>`).join("")}</optgroup>` : ""}<optgroup label="مقترحات">${sg.map(n => `<option ${x.phase === n ? "selected" : ""}>${esc(n)}</option>`).join("")}</optgroup><option value="__custom">✏️ إدخال يدوي…</option></select>`; })()}</td>
     <td><input data-row="claims" data-i="${i}" data-k="inv" value="${esc(x.inv || "")}" placeholder="رقم" class="sm"></td><td><input type="date" data-row="claims" data-i="${i}" data-k="date" value="${esc(x.date || "")}"></td>
     <td><input class="nn" type="number" step="0.01" data-row="claims" data-i="${i}" data-k="amount" value="${esc(x.amount ?? "")}"></td><td class="n mutd" data-c="clv${i}">${money(x.vat)}</td>
     <td><input class="nn" type="number" step="0.01" data-row="claims" data-i="${i}" data-k="paid" value="${esc(x.paid ?? "")}"></td><td><input type="date" data-row="claims" data-i="${i}" data-k="paidDate" value="${esc(x.paidDate || "")}"></td>
@@ -2184,15 +2245,17 @@ $("#view").addEventListener("change", async e => { if (tab !== "projects" || !pr
         projDraft.docs.push({ kind: r.kind || "drive", id: r.id || "", url: r.url, name: file.name, size: file.size, cat: docCat, at: Date.now(), by: ME.name, note: "" }); ok++; }
       catch (x) { banner(`تعذّر رفع «${file.name}»: ` + ((x && x.message) || ""), true); } }
     if (ok) { projDirty = true; render(); await projSaveNow(); toast(`تم الرفع ${ok} ملف ✓`); } return; }
+  if (e.target.dataset.row === "claims" && e.target.dataset.k === "phase" && e.target.value === "__custom") { claimCustom.add(+e.target.dataset.i); render(); setTimeout(() => { const f = document.querySelector('[data-clcustom][data-i="' + e.target.dataset.i + '"]'); if (f) f.focus(); }, 30); return; }
+  if (e.target.dataset.clcustom) claimCustom.delete(+e.target.dataset.i);
   const el = e.target; const isPhSt = el.dataset.row === "phases" && el.dataset.k === "status"; const oldSt = isPhSt ? projDraft.phases[+el.dataset.i].status : null;
   if (!projInput(el)) return;
   if (isPhSt && el.value === "done" && oldSt !== "done") makeClaim(+el.dataset.i, true);
   if (el.dataset.row === "claims" && el.dataset.k === "phase") { const r = projDraft.claims[+el.dataset.i]; const ph = pcalc(projDraft).ph.find(x => x.name === el.value); if (ph && !num(r.amount)) r.amount = Math.round(ph.amt * 100) / 100; }
   projTouch();
-  if (el.tagName === "SELECT" || el.dataset.pf === "name" || el.dataset.k === "name") render(); else projRecalc(); });
+  if (el.tagName === "SELECT" || el.dataset.pf === "name" || el.dataset.k === "name" || el.dataset.clcustom) render(); else projRecalc(); });
 $("#view").addEventListener("click", async e => {
   if (tab !== "projects") return;
-  const o = e.target.closest("[data-popen]"); if (o) { projOpen = o.dataset.popen; projDraft = null; projDirty = false; render(); window.scrollTo({ top: 0, behavior: "smooth" }); return; }
+  const o = e.target.closest("[data-popen]"); if (o) { claimCustom.clear(); projOpen = o.dataset.popen; projDraft = null; projDirty = false; render(); window.scrollTo({ top: 0, behavior: "smooth" }); return; }
   const df = e.target.closest("[data-docf]"); if (df) { docF = df.dataset.docf; render(); return; }
   if (e.target.closest("[data-plink]")) { let url = ($("#docLUrl").value || "").trim(); if (!url) return; if (!/^https?:[\/][\/]/i.test(url)) url = "https:\/\/" + url;
     projDraft.docs.push({ kind: "link", name: ($("#docLName").value || "").trim() || new URL(url).hostname, url, cat: docCat, at: Date.now(), by: ME.name, note: "" }); projDirty = true; render(); await projSaveNow(); toast("أُضيف الرابط ✓"); return; }
@@ -2205,7 +2268,7 @@ $("#view").addEventListener("click", async e => {
   const add = e.target.closest("[data-add]"); if (add) { const k = add.dataset.add;
     projDraft[k].push(k === "phases" ? { name: "", pct: 0, due: "", status: "todo" } : k === "claims" ? { phase: "", inv: "", date: today(), amount: "", paid: "", paidDate: "" } : k === "log" ? { date: today(), kind: LOGK[0], subject: "", details: "" } : { desc: "", cat: EXCAT[0], date: today(), amount: "" });
     projTouch(); render(); return; }
-  const rm = e.target.closest("[data-rm]"); if (rm) { projDraft[rm.dataset.rm].splice(+rm.dataset.i, 1); projTouch(); render(); return; }
+  const rm = e.target.closest("[data-rm]"); if (rm) { if (rm.dataset.rm === "claims") claimCustom.clear(); projDraft[rm.dataset.rm].splice(+rm.dataset.i, 1); projTouch(); render(); return; }
   if (e.target.closest("[data-pprint]")) { window.print(); return; }
   if (e.target.closest("[data-pay]")) { openPay(+e.target.closest("[data-pay]").dataset.pay); return; }
   if (e.target.closest("[data-pmap]")) { const u = mapURL(projDraft); if (!u) { toast("اكتب الموقع أو الصق رابط الموقع أولاً", true); return; } window.open(u, "_blank", "noopener"); return; }
