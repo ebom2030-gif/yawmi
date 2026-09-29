@@ -387,7 +387,13 @@ body[data-tab="home"] .main .hero{padding-bottom:26px}
 .gsearch input{background:none;border:0;outline:0;color:#fff;width:100%;font-size:14px}.gsearch input::placeholder{color:#c9d2e8}
 .gsearch kbd{font:11px/1 inherit;color:#c9d2e8;border:1px solid rgba(255,255,255,.3);border-radius:5px;padding:2px 6px}
 @media(max-width:700px){.gsearch{min-width:0;flex:1 1 100%;order:-1}.gsearch kbd{display:none}}
-.stat[data-go]{cursor:pointer}.pill.lnk{cursor:pointer}.missbox{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:var(--gold-soft);border:1px solid var(--gold);border-radius:12px;padding:10px 14px;margin:10px 0}.missbox .btn{width:auto}.pill.lnk:hover{border-color:var(--gold);color:var(--ink)}
+.stat[data-go]{cursor:pointer}.pill.lnk{cursor:pointer}.missbox{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:var(--gold-soft);border:1px solid var(--gold);border-radius:12px;padding:10px 14px;margin:10px 0}.missbox .btn{width:auto}.ncli{border:1px solid var(--gold);margin:10px 0}.ncrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:6px 0;border-bottom:1px solid var(--line)}.ncrow:last-child{border:0}.ncrow b{min-width:180px}.ncrow input{flex:1;min-width:180px;border:1px solid var(--line);border-radius:10px;padding:7px 10px;background:var(--surface)}.ncrow .btn{width:auto}
+.wbox{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0 2px;padding:10px 12px;border:1px dashed var(--wait);background:var(--wait-soft);border-radius:12px;grid-column:1/-1}.wbox small{flex-basis:100%;color:var(--ink2)}.wbox input{border:1px solid var(--line);border-radius:8px;padding:5px 8px;background:var(--surface)}.wbox button{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:5px 12px;font-weight:700}.wbox button.ok{background:var(--wait);color:#fff;border-color:transparent}
+#printDay{display:none}
+@media print{body.printday>*:not(#printDay){display:none!important}body.printday{padding:0!important;background:#fff!important}body.printday #printDay{display:block!important;color:#111;font-size:12px}
+#printDay .pdh{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid #14213d;padding-bottom:8px;margin-bottom:12px}#printDay h1{margin:0;font-size:20px;color:#14213d}#printDay .pdl{color:#c29a3e;font-weight:800}
+#printDay .pdk{display:flex;gap:8px;margin-bottom:12px}#printDay .pdk div{flex:1;border:1px solid #ccd;border-radius:8px;padding:6px;text-align:center}#printDay .pdk b{display:block;font-size:18px;color:#14213d}
+#printDay table{width:100%;border-collapse:collapse}#printDay th{background:#14213d;color:#fff;padding:6px;-webkit-print-color-adjust:exact;print-color-adjust:exact}#printDay td{border:1px solid #ddd;padding:5px;vertical-align:top}#printDay tr.d td{color:#2c8a60}#printDay .pdn{margin-top:10px;border:1px solid #ddd;padding:8px;border-radius:6px}#printDay .pdf{margin-top:14px;color:#888;font-size:10px;text-align:center}}.pill.lnk:hover{border-color:var(--gold);color:var(--ink)}
 .task.flash{animation:flash 2.4s ease}@keyframes flash{0%,55%{background:var(--gold-soft);box-shadow:inset 0 0 0 2px var(--gold)}100%{background:transparent}}
 .dhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin:18px 0 6px}.dhead b{font-size:24px;color:var(--done)}
 .srch .shead{margin:18px 0 10px;font-size:15px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
@@ -510,6 +516,7 @@ body.private .hero{background:radial-gradient(1200px 300px at 85% -40%,rgba(111,
 <button class="nb" id="nextDay" aria-label="اليوم التالي">التالي ›</button>
 <button class="nb" id="goToday">اليوم</button>
 <input type="date" id="pickDay" aria-label="اذهب لتاريخ">
+<button class="nb" id="dayPdf" title="تقرير اليوم PDF">📄 تقرير PDF</button><button class="nb" id="dayXls" title="تقرير اليوم Excel">📊 Excel</button>
 </div>
 <div class="pages" role="tablist" hidden>
 <button role="tab" data-page="1" aria-selected="true">الصفحة 1 · أهم الأمور<span class="c" id="c1">0</span></button>
@@ -553,7 +560,8 @@ const nice = s => { const diff = daysBetween(today(), s);
 if (diff === 0) return "اليوم"; if (diff === 1) return "بكرة"; if (diff === 2) return "بعد بكرة"; if (diff === -1) return "أمس";
 const d = parse(s); return `${DAYN[d.getDay()]} ${gFmt.format(d)}`; };
 const weekStart = () => { const d = new Date(); d.setHours(0,0,0,0); return addDays(d, -d.getDay()); };
-const STATUS = {todo:"جديدة", doing:"جاري العمل", waiting:"بانتظار رد"};
+const STATUS = {todo:"جديدة", doing:"جاري العمل", waiting:"بانتظار رد", daily:"🔁 متابعة يومية"};
+let waitFor = null;
 const KIND = { top:"أهم 6 مهام ★", meeting:"الاجتماعات والمواعيد", follow:"متابعات — بانتظار رد", admin:"مهام إدارية", task:"مهام اليوم" };
 const TTYPE = { tech:"فنية", admin:"إدارية", fin:"مالية" };
 const API = "https://script.google.com/macros/s/AKfycbwgvjkn2Op3hg-sSwxMi3PJO4MmIot0udoa8FXKOGTK9LBjqKuGtqlLYY1FaAkMwnI9/exec";
@@ -654,6 +662,7 @@ if (x.kind === "follow" && x.from) pills.push(`<span class="pill wait">من: ${e
 if (x.kind === "task" && x.status === "doing" && !x.done) pills.push(`<span class="pill doing">جاري العمل</span>`);
 if (x.kind === "task" && x.status === "waiting" && !x.done) pills.push(`<span class="pill wait">بانتظار رد</span>`);
 if (x.priority === 2 && !x.done) pills.push(`<span class="pill late">عاجلة</span>`);
+if (x.status === "daily" && !x.done) pills.push(`<span class="pill doing">🔁 متابعة يومية</span>`);
 if (x.assignedBy && x.assignedBy !== x.owner) pills.push(`<span class="pill asg">📌 أسندها ${esc(uname(x.assignedBy) || "المدير")}</span>`);
 if (!x.done && x.kind !== "meeting" && x.reminder?.time) pills.push(`<span class="pill rem">⏰ تذكير ${esc(x.reminder.time)}${x.calId ? " · 📅" : ""}</span>`); else if (x.calId && !x.done) pills.push(`<span class="pill rem">📅 في التقويم</span>`);
 if (x.done && x.doneAt && iso(new Date(x.doneAt)) !== x.due) pills.push(`<span class="pill done">أُنجزت ${esc(nice(iso(new Date(x.doneAt))))}</span>`);
@@ -663,7 +672,7 @@ if (!x.done) {
 if (x.kind === "task") acts += `<button data-a="star" data-id="${x.id}" title="${x.star ? "إزالة الأولوية" : "تعليم كأولوية"}" aria-pressed="${!!x.star}" style="${x.star ? "color:var(--gold);border-color:var(--gold)" : ""}">${x.star ? "★" : "☆"}</button>`;
 if (x.kind === "task") acts += `<select data-a="status" data-id="${x.id}" aria-label="الحالة">${Object.keys(STATUS).map(s => `<option value="${s}" ${ (x.status||"todo")===s?"selected":""}>${STATUS[s]}</option>`).join("")}</select>`;
 if (!x.due && x.kind !== "meeting") acts += `<button data-a="today" data-id="${x.id}">لليوم</button><label class="sch" title="حدد يوم للمهمة">📅<input type="date" data-f="due" data-id="${x.id}" aria-label="جدولة ليوم"></label>`;
-if (x.kind !== "meeting") acts += `<button data-a="tomorrow" data-id="${x.id}">لبكرة</button>`;
+if (x.kind !== "meeting") acts += `<button data-a="tomorrow" data-id="${x.id}">لبكرة</button><button data-a="waitreply" data-id="${x.id}" title="خلّصت اللي عليك ومستني رد — تتحول لمتابعة في يوم تحدده">⏳ بانتظار رد</button>`;
 if (x.reminder && x.reminder.state === "link") acts += `<a href="${esc(calLink(x))}" target="_blank" rel="noopener">أضف للتقويم</a>`;
 }
 acts += `<button data-a="more" data-id="${x.id}" aria-expanded="${open===x.id}" title="تفاصيل ومرفقات">📎 …</button>`;
@@ -688,7 +697,7 @@ ${(mcp || assets) ? `<label class="upbtn">رفع ملف<input type="file" data-a
 <small>${mcp ? `الملفات تُرفع على Google Drive في فولدر <a href="${DRIVE_URL}" target="_blank" rel="noopener">«المهام»</a> — Word وExcel وPDF وDWG وغيرها.` : assets ? "ارفع PDF أو صور مباشرة، أو أضف رابط الملف." : "أضف رابط الملف من Drive أو OneDrive."}</small>
 </div>
 ${confirmDel === x.id ? `<span class="confirm">حذف نهائي؟ <button data-a="delyes" data-id="${x.id}">نعم</button><button data-a="delno" data-id="${x.id}">لا</button></span>`
-: ((x.due && x.kind !== "meeting" && !x.done ? `<button data-a="unsched" data-id="${x.id}">↩ رجّعها للمهام العامة</button> ` : "") + (canDel(x) ? `<button data-a="del" data-id="${x.id}" class="del">حذف</button>` : ""))}
+: ((x.kind !== "meeting" && !x.done ? `<button data-a="dailyT" data-id="${x.id}">${x.status === "daily" ? "⏹ إيقاف المتابعة اليومية" : "🔁 خليها متابعة يومية"}</button> ${x.status === "daily" ? `<button data-a="finish" data-id="${x.id}">✓ إنهاء نهائي</button> ` : ""}` : "") + (x.due && x.kind !== "meeting" && !x.done ? `<button data-a="unsched" data-id="${x.id}">↩ رجّعها للمهام العامة</button> ` : "") + (canDel(x) ? `<button data-a="del" data-id="${x.id}" class="del">حذف</button>` : ""))}
 </div>`;
 }
 const lead = x.kind === "meeting" ? `<span class="time">${esc(x.time || "—")}</span>` : (x.kind === "top" || x.kind === "task") ? `<span class="num">${i+1}</span>` : "";
@@ -700,7 +709,7 @@ ${lead}
 ${pills.length ? `<div class="meta">${pills.join("")}</div>` : ""}
 ${x.note && open !== x.id ? `<div class="note">${esc(x.note)}</div>` : ""}
 ${filesHTML(x)}</div>
-<div class="acts">${acts}</div>${more}</div>`;
+<div class="acts">${acts}</div>${waitFor === x.id ? waitBox(x) : ""}${more}</div>`;
 }
 function fileType(f){ const n = (f.name || "").toLowerCase();
 if (f.kind === "link") return ["lnk","رابط"]; if (f.kind === "drive" && /\.(docx?|xlsx?|pptx?|dwg|dxf)$/i.test(f.name||"")) return ["lnk",(f.name.split(".").pop()||"").toUpperCase()]; if ((f.type||"").includes("pdf") || n.endsWith(".pdf")) return ["pdf","PDF"];
@@ -949,6 +958,7 @@ function viewClick(e){
   if ((el = q("[data-dt]"))) { dType = el.dataset.dt; render(); return true; }
   if (q("[data-dmore]")) { dLim += 150; render(); return true; }
   if (q("[data-sclear]")) { clearSearch(); tab = gprev || "home"; setTabUI(); render(); return true; }
+  if ((el = q("[data-ncsave]"))) { linkClient(el.dataset.ncsave); return true; }
   if (q("[data-addmiss]")) { const m = missRefs(); m.cs.forEach(c => ensureRefs("", c)); m.ps.forEach(p => ensureRefs(p.n, p.c)); setTimeout(() => { render(); toast("✓ اتضافوا — كمّل بياناتهم وقت ما تحب"); }, 950); return true; }
   if ((el = q("[data-pj]"))) { const pj = projByName(el.dataset.pj); if (!pj) { toast("المشروع ده مش مسجّل في صفحة المشاريع"); return true; } if (!(PRIV() || can("projects"))) return true; clearSearch(); tab = "projects"; projOpen = pj.id; projDraft = null; setTabUI(); render(); window.scrollTo({ top: 0 }); return true; }
   if ((el = q("[data-cj]"))) { if (!(PRIV() || can("projects"))) return true; const n = normN(el.dataset.cj); const c = clientsAll().find(e => normN(e.name) === n); clearSearch(); tab = "clients"; setTabUI(); render(); if (c) setTimeout(() => openCli(c.saved ? c.id : "n:" + c.name), 30); return true; }
@@ -963,6 +973,13 @@ function missRefs(){ const ps = new Map(), cs = new Map(), all = clientsAll();
     if (p && !projByName(p)) { const k = normN(p); if (!ps.has(k)) ps.set(k, { n: p, c }); else if (c && !ps.get(k).c) ps.get(k).c = c; }
     if (c && !all.some(e => normN(e.name) === normN(c))) cs.set(normN(c), c); });
   return { ps: [...ps.values()], cs: [...cs.values()] }; }
+function noCliBox(){ if (!pEdit()) return ""; const ps = PV().filter(p => !String(p.client || "").trim()); if (!ps.length) return "";
+  return `<div class="panel ncli"><h3>🔗 مشاريع لسه مش مربوطة بعميل / جهة <small>${ps.length}</small></h3><small class="hnote" style="margin:0 0 8px">اكتب العميل أو المالك لكل مشروع ودوس «ربط» — هيتضاف هنا في العملاء ويترّبط بالمشروع وكل مهامه.</small>${ps.map(p => `<div class="ncrow"><b>🏗️ ${esc(p.name)}</b><input list="cliList" placeholder="اسم العميل / الجهة المالكة" data-ncli="${p.id}"><button type="button" class="btn gold" data-ncsave="${p.id}">ربط</button></div>`).join("")}</div>`; }
+function linkClient(pid){ const p = PROJECTS.find(x => x.id === pid), i = document.querySelector(`[data-ncli="${pid}"]`); if (!p || !i) return; const v = i.value.trim(); if (!v) { i.focus(); return; }
+  ensureRefs("", v); p.client = v; p.log = (p.log || []).concat([{ date: today(), kind: "تحديث", subject: "اتربط بالجهة «" + v + "»", details: "" }]); bgSaveProject(p);
+  allItems.filter(x => normN(x.project) === normN(p.name) && !x.client).forEach(x => { try { col.doc(x.id).update({ client: v }); } catch (e) {} });
+  render(); toast("✓ اتربط «" + p.name + "» بـ «" + v + "»"); }
+$("#view").addEventListener("keydown", e => { const i = e.target.closest && e.target.closest("[data-ncli]"); if (i && e.key === "Enter") { e.preventDefault(); linkClient(i.dataset.ncli); } });
 function missBox(){ if (!pEdit()) return ""; const m = missRefs(); if (!m.ps.length && !m.cs.length) return ""; const names = m.ps.map(x => x.n).concat(m.cs);
   return `<div class="missbox"><span>📌 فيه ${m.ps.length ? m.ps.length + " مشروع" : ""}${m.ps.length && m.cs.length ? " و" : ""}${m.cs.length ? m.cs.length + " جهة" : ""} مكتوبين في المهام ومش متسجلين: <b>${esc(names.slice(0, 6).join("، "))}${names.length > 6 ? "…" : ""}</b></span><button class="btn gold" data-addmiss>ضيفهم كلهم ✓</button></div>`; }
 function projByName(n){ n = normN(n); return n ? PV().find(p => normN(p.name) === n) : null; }
@@ -977,6 +994,27 @@ function ensureRefs(pn, cn){
 }
 // اختيار مشروع في إضافة مهمة → يملأ الجهة تلقائياً من بيانات المشروع
 ["input", "change"].forEach(ev => $("#view").addEventListener(ev, e => { const i = e.target; if (i.name !== "project" || !i.closest("form.addrow")) return; const c = i.form.querySelector('[name="client"]'); const pj = projByName(i.value); if (c && pj && pj.client && (!c.value || c.dataset.auto === "1")) { c.value = pj.client; c.dataset.auto = "1"; } else if (c && !pj && c.dataset.auto === "1") { c.value = ""; c.dataset.auto = ""; } }, true));
+// ----- انتظار رد + تقرير اليوم -----
+function waitBox(x){ return `<div class="wbox"><b>⏳ خلّصت اللي عليك؟</b><small>المهمة هتتقفل من النهارده وتتحول لـ«متابعات — بانتظار رد» وترجعلك يوم المتابعة.</small><label>أتابع يوم <input type="date" data-wdate value="${iso(addDays(new Date(), 2))}"></label><label>مستني رد من <input data-wfrom value="${esc(x.from || x.client || "")}" placeholder="الجهة أو الشخص"></label><button data-a="waitok" data-id="${x.id}" class="ok">تمام</button><button data-a="waitno" data-id="${x.id}">إلغاء</button></div>`; }
+function dayRows(){ const d = day, t = today(); const seen = new Set(); const tag = "✓ " + d + ":"; const L = forDay(d).concat(items.filter(x => x.done && doneDay(x) === d), items.filter(x => String(x.note || "").includes(tag))).filter(x => !seen.has(x.id) && seen.add(x.id));
+  const st = x => (!x.done && x.due !== d && String(x.note || "").includes(tag)) ? (x.kind === "follow" ? "✓ اتعمل — بانتظار رد" : "✓ اتابعت") : x.done ? "✓ منجزة" : x.kind === "meeting" ? "📅 اجتماع" : (x.kind === "follow" || x.status === "waiting") ? "⏳ بانتظار رد" : x.status === "daily" ? "🔁 متابعة يومية" : (x.due && x.due < d) ? "⏰ مرحّلة من " + nice(x.due) : x.status === "doing" ? "جاري العمل" : "مفتوحة";
+  const ord = { meeting: 0, top: 1, task: 2, admin: 3, follow: 4 };
+  return L.sort((a, b) => (a.done ? 1 : 0) - (b.done ? 1 : 0) || (ord[a.kind] ?? 5) - (ord[b.kind] ?? 5) || String(a.time || "").localeCompare(String(b.time || ""))).map(x => ({ x, st: st(x), type: x.kind === "meeting" ? "اجتماع" + (x.time ? " " + x.time : "") : x.kind === "follow" ? "متابعة" : x.kind === "admin" ? "إدارية" : (TTYPE[x.ttype] || "مهمة") }));
+}
+function dayTitle(){ const d = parse(day); return DAYN[d.getDay()] + " " + gFmtY.format(d); }
+$("#dayXls").onclick = () => { const R = dayRows(); const q = v => `"${String(v ?? "").replace(/"/g, '""')}"`;
+  const lines = [[`تقرير يوم ${dayTitle()} — ${ME ? (uname(viewUid) || ME.name) : ""}`].map(q).join(","), "", ["م", "البند", "النوع", "المشروع", "الجهة / المالك", "الحالة", "تاريخ البند", "وقت الإنجاز", "ملاحظات"].map(q).join(",")];
+  R.forEach((r, i) => lines.push([i + 1, r.x.title, r.type, r.x.project, r.x.client, r.st, r.x.due, r.x.doneAt ? new Date(r.x.doneAt).toLocaleString("ar-EG-u-nu-latn") : "", r.x.note].map(q).join(",")));
+  if (notes[day]) lines.push("", q("ملاحظات اليوم: " + notes[day]));
+  const blob = new Blob(["\ufeff" + lines.join("\r\n")], { type: "text/csv;charset=utf-8" }); const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `تقرير-يومي-${day}.csv`; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500); toast("📊 اتنزّل تقرير اليوم — يفتح في Excel"); };
+$("#dayPdf").onclick = () => { const R = dayRows(), n = k => R.filter(k).length, tot = R.filter(r => r.x.kind !== "meeting");
+  { const o = document.getElementById("printDay"); if (o) o.remove(); } const box = document.createElement("div"); box.id = "printDay";
+  box.innerHTML = `<div class="pdh"><div><h1>تقرير يوم ${esc(dayTitle())}</h1><div>${esc(hij(parse(day)))} · ${esc(ME ? (uname(viewUid) || ME.name) : "")}</div></div><div class="pdl">يومي · Yawmi</div></div>
+  <div class="pdk"><div><b>${n(r => r.st.startsWith("✓") && r.x.kind !== "meeting")}/${tot.length}</b>اتعمل / اتنجز</div><div><b>${n(r => r.st.startsWith("⏰"))}</b>مرحّلة</div><div><b>${n(r => r.st.startsWith("⏳"))}</b>بانتظار رد</div><div><b>${n(r => r.st.startsWith("🔁"))}</b>متابعة يومية</div><div><b>${n(r => r.x.kind === "meeting")}</b>اجتماعات</div></div>
+  <table><tr><th>م</th><th>البند</th><th>النوع</th><th>المشروع / الجهة</th><th>الحالة</th><th>ملاحظات</th></tr>${R.map((r, i) => `<tr class="${r.x.done ? "d" : ""}"><td>${i + 1}</td><td>${esc(r.x.title)}</td><td>${esc(r.type)}</td><td>${esc([r.x.project, r.x.client].filter(Boolean).join(" · "))}</td><td>${esc(r.st)}</td><td>${esc(String(r.x.note || "").slice(0, 160))}</td></tr>`).join("") || '<tr><td colspan="6">لا يوجد بنود</td></tr>'}</table>
+  ${notes[day] ? `<div class="pdn"><b>ملاحظات اليوم:</b> ${esc(notes[day])}</div>` : ""}<div class="pdf">طُبع من يومي · ${esc(new Date().toLocaleString("ar-EG-u-nu-latn"))}</div>`;
+  document.body.appendChild(box); document.body.classList.add("printday"); const done = () => { document.body.classList.remove("printday"); box.remove(); removeEventListener("afterprint", done); }; addEventListener("afterprint", done); setTimeout(() => { window.print(); setTimeout(() => { if (document.body.classList.contains("printday") && !matchMedia("print").matches) done(); }, 1500); }, 60);
+  toast("📄 اختار «حفظ كـ PDF» من نافذة الطباعة"); };
 // البحث العام
 { const qi = $("#gq"); let tmr = null;
   qi.addEventListener("input", () => { clearTimeout(tmr); tmr = setTimeout(() => { const v = qi.value.trim(); if (v && tab !== "search") { gprev = tab; tab = "search"; } if (!v && tab === "search") tab = gprev || "home"; gq = v; open = null; setTabUI(); render(); }, 160); });
@@ -1024,10 +1062,18 @@ const b = e.target.closest("[data-a]"); if (!b) return; const a = b.dataset.a;
 if (a === "print") { window.print(); return; }
 if (a === "copy") { try { await navigator.clipboard.writeText(reportText()); toast("نُسخ الملخص — الصقه في واتساب أو الإيميل"); } catch { banner("تعذّر النسخ تلقائياً في هذا المتصفح."); } return; }
 const x = find(b.dataset.id); if (!x || !canWrite || !own(x)) return; if (isMgr && ["toggle","calMeet","remind"].includes(a)) return;
+if (a === "toggle" && !x.done && x.status === "daily") { const nd = iso(addDays(new Date(), 1)); await upd(x.id, { due: nd, note: (x.note ? x.note + "\n" : "") + "✓ " + today() + ": اتابعت" }); toast("🔁 اتسجلت متابعة النهارده — هتظهرلك بكرة تاني"); return; }
 if (a === "toggle") { const d = !x.done; if (d) toast("أحسنت ✓ تم إنجاز المهمة"); await upd(x.id, { done: d, doneAt: d ? Date.now() : null }); }
 else if (a === "star") { const s = !x.star; await upd(x.id, { star: s, kind: "task" }); toast(s ? "★ اتعلّمت أولوية — هتطلع فوق" : "اتشالت من الأولوية"); }
 else if (a === "today") { await upd(x.id, { due: today() }); toast("اتنقلت لمهام النهارده"); }
 else if (a === "unsched") { open = null; await upd(x.id, { due: null }); toast("رجعت للمهام العامة"); }
+else if (a === "waitreply") { waitFor = waitFor === x.id ? null : x.id; render(); }
+else if (a === "waitno") { waitFor = null; render(); }
+else if (a === "waitok") { const box = b.closest(".wbox"); const dt = (box.querySelector("[data-wdate]").value || iso(addDays(new Date(), 2))); const who = box.querySelector("[data-wfrom]").value.trim();
+  waitFor = null; await upd(x.id, { kind: "follow", status: "waiting", star: false, from: who, due: dt, note: (x.note ? x.note + "\n" : "") + "✓ " + today() + ": اتعمل المطلوب — بانتظار رد" + (who ? " من " + who : "") });
+  toast("⏳ اتحولت لـ«بانتظار رد» — هتظهرلك في المتابعات يوم " + nice(dt)); }
+else if (a === "dailyT") { const on = x.status !== "daily"; await upd(x.id, { status: on ? "daily" : "todo" }); toast(on ? "🔁 بقت متابعة يومية — كل ما تعلّمها ✓ بتتسجل المتابعة وترجعلك تاني يوم" : "اتوقفت المتابعة اليومية"); }
+else if (a === "finish") { open = null; await upd(x.id, { status: "todo", done: true, doneAt: Date.now() }); toast("✓ اتقفلت المتابعة نهائياً"); }
 else if (a === "tomorrow") { await upd(x.id, { due: iso(addDays(new Date(), 1)) }); toast("نُقلت إلى بكرة"); }
 else if (a === "more") { open = open === x.id ? null : x.id; confirmDel = null; render(); }
 else if (a === "del") { confirmDel = x.id; render(); }
@@ -1862,7 +1908,7 @@ function clientsView(){
       <td class="n">${e.projects.length ? `${e.projects.length} <small>مشروع</small><br><small>${kmoney(e.T)} ر.س</small>` : "—"}</td>
       <td class="cacts">${wa ? `<a class="wa" href="${wa}" target="_blank" rel="noopener" title="واتساب" data-stop>💬</a>` : ""}${e.memail ? `<a href="mailto:${esc(e.memail)}" title="إيميل" data-stop>✉️</a>` : ""}${e.mphone ? `<a href="tel:+${normPh(e.mphone)}" title="اتصال" data-stop>📞</a>` : ""}${e.web ? `<a href="${esc(/^https?:/i.test(e.web) ? e.web : "https://" + e.web)}" target="_blank" rel="noopener" title="الموقع" data-stop>🌐</a>` : ""}</td></tr>`; }).join("");
   return `<div class="phead"><div><h2>العملاء والجهات</h2><div class="sub">${PRIV() ? "🔒 جهاتك الخاصة · " : ""}قاعدة بيانات العملاء والمطورين والمكاتب والجهات المتعاونة — العملاء بيتضافوا تلقائياً من المشاريع</div></div>
-    <div class="row2">${pEdit() ? `<button class="btn gold" data-cnew>+ جهة جديدة</button>` : ""}<button class="btn ghost" data-cexport>⬇ تصدير Excel</button></div></div>${missBox()}
+    <div class="row2">${pEdit() ? `<button class="btn gold" data-cnew>+ جهة جديدة</button>` : ""}<button class="btn ghost" data-cexport>⬇ تصدير Excel</button></div></div>${missBox()}${noCliBox()}
   <div class="mk"><div class="mkc cur"><span class="kl">إجمالي الجهات</span><b>${all.length}</b><small>${all.filter(e => e.saved).length} مسجّلة · ${all.filter(e => !e.saved).length} من المشاريع</small></div>
     <div class="mkc"><span class="kl">عملاء عندهم مشاريع</span><b>${withP.length}</b><small>قيمة العقود ${kmoney(tot)} ر.س</small></div>
     <div class="mkc"><span class="kl">مطورين عقاريين</span><b>${all.filter(e => e.cat === "dev").length}</b><small>مكاتب هندسية ${all.filter(e => e.cat === "eng").length}</small></div>
