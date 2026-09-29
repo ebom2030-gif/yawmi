@@ -387,7 +387,7 @@ body[data-tab="home"] .main .hero{padding-bottom:26px}
 .gsearch input{background:none;border:0;outline:0;color:#fff;width:100%;font-size:14px}.gsearch input::placeholder{color:#c9d2e8}
 .gsearch kbd{font:11px/1 inherit;color:#c9d2e8;border:1px solid rgba(255,255,255,.3);border-radius:5px;padding:2px 6px}
 @media(max-width:700px){.gsearch{min-width:0;flex:1 1 100%;order:-1}.gsearch kbd{display:none}}
-.stat[data-go]{cursor:pointer}
+.stat[data-go]{cursor:pointer}.pill.lnk{cursor:pointer}.pill.lnk:hover{border-color:var(--gold);color:var(--ink)}
 .task.flash{animation:flash 2.4s ease}@keyframes flash{0%,55%{background:var(--gold-soft);box-shadow:inset 0 0 0 2px var(--gold)}100%{background:transparent}}
 .dhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin:18px 0 6px}.dhead b{font-size:24px;color:var(--done)}
 .srch .shead{margin:18px 0 10px;font-size:15px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
@@ -647,8 +647,8 @@ const late = !x.done && x.due && x.due < t && ROLL.has(x.kind);
 const pills = [];
 if (x.kind === "task" && x.star && page === "2" && tab === "day") pills.push(`<span class="pill rem">★ من أهم 6</span>`);
 if ((x.kind === "task" || x.kind === "top") && x.ttype) pills.push(`<span class="pill ${({admin:"adm",fin:"fin"})[x.ttype] || "tech"}">${TTYPE[x.ttype] || ""}</span>`);
-if (x.kind === "task" && x.project) pills.push(`<span class="pill proj">${esc(x.project)}</span>`);
-if (x.client) pills.push(`<span class="pill proj">🏢 ${esc(x.client)}</span>`);
+if (x.kind === "task" && x.project) pills.push(`<span class="pill proj lnk" data-pj="${esc(x.project)}" title="افتح المشروع">🏗️ ${esc(x.project)}</span>`);
+if (x.client) pills.push(`<span class="pill proj lnk" data-cj="${esc(x.client)}" title="افتح بيانات الجهة">🏢 ${esc(x.client)}</span>`);
 if (late) { const n = daysBetween(x.due, t); pills.push(`<span class="pill late">مرحّلة من ${esc(nice(x.due))}${n > 1 ? ` · ${n} أيام` : ""}</span>`); }
 if (x.kind === "follow" && x.from) pills.push(`<span class="pill wait">من: ${esc(x.from)}</span>`);
 if (x.kind === "task" && x.status === "doing" && !x.done) pills.push(`<span class="pill doing">جاري العمل</span>`);
@@ -768,7 +768,7 @@ let add = "";
 if (canWrite && (!isMgr || kind === "task" || kind === "top")) {
 if (kind === "meeting") add = `<form class="addrow" data-kind="meeting"><input type="time" name="time" value="10:00" aria-label="الوقت"><input name="title" placeholder="مع / الموضوع…" aria-label="الاجتماع"><button>+</button></form>`;
 else if (kind === "follow") add = `<form class="addrow" data-kind="follow"><input name="title" placeholder="الموضوع…" aria-label="الموضوع"><input class="sm" name="from" placeholder="من" aria-label="من"><button>+</button></form>`;
-else if (kind === "task") add = `<form class="addrow" data-kind="task"><input name="title" placeholder="اكتب مهمة واضغط Enter…" aria-label="مهمة"><input class="sm" name="project" list="projList" placeholder="المشروع" aria-label="المشروع" value="${esc(lastProj)}"><input class="sm" name="client" list="cliList" placeholder="الجهة / المالك" aria-label="الجهة أو المالك" value="${esc(lastCli)}"><select name="ttype" aria-label="نوع المهمة"><option value="tech">فنية</option><option value="admin">إدارية</option><option value="fin">مالية</option></select><select name="priority" aria-label="الأولوية"><option value="0">عادية</option><option value="1">مهمة</option><option value="2">عاجلة</option></select><button>+</button></form>`;
+else if (kind === "task") add = `<form class="addrow" data-kind="task"><input name="title" placeholder="اكتب مهمة واضغط Enter…" aria-label="مهمة"><input class="sm" name="project" list="projList" placeholder="المشروع" aria-label="المشروع"><input class="sm" name="client" list="cliList" placeholder="الجهة / المالك" aria-label="الجهة أو المالك"><select name="ttype" aria-label="نوع المهمة"><option value="tech">فنية</option><option value="admin">إدارية</option><option value="fin">مالية</option></select><select name="priority" aria-label="الأولوية"><option value="0">عادية</option><option value="1">مهمة</option><option value="2">عاجلة</option></select><button>+</button></form>`;
 else add = `<form class="addrow" data-kind="${kind}"><input name="title" placeholder="${kind === "top" ? "أضف مهمة مهمة…" : "أضف مهمة إدارية…"}" aria-label="${KIND[kind]}">${kind === "top" ? '<select name="ttype" aria-label="نوع المهمة"><option value="tech">فنية</option><option value="admin">إدارية</option><option value="fin">مالية</option></select>' : ""}<button>+</button></form>`;
 }
 return `<section class="sec sec-${kind} ${extra?.full ? "full" : ""}">${head}${extra?.filter || ""}${body}${add}</section>`;
@@ -849,7 +849,7 @@ const shown = bfilter === "all" ? all : all.filter(x => (x.ttype || "tech") === 
 const cnt = k => all.filter(x => (x.ttype || "tech") === k).length;
 const filter = `<div class="tfilter">عرض: ${[["all",`الكل (${all.length})`],["tech",`فنية (${cnt("tech")})`],["admin",`إدارية (${cnt("admin")})`],["fin",`مالية (${cnt("fin")})`]].map(([k,l]) => `<button type="button" class="chip" data-bf="${k}" aria-pressed="${bfilter===k}">${l}</button>`).join("")}</div>`;
 const body = shown.length ? `<div class="list">${shown.map((x,i) => row(x,i)).join("")}</div>` : `<div class="empty"><b>${all.length ? "لا مهام من هذا النوع" : "لا توجد مهام عامة"}</b>اكتب هنا أي مهمة لسه ملهاش يوم محدد.</div>`;
-const add = canWrite ? `<form class="addrow" data-kind="backlog"><input name="title" placeholder="مهمة بدون تاريخ… اكتب واضغط Enter" aria-label="مهمة عامة"><input class="sm" name="project" list="projList" placeholder="المشروع" aria-label="المشروع" value="${esc(lastProj)}"><input class="sm" name="client" list="cliList" placeholder="الجهة / المالك" aria-label="الجهة أو المالك" value="${esc(lastCli)}"><select name="ttype" aria-label="نوع المهمة"><option value="tech">فنية</option><option value="admin">إدارية</option><option value="fin">مالية</option></select> <select name="priority" aria-label="الأولوية"><option value="0">عادية</option><option value="1">مهمة</option><option value="2">عاجلة</option></select><button>+</button></form>` : "";
+const add = canWrite ? `<form class="addrow" data-kind="backlog"><input name="title" placeholder="مهمة بدون تاريخ… اكتب واضغط Enter" aria-label="مهمة عامة"><input class="sm" name="project" list="projList" placeholder="المشروع" aria-label="المشروع"><input class="sm" name="client" list="cliList" placeholder="الجهة / المالك" aria-label="الجهة أو المالك"><select name="ttype" aria-label="نوع المهمة"><option value="tech">فنية</option><option value="admin">إدارية</option><option value="fin">مالية</option></select> <select name="priority" aria-label="الأولوية"><option value="0">عادية</option><option value="1">مهمة</option><option value="2">عاجلة</option></select><button>+</button></form>` : "";
 return `<div class="bkhint">💡 اكتب هنا المهام اللي لسه ملهاش يوم. لما تحتاج واحدة، دوس <b>لليوم</b> أو <b>لبكرة</b> أو اختار يوم من <b>📅</b> — وهتظهر تلقائياً في صفحة اليوم ده، ولو ما خلصتش بتترحل لليوم اللي بعده.</div>
 <div class="sheet"><section class="sec sec-backlog full"><h3>المهام العامة — بدون تاريخ<small>${all.length} مهمة</small></h3>${filter}${body}${add}</section></div>`;
 }
@@ -949,20 +949,26 @@ function viewClick(e){
   if ((el = q("[data-dt]"))) { dType = el.dataset.dt; render(); return true; }
   if (q("[data-dmore]")) { dLim += 150; render(); return true; }
   if (q("[data-sclear]")) { clearSearch(); tab = gprev || "home"; setTabUI(); render(); return true; }
+  if ((el = q("[data-pj]"))) { const pj = projByName(el.dataset.pj); if (!pj) { toast("المشروع ده مش مسجّل في صفحة المشاريع"); return true; } if (!(PRIV() || can("projects"))) return true; clearSearch(); tab = "projects"; projOpen = pj.id; projDraft = null; setTabUI(); render(); window.scrollTo({ top: 0 }); return true; }
+  if ((el = q("[data-cj]"))) { if (!(PRIV() || can("projects"))) return true; const n = normN(el.dataset.cj); const c = clientsAll().find(e => normN(e.name) === n); clearSearch(); tab = "clients"; setTabUI(); render(); if (c) setTimeout(() => openCli(c.saved ? c.id : "n:" + c.name), 30); return true; }
   if ((el = q("li[data-sr]"))) { goItem(el.dataset.sr); return true; }
   if ((el = q("li[data-sp]"))) { clearSearch(); tab = "projects"; projOpen = el.dataset.sp; projDraft = null; setTabUI(); render(); window.scrollTo({ top: 0 }); return true; }
   if ((el = q("li[data-sc]"))) { const k = el.dataset.sc; clearSearch(); tab = "clients"; setTabUI(); render(); setTimeout(() => openCli(k), 30); return true; }
   if (tab !== "home" && (el = q("[data-go]")) && !q("[data-view]")) { goTab(el.dataset.go); return true; }
   return false;
 }
+function projByName(n){ n = normN(n); return n ? PV().find(p => normN(p.name) === n) : null; }
 function ensureRefs(pn, cn){
   pn = String(pn || "").trim(); cn = String(cn || "").trim(); if (!ME || (!pn && !cn)) return;
   if (!(PRIV() || can("projectsEdit"))) return; const msg = [];
   if (cn && !clientsAll().some(e => normN(e.name) === normN(cn))) { const c = { id: rid(), name: cn, cat: "client", rel: "current", country: "", city: "", phone: "", email: "", web: "", notes: "اتضافت تلقائي من مهمة — كمّل بياناتها", people: [], space: PRIV() ? "p" : "", createdAt: Date.now(), updatedAt: Date.now() };
     CONTACTS.push(c); if (!isDemo) bg("saveContact", c).then(saveCache).catch(x => console.warn(x)); msg.push("الجهة «" + cn + "»"); }
-  if (pn && !PV().some(p => normN(p.name) === normN(pn))) { const p = newProject(); p.name = pn; p.client = cn; p.notes = "اتعمل تلقائي من مهمة — كمّل بيانات المشروع"; p.stub = 1; bgSaveProject(p); msg.push("المشروع «" + pn + "»"); }
+  const ex = pn ? projByName(pn) : null; if (ex && cn && !ex.client) { ex.client = cn; ex.log = (ex.log || []).concat([{ date: today(), kind: "تحديث", subject: "اتربط بالجهة «" + cn + "» من مهمة", details: "" }]); bgSaveProject(ex); msg.push("ربط المشروع بالجهة"); }
+  if (pn && !ex) { const p = newProject(); p.name = pn; p.client = cn; p.notes = "اتعمل تلقائي من مهمة — كمّل بيانات المشروع"; p.stub = 1; bgSaveProject(p); msg.push("المشروع «" + pn + "»"); }
   if (msg.length) setTimeout(() => toast("✓ اتضاف " + msg.join(" و") + " — كمّل بياناتهم بعدين"), 900);
 }
+// اختيار مشروع في إضافة مهمة → يملأ الجهة تلقائياً من بيانات المشروع
+["input", "change"].forEach(ev => $("#view").addEventListener(ev, e => { const i = e.target; if (i.name !== "project" || !i.closest("form.addrow")) return; const c = i.form.querySelector('[name="client"]'); const pj = projByName(i.value); if (c && pj && pj.client && (!c.value || c.dataset.auto === "1")) { c.value = pj.client; c.dataset.auto = "1"; } else if (c && !pj && c.dataset.auto === "1") { c.value = ""; c.dataset.auto = ""; } }, true));
 // البحث العام
 { const qi = $("#gq"); let tmr = null;
   qi.addEventListener("input", () => { clearTimeout(tmr); tmr = setTimeout(() => { const v = qi.value.trim(); if (v && tab !== "search") { gprev = tab; tab = "search"; } if (!v && tab === "search") tab = gprev || "home"; gq = v; open = null; setTabUI(); render(); }, 160); });
@@ -996,7 +1002,7 @@ data.owner = viewUid || (ME && ME.id) || ""; if (ME && data.owner !== ME.id) dat
 if (kind === "meeting") data.time = (fd.get("time") || "").toString();
 if (kind === "follow") data.from = (fd.get("from") || "").toString().trim();
 if (kind === "task") { data.project = (fd.get("project") || "").toString().trim(); data.status = "todo"; }
-if (kind === "task" || kind === "backlog") { data.client = (fd.get("client") || "").toString().trim(); lastProj = data.project || ""; lastCli = data.client || ""; ensureRefs(data.project, data.client); }
+if (kind === "task" || kind === "backlog") { data.client = (fd.get("client") || "").toString().trim(); if (data.project && !data.client) { const pj = projByName(data.project); if (pj && pj.client) data.client = pj.client; } ensureRefs(data.project, data.client); f.querySelectorAll('[name="project"],[name="client"]').forEach(i => i.value = ""); }
 if (kind === "task" && forDay(day).filter(x => x.kind === "task" && !x.done).length > 15) toast("تنبيه: عندك أكثر من 15 مهمة النهارده — فكّر تنقل بعضها للمهام العامة");
 try { await col.doc().set(data); } catch (err) { handleWriteErr(err); return; }
 if (kind === "meeting" && !isDemo) setTimeout(load, 300);
@@ -1048,7 +1054,7 @@ const f = el.dataset.f; if (!f) return;
 if (f === "remTime") { if (el.value && el.value !== x.reminder?.time) { await upd(x.id, { reminder: { time: el.value, state: "auto" } }); toast("⏰ اتحفظ التذكير الساعة " + el.value + (isDemo ? "" : " " + remVia())); } return; }
 if (f === "due") { const was = x.due; await upd(x.id, { due: el.value || x.due }); if (!was && el.value) toast("اتجدولت ليوم " + nice(el.value) + " — هتظهر في صفحة اليوم ده تلقائياً"); }
 else if (f === "priority") await upd(x.id, { priority: Number(el.value) });
-else if ((x[f] || "") !== el.value.trim()) { await upd(x.id, { [f]: el.value.trim() }); if (f === "project" || f === "client") ensureRefs(f === "project" ? el.value : "", f === "client" ? el.value : ""); }
+else if ((x[f] || "") !== el.value.trim()) { await upd(x.id, { [f]: el.value.trim() }); if (f === "project") { const pj = projByName(el.value); if (pj && pj.client && !x.client) await upd(x.id, { client: pj.client }); } if (f === "project" || f === "client") ensureRefs(f === "project" ? el.value : "", f === "client" ? el.value : (x.client || "")); }
 });
 $("#view").addEventListener("focusout", async e => {
 const el = e.target; if (!el.classList?.contains("tt") || !el.isContentEditable) return;
@@ -2004,7 +2010,7 @@ $("#view").addEventListener("click", async e => {
     if (!isDemo) bg("deleteProject", pid).then(saveCache).catch(x => { if (gone) PROJECTS.push(gone); render(); banner((x && x.message) || "تعذّر الحذف", true); }); return; }
 });
 $("#view").addEventListener("submit", async e => { if (e.target.id !== "ptaskForm") return; e.preventDefault(); const t = (new FormData(e.target).get("title") || "").toString().trim(); if (!t || !projDraft || !projDraft.name) return;
-  try { await col.doc().set({ kind: "task", title: t, due: null, done: false, doneAt: null, createdAt: Date.now(), note: "", priority: 0, ttype: "tech", status: "todo", project: projDraft.name, star: false, owner: ME.id }); toast("اتضافت للمهام العامة"); render(); } catch (x) { handleWriteErr(x); } }, true);
+  try { await col.doc().set({ kind: "task", title: t, due: null, done: false, doneAt: null, createdAt: Date.now(), note: "", priority: 0, ttype: "tech", status: "todo", project: projDraft.name, client: projDraft.client || "", star: false, owner: ME.id }); toast("اتضافت للمهام العامة"); render(); } catch (x) { handleWriteErr(x); } }, true);
 window.addEventListener("beforeunload", () => { if (projDirty) projSaveNow(); });
 
 // re-render without losing the cursor in an add field
@@ -2015,7 +2021,7 @@ if (a && a.isContentEditable) return; // don't clobber inline editing
 if (a && a.closest && a.closest(".pdetail") && (a.dataset.pf || a.dataset.row)) { const sel2 = a.dataset.pf ? `[data-pf="${a.dataset.pf}"]` : `[data-row="${a.dataset.row}"][data-i="${a.dataset.i}"][data-k="${a.dataset.k}"]`; let pos = null; try { pos = a.selectionStart; } catch {} fn(); const n = document.querySelector(sel2); if (n) { n.focus(); try { if (pos != null) n.setSelectionRange(pos, pos); } catch {} } return; }
 if (a && a.id === "notes") { const v = a.value, s = a.selectionStart; fn(); const n = $("#notes"); if (n) { n.value = v; n.focus(); n.setSelectionRange(s, s); } return; }
 fn();
-if (sel) { const f = document.querySelector(`form.addrow[data-kind="${sel.kind}"] [name="${sel.name}"]`); if (f) { if (sel.name !== "title") f.value = sel.val; f.focus(); } }
+if (sel) { const f = document.querySelector(`form.addrow[data-kind="${sel.kind}"] [name="${sel.name}"]`); if (f) { if (sel.name !== "title" && sel.name !== "project" && sel.name !== "client") f.value = sel.val; f.focus(); } }
 }
 })();
 </script>
