@@ -349,6 +349,7 @@ body:not([data-tab="day"]) .ringwrap{display:none}
 .bnav{display:none}
 .main .phead>div>h2{display:none}.main .phead .sub{font-size:14px;color:var(--ink2);margin-top:4px}
 body:not([data-tab="day"]):not([data-tab="backlog"]):not([data-tab="upcoming"]):not([data-tab="report"]) #viewSel{display:none}
+body[data-tab="home"] .main .hero{padding-bottom:26px}
 .side .spc button{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-inline:8px}
 @media (max-width:1000px){
  .app{display:block}.main{padding-inline:14px;padding-bottom:96px}.main .hero{margin-inline:-14px;padding:14px 14px 60px}
@@ -361,6 +362,24 @@ body:not([data-tab="day"]):not([data-tab="backlog"]):not([data-tab="upcoming"]):
  .updbar{bottom:calc(84px + env(safe-area-inset-bottom,0px))}
 }
 @media print{.side,.bnav,.sback,.menub{display:none!important}.app{display:block}.main{padding:0}}
+/* ===== Home dashboard ===== */
+.hgreet{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:18px 0 12px}.hg1{font-size:22px;font-weight:800}.hg2{color:var(--ink2);font-size:13.5px;margin-top:2px}.hq{display:flex;gap:8px;flex-wrap:wrap}
+.hinst{display:flex;justify-content:space-between;align-items:center;gap:14px;background:linear-gradient(135deg,#14213d,#22335a);color:#e8ecf5;border-radius:16px;padding:14px 18px;margin-bottom:14px;border:1px solid rgba(228,199,127,.35)}
+.hinst b{color:#fff;font-size:16px}.hinst small{display:block;color:#c9d2e8;margin:4px 0 10px;font-size:12.5px}.hi2{text-align:center}.hi2 img{background:#fff;border-radius:10px;padding:4px;display:block}.hi2 small{margin:4px 0 0!important}
+@media(max-width:700px){.hi2{display:none}}
+.hsec{margin-top:18px}.hsec>h3{margin:0 0 10px;font-size:17px;display:flex;align-items:center;gap:8px}
+.hks{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.hk{display:flex;flex-direction:column;align-items:flex-start;gap:2px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;text-align:start;cursor:pointer;font:inherit;color:var(--ink);transition:transform .15s,box-shadow .15s}
+.hk:hover{transform:translateY(-2px);box-shadow:var(--shadow)}.hk span{font-size:12.5px;color:var(--ink2);font-weight:700}.hk b{font-size:24px;font-variant-numeric:tabular-nums;line-height:1.2}.hk b small{font-size:12px;color:var(--mut)}.hk small{font-size:11.5px;color:var(--mut)}
+.hk.bad{border-inline-start:3px solid var(--late)}.hk.bad b{color:var(--late)}.hk.good{border-inline-start:3px solid var(--done)}
+.hgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px}.hgrid .panel{margin:0}.hgrid h3{display:flex;justify-content:space-between;align-items:center;gap:6px}
+@media(max-width:1100px){.hgrid{grid-template-columns:1fr 1fr}}@media(max-width:700px){.hgrid{grid-template-columns:1fr}}
+.hlist{list-style:none;margin:0;padding:0}.hlist li{display:flex;justify-content:space-between;gap:8px;padding:8px 2px;border-bottom:1px solid var(--line);font-size:13.5px}.hlist li:last-child{border:0}.hlist li small{color:var(--mut);white-space:nowrap}.hlist li.late span{color:var(--late)}.hlist li[data-hp]{cursor:pointer}
+.vchart.sm{height:150px}
+.hb3{display:grid;grid-template-columns:minmax(120px,1.2fr) 3fr auto;gap:10px;align-items:center;padding:6px 0;cursor:pointer}.hb3 .hl{font-size:13px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hb3 .hl small{font-weight:400;color:var(--mut);display:block}
+.hb3 .ht{display:flex;gap:2px;height:14px;background:var(--surface2);border-radius:7px;overflow:hidden}.hb3 .ht i{display:block;height:100%}.hb3 b{font-size:13px;min-width:48px;text-align:end}.hb3 .lt{color:var(--late);font-size:11px}
+.hier{display:grid;gap:6px}.hl{display:flex;gap:10px;align-items:baseline;padding:6px 10px;border-radius:10px;background:var(--surface2);margin-inline-start:calc(var(--i) * 18px)}.hr{font-weight:800;white-space:nowrap}.hl small{color:var(--ink2)}.hnote{display:block;margin-top:10px;color:var(--ink2)}
+.uorg{display:block;color:var(--gold);font-size:11.5px;font-weight:700}.ufrm{display:flex;flex-wrap:wrap;gap:6px}.orgbox input{width:120px}
 /* ===== AI page ===== */
 .aihero{display:grid;grid-template-columns:1.4fr 1fr;gap:12px;margin:14px 0}.aihero>div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 16px;font-size:13.5px}.aihero ol{margin:6px 0 0;padding-inline-start:18px;line-height:1.9}.aitip{background:var(--gold-soft)!important;border-color:var(--gold2)!important;color:var(--ink2)}
 .aigrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
@@ -439,7 +458,8 @@ body.private .hero{background:radial-gradient(1200px 300px at 85% -40%,rgba(111,
 <div class="sbrand"><svg class="logo" role="img" aria-label="شعار يومي"><use href="#yl"/></svg><div><b>يومي</b><span>YAWMI</span></div><button type="button" class="sclose" id="sideClose" aria-label="إغلاق القائمة">✕</button></div>
 <span class="spc" id="spc" hidden><button data-space="w">🏢 العمل</button><button data-space="p">🔒 <span id="spName">أعمالي الخاصة</span></button></span>
 <nav class="tabs" role="tablist" aria-label="الصفحات">
-<div class="ngrp"><div class="ngl">المهام</div><button role="tab" data-tab="day" aria-selected="true"><i><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M8 2v4M16 2v4M3 10h18"/><path d="M9 15l2 2 4-4"/></svg></i><span>صفحة اليوم</span></button><button role="tab" data-tab="backlog" aria-selected="false"><i><svg viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg></i><span>المهام العامة</span><span class="c" id="cBk">0</span></button><button role="tab" data-tab="upcoming" aria-selected="false"><i><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></i><span>القادمة</span><span class="c" id="cUp">0</span></button><button role="tab" data-tab="report" aria-selected="false"><i><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15v3M11 11v7M15 7v11M19 12v6"/></svg></i><span>ملخص الأسبوع</span></button></div>
+<div class="ngrp"><button role="tab" data-tab="home" aria-selected="true"><i><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg></i><span>الرئيسية</span></button></div>
+<div class="ngrp"><div class="ngl">المهام</div><button role="tab" data-tab="day" aria-selected="false"><i><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M8 2v4M16 2v4M3 10h18"/><path d="M9 15l2 2 4-4"/></svg></i><span>صفحة اليوم</span></button><button role="tab" data-tab="backlog" aria-selected="false"><i><svg viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg></i><span>المهام العامة</span><span class="c" id="cBk">0</span></button><button role="tab" data-tab="upcoming" aria-selected="false"><i><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></i><span>القادمة</span><span class="c" id="cUp">0</span></button><button role="tab" data-tab="report" aria-selected="false"><i><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15v3M11 11v7M15 7v11M19 12v6"/></svg></i><span>ملخص الأسبوع</span></button></div>
 <div class="ngrp"><div class="ngl">الأعمال</div><button role="tab" data-tab="projects" aria-selected="false" id="tabProj" hidden><i><svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-5h6v5M9 9h.01M15 9h.01M9 12.5h.01M15 12.5h.01"/></svg></i><span>المشاريع</span></button><button role="tab" data-tab="clients" aria-selected="false" id="tabCli" hidden><i><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg></i><span>العملاء والجهات</span></button></div>
 <div class="ngrp"><div class="ngl">الأدوات</div><button role="tab" data-tab="ai" aria-selected="false" id="tabAi" hidden><i><svg viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg></i><span>مساعد الذكاء الاصطناعي</span><span class="c new">جديد</span></button></div>
 <div class="ngrp"><div class="ngl">الإدارة</div><button role="tab" data-tab="team" aria-selected="false" id="tabTeam" hidden><i><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/></svg></i><span>لوحة الفريق</span></button><button role="tab" data-tab="users" aria-selected="false" id="tabUsers" hidden><i><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></i><span>المستخدمين والصلاحيات</span></button></div>
@@ -478,7 +498,7 @@ body.private .hero{background:radial-gradient(1200px 300px at 85% -40%,rgba(111,
 <main id="view"></main>
 </div>
 </div></div>
-<nav class="bnav" id="bnav" aria-label="تنقل سريع"><button type="button" data-bt="day"><i><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M8 2v4M16 2v4M3 10h18"/><path d="M9 15l2 2 4-4"/></svg></i><span>اليوم</span></button><button type="button" data-bt="projects"><i><svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-5h6v5M9 9h.01M15 9h.01M9 12.5h.01M15 12.5h.01"/></svg></i><span>المشاريع</span></button><button type="button" data-bt="clients"><i><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg></i><span>العملاء</span></button><button type="button" data-bt="ai"><i><svg viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg></i><span>الذكاء</span></button><button type="button" data-more><i><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></i><span>المزيد</span></button></nav>
+<nav class="bnav" id="bnav" aria-label="تنقل سريع"><button type="button" data-bt="home"><i><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg></i><span>الرئيسية</span></button><button type="button" data-bt="day"><i><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M8 2v4M16 2v4M3 10h18"/><path d="M9 15l2 2 4-4"/></svg></i><span>اليوم</span></button><button type="button" data-bt="projects"><i><svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-5h6v5M9 9h.01M15 9h.01M9 12.5h.01M15 12.5h.01"/></svg></i><span>المشاريع</span></button><button type="button" data-bt="clients"><i><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg></i><span>العملاء</span></button><button type="button" data-more><i><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></i><span>المزيد</span></button></nav>
 <datalist id="projList"></datalist><datalist id="cliList"></datalist>
 <div class="toast" id="toast" hidden></div>
 <div class="updbar" id="actBar" hidden><span id="actMsg"></span><a id="actLink" class="wabtn" target="_blank" rel="noopener"></a><button type="button" class="x" onclick="this.parentNode.hidden=true" aria-label="إغلاق">✕</button></div>
@@ -490,6 +510,7 @@ body.private .hero{background:radial-gradient(1200px 300px at 85% -40%,rgba(111,
 <div class="os">آيفون / آيباد (Safari):</div><ol><li>افتح الرابط في <b>Safari</b></li><li>دوس زر المشاركة <b>⬆︎</b> تحت</li><li>اختار <b>«إضافة إلى الشاشة الرئيسية»</b> ثم <b>إضافة</b></li></ol>
 <div class="os">أندرويد (Chrome):</div><ol><li>دوس <b>⋮</b> فوق</li><li>اختار <b>«تثبيت التطبيق»</b> أو «إضافة إلى الشاشة الرئيسية»</li></ol>
 <div class="os">الكمبيوتر (Chrome / Edge):</div><ol><li>دوس أيقونة التثبيت <b>⊕</b> في آخر شريط العنوان</li></ol>
+<div class="os">من الكمبيوتر للجوال:</div><div style="display:flex;gap:10px;align-items:center;margin:6px 0 12px"><img id="iHelpQR" alt="رمز QR" width="96" height="96"><small>امسح الرمز بكاميرا الجوال عشان تفتح يومي عليه وتثبّته</small></div>
 <button class="btn" type="button" id="iHelpClose">تمام</button></div></div>
 <div class="auth" id="auth" hidden><form class="auth-card" id="authForm" autocomplete="on"><div class="brand"><svg class="logo" aria-hidden="true"><use href="#yl"/></svg>يومي <span>Yawmi</span><small>رتّب يومك… وتابع فريقك</small></div><h2><i></i><span id="authTitle">تسجيل الدخول</span></h2><p id="authSub">ادخل باسم المستخدم وكلمة المرور</p><div id="authFields"></div><button class="btn" id="authBtn">دخول</button><div class="auth-err" id="authErr"></div><button type="button" class="btn ghost" id="demoBtn" style="margin-top:10px;width:100%">جرّب نسخة العرض (بدون حساب)</button></form></div>
 <script>
@@ -519,7 +540,14 @@ let TOKEN = ""; try { TOKEN = localStorage.getItem("tasks_token") || ""; } catch
 let ME = null, USERS = [], viewUid = "", allItems = [], PROJECTS = [], CONTACTS = [];
 const can = k => !!ME && (ME.role === "owner" || !!(ME.perms || {})[k]);
 const isAdmin = () => can("team");
-const ROLEL = { owner: "المالك", admin: "مدير", member: "مستخدم" };
+const ROLEL = { owner: "المالك", ceo: "الرئيس التنفيذي", branch: "مدير فرع", admin: "مدير قسم / إدارة", member: "موظف" };
+const RANK = { member: 0, admin: 1, branch: 2, ceo: 3, owner: 4 };
+const RICON = { owner: "👑", ceo: "⭐", branch: "🏢", admin: "🗂️", member: "👤" };
+const PDEFC = { ceo: { team: true, assign: true, projects: true, projectsEdit: true, users: true }, branch: { team: true, assign: true, projects: true, projectsEdit: true, users: true }, admin: { team: true, assign: true, projects: true, projectsEdit: true, users: false }, member: {} };
+const scopeUsers = () => USERS.filter(u => u.sc !== false);
+const canPerms = u => !!ME && u.role !== "owner" && (ME.role === "owner" || (ME.role === "ceo" && RANK[u.role] < RANK.ceo));
+const rolesBelow = () => !ME ? [] : Object.keys(RANK).filter(r => r !== "owner" && (ME.role === "owner" || RANK[r] < RANK[ME.role])).sort((a, b) => RANK[b] - RANK[a]);
+const orgLine = u => { const o = u.org || {}; return [o.title, o.dept && "🗂️ " + o.dept, o.branch && "🏢 " + o.branch].filter(Boolean).join(" · "); };
 const PERML = [["team","متابعة الفريق","يشوف مهام كل الموظفين ولوحة الفريق ويعدّل عليها"],["assign","إسناد المهام","يسند مهام لأي موظف"],["projects","مشاهدة المشاريع","يشوف صفحة المشاريع والأرقام المالية"],["projectsEdit","تعديل المشاريع","يضيف ويعدّل ويحذف مشاريع ودفعات وملفات"],["users","إدارة المستخدمين","يضيف مستخدمين ويوقفهم ويغيّر كلمات المرور"]];
 let SPACE = "w"; try { SPACE = localStorage.getItem("yawmi_space") === "p" ? "p" : "w"; } catch {}
 const PRIV = () => SPACE === "p";
@@ -532,12 +560,12 @@ const ROLL = new Set(["top","follow","admin","task"]); // meetings don't roll ov
 let items = [], notes = {};
 let db = null, col = null, mcp = null, assets = null, canWrite = false;
 let tfilter = "all", bfilter = "all";
-let tab = "day", page = "1", day = today(), open = null, confirmDel = null;
-function setChip(){ const c = $("#roleChip"); c.textContent = ME ? ME.name + " · " + (ROLEL[ME.role] || "مستخدم") : "جارٍ التحميل…"; c.className = "role" + (ME && ME.role === "owner" ? " own" : ME && ME.role === "admin" ? "" : " mgr");
+let tab = "home", page = "1", day = today(), open = null, confirmDel = null;
+function setChip(){ const c = $("#roleChip"); c.textContent = ME ? ME.name + " · " + (ROLEL[ME.role] || "مستخدم") : "جارٍ التحميل…"; c.className = "role" + (ME && ME.role === "owner" ? " own" : ME && RANK[ME.role] >= 1 ? "" : " mgr");
 $("#logoutBtn").hidden = !ME; $("#pwBtn").hidden = !ME || isDemo; if (ME) $("#logoutBtn").textContent = isDemo ? "خروج من العرض" : "خروج"; $("#tabTeam").hidden = !can("team") || PRIV(); $("#tabProj").hidden = !(can("projects") || PRIV()); $("#tabCli").hidden = !(can("projects") || PRIV()); $("#tabAi").hidden = !ME; $("#tabUsers").hidden = !can("users") || PRIV();
 document.body.classList.toggle("private", PRIV()); const sp = $("#spc"); if (sp) { sp.hidden = !ME; $("#spName").textContent = spName(); sp.querySelectorAll("[data-space]").forEach(b => b.setAttribute("aria-pressed", b.dataset.space === SPACE)); }
-const s = $("#viewSel"); s.hidden = !can("team") || PRIV() || USERS.filter(u => u.active).length < 2;
-if (!s.hidden) s.innerHTML = USERS.filter(u => u.active).map(u => `<option value="${u.id}" ${u.id === viewUid ? "selected" : ""}>${u.id === ME.id ? "مهامي" : "مهام: " + esc(u.name)}</option>`).join(""); }
+const s = $("#viewSel"); s.hidden = !can("team") || PRIV() || scopeUsers().filter(u => u.active).length < 2;
+if (!s.hidden) s.innerHTML = scopeUsers().filter(u => u.active).map(u => `<option value="${u.id}" ${u.id === viewUid ? "selected" : ""}>${u.id === ME.id ? "مهامي" : "مهام: " + esc(u.name)}</option>`).join(""); }
 setChip();
 $("#todayLbl").innerHTML = (() => { const d = new Date(); return `<b>${DAYN[d.getDay()]} ${gFmtY.format(d)}</b> · <span>${esc(hij(d))}</span>`; })();
 function toast(m, err){ const t = $("#toast"); t.textContent = m; t.className = "toast" + (err ? " err" : ""); t.hidden = false; clearTimeout(toast.h); toast.h = setTimeout(() => t.hidden = true, 2600); }
@@ -723,7 +751,7 @@ return `<section class="sec sec-${kind} ${extra?.full ? "full" : ""}">${head}${e
 }
 // ---------- render ----------
 // ----- الواجهة: القائمة الجانبية والتنقل -----
-const TITLES = { day: "صفحة اليوم", backlog: "المهام العامة", upcoming: "المهام القادمة", report: "ملخص الأسبوع", projects: "المشاريع", clients: "العملاء والجهات", ai: "مساعد الذكاء الاصطناعي", team: "لوحة الفريق", users: "المستخدمين والصلاحيات" };
+const TITLES = { home: "الرئيسية", day: "صفحة اليوم", backlog: "المهام العامة", upcoming: "المهام القادمة", report: "ملخص الأسبوع", projects: "المشاريع", clients: "العملاء والجهات", ai: "مساعد الذكاء الاصطناعي", team: "لوحة الفريق", users: "المستخدمين والصلاحيات" };
 function shellSync(){ document.body.dataset.tab = tab; const t = $("#pgTitle"); if (t) t.textContent = TITLES[tab] || "";
   document.querySelectorAll(".ngrp").forEach(g => g.hidden = ![...g.querySelectorAll("[data-tab]")].some(b => !b.hidden));
   document.querySelectorAll("#bnav [data-bt]").forEach(b => { const sb = document.querySelector(`nav.tabs [data-tab="${b.dataset.bt}"]`); b.hidden = !sb || sb.hidden; b.classList.toggle("on", b.dataset.bt === tab); }); }
@@ -783,8 +811,9 @@ Object.keys(g).sort().forEach(d => { h += `<div class="grp"><h3>${esc(nice(d))}<
 } else if (tab === "projects") h = projectsView();
 else if (tab === "clients") h = clientsView();
 else if (tab === "ai") h = aiView();
+else if (tab === "home") h = homeView();
 else if (tab === "team") h = teamView(); else if (tab === "users") h = usersView(); else h = report();
-if (ME && viewUid && viewUid !== ME.id && tab !== "team" && tab !== "users" && tab !== "projects" && tab !== "clients" && tab !== "ai") h = `<div class="viewing">👁 أنت تشاهد مهام: ${esc(uname(viewUid))} — أي مهمة تضيفها هنا تُسند له<button data-view="${ME.id}">رجوع لمهامي</button></div>` + h;
+if (ME && viewUid && viewUid !== ME.id && tab !== "team" && tab !== "users" && tab !== "projects" && tab !== "clients" && tab !== "ai" && tab !== "home") h = `<div class="viewing">👁 أنت تشاهد مهام: ${esc(uname(viewUid))} — أي مهمة تضيفها هنا تُسند له<button data-view="${ME.id}">رجوع لمهامي</button></div>` + h;
 if (render.busy) { setTimeout(render, 0); return; } render.busy = true; try { $("#view").innerHTML = h; if (tab === "projects" && projOpen && !pEdit()) document.querySelectorAll(".pdetail input,.pdetail select,.pdetail textarea,.pdetail button:not([data-pback]):not([data-pprint]):not(.cbtns button)").forEach(x => { x.disabled = true; if (x.matches("[data-psave],[data-pdel],[data-add],[data-mkclaim],.rm")) x.hidden = true; }); } finally { render.busy = false; }
 if (open) { const f = document.querySelector(`[data-f="note"][data-id="${open}"]`); }
 }
@@ -929,15 +958,15 @@ setInterval(() => { if (render.d !== today()) { const was = render.d; render.d =
 render();
 // ---------- Google Apps Script data layer ----------
 const DEMO_ME = { id: "demo", username: "demo", name: "زائر (نسخة عرض)", role: "owner", active: true, perms: { team: true, assign: true, projects: true, projectsEdit: true, users: true }, prefs: {} };
-let demoUsers = [DEMO_ME, { id: "demo_u1", username: "ahmed", name: "أحمد (مدير تجريبي)", role: "admin", active: true, perms: { team: true, assign: true, projects: true, projectsEdit: true, users: false } }, { id: "demo_u2", username: "sara", name: "سارة (مستخدم تجريبي)", role: "member", active: true, perms: {} }];
+let demoUsers = [DEMO_ME, { id: "demo_u0", username: "khaled", name: "خالد (رئيس تنفيذي تجريبي)", role: "ceo", active: true, sc: true, mg: true, org: { title: "الرئيس التنفيذي" }, perms: { team: true, assign: true, projects: true, projectsEdit: true, users: true } }, { id: "demo_u1", username: "ahmed", name: "أحمد (مدير فرع تجريبي)", role: "branch", active: true, sc: true, mg: true, org: { branch: "مكة" }, perms: { team: true, assign: true, projects: true, projectsEdit: true, users: true } }, { id: "demo_u2", username: "sara", name: "سارة (موظفة تجريبية)", role: "member", active: true, sc: true, mg: true, org: { branch: "مكة", dept: "التصميم", title: "مهندسة معمارية" }, perms: {} }];
 function demoApi(fn, args){
   if (fn === "getAll") return { me: DEMO_ME, users: demoUsers.map(u => ({ ...u })), items: [], notes: {}, projects: [] };
   if (fn === "saveProject" || fn === "deleteProject") return true;
   if (fn === "uploadFile") return { kind: "link", url: "#", name: args[0] + " (عرض)" };
   if (fn === "listUsers") return demoUsers.map(u => ({ ...u }));
-  if (fn === "addUser") { const [username, name, role] = args; if (!username || !name) throw new Error("أكمل البيانات"); demoUsers.push({ id: "demo_" + rid(), username: String(username).toLowerCase(), name, role: role === "admin" ? "admin" : "member", active: true }); return demoUsers.map(u => ({ ...u })); }
+  if (fn === "addUser") { const [username, name, role, , org] = args; if (!username || !name) throw new Error("أكمل البيانات"); demoUsers.push({ id: "demo_" + rid(), username: String(username).toLowerCase(), name, role: RANK[role] !== undefined && role !== "owner" ? role : "member", active: true, sc: true, mg: true, org: org || {}, perms: { ...(PDEFC[role] || {}) } }); return demoUsers.map(u => ({ ...u })); }
   if (fn === "sendDigest") throw new Error("الإرسال مش متاح في نسخة العرض");
-  if (fn === "updateUser") { const [id, patch] = args; const u = demoUsers.find(x => x.id === id); if (u) { if (patch.role) u.role = patch.role; if (patch.active !== undefined) u.active = patch.active; if (patch.name) u.name = patch.name; if (patch.email !== undefined) u.email = patch.email; if (patch.phone !== undefined) u.phone = String(patch.phone).replace(/[^0-9]/g, ""); if (patch.prefs) u.prefs = { ...(u.prefs || {}), ...patch.prefs }; if (patch.perms) u.perms = { ...patch.perms }; if (patch.role) { u.role = patch.role; u.perms = patch.role === "admin" ? { team: true, assign: true, projects: true, projectsEdit: true, users: false } : {}; } } return demoUsers.map(u => ({ ...u })); }
+  if (fn === "updateUser") { const [id, patch] = args; const u = demoUsers.find(x => x.id === id); if (u && patch.org) u.org = { ...patch.org }; if (u) { if (patch.role) u.role = patch.role; if (patch.active !== undefined) u.active = patch.active; if (patch.name) u.name = patch.name; if (patch.email !== undefined) u.email = patch.email; if (patch.phone !== undefined) u.phone = String(patch.phone).replace(/[^0-9]/g, ""); if (patch.prefs) u.prefs = { ...(u.prefs || {}), ...patch.prefs }; if (patch.perms) u.perms = { ...patch.perms }; if (patch.role) { u.role = patch.role; u.perms = { ...(PDEFC[patch.role] || {}) }; } } return demoUsers.map(u => ({ ...u })); }
   if (fn === "deleteUser") { demoUsers = demoUsers.filter(u => u.id !== args[0]); return demoUsers.map(u => ({ ...u })); }
   if (fn === "logout") { try { location.href = location.pathname; } catch {} return true; }
   return true;
@@ -1093,11 +1122,11 @@ $("#updBtn").onclick = () => { saveCache(); location.reload(); };
 let deferredInstall = null;
 const standalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
 const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-if (!standalone && (isIOS || /android/i.test(navigator.userAgent))) $("#installBtn").hidden = false;
+if (!standalone) $("#installBtn").hidden = false;
 window.addEventListener("beforeinstallprompt", e => { e.preventDefault(); deferredInstall = e; if (!standalone) $("#installBtn").hidden = false; });
 window.addEventListener("appinstalled", () => { $("#installBtn").hidden = true; toast("اتثبّت يومي على جهازك ✓"); });
 $("#installBtn").onclick = async () => { if (deferredInstall) { deferredInstall.prompt(); try { const r = await deferredInstall.userChoice; if (r.outcome === "accepted") $("#installBtn").hidden = true; } catch {} deferredInstall = null; } else $("#iHelp").hidden = false; };
-$("#iHelpClose").onclick = () => $("#iHelp").hidden = true; $("#iHelp").onclick = e => { if (e.target.id === "iHelp") $("#iHelp").hidden = true; };
+$("#iHelpClose").onclick = () => $("#iHelp").hidden = true; { const q = $("#iHelpQR"); if (q) setTimeout(() => { if (typeof QRDATA !== "undefined") q.src = QRDATA; }, 0); } $("#iHelp").onclick = e => { if (e.target.id === "iHelp") $("#iHelp").hidden = true; };
 async function boot(){
   if (/[?&]demo\b/.test(location.search)) { startDemo(); return; }
   if (TOKEN) { let l = 0; try { l = Number(localStorage.getItem("yawmi_last") || 0); } catch {} if (l && Date.now() - l > IDLE) { lastAct = 0; idleLock(); return; } touch(true);
@@ -1122,9 +1151,9 @@ function waLink(u){ const t = today(); const open = allItems.filter(x => (x.owne
   return "https:\/\/wa.me/" + u.phone + "?text=" + encodeURIComponent(msg); }
 function teamView(){
   if (!can("team")) return "";
-  const us = USERS.filter(u => u.active);
+  const us = scopeUsers().filter(u => u.active);
   const cards = us.map(u => { const s = statsFor(u.id); const ini = (u.name || "?").trim().charAt(0);
-    return `<div class="ucard"><div class="top"><span class="av">${esc(ini)}</span><div class="nm"><b>${esc(u.name)}</b><small>${u.role === "admin" ? "مدير" : "مستخدم"}</small></div></div>
+    return `<div class="ucard"><div class="top"><span class="av">${esc(ini)}</span><div class="nm"><b>${esc(u.name)}</b><small>${RICON[u.role] || ""} ${ROLEL[u.role] || "موظف"}${orgLine(u) ? " · " + esc(orgLine(u)) : ""}</small></div></div>
     <div class="ustats"><div><b>${s.open}</b><small>مفتوحة</small></div><div class="l"><b>${s.late}</b><small>متأخرة</small></div><div class="w"><b>${s.wait}</b><small>بانتظار رد</small></div><div class="d"><b>${s.doneW}</b><small>أُنجزت</small></div></div>
     <div class="bar"><i style="width:${s.pct}%"></i></div>
     ${u.email || u.phone ? `<div class="contact">${esc(u.email || "")}${u.phone ? (u.email ? " · " : "") + "+" + esc(u.phone) : ""}</div>` : `<div class="contact" style="color:var(--late);direction:rtl">لم يضف إيميل/جوال بعد</div>`}
@@ -1139,16 +1168,22 @@ function teamView(){
 }
 function usersView(){
   if (!can("users")) return "";
-  const O = ME.role === "owner";
-  const rows = USERS.slice().sort((a, b) => ({ owner: 0, admin: 1, member: 2 }[a.role] - { owner: 0, admin: 1, member: 2 }[b.role])).map(u => { const self = u.id === ME.id, isO = u.role === "owner", editable = !self && !isO && (O || u.role === "member");
-    return `<tr class="${u.active ? "" : "off"}"><td><span class="uav r-${u.role}">${esc((u.name || "?").trim().charAt(0))}</span><b>${esc(u.name)}</b>${self ? " <small>(أنت)</small>" : ""}<small class="un" dir="ltr">${esc(u.username || "")}</small>${u.email || u.phone ? `<div class="ucon">${u.phone ? `<a class="wa" href="${waURL(u.phone, "السلام عليكم " + u.name + "،\n")}" target="_blank" rel="noopener">💬 واتساب</a>` : ""}${u.email ? `<a href="mailto:${esc(u.email)}">✉️ إيميل</a>` : ""}<span class="nt">إشعاراته: ${NOTIFYL[(u.prefs || {}).notify] || NOTIFYL.email}</span></div>` : ""}</td>
-    <td>${isO ? '<span class="tag owner">👑 المالك</span>' : O ? `<select data-urole="${u.id}"><option value="member" ${u.role !== "admin" ? "selected" : ""}>مستخدم</option><option value="admin" ${u.role === "admin" ? "selected" : ""}>مدير</option></select>` : `<span class="tag ${u.role === "admin" ? "admin" : "member"}">${ROLEL[u.role]}</span>`}</td>
-    ${PERML.map(([k]) => `<td class="pc">${isO ? '<span class="pk on">✓</span>' : O ? `<label class="sw"><input type="checkbox" data-uperm="${u.id}" data-k="${k}" ${(u.perms || {})[k] ? "checked" : ""}><i></i></label>` : `<span class="pk ${(u.perms || {})[k] ? "on" : ""}">${(u.perms || {})[k] ? "✓" : "—"}</span>`}</td>`).join("")}
-    <td class="uct">${u.active ? '<span class="tag member">مفعّل</span>' : '<span class="tag off">موقوف</span>'}${editable ? ` <button data-uact="${u.id}">${u.active ? "إيقاف" : "تفعيل"}</button> <button data-upw="${u.id}">كلمة مرور جديدة</button> <button data-udel="${u.id}">حذف</button>` : ""}</td></tr>`; }).join("");
-  return `<div class="panel"><h3>إضافة مستخدم</h3><form class="frm" id="addUserForm"><input name="name" placeholder="الاسم" required><input name="username" placeholder="اسم المستخدم (إنجليزي)" required autocomplete="off">
-    <input name="password" type="password" placeholder="كلمة المرور (8+)" required minlength="8" autocomplete="new-password"><select name="role"><option value="member">مستخدم</option>${O ? '<option value="admin">مدير</option>' : ""}</select><button class="btn">إضافة</button></form>
-    <div class="rolehint"><b>المالك</b> (انت): كل الصلاحيات ومحدش يقدر يغيّرها · <b>مدير</b>: بياخد صلاحيات المتابعة والإسناد والمشاريع افتراضياً · <b>مستخدم</b>: مهامه بس. وتقدر تفتح أو تقفل أي صلاحية لأي شخص من الجدول تحت.</div></div>
-    <div class="panel"><h3>المستخدمين والصلاحيات ${O ? "" : '<small>(توزيع الصلاحيات للمالك فقط)</small>'}</h3><div class="tblwrap"><table class="utable ptab"><tr><th>المستخدم</th><th>الدور</th>${PERML.map(([k, l, d]) => `<th class="pc" title="${d}">${l}</th>`).join("")}<th>الحالة</th></tr>${rows}</table></div>
+  const O = ME.role === "owner", RB = rolesBelow(), mo = ME.org || {}, lockBr = !O && ME.role !== "ceo" && !!mo.branch;
+  const list = scopeUsers().slice().sort((a, b) => RANK[b.role] - RANK[a.role] || String((a.org || {}).branch || "").localeCompare(String((b.org || {}).branch || ""), "ar") || String(a.name).localeCompare(String(b.name), "ar"));
+  const BR = [...new Set(USERS.map(u => (u.org || {}).branch).filter(Boolean))], DP = [...new Set(USERS.map(u => (u.org || {}).dept).filter(Boolean))];
+  const rows = list.map(u => { const self = u.id === ME.id, isO = u.role === "owner", mg = !self && (u.mg || (O && !isO));
+    return `<tr class="${u.active ? "" : "off"}"><td><span class="uav r-${u.role}">${esc((u.name || "?").trim().charAt(0))}</span><b>${esc(u.name)}</b>${self ? " <small>(أنت)</small>" : ""}<small class="un" dir="ltr">${esc(u.username || "")}</small>${orgLine(u) ? `<small class="uorg">${esc(orgLine(u))}</small>` : ""}${u.email || u.phone ? `<div class="ucon">${u.phone ? `<a class="wa" href="${waURL(u.phone, "السلام عليكم " + u.name + "،\n")}" target="_blank" rel="noopener">💬 واتساب</a>` : ""}${u.email ? `<a href="mailto:${esc(u.email)}">✉️ إيميل</a>` : ""}<span class="nt">إشعاراته: ${NOTIFYL[(u.prefs || {}).notify] || NOTIFYL.email}</span></div>` : ""}</td>
+    <td>${isO ? '<span class="tag owner">👑 المالك</span>' : mg && RB.length ? `<select data-urole="${u.id}">${RB.concat(RB.includes(u.role) ? [] : [u.role]).map(r => `<option value="${r}" ${u.role === r ? "selected" : ""}>${RICON[r]} ${ROLEL[r]}</option>`).join("")}</select>` : `<span class="tag ${RANK[u.role] ? "admin" : "member"}">${RICON[u.role] || ""} ${ROLEL[u.role] || "موظف"}</span>`}</td>
+    ${PERML.map(([k]) => `<td class="pc">${isO ? '<span class="pk on">✓</span>' : canPerms(u) && !self ? `<label class="sw"><input type="checkbox" data-uperm="${u.id}" data-k="${k}" ${(u.perms || {})[k] ? "checked" : ""}><i></i></label>` : `<span class="pk ${(u.perms || {})[k] ? "on" : ""}">${(u.perms || {})[k] ? "✓" : "—"}</span>`}</td>`).join("")}
+    <td class="uct">${u.active ? '<span class="tag member">مفعّل</span>' : '<span class="tag off">موقوف</span>'}${mg ? ` <button data-uorg="${u.id}">الفرع والقسم</button> <button data-uact="${u.id}">${u.active ? "إيقاف" : "تفعيل"}</button> <button data-upw="${u.id}">كلمة مرور جديدة</button> <button data-udel="${u.id}">حذف</button>` : ""}</td></tr>`; }).join("");
+  const hier = [["owner","كل الصلاحيات ويشوف كل حاجة — ومحدش يقدر يعدّل حسابه"],["ceo","يشوف كل الفروع والأقسام، يدير كل اللي تحته ويوزّع صلاحياتهم"],["branch","يشوف ويدير موظفي ومديري فرعه ويسند لهم مهام، ويشوف المشاريع"],["admin","يتابع ويسند مهام لموظفي قسمه/إدارته، ويشوف المشاريع"],["member","مهامه بس ومساحته الخاصة — والمالك يقدر يفتحله أي صلاحية"]];
+  return `<datalist id="brList">${BR.map(x => `<option value="${esc(x)}">`).join("")}</datalist><datalist id="dpList">${DP.map(x => `<option value="${esc(x)}">`).join("")}</datalist>
+  <div class="panel"><h3>الهيكل الوظيفي والصلاحيات الافتراضية</h3><div class="hier">${hier.map(([r, d], i) => `<div class="hl" style="--i:${i}"><span class="hr">${RICON[r]} ${ROLEL[r]}</span><small>${d}</small></div>`).join("")}</div>
+    <small class="hnote">كل مستخدم بيتربط بـ <b>فرع</b> و<b>قسم/إدارة</b> — والمدير بيشوف ويدير اللي في فرعه أو قسمه بس. ومحدش يقدر يضيف أو يعدّل حد في نفس مستواه أو أعلى منه.</small></div>
+  <div class="panel"><h3>إضافة مستخدم</h3><form class="frm ufrm" id="addUserForm"><input name="name" placeholder="الاسم" required><input name="username" placeholder="اسم المستخدم (إنجليزي)" required autocomplete="off" dir="ltr">
+    <input name="password" type="password" placeholder="كلمة المرور (8+)" required minlength="8" autocomplete="new-password"><select name="role">${RB.slice().reverse().map(r => `<option value="${r}">${RICON[r]} ${ROLEL[r]}</option>`).join("")}</select>
+    <input name="branch" list="brList" placeholder="الفرع" value="${esc(lockBr ? mo.branch : "")}" ${lockBr ? "readonly" : ""}><input name="dept" list="dpList" placeholder="القسم / الإدارة" value="${esc(ME.role === "admin" ? mo.dept || "" : "")}"><input name="title" placeholder="المسمى الوظيفي (اختياري)"><button class="btn">إضافة</button></form></div>
+  <div class="panel"><h3>المستخدمين والصلاحيات ${O || ME.role === "ceo" ? "" : '<small>(توزيع الصلاحيات للمالك والرئيس التنفيذي)</small>'}</h3><div class="tblwrap"><table class="utable ptab"><tr><th>المستخدم</th><th>الدور</th>${PERML.map(([k, l, d]) => `<th class="pc" title="${d}">${l}</th>`).join("")}<th>الحالة</th></tr>${rows}</table></div>
     <ul class="permleg">${PERML.map(([k, l, d]) => `<li><b>${l}:</b> ${d}</li>`).join("")}<li><b>🔒 ${esc(spName())}:</b> مساحة خاصة لكل مستخدم — محدش يشوفها غير صاحبها، حتى المالك.</li></ul></div>`;
 }
 async function refreshUsers(){ try { const us = await api("listUsers"); USERS = us; setChip(); render(); } catch (x) { banner((x && x.message) || "تعذّر تحميل المستخدمين", true); } }
@@ -1158,7 +1193,7 @@ $("#view").addEventListener("submit", async e => {
     if (!data.title) return; try { await col.doc().set(data); toast("أُسندت المهمة لـ " + uname(data.owner)); e.target.reset();
       const tu = USERS.find(u => u.id === data.owner); if (tu && tu.id !== ME.id && wantsWA(tu)) actBar("📲 " + tu.name + " بيفضّل الإشعار على واتساب", "ابعتله على واتساب", waURL(tu.phone, `السلام عليكم ${tu.name}،\nأسندتلك مهمة جديدة على يومي:\n• ${data.title}${data.due ? "\nالتاريخ: " + data.due : ""}\n\n${location.origin + location.pathname}`)); } catch (x) { handleWriteErr(x); } }
   if (e.target.id === "addUserForm") { e.preventDefault(); const fd = new FormData(e.target); const g = k => (fd.get(k) || "").toString();
-    try { USERS = await api("addUser", g("username"), g("name"), g("role"), g("password")); toast("أُضيف المستخدم"); setChip(); render(); } catch (x) { banner((x && x.message) || "تعذّر الإضافة", true); } }
+    try { USERS = await api("addUser", g("username"), g("name"), g("role"), g("password"), { branch: g("branch"), dept: g("dept"), title: g("title") }); toast("أُضيف المستخدم"); setChip(); render(); } catch (x) { banner((x && x.message) || "تعذّر الإضافة", true); } }
 }, true);
 $("#view").addEventListener("click", e => { const b = e.target.closest("[data-udel]"); if (!b) return; const u = USERS.find(x => x.id === b.dataset.udel); if (!u) return;
   if (b.dataset.sure !== "1") { b.dataset.sure = "1"; b.textContent = "تأكيد حذف " + u.name + "؟"; toast("مهام العمل بتاعته هتتنقل ليك، ومساحته الخاصة هتتمسح. دوس تأكيد للحذف."); setTimeout(() => { if (b.isConnected) { b.dataset.sure = ""; b.textContent = "حذف"; } }, 6000); return; }
@@ -1166,6 +1201,11 @@ $("#view").addEventListener("click", e => { const b = e.target.closest("[data-ud
   if (viewUid === u.id) viewUid = ME.id; emit(); setChip(); render(); toast("اتحذف " + u.name);
   bg("deleteUser", u.id).then(r => { if (!pending) USERS = r; saveCache(); load(); }).catch(x => { USERS = before; render(); banner((x && x.message) || "تعذّر الحذف", true); load(); }); });
 $("#view").addEventListener("click", async e => {
+  const og = e.target.closest("[data-uorg]"); if (og) { const u = USERS.find(x => x.id === og.dataset.uorg); if (!u) return; const o = u.org || {}; const box = document.createElement("span"); box.className = "frm orgbox";
+    const lockBr = ME.role !== "owner" && ME.role !== "ceo" && !!(ME.org || {}).branch;
+    box.innerHTML = `<input data-o="branch" list="brList" placeholder="الفرع" value="${esc(o.branch || "")}" ${lockBr ? "readonly" : ""}><input data-o="dept" list="dpList" placeholder="القسم / الإدارة" value="${esc(o.dept || "")}"><input data-o="title" placeholder="المسمى الوظيفي" value="${esc(o.title || "")}"><button>حفظ</button>`; og.replaceWith(box);
+    box.querySelector("button").onclick = () => { const no = {}; box.querySelectorAll("[data-o]").forEach(i => no[i.dataset.o] = i.value.trim()); const old = u.org; u.org = no; render(); toast("اتحدّث الفرع والقسم");
+      bg("updateUser", u.id, { org: no }).then(r => { if (!pending) { USERS = r; render(); } }).catch(x => { u.org = old; render(); banner((x && x.message) || "خطأ", true); }); }; return; }
   const a = e.target.closest("[data-uact]"), p = e.target.closest("[data-upw]"); if (!a && !p) return;
   const id = (a || p).dataset[a ? "uact" : "upw"]; const u = USERS.find(x => x.id === id); if (!u) return;
   try {
@@ -1181,7 +1221,7 @@ $("#view").addEventListener("change", async e => { const pc = e.target.closest("
   const old = { ...(u.perms || {}) }; const perms = { ...old, [pc.dataset.k]: pc.checked }; u.perms = perms; toast("اتحدثت صلاحيات " + u.name);
   bg("updateUser", u.id, { perms }).then(r => { if (!pending) { USERS = r; render(); } }).catch(x => { u.perms = old; banner((x && x.message) || "خطأ", true); render(); }); });
 $("#view").addEventListener("change", async e => { const s = e.target.closest("[data-urole]"); if (!s) return; const u = USERS.find(x => x.id === s.dataset.urole); if (!u) return; const old = { role: u.role, perms: u.perms };
-  u.role = s.value; u.perms = s.value === "admin" ? { team: true, assign: true, projects: true, projectsEdit: true, users: false } : {}; toast("اتغيّر الدور"); render();
+  u.role = s.value; u.perms = { ...(PDEFC[s.value] || {}) }; toast("اتغيّر الدور إلى " + ROLEL[s.value]); render();
   bg("updateUser", u.id, { role: s.value }).then(r => { if (!pending) { USERS = r; render(); } }).catch(x => { Object.assign(u, old); render(); banner((x && x.message) || "خطأ", true); }); });
 
 // ---------- projects ----------
@@ -1584,6 +1624,65 @@ $("#view").addEventListener("click", e => { if (tab !== "ai") return;
     <div class="aivars"><label>العنوان<input id="aiNT"></label><label>وصف قصير<input id="aiND"></label></div><label class="aip">البرومبت<textarea id="aiNP" rows="8" placeholder="مثال: اكتب تقرير عن {{اسم المشروع}} في {{الموقع}}…"></textarea></label>
     <div class="aiact"><button type="button" class="btn gold" id="aiSaveNew">حفظ</button><button type="button" class="btn ghost" id="aiClose">إلغاء</button></div>`; $("#aiBox").hidden = false; } });
 $("#view").addEventListener("input", e => { if (tab !== "ai" || e.target.id !== "aiSearch") return; aiQ = e.target.value; const pos = e.target.selectionStart; render(); const s = $("#aiSearch"); if (s) { s.focus(); s.setSelectionRange(pos, pos); } });
+// ----- الصفحة الرئيسية: لوحة المؤشرات -----
+const QRDATA = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIQAAACEAQAAAAB5P74KAAAEFklEQVR42s2Wv6okxxXGf11qvD0g9mvdRBssvkeiU7nAiR2OhYNR1C/gwE/gJ3AwBgWrqJd9GafzCotRpjV9zWKc+UyDAoHoz0HNvVrbuXFFh0P9uqrOv6878+/rWvjP9b/1dF03ch3HcWzmf+/pmf7w579Tjis0EwNySpIBZUE2nR6AUTYUAgI4R9xMy9bkTVKVrWxnfccesLbDXFFFxqmKamIhTYtxLkJKrGkR8uRNmhYlrtzXoRpnrdw3atZnuGCJuVESOLA0SVmId0R/4h8nIt4RdB5/eMYnD3thH/nhGQ8FXhx5+89uf36FF0fAtVPNDSuX2rUb9tKWd66b1EtZ4GWw8wvWPXgZgKtdUym5mYUV1tLitMJ6i/x+3I/rU3YCggsXaGbnDgQQK1fQQwE4E0SjzuDpzUlVVZKmNydl547uOe0jb+meP2DbZsZCtp3NEwqL5QNPv/Su04d7EBb15pGtaiuvqcS3nK7QqoQPKiFKKcdygg+oTGXn7GG8pkaujHj86EYBRDkM8BJ61vi+EHy7/+qBeAtYIi2RYA1OXCVkp+4zZWdhjRjOUMieM41SyM55zk129sTK376A7gJ7ANhxTHAvRLa3Q54xddRw8/SvtsPkWMocW/NEycC9QqXtSQKXxBncav6bdeDnvKasr1vNbxw+87AV59fFrolzPGMS5zjYSuwyGnPSxlmpdpbxAeWXo3JJbI6+c5Q5h65uSuzDYExo47fKmtg1VdV/Xf2bTDmxdZUULB6ePFlVGWVym50FoqyxHjaIsl8Ak3I6a7WwHnsZ+P0KAwE9UxcUyhniygo933llZydYr20meLNSIjOd7awdCrf0X25TK/ZjvKcUCtBDYeXCx2WH/dhyaktKAeLpPhEdwysYAddqVylrdNNS5nyiNpWghhKDxJyYbUwrC/EK4sJA7L9sd+5Zar9sR/fJZiXmSwll8bgNaSWug/NUdW+Y1ToFZyfJn3+iVpkExUTw19qe69o7T7Pkoa9PFLbMzFkoscIHuxoFC0pce4ctT0s/aFoSa7xRGv9UuX/sXI6ZVeanXobcVI0fO/fuq7uyn1fugM4AHST3ZGeubfKnkz5nhR6pQhn+yIX3AJ7efFXTeRw3icX5SF37knP9/P5xbmzZ54KsdLYpsfMj58Oj7rSxeCpx1S0+jSLFYm3OphemWBtg5Y06fMpxh9eNmhY5BiunN8X1phfm/EQ1vbCUiZ2tnqdLq8IBeoKmF6xRyq/hx/MK1qBGFTtry84sR6ZGUXA2vTC5CTHg7Fk/YqUv+/EvX3z7uzvAitooxNgou1rubXNsqmfLMranMv9U4QTw7meXoG+TduU98OyF1ptSyyidqcd8nWmh6bjl66TqSZu3rLXlq3uiFjm7/7P/ln8Bf8zXB7p5x9YAAAAASUVORK5CYII=";
+function goTab(t, then){ const b = document.querySelector(`nav.tabs [data-tab="${t}"]`); if (b && !b.hidden) b.click(); if (then) setTimeout(then, 60); }
+function homeView(){ try { return homeView0(); } catch (e) { if (e instanceof ReferenceError) { setTimeout(render, 30); return `<div class="empty">جارٍ التحميل…</div>`; } throw e; } }
+function homeView0(){
+  if (!ME) return `<div class="empty">جارٍ التحميل…</div>`;
+  const t = today(), ws = iso(weekStart()), hr = new Date().getHours(), P = PRIV();
+  const mine = allItems.filter(x => (x.owner || ME.id) === ME.id && ((x.space === "p") === P));
+  const tasks = mine.filter(x => x.kind !== "meeting"), open = tasks.filter(x => !x.done && x.due && x.due <= t), late = open.filter(x => x.due < t);
+  const doneW = tasks.filter(x => x.done && x.doneAt && iso(new Date(x.doneAt)) >= ws).length, wait = tasks.filter(x => !x.done && (x.kind === "follow" || x.status === "waiting")).length, bk = tasks.filter(x => !x.done && !x.due).length;
+  const meets = mine.filter(x => x.kind === "meeting" && !x.done && x.due && x.due >= t && x.due <= iso(addDays(new Date(), 7))).sort((a, b) => (a.due + (a.time || "")).localeCompare(b.due + (b.time || "")));
+  const top = open.slice().sort((a, b) => (b.star ? 1 : 0) - (a.star ? 1 : 0) || (b.priority || 0) - (a.priority || 0) || String(a.due).localeCompare(String(b.due))).slice(0, 6);
+  const days = []; for (let i = 6; i >= 0; i--) { const d = iso(addDays(new Date(), -i)); days.push({ d, l: DAYN[parse(d).getDay()].replace("ال", "").slice(0, 3), v: tasks.filter(x => x.done && x.doneAt && iso(new Date(x.doneAt)) === d).length }); }
+  const maxD = Math.max(1, ...days.map(x => x.v));
+  const o = ME.org || {};
+  const greet = `<div class="hgreet"><div><div class="hg1">${hr < 12 ? "صباح الخير" : "مساء الخير"}، <b>${esc(String(ME.name).split(" ")[0])}</b> 👋</div><div class="hg2">${RICON[ME.role] || ""} ${ROLEL[ME.role] || ""}${orgLine(ME) ? " · " + esc(orgLine(ME)) : ""}${P ? " · 🔒 " + esc(spName()) : ""}</div></div>
+    <div class="hq"><button class="btn gold" data-hq="task">+ مهمة</button>${(PRIV() || can("projectsEdit")) ? `<button class="btn ghost" data-hq="proj">+ مشروع</button><button class="btn ghost" data-hq="cli">+ جهة</button>` : ""}<button class="btn ghost" data-hq="ai">✨ الذكاء الاصطناعي</button></div></div>`;
+  const inst = !(matchMedia("(display-mode: standalone)").matches || navigator.standalone === true) ? `<div class="hinst"><div class="hi1"><b>📲 ثبّت يومي على جوالك أو جهازك</b><small>يفتح بأيقونة زي أي تطبيق، أسرع، ويشتغل حتى لو النت ضعيف — من غير متجر.</small><div class="row2"><button class="btn gold" data-install>ثبّت التطبيق</button><button class="btn ghost" data-ihelp>إزاي؟</button></div></div><div class="hi2"><img src="${QRDATA}" alt="رمز QR لتثبيت يومي على الجوال" width="104" height="104"><small>امسح بكاميرا الجوال</small></div></div>` : "";
+  const kpi = (lab, v, sub, cls, go) => `<button type="button" class="hk ${cls || ""}" ${go ? `data-go="${go}"` : ""}><span>${lab}</span><b>${v}</b><small>${sub || ""}</small></button>`;
+  const my = `<div class="hsec"><h3>مهامي</h3><div class="hks">${kpi("مفتوحة لليوم", open.length, "من ضمنها " + late.length + " متأخرة", "", "day")}${kpi("متأخرة", late.length, late.length ? "محتاجة تتابع" : "ممتاز 👌", late.length ? "bad" : "good", "day")}${kpi("أُنجزت الأسبوع ده", doneW, "", "good", "report")}${kpi("بانتظار رد", wait, "", "", "day")}${kpi("مهام عامة", bk, "بدون تاريخ", "", "backlog")}${kpi("اجتماعات 7 أيام", meets.length, meets[0] ? "الأقرب: " + nice(meets[0].due) : "", "", "upcoming")}</div>
+    <div class="hgrid"><div class="panel"><h3>أهم مهام اليوم <button class="linkbtn" data-go="day">كل المهام ←</button></h3>${top.length ? `<ul class="hlist">${top.map(x => `<li class="${x.due < t ? "late" : ""}"><span>${x.star ? "★ " : ""}${esc(x.title)}</span><small>${x.due < t ? "متأخرة من " + nice(x.due) : x.project ? esc(x.project) : ""}</small></li>`).join("")}</ul>` : `<div class="empty" style="padding:12px">مفيش مهام مفتوحة لليوم 🎉</div>`}</div>
+    <div class="panel"><h3>الإنجاز آخر 7 أيام</h3><div class="vchart sm">${days.map((x, i) => `<div class="vc ${i === 6 ? "cur" : ""}" title="${esc(nice(x.d))}: ${x.v} مهمة"><span class="vv">${x.v || ""}</span><span class="vb"><i style="height:${x.v / maxD * 100}%"></i></span><span class="vl">${x.l}</span></div>`).join("")}</div></div>
+    <div class="panel"><h3>المواعيد القادمة</h3>${meets.length ? `<ul class="hlist">${meets.slice(0, 5).map(x => `<li><span>📅 ${esc(x.title)}</span><small>${esc(nice(x.due))}${x.time ? " · " + esc(x.time) : ""}</small></li>`).join("")}</ul>` : `<div class="empty" style="padding:12px">مفيش اجتماعات الأسبوع ده</div>`}</div></div></div>`;
+  let team = "";
+  if (can("team") && !P) { const us = scopeUsers().filter(u => u.active && u.id !== ME.id); if (us.length) {
+    const st = us.map(u => ({ u, s: statsFor(u.id) })).sort((a, b) => b.s.late - a.s.late || b.s.open - a.s.open);
+    const tot = st.reduce((a, x) => ({ open: a.open + x.s.open, late: a.late + x.s.late, done: a.done + x.s.doneW }), { open: 0, late: 0, done: 0 });
+    const mx = Math.max(1, ...st.map(x => x.s.open + x.s.doneW));
+    const byR = {}; us.forEach(u => byR[u.role] = (byR[u.role] || 0) + 1); const brs = [...new Set(us.map(u => (u.org || {}).branch).filter(Boolean))];
+    team = `<div class="hsec"><h3>الفريق ${ME.role === "owner" || ME.role === "ceo" ? "(كل الفروع)" : (o.branch ? "— فرع " + esc(o.branch) : "") + (ME.role === "admin" && o.dept ? " / " + esc(o.dept) : "")}</h3>
+    <div class="hks">${kpi("أعضاء الفريق", us.length, Object.entries(byR).map(([r, n]) => n + " " + ROLEL[r]).join(" · "), "", "team")}${kpi("مهام مفتوحة", tot.open, "", "", "team")}${kpi("متأخرة", tot.late, "", tot.late ? "bad" : "good", "team")}${kpi("أُنجزت الأسبوع ده", tot.done, "", "good", "team")}${brs.length ? kpi("الفروع", brs.length, brs.slice(0, 3).join(" · "), "", "users") : ""}</div>
+    <div class="panel"><h3>حِمل كل عضو <small>مفتوحة · متأخرة · أُنجزت الأسبوع ده</small></h3><div class="lg"><span><i style="background:var(--navy2)"></i>مفتوحة</span><span><i style="background:var(--late)"></i>منها متأخرة</span><span><i style="background:var(--done)"></i>أُنجزت</span></div>
+    ${st.slice(0, 10).map(x => { const on = x.s.open - x.s.late; return `<div class="hb3" data-view="${x.u.id}" title="${esc(x.u.name)}: ${x.s.open} مفتوحة (${x.s.late} متأخرة) · ${x.s.doneW} أُنجزت"><span class="hl">${esc(x.u.name)} <small>${RICON[x.u.role] || ""} ${esc((x.u.org || {}).dept || (x.u.org || {}).branch || ROLEL[x.u.role] || "")}</small></span><span class="ht">${on ? `<i style="width:${on / mx * 100}%;background:var(--navy2)"></i>` : ""}${x.s.late ? `<i style="width:${x.s.late / mx * 100}%;background:var(--late)"></i>` : ""}${x.s.doneW ? `<i style="width:${x.s.doneW / mx * 100}%;background:var(--done)"></i>` : ""}</span><b>${x.s.open}${x.s.late ? ` <small class="lt">⏰${x.s.late}</small>` : ""}</b></div>`; }).join("")}</div></div>`; } }
+  let proj = "";
+  if (P || can("projects")) { const PP = PV().map(p => ({ p, c: pcalc(p) })), con = PP.filter(x => x.p.status !== "quote");
+    const sum = (a, f) => a.reduce((s, x) => s + f(x), 0), T = sum(con, x => x.c.T), paid = sum(con, x => x.c.paid);
+    const now = new Date(); const ms = []; for (let i = 5; i >= 0; i--) { const d = new Date(now.getFullYear(), now.getMonth() - i, 1); ms.push({ k: `${d.getFullYear()}-${pad(d.getMonth() + 1)}`, l: new Intl.DateTimeFormat("ar-EG-u-nu-latn", { month: "short" }).format(d), v: 0 }); }
+    PP.forEach(x => x.p.claims.forEach(c => { const d = c.paidDate || c.date; if (num(c.paid) && d) { const m = ms.find(m => m.k === String(d).slice(0, 7)); if (m) m.v += num(c.paid); } }));
+    const due = con.flatMap(x => x.c.dueCl.map(c => ({ ...c, p: x.p }))).sort((a, b) => b.age - a.age), dueSum = due.reduce((s, c) => s + (c.inc - c.pd), 0);
+    const maxM = Math.max(1, ...ms.map(m => m.v)), cur = ms[5], prv = ms[4];
+    const segs = PST.map(([k, l, c]) => ({ l, c: PCOL[c], v: PP.filter(x => x.p.status === k).length }));
+    const cl = clientsAll();
+    proj = `<div class="hsec"><h3>المشاريع والمالية ${P ? "🔒" : ""}</h3>
+    <div class="hks">${kpi("قيمة العقود", kmoney(T) + " <small>ر.س</small>", con.length + " عقد · " + PP.filter(x => x.p.status === "active").length + " جاري", "", "projects")}${kpi("المحصّل", kmoney(paid) + " <small>ر.س</small>", pct(T ? paid / T : 0) + " من العقود", "good", "projects")}${kpi("المتبقي للتحصيل", kmoney(Math.max(T - paid, 0)) + " <small>ر.س</small>", due.length + " مطالبة مستحقة", "", "projects")}${kpi("دخل الشهر", kmoney(cur.v) + " <small>ر.س</small>", prv.v ? (cur.v >= prv.v ? "▲ " : "▼ ") + Math.abs(Math.round((cur.v - prv.v) / prv.v * 100)) + "% عن الشهر اللي فات" : "", cur.v >= prv.v ? "good" : "bad", "projects")}${kpi("العملاء والجهات", cl.length, cl.filter(e => e.rel === "lead").length + " فرصة محتملة", "", "clients")}</div>
+    <div class="hgrid"><div class="panel"><h3>الدخل الشهري (المحصّل) — آخر 6 شهور</h3><div class="vchart sm">${ms.map((m, i) => `<div class="vc ${i === 5 ? "cur" : ""}" title="${m.l}: ${money(m.v)} ر.س"><span class="vv">${m.v ? kmoney(m.v) : ""}</span><span class="vb"><i style="height:${m.v / maxM * 100}%"></i></span><span class="vl">${m.l}</span></div>`).join("")}</div></div>
+    <div class="panel"><h3>المشاريع حسب الحالة</h3><div class="dwrap">${donut(segs, Math.max(PP.length, 1), PP.length, "مشروع")}<ul class="dleg">${segs.map(x => `<li><i style="background:${x.c}"></i>${x.l}<b>${x.v}</b></li>`).join("")}</ul></div></div>
+    <div class="panel"><h3>مطالبات مستحقة <small>${kmoney(dueSum)} ر.س</small></h3>${due.length ? `<ul class="hlist">${due.slice(0, 5).map(c => `<li class="${c.st === "late" ? "late" : ""}" data-hp="${c.p.id}"><span>${esc(c.p.name)} · ${esc(c.phase || c.inv || "")}</span><small>${money(c.inc - c.pd)} ر.س${c.date ? " · من " + c.age + " يوم" : ""}</small></li>`).join("")}</ul>` : `<div class="empty" style="padding:12px">مفيش مطالبات مستحقة 👌</div>`}</div></div></div>`; }
+  return greet + inst + my + team + proj;
+}
+$("#view").addEventListener("click", e => { if (tab !== "home") return;
+  const g = e.target.closest("[data-go]"); if (g && !e.target.closest("[data-view]")) { goTab(g.dataset.go); return; }
+  const q = e.target.closest("[data-hq]"); if (q) { const k = q.dataset.hq;
+    if (k === "task") goTab("day", () => { const i = document.querySelector('form.addrow[data-kind="task"] input[name="title"]'); if (i) { i.scrollIntoView({ block: "center" }); i.focus(); } });
+    else if (k === "proj") goTab("projects", () => { const b = document.querySelector("[data-pnew]"); if (b) b.click(); });
+    else if (k === "cli") goTab("clients", () => { const b = document.querySelector("[data-cnew]"); if (b) b.click(); });
+    else goTab("ai"); return; }
+  const hp = e.target.closest("[data-hp]"); if (hp) { goTab("projects", () => { projOpen = hp.dataset.hp; projDraft = null; render(); }); return; }
+  if (e.target.closest("[data-install]")) { $("#installBtn").click(); return; }
+  if (e.target.closest("[data-ihelp]")) { $("#iHelp").hidden = false; return; } });
 // ----- العملاء والجهات -----
 const CCAT = [["client","عميل","#c29a3e"],["dev","مطور عقاري","#2f63b5"],["eng","مكتب هندسي / استشاري","#1f8a8a"],["partner","مكتب متعاون / شريك","#2c8a60"],["hotel","مشغّل فنادق","#6a4fb3"],["contractor","مقاول","#a07412"],["gov","جهة حكومية","#22335a"],["supplier","مورد","#8b94aa"],["other","أخرى","#8b94aa"]];
 const CCATL = Object.fromEntries(CCAT.map(([k, l, c]) => [k, { l, c }]));
