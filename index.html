@@ -974,7 +974,7 @@ function ensureRefs(pn, cn){
   qi.addEventListener("input", () => { clearTimeout(tmr); tmr = setTimeout(() => { const v = qi.value.trim(); if (v && tab !== "search") { gprev = tab; tab = "search"; } if (!v && tab === "search") tab = gprev || "home"; gq = v; open = null; setTabUI(); render(); }, 160); });
   qi.addEventListener("keydown", e => { if (e.key === "Escape") { qi.value = ""; qi.dispatchEvent(new Event("input")); qi.blur(); } });
   document.addEventListener("keydown", e => { const a = document.activeElement; const typing = a && (/INPUT|TEXTAREA|SELECT/.test(a.tagName) || a.isContentEditable);
-    if ((e.key.toLowerCase() === "k" && (e.ctrlKey || e.metaKey)) || (e.key === "/" && !typing)) { e.preventDefault(); qi.focus(); qi.select(); } });
+    if (!e.key) return; if ((e.key.toLowerCase() === "k" && (e.ctrlKey || e.metaKey)) || (e.key === "/" && !typing)) { e.preventDefault(); qi.focus(); qi.select(); } });
   $("nav.tabs").addEventListener("click", e => { if (e.target.closest("[data-tab]") && tab !== "search") clearSearch(); });
   document.querySelector(".stats").addEventListener("click", e => { const s = e.target.closest("[data-go]"); if (s) goTab(s.dataset.go); });
   document.querySelector(".stats").addEventListener("keydown", e => { const s = e.target.closest("[data-go]"); if (s && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); goTab(s.dataset.go); } }); }
