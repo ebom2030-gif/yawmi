@@ -1000,7 +1000,7 @@ function ensureRefs(pn, cn){
     CONTACTS.push(c); if (!isDemo) bg("saveContact", c).then(saveCache).catch(x => console.warn(x)); msg.push("العميل «" + cn + "»"); }
   const ex = pn ? projByName(pn) : null; if (ex && cn && !ex.client) { ex.client = cn; ex.log = (ex.log || []).concat([{ date: today(), kind: "تحديث", subject: "تم الربط بالعميل «" + cn + "» من مهمة", details: "" }]); bgSaveProject(ex); msg.push("ربط المشروع بالعميل"); }
   if (pn && !ex) { const p = newProject(); p.name = pn; p.client = cn; p.notes = "أُنشئ تلقائياً من مهمة — أكمل بيانات المشروع"; p.stub = 1; bgSaveProject(p); msg.push("المشروع «" + pn + "»"); }
-  if (msg.length) setTimeout(() => toast("✓ تمت الإضافة " + msg.join(" و") + " — أكمل بياناتهم لاحقاً"), 900);
+  if (msg.length) setTimeout(() => toast("✓ تمت إضافة " + msg.join(" و") + " — أكمل بياناتهم لاحقاً"), 900);
 }
 // اختيار مشروع في إضافة مهمة → يملأ العميل تلقائياً من بيانات المشروع
 ["input", "change"].forEach(ev => $("#view").addEventListener(ev, e => { const i = e.target; if (i.name !== "project" || !i.closest("form.addrow")) return; const c = i.form.querySelector('[name="client"]'); const pj = projByName(i.value); if (c && pj && pj.client && (!c.value || c.dataset.auto === "1")) { c.value = pj.client; c.dataset.auto = "1"; } else if (c && !pj && c.dataset.auto === "1") { c.value = ""; c.dataset.auto = ""; } }, true));
