@@ -1885,7 +1885,22 @@ const PROMPTS = [
 دورنا في المشروع: {{دورنا}}. أرقام مهمة: {{أرقام المشروع}}.
 المطلوب: فقرة عربية (80 كلمة) + ترجمة إنجليزية احترافية + 3 نقاط تبرز القيمة المضافة.` },
 { c:"img", t:"منظور خارجي (Midjourney / DALL·E)", d:"برومبت بالإنجليزي لصورة معمارية واقعية", p:`Photorealistic architectural exterior render of a {{نوع المبنى بالإنجليزي}} in {{المدينة بالإنجليزي}}, Saudi Arabia, {{الطراز}} style, {{المواد}} facade, golden hour lighting, lush landscaping with palm trees, people for scale, shot on a 24mm lens, ultra detailed, 8k, architectural photography --ar 16:9` },
-{ c:"img", t:"تصميم داخلي (Interior)", d:"برومبت لصورة داخلية فاخرة", p:`Luxury interior design of a {{نوع الفراغ بالإنجليزي}}, {{الطراز}} style with subtle Saudi/Najdi motifs, {{الألوان}} color palette, natural light, warm ambient lighting, high-end materials (marble, oak, brass), photorealistic, editorial interior photography, 8k --ar 3:2` }
+{ c:"img", t:"تصميم داخلي (Interior)", d:"برومبت لصورة داخلية فاخرة", p:`Luxury interior design of a {{نوع الفراغ بالإنجليزي}}, {{الطراز}} style with subtle Saudi/Najdi motifs, {{الألوان}} color palette, natural light, warm ambient lighting, high-end materials (marble, oak, brass), photorealistic, editorial interior photography, 8k --ar 3:2` },
+{ c:"img", t:"لوحة توقيعات (4 أنماط للاسم)", d:"لوحة عرض أنيقة: الاسم بخط كبير + 4 تواقيع يدوية مقترحة (Flow · Edge · Loop · Charm)", p:`Elegant "Name to Signature" presentation board, vertical poster, aspect ratio 9:16.
+TOP HALF: deep dusty-blue textured plaster wall with soft natural leaf shadows falling diagonally from a window. Small, widely letter-spaced serif caption "NAME TO SIGNATURE" with a short thin line below it. Under it, the name "{{الاسم بالإنجليزي}}" in large, clean, cream-colored sans-serif letters, perfectly centered.
+BOTTOM HALF: warm cream textured paper, divided by thin dashed grey lines into a 2×2 grid. Each cell shows the SAME name "{{الاسم بالإنجليزي}}" written as a different realistic handwritten signature in black fine-liner ink:
+1) FLOW – smooth flowing cursive with a long horizontal underline swash and one large sweeping loop below.
+2) EDGE – fast, sharp, strongly slanted strokes, tall diagonal capital letters, finished with two straight slash underlines.
+3) LOOP – the signature wrapped inside large sweeping elliptical loops that circle around the whole name.
+4) CHARM – delicate, light cursive that ends with a small single-line drawing of a {{الرمز الصغير في النهاية (مثلاً: rose / palm leaf / star)}}.
+Under each signature, a small letter-spaced serif label (FLOW, EDGE, LOOP, CHARM) with a short thin line under it.
+Natural pen pressure variation, confident professional strokes, minimal luxury branding aesthetic, soft even lighting, high resolution, sharp clean typography, the name spelled exactly "{{الاسم بالإنجليزي}}" with no extra text.` },
+{ c:"img", t:"توقيع جاهز للاستخدام (خلفية بيضاء)", d:"توقيع واحد نظيف بالحبر الأسود على أبيض — لتفريغه واستخدامه في الخطابات والعروض", p:`A single realistic handwritten signature of the name "{{الاسم بالإنجليزي}}", signature style: {{الأسلوب (Flow / Edge / Loop / Charm / Minimal)}}.
+Black ink, fine-liner pen with natural pressure variation, confident and professional, slightly slanted to the right, elegant capital letters with a stylish underline stroke.
+Pure white background, signature isolated and centered, no paper texture, no shadows, no other text, no labels, high contrast, crisp clean edges, high resolution — ready to be cut out as a transparent PNG and placed on official letters. Aspect ratio 3:2.
+Spell the name exactly "{{الاسم بالإنجليزي}}".` },
+{ c:"img", t:"توقيع عربي (ديواني / رقعة)", d:"توقيع بالاسم العربي — ملاحظة: أدوات الصور ما زالت أضعف في الحروف العربية، جرّب أكثر من مرة", p:`An elegant Arabic calligraphy signature of the name "{{الاسم بالعربي}}", written in {{الخط (Diwani / Ruqaa / Thuluth)}} style, as a personal handwritten signature — flowing, confident, with a graceful extended stroke (kashida) and a sweeping underline flourish.
+Black ink with natural pen pressure, on {{الخلفية (pure white background / warm cream textured paper)}}, centered, no other text, high resolution, accurate and correctly connected Arabic letters. Aspect ratio 3:2.` }
 ];
 
 let aiCat = "all", aiQ = "", aiCur = null, aiVals = {};
@@ -1912,7 +1927,7 @@ function aiDraw(){ const x = aiCur; const vars = aiVars(x.p); const P = PV();
   $("#aiCard").innerHTML = `<h3>${esc(x.t)}</h3><div class="sub" style="margin-bottom:8px">${esc(x.d || "")}</div>
   ${P.length && vars.some(v => ["اسم المشروع","العميل","الموقع","نوع المشروع","المدينة","قيمة العقد"].includes(v)) ? `<label class="aip">📂 املأ من مشروع<select id="aiProj"><option value="">— اختر مشروعاً —</option>${P.map(p => `<option value="${p.id}">${esc(p.name)}</option>`).join("")}</select></label>` : ""}
   <div class="aivars">${vars.map(v => `<label>${esc(v)}${/ملاحظات|تفاصيل|وصف|المعطيات|النقاط|المميزات|معلومات|أسباب/.test(v) ? `<textarea data-aiv="${esc(v)}" rows="3">${esc(aiVals[v] || "")}</textarea>` : `<input data-aiv="${esc(v)}" value="${esc(aiVals[v] || "")}">`}</label>`).join("")}</div>
-  <label class="aip">البرومبت الجاهز<textarea id="aiOut" rows="9" readonly>${esc(aiFill(x.p, aiVals))}</textarea></label>
+  <label class="aip">البرومبت الجاهز<textarea id="aiOut" rows="9" readonly dir="${/^[\s"(]*[A-Za-z]/.test(x.p) ? "ltr" : "rtl"}">${esc(aiFill(x.p, aiVals))}</textarea></label>
   <div class="aiact"><a class="btn gold" id="aiClaude" target="_blank" rel="noopener">✨ افتح في Claude</a><a class="btn ghost" id="aiGpt" target="_blank" rel="noopener">افتح في ChatGPT</a><button type="button" class="btn ghost" id="aiCopy">📋 نسخ</button>${x.mine ? `<button type="button" class="btn ghost danger" id="aiDel">حذف</button>` : ""}<button type="button" class="btn ghost" id="aiClose">إغلاق</button></div>`;
   aiLinks(); }
 function aiLinks(){ const t = aiFill(aiCur.p, aiVals); const o = $("#aiOut"); if (o) o.value = t; const c = $("#aiClaude"), g = $("#aiGpt"); if (c) c.href = "https://claude.ai/new?q=" + encodeURIComponent(t); if (g) g.href = "https://chatgpt.com/?q=" + encodeURIComponent(t); }
