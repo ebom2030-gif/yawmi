@@ -387,7 +387,7 @@ body[data-tab="home"] .main .hero{padding-bottom:26px}
 .gsearch input{background:none;border:0;outline:0;color:#fff;width:100%;font-size:14px}.gsearch input::placeholder{color:#c9d2e8}
 .gsearch kbd{font:11px/1 inherit;color:#c9d2e8;border:1px solid rgba(255,255,255,.3);border-radius:5px;padding:2px 6px}
 @media(max-width:700px){.gsearch{min-width:0;flex:1 1 100%;order:-1}.gsearch kbd{display:none}}
-.stat[data-go]{cursor:pointer}.pill.lnk{cursor:pointer}.pill.lnk:hover{border-color:var(--gold);color:var(--ink)}
+.stat[data-go]{cursor:pointer}.pill.lnk{cursor:pointer}.missbox{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:var(--gold-soft);border:1px solid var(--gold);border-radius:12px;padding:10px 14px;margin:10px 0}.missbox .btn{width:auto}.pill.lnk:hover{border-color:var(--gold);color:var(--ink)}
 .task.flash{animation:flash 2.4s ease}@keyframes flash{0%,55%{background:var(--gold-soft);box-shadow:inset 0 0 0 2px var(--gold)}100%{background:transparent}}
 .dhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin:18px 0 6px}.dhead b{font-size:24px;color:var(--done)}
 .srch .shead{margin:18px 0 10px;font-size:15px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
@@ -949,6 +949,7 @@ function viewClick(e){
   if ((el = q("[data-dt]"))) { dType = el.dataset.dt; render(); return true; }
   if (q("[data-dmore]")) { dLim += 150; render(); return true; }
   if (q("[data-sclear]")) { clearSearch(); tab = gprev || "home"; setTabUI(); render(); return true; }
+  if (q("[data-addmiss]")) { const m = missRefs(); m.cs.forEach(c => ensureRefs("", c)); m.ps.forEach(p => ensureRefs(p.n, p.c)); setTimeout(() => { render(); toast("✓ اتضافوا — كمّل بياناتهم وقت ما تحب"); }, 950); return true; }
   if ((el = q("[data-pj]"))) { const pj = projByName(el.dataset.pj); if (!pj) { toast("المشروع ده مش مسجّل في صفحة المشاريع"); return true; } if (!(PRIV() || can("projects"))) return true; clearSearch(); tab = "projects"; projOpen = pj.id; projDraft = null; setTabUI(); render(); window.scrollTo({ top: 0 }); return true; }
   if ((el = q("[data-cj]"))) { if (!(PRIV() || can("projects"))) return true; const n = normN(el.dataset.cj); const c = clientsAll().find(e => normN(e.name) === n); clearSearch(); tab = "clients"; setTabUI(); render(); if (c) setTimeout(() => openCli(c.saved ? c.id : "n:" + c.name), 30); return true; }
   if ((el = q("li[data-sr]"))) { goItem(el.dataset.sr); return true; }
@@ -957,6 +958,13 @@ function viewClick(e){
   if (tab !== "home" && (el = q("[data-go]")) && !q("[data-view]")) { goTab(el.dataset.go); return true; }
   return false;
 }
+function missRefs(){ const ps = new Map(), cs = new Map(), all = clientsAll();
+  allItems.filter(x => (x.space === "p") === PRIV()).forEach(x => { const p = String(x.project || "").trim(), c = String(x.client || "").trim();
+    if (p && !projByName(p)) { const k = normN(p); if (!ps.has(k)) ps.set(k, { n: p, c }); else if (c && !ps.get(k).c) ps.get(k).c = c; }
+    if (c && !all.some(e => normN(e.name) === normN(c))) cs.set(normN(c), c); });
+  return { ps: [...ps.values()], cs: [...cs.values()] }; }
+function missBox(){ if (!pEdit()) return ""; const m = missRefs(); if (!m.ps.length && !m.cs.length) return ""; const names = m.ps.map(x => x.n).concat(m.cs);
+  return `<div class="missbox"><span>📌 فيه ${m.ps.length ? m.ps.length + " مشروع" : ""}${m.ps.length && m.cs.length ? " و" : ""}${m.cs.length ? m.cs.length + " جهة" : ""} مكتوبين في المهام ومش متسجلين: <b>${esc(names.slice(0, 6).join("، "))}${names.length > 6 ? "…" : ""}</b></span><button class="btn gold" data-addmiss>ضيفهم كلهم ✓</button></div>`; }
 function projByName(n){ n = normN(n); return n ? PV().find(p => normN(p.name) === n) : null; }
 function ensureRefs(pn, cn){
   pn = String(pn || "").trim(); cn = String(cn || "").trim(); if (!ME || (!pn && !cn)) return;
@@ -1464,7 +1472,7 @@ function projDash(){
     if (x.p.end && x.p.status === "active" && x.p.end < today()) alerts.push({ w: 2, t: `تجاوز تاريخ الانتهاء المتوقع (${nice(x.p.end)})`, p: x.p }); });
   alerts.sort((a, b) => b.w - a.w);
   const al = alerts.length ? `<ul class="alerts">${alerts.slice(0, 6).map(a => `<li class="${a.w > 1 ? "hi" : ""}" data-popen="${a.p.id}"><b>${esc(a.p.name)}</b> · ${esc(a.t)}</li>`).join("")}</ul>` : `<div class="empty" style="padding:10px">لا توجد تنبيهات 👌</div>`;
-  return `<div class="phead"><div><h2>المشاريع</h2><div class="sub">${PRIV() ? "🔒 مشاريعك الخاصة · " : ""}لوحة مؤشرات العقود والتحصيل والربحية · ${esc(gFmtY.format(new Date()))}</div></div>${pEdit() ? `<button class="btn gold" data-pnew>+ مشروع جديد</button>` : `<span class="tag member">عرض فقط</span>`}</div>${big}${income}
+  return `<div class="phead"><div><h2>المشاريع</h2><div class="sub">${PRIV() ? "🔒 مشاريعك الخاصة · " : ""}لوحة مؤشرات العقود والتحصيل والربحية · ${esc(gFmtY.format(new Date()))}</div></div>${pEdit() ? `<button class="btn gold" data-pnew>+ مشروع جديد</button>` : `<span class="tag member">عرض فقط</span>`}</div>${missBox()}${big}${income}
   <div class="pgrid g3">
     <div class="panel"><h3>المشاريع حسب الحالة</h3>${stat}</div>
     <div class="panel"><h3>قيمة العقود حسب النوع</h3>${byType}</div>
@@ -1853,7 +1861,7 @@ function clientsView(){
       <td class="n">${e.projects.length ? `${e.projects.length} <small>مشروع</small><br><small>${kmoney(e.T)} ر.س</small>` : "—"}</td>
       <td class="cacts">${wa ? `<a class="wa" href="${wa}" target="_blank" rel="noopener" title="واتساب" data-stop>💬</a>` : ""}${e.memail ? `<a href="mailto:${esc(e.memail)}" title="إيميل" data-stop>✉️</a>` : ""}${e.mphone ? `<a href="tel:+${normPh(e.mphone)}" title="اتصال" data-stop>📞</a>` : ""}${e.web ? `<a href="${esc(/^https?:/i.test(e.web) ? e.web : "https://" + e.web)}" target="_blank" rel="noopener" title="الموقع" data-stop>🌐</a>` : ""}</td></tr>`; }).join("");
   return `<div class="phead"><div><h2>العملاء والجهات</h2><div class="sub">${PRIV() ? "🔒 جهاتك الخاصة · " : ""}قاعدة بيانات العملاء والمطورين والمكاتب والجهات المتعاونة — العملاء بيتضافوا تلقائياً من المشاريع</div></div>
-    <div class="row2">${pEdit() ? `<button class="btn gold" data-cnew>+ جهة جديدة</button>` : ""}<button class="btn ghost" data-cexport>⬇ تصدير Excel</button></div></div>
+    <div class="row2">${pEdit() ? `<button class="btn gold" data-cnew>+ جهة جديدة</button>` : ""}<button class="btn ghost" data-cexport>⬇ تصدير Excel</button></div></div>${missBox()}
   <div class="mk"><div class="mkc cur"><span class="kl">إجمالي الجهات</span><b>${all.length}</b><small>${all.filter(e => e.saved).length} مسجّلة · ${all.filter(e => !e.saved).length} من المشاريع</small></div>
     <div class="mkc"><span class="kl">عملاء عندهم مشاريع</span><b>${withP.length}</b><small>قيمة العقود ${kmoney(tot)} ر.س</small></div>
     <div class="mkc"><span class="kl">مطورين عقاريين</span><b>${all.filter(e => e.cat === "dev").length}</b><small>مكاتب هندسية ${all.filter(e => e.cat === "eng").length}</small></div>
