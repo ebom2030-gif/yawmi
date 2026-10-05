@@ -595,6 +595,106 @@ body.private .hero{background:radial-gradient(1200px 300px at 85% -40%,rgba(111,
 .tg-late .list{border-color:var(--late)}.tg-done .task{opacity:.78}
 .pill.td{background:#e8f1ff;color:#1f5fbf;border-color:#b9d1f5}
 </style>
+<style id="v53css">
+.acts{gap:5px;align-items:stretch}
+.acts .ic,.acts .stsel{width:auto!important;min-width:50px;height:auto!important;padding:5px 6px 4px!important;display:inline-flex!important;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:1px solid var(--line);border-radius:10px!important;background:var(--surface);cursor:pointer;line-height:1}
+.acts .ic i{font-style:normal;font-size:16px;line-height:1.15}.acts .ic span,.acts .stsel span{font-size:10.5px;font-weight:700;color:var(--ink2);white-space:nowrap}
+.acts .ic:hover{border-color:var(--gold);background:var(--gold-soft)}.acts .ic.on{background:var(--navy)!important;border-color:var(--navy)!important}.acts .ic.on span{color:#fff}.acts .ic.gold{border-color:var(--gold);color:var(--gold)}
+.acts .stsel select{border:0;background:transparent;height:auto;padding:0 2px;font-size:12px;font-weight:700;color:var(--ink);max-width:96px}
+.acts .tchev{border-style:dashed;color:var(--mut)}
+.backb{display:inline-flex;align-items:center;gap:4px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.1);color:#fff;border-radius:10px;padding:6px 10px 6px 12px;font:700 13px inherit;cursor:pointer;margin-inline-end:8px}
+.backb svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}.backb:hover{background:rgba(255,255,255,.2)}
+.crumb{opacity:.7;cursor:pointer;font-weight:600}.crumb:hover{opacity:1;text-decoration:underline}
+.fab{position:fixed;inset-inline-start:22px;bottom:calc(24px + env(safe-area-inset-bottom,0px));z-index:40;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#1a1f2e;border:0;border-radius:99px;padding:12px 18px 12px 16px;font:800 14px inherit;box-shadow:0 10px 28px rgba(0,0,0,.25);cursor:pointer}
+.fab svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round}
+.totop{position:fixed;inset-inline-end:22px;bottom:calc(24px + env(safe-area-inset-bottom,0px));z-index:40;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--surface);box-shadow:var(--shadow);display:grid;place-items:center;cursor:pointer}
+.totop svg{width:20px;height:20px;fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.tundo{margin-inline-start:12px;background:var(--gold);color:#1a1f2e;border:0;border-radius:8px;padding:4px 10px;font:800 12.5px inherit;cursor:pointer}
+.toast{display:flex;align-items:center}
+@media (max-width:900px){.fab{bottom:calc(84px + env(safe-area-inset-bottom,0px));padding:14px}.fab span{display:none}.totop{bottom:calc(84px + env(safe-area-inset-bottom,0px))}.backb span{display:none}.backb{padding:6px 8px}}
+@media print{.fab,.totop,.backb{display:none!important}}
+</style>
+<style id="v54css">
+/* v54 */
+.jnext{background:var(--gold-soft);border:1px solid var(--gold);border-radius:12px;padding:8px 12px;font-size:13px;margin:6px 0 10px}
+.jform{border:1px dashed var(--line);border-radius:14px;padding:10px;display:grid;gap:8px;background:var(--surface2);margin-bottom:12px}.jrow{display:flex;gap:8px;flex-wrap:wrap}.jrow>*{flex:1;min-width:140px}
+.jform textarea{width:100%;resize:vertical;border:1px solid var(--line);border-radius:10px;padding:8px 10px;font:inherit;background:var(--surface)}.jform .btn{justify-self:start}
+.jtl{position:relative;padding-inline-start:16px;border-inline-start:3px solid var(--line)}
+.jday{margin-bottom:14px}.jdh{display:flex;gap:8px;align-items:baseline;margin:0 0 6px -2px}.jdh b{background:var(--navy);color:#fff;border-radius:99px;padding:2px 12px;font-size:12.5px;margin-inline-start:-26px}.jdh small{color:var(--mut)}
+.jit{display:flex;gap:10px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:9px 12px;margin-bottom:6px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.jit>i{font-style:normal;font-size:18px}.jit>div{flex:1;min-width:0}.jtx{font-weight:600;white-space:pre-wrap}.jnx{font-size:12.5px;color:var(--gold);font-weight:700;margin-top:2px}.jit small{color:var(--mut);font-size:11.5px}
+.jit.k-done{border-color:#bfe3cf;background:#f3fbf6}.jit.k-issue{border-color:#f2c4c0;background:#fdf3f2}.jit.k-visit{border-inline-start:4px solid var(--navy2)}
+.stn{display:block;margin-top:4px;font-size:12px!important;color:var(--ink2);background:var(--surface2)!important}
+.gantt{border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin:8px 0 12px;background:var(--surface)}
+.gh{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px}.glg{display:flex;gap:6px;align-items:center;font-size:11.5px;color:var(--mut)}.glg i{width:12px;height:8px;border-radius:3px;display:inline-block;margin-inline-start:6px}
+.glg .d,.gb.d{background:var(--done)}.glg .c,.gb.c{background:var(--gold)}.glg .l,.gb.l{background:var(--late)}.glg .t,.gb.t{background:#9db4d8}
+.gbody{display:grid;gap:4px}.grow{display:grid;grid-template-columns:minmax(120px,210px) 1fr;gap:8px;align-items:center;cursor:pointer}.grow:hover .gl{color:var(--gold)}
+.gl{font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.gl small{display:block;font-weight:500;color:var(--mut);font-size:10.5px}
+.gtrack{position:relative;height:18px;background:repeating-linear-gradient(90deg,transparent,transparent 39px,var(--line) 39px,var(--line) 40px);border-radius:6px;background-color:var(--surface2)}
+.gtk .gtrack{background:none;height:16px}.gtk .gtrack span{position:absolute;top:0;font-size:10.5px;color:var(--mut);transform:translateX(50%)}
+.gb{position:absolute;top:3px;height:12px;border-radius:6px;font-size:9px;line-height:12px;text-align:center;color:#fff;box-shadow:0 1px 2px rgba(0,0,0,.15)}
+.gb.est{opacity:.45;background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.5) 0 4px,transparent 4px 8px)}
+.gnow{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--late);opacity:.55}
+.hkp{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0}.hkp>div{border:1px solid var(--line);border-radius:12px;padding:9px 11px;background:var(--surface)}
+.hkp span{display:block;font-size:11.5px;color:var(--mut);font-weight:700}.hkp b{font-size:18px}.hkp small{display:block;font-size:11px;color:var(--ink2)}.hkp .good{border-color:#bfe3cf;background:#f3fbf6}.hkp .bad{border-color:#f2c4c0;background:#fdf3f2}
+.mini.r i{background:var(--late)!important}.gd{color:var(--done)!important;font-weight:700}
+.mpaste textarea{width:100%;border:1px dashed var(--gold);border-radius:12px;padding:10px;font:inherit;background:var(--gold-soft)}
+.mlist{display:grid;gap:10px;margin-top:10px}.mit{border:1px solid var(--line);border-radius:14px;padding:10px;border-inline-start:5px solid var(--late);background:var(--surface)}
+.mit.st-replied{border-inline-start-color:var(--done)}.mit.st-wait{border-inline-start-color:var(--gold)}.mit.st-closed{border-inline-start-color:var(--mut);opacity:.8}
+.mh{display:flex;gap:6px;flex-wrap:wrap;align-items:center}.mh .grow{flex:1;min-width:140px}.msub{width:100%;font-weight:800;margin:6px 0;border:0;border-bottom:1px solid var(--line);background:transparent;font-size:14px;padding:4px 2px}
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.mgrid label{font-size:12px;font-weight:700;color:var(--ink2)}.mgrid textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:6px 8px;font:inherit;font-size:13px;margin-top:3px}
+.qk{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:4px 0 14px}.qc{border:1px solid var(--line);border-radius:16px;padding:14px;background:var(--surface);box-shadow:var(--shadow)}
+.qc span{display:block;font-size:12.5px;font-weight:700;color:var(--ink2)}.qc b{display:block;font-size:22px;margin:4px 0}.qc small{color:var(--mut);font-size:11.5px}.qc.navy{background:var(--navy);color:#fff}.qc.navy span,.qc.navy small{color:var(--gold2)}
+.qc.good b{color:var(--done)}.qc.bad b{color:var(--late)}
+.pray{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;border-radius:18px;padding:14px 16px;margin:4px 0 16px;box-shadow:var(--shadow)}
+.prh{display:flex;gap:14px;align-items:stretch;flex-wrap:wrap}.prn{min-width:170px;display:flex;flex-direction:column;justify-content:center}.prn span{font-size:12px;color:var(--gold2);font-weight:700}.prn b{font-size:24px}.prn em{font-style:normal;font-size:20px;font-weight:800;color:var(--gold2)}.prn small{font-size:11.5px;opacity:.85}
+.prt{flex:1;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}.prt>div{background:rgba(255,255,255,.08);border-radius:12px;padding:8px 4px;text-align:center}.prt span{display:block;font-size:12px;opacity:.85}.prt b{font-size:15px}.prt small{display:block;font-size:10px;opacity:.7}
+.prt .on{background:var(--gold);color:#1a1f2e}.prt .past{opacity:.5}
+.prf{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:10px}.prf select{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:9px;padding:4px 6px}.prf select option{color:#000}
+.prf .chip{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.25)}.prf .chip.on{background:rgba(255,255,255,.22)}.prf .chip.gold{background:var(--gold);color:#1a1f2e}.prm{opacity:.7;font-size:11px;margin-inline-start:auto}
+@media (max-width:700px){.prt{grid-template-columns:repeat(3,minmax(0,1fr))}.prm{margin:0}.mgrid{grid-template-columns:1fr}.grow{grid-template-columns:110px 1fr}}
+.azk{max-width:620px!important;max-height:90vh;overflow:auto}.azh{display:flex;justify-content:space-between;align-items:center;position:sticky;top:-26px;background:var(--surface);padding:6px 0;z-index:1}
+.azi{border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0;cursor:pointer;user-select:none;transition:background .2s}.azi:active{transform:scale(.99)}
+.azt{font-weight:800;color:var(--gold);font-size:13px;margin-bottom:4px}.azx{font-size:17px;line-height:2;font-family:"Amiri","Traditional Arabic","Tajawal",serif}
+.azf{display:flex;justify-content:space-between;align-items:center;margin-top:6px}.azf small{color:var(--mut);font-size:11px}.azf b{min-width:38px;height:38px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:15px}
+.azi.ok{background:#f0faf4;border-color:var(--done)}.azi.ok .azf b{background:var(--done)}
+.updbar{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);z-index:60;background:var(--navy);color:#fff;border-radius:14px;padding:10px 14px;box-shadow:0 10px 30px rgba(0,0,0,.3);display:flex;gap:10px;align-items:center;font-weight:700}
+.updbar button{background:var(--gold);border:0;border-radius:9px;padding:6px 12px;font:800 13px inherit;cursor:pointer}
+.cmd{max-width:640px!important;padding:0!important;overflow:hidden;align-self:flex-start;margin-top:10vh!important}.cmdq{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.cmdq svg{width:20px;height:20px;fill:none;stroke:var(--mut);stroke-width:2}.cmdq input{flex:1;border:0;font:600 16px inherit;background:transparent;outline:none}.cmdq kbd{font-size:11px;color:var(--mut);border:1px solid var(--line);border-radius:5px;padding:1px 5px}
+.cmdl{max-height:55vh;overflow:auto;padding:6px}.cmdi{width:100%;display:flex;gap:10px;align-items:center;border:0;background:none;padding:9px 10px;border-radius:10px;cursor:pointer;text-align:start;font:inherit}
+.cmdi i{font-style:normal;width:22px}.cmdi span{flex:1;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.cmdi small{color:var(--mut);font-size:11.5px}.cmdi.on,.cmdi:hover{background:var(--gold-soft)}
+.cmdf{font-size:11px;color:var(--mut);padding:8px 14px;border-top:1px solid var(--line)}
+.cmdb{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#fff;border-radius:10px;padding:6px 10px;font:700 12.5px inherit;cursor:pointer}.cmdb kbd{font-size:10.5px;opacity:.75}
+/* حسابي */
+#auth[data-mode=profile] .auth-card{max-width:760px}
+#auth[data-mode=profile] #authFields{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px}
+#auth[data-mode=profile] #authFields>label:not(.chk){background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:8px 10px;font-size:12px;font-weight:700;color:var(--ink2)}
+#auth[data-mode=profile] #authFields>label:not(.chk) input{margin-top:4px;background:var(--surface)}
+#auth[data-mode=profile] #authFields>.chk,#auth[data-mode=profile] #authFields>div,#auth[data-mode=profile] #authFields>details,#auth[data-mode=profile] #authFields>.row2{grid-column:1/-1}
+#auth[data-mode=profile] #authFields>.chk{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;gap:10px;align-items:center}
+#auth[data-mode=profile] details.wabox{border:1px solid var(--line);border-radius:14px;padding:10px 14px;background:var(--surface);box-shadow:0 1px 3px rgba(0,0,0,.05)}
+#auth[data-mode=profile] details.wabox summary{font-weight:800;cursor:pointer;display:flex;gap:8px;align-items:center}
+#auth[data-mode=profile] .row2{display:flex;flex-wrap:wrap;gap:8px}
+@media (max-width:620px){#auth[data-mode=profile] #authFields{grid-template-columns:1fr}}
+/* كشف المهام */
+.atable{border-collapse:separate;border-spacing:0}.atable th{position:sticky;top:0;background:var(--navy);color:#fff;z-index:1;font-size:12.5px}.atable th i{color:var(--gold2)}
+.atable tr[data-sr]{cursor:pointer;transition:background .15s}.atable tr[data-sr]:nth-child(even) td{background:var(--surface2)}.atable tr[data-sr]:hover td{background:var(--gold-soft)}
+.atable tr.st-late td:first-child{box-shadow:inset -4px 0 0 var(--late)}.atable tr.st-done td{opacity:.72}.atable tr.st-done td:first-child{box-shadow:inset -4px 0 0 var(--done)}.atable tr.st-wait td:first-child{box-shadow:inset -4px 0 0 var(--gold)}
+.astrip{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px 14px}.afl{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:8px}
+.dhead b{font-size:22px}
+/* تقارير مطبوعة ملوّنة */
+#printDay .pdk .g-done{background:#e9f7ef!important;border-color:#2c8a60!important}#printDay .pdk .g-done b{color:#2c8a60!important}
+#printDay .pdk .g-late{background:#fdecea!important;border-color:#c2453b!important}#printDay .pdk .g-late b{color:#c2453b!important}
+#printDay .pdk .g-wait{background:#fff6e0!important;border-color:#c9962b!important}#printDay .pdk .g-wait b{color:#a87711!important}
+#printDay .pdk .g-open{background:#eaf1fb!important;border-color:#2f63b5!important}#printDay .pdk .g-open b{color:#2f63b5!important}
+#printDay .pdk .g-daily{background:#f1ecfb!important;border-color:#6b4fbb!important}#printDay .pdk .g-daily b{color:#6b4fbb!important}
+#printDay .pdk .g-meet{background:#e6f6f6!important;border-color:#1d8a8a!important}#printDay .pdk .g-meet b{color:#1d8a8a!important}
+#printDay .pds.g-done .pdb{background:#2c8a60!important}#printDay .pds.g-late .pdb{background:#c2453b!important}#printDay .pds.g-wait .pdb{background:#a87711!important}#printDay .pds.g-open .pdb{background:#2f63b5!important}#printDay .pds.g-daily .pdb{background:#6b4fbb!important}#printDay .pds.g-meet .pdb{background:#1d8a8a!important}#printDay .pds.g-fut .pdb{background:#5b6478!important}
+#printDay .pdbar{display:flex;height:16px;border-radius:8px;overflow:hidden;margin:-6px 0 14px;gap:2px}#printDay .pdbar i{display:block;position:relative;font-style:normal}#printDay .pdbar span{position:absolute;inset:0;color:#fff;font-size:8.5px;text-align:center;line-height:16px;white-space:nowrap;overflow:hidden;font-weight:700}
+#printDay .pdbar .g-done{background:#2c8a60}#printDay .pdbar .g-late{background:#c2453b}#printDay .pdbar .g-wait{background:#c9962b}#printDay .pdbar .g-open{background:#2f63b5}#printDay .pdbar .g-daily{background:#6b4fbb}#printDay .pdbar .g-fut{background:#8b94aa}
+@media print{.pray,.updbar,#cmdM{display:none!important}}
+</style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="ylg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0d68f"/><stop offset="1" stop-color="#c29a3e"/></linearGradient><linearGradient id="ylb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22335a"/><stop offset="1" stop-color="#14213d"/></linearGradient></defs><symbol id="yl" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="url(#ylb)"/><g stroke="#e4c77f" stroke-width="3.2" stroke-linecap="round"><path d="M32 11v6"/><path d="M17.2 17.2l4.2 4.2"/><path d="M46.8 17.2l-4.2 4.2"/><path d="M11 32h6"/><path d="M47 32h6"/></g><path d="M16 44a16 16 0 0 1 32 0z" fill="url(#ylg)"/><path d="M24.5 36.5l5 5 10-10.5" fill="none" stroke="#14213d" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 48h42" stroke="#e4c77f" stroke-width="3.2" stroke-linecap="round"/></symbol></svg>
@@ -615,11 +715,13 @@ body.private .hero{background:radial-gradient(1200px 300px at 85% -40%,rgba(111,
 <div class="sback" id="sideBack"></div>
 <div class="main">
 <header class="hero"><div class="hero-in">
-<div class="htl"><button type="button" class="menub" id="menuBtn" aria-label="فتح القائمة"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><div><h1 id="pgTitle">صفحة اليوم</h1><button type="button" class="helpq" id="helpBtn" title="شرح هذه الصفحة">؟</button><div class="date" id="todayLbl"></div></div></div>
-<div class="htr"><label class="gsearch" id="gqWrap"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="gq" type="search" placeholder="ابحث في المهام والمشاريع والعملاء…" autocomplete="off" aria-label="بحث"><kbd>/</kbd></label><select id="viewSel" hidden aria-label="عرض مهام"></select><div class="ringwrap"><div class="ringlbl"><b id="ringTxt">إنجاز اليوم</b><span id="ringSub">لا توجد مهام بعد</span></div><div class="ring" id="ring"><div id="ringPct">0%</div></div></div></div>
+<div class="htl"><button type="button" class="menub" id="menuBtn" aria-label="فتح القائمة"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><button type="button" class="backb" id="backBtn" hidden title="رجوع للصفحة السابقة" aria-label="رجوع"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg><span>رجوع</span></button><div><h1 id="pgTitle">صفحة اليوم</h1><button type="button" class="helpq" id="helpBtn" title="شرح هذه الصفحة">؟</button><div class="date" id="todayLbl"></div></div></div>
+<div class="htr"><button type="button" class="cmdb" id="cmdBtn" title="انتقال سريع لأي صفحة أو مشروع أو عميل (Ctrl+K)">⚡ انتقال سريع <kbd>Ctrl K</kbd></button><label class="gsearch" id="gqWrap"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="gq" type="search" placeholder="ابحث في المهام والمشاريع والعملاء…" autocomplete="off" aria-label="بحث"><kbd>/</kbd></label><select id="viewSel" hidden aria-label="عرض مهام"></select><div class="ringwrap"><div class="ringlbl"><b id="ringTxt">إنجاز اليوم</b><span id="ringSub">لا توجد مهام بعد</span></div><div class="ring" id="ring"><div id="ringPct">0%</div></div></div></div>
 </div></header>
 <div class="wrap">
 <span class="ro" id="roBadge" hidden></span>
+<button type="button" class="fab" id="fabAdd" title="مهمة جديدة (اختصار N)" aria-label="مهمة جديدة"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span>مهمة</span></button>
+<button type="button" class="totop" id="toTop" hidden title="لأعلى الصفحة" aria-label="لأعلى الصفحة"><svg viewBox="0 0 24 24"><path d="M6 15l6-6 6 6"/></svg></button>
 <section class="stats" aria-label="ملخص">
 <div class="stat" data-go="day" role="button" tabindex="0" title="افتح مهام اليوم"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M8 2v4M16 2v4M3 10h18"/></svg></span><span class="tx"><span class="n" id="sToday">0</span><span class="l">مفتوحة اليوم</span></span></div>
 <div class="stat late" data-go="day" role="button" tabindex="0" title="افتح المهام المرحّلة"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 8v4l3 2"/></svg></span><span class="tx"><span class="n" id="sLate">0</span><span class="l">مرحّلة من أيام سابقة</span></span></div>
@@ -719,7 +821,7 @@ const s = $("#viewSel"); s.hidden = !can("team") || PRIV() || scopeUsers().filte
 if (!s.hidden) s.innerHTML = scopeUsers().filter(u => u.active).map(u => `<option value="${u.id}" ${u.id === viewUid ? "selected" : ""}>${u.id === ME.id ? "مهامي" : "مهام: " + esc(u.name)}</option>`).join(""); }
 setChip();
 $("#todayLbl").innerHTML = (() => { const d = new Date(); return `<b>${DAYN[d.getDay()]} ${gFmtY.format(d)}</b> · <span>${esc(hij(d))}</span>`; })();
-function toast(m, err){ const t = $("#toast"); t.textContent = m; t.className = "toast" + (err ? " err" : ""); t.hidden = false; clearTimeout(toast.h); toast.h = setTimeout(() => t.hidden = true, 2600); }
+function toast(m, err, undo){ const t = $("#toast"); t.textContent = m; t.className = "toast" + (err ? " err" : ""); if (undo) { const b = document.createElement("button"); b.type = "button"; b.className = "tundo"; b.textContent = "↩ تراجع"; b.onclick = () => { t.hidden = true; undo(); }; t.appendChild(b); } t.hidden = false; clearTimeout(toast.h); toast.h = setTimeout(() => t.hidden = true, undo ? 6000 : 2600); }
 function banner(m, err){ const b = $("#banner"); b.textContent = m || ""; b.className = "banner" + (err ? " err" : ""); b.hidden = !m; }
 function handleWriteErr(err){
 if (err && err.code === "invalid_argument") { setReadOnly(true); banner("ليس لديك صلاحية التعديل — هذه الصفحة للاطلاع فقط."); }
@@ -795,15 +897,15 @@ if (x.done && x.doneAt && iso(new Date(x.doneAt)) !== x.due) pills.push(`<span c
 let acts = "";
 if (canWrite && own(x)) {
 if (!x.done) {
-if (x.kind === "task") acts += `<button class="ic" data-a="star" data-id="${x.id}" title="${x.star ? "إزالة الأولوية" : "تعليم كأولوية (من أهم 6)"}" aria-label="أولوية" aria-pressed="${!!x.star}" style="${x.star ? "color:var(--gold);border-color:var(--gold)" : ""}">${x.star ? "★" : "☆"}</button>`;
-if (x.kind === "task") acts += `<select data-a="status" data-id="${x.id}" aria-label="الحالة">${Object.keys(STATUS).map(s => `<option value="${s}" ${ (x.status||"todo")===s?"selected":""}>${STATUS[s]}</option>`).join("")}</select>`;
-if (!x.due && x.kind !== "meeting") acts += `<button class="ic" data-a="today" data-id="${x.id}" title="انقلها لمهام اليوم" aria-label="لليوم">☀️</button><label class="sch ic" title="حدد يوماً للمهمة">📅<input type="date" data-f="due" data-id="${x.id}" aria-label="جدولة ليوم"></label>`;
-if (x.kind !== "meeting") acts += `<button class="ic" data-a="tomorrow" data-id="${x.id}" title="انقلها للغد" aria-label="للغد">⏭</button><button class="ic" data-a="waitreply" data-id="${x.id}" title="أنجزت ما عليك وبانتظار رد — تتحول إلى متابعة في يوم تحدده" aria-label="بانتظار رد">⏳</button>`;
+if (x.kind === "task") acts += `<button class="ic${x.star ? " gold" : ""}" data-a="star" data-id="${x.id}" title="${x.star ? "إزالة الأولوية" : "تعليم كأولوية (من أهم 6)"}" aria-pressed="${!!x.star}"><i>${x.star ? "★" : "☆"}</i><span>أولوية</span></button>`;
+if (x.kind === "task") acts += `<label class="stsel"><select data-a="status" data-id="${x.id}" aria-label="الحالة">${Object.keys(STATUS).map(s => `<option value="${s}" ${ (x.status||"todo")===s?"selected":""}>${STATUS[s]}</option>`).join("")}</select><span>الحالة</span></label>`;
+if (!x.due && x.kind !== "meeting") acts += `<button class="ic" data-a="today" data-id="${x.id}" title="انقلها لمهام اليوم"><i>☀️</i><span>لليوم</span></button><label class="sch ic" title="حدد يوماً للمهمة"><i>📅</i><span>جدولة</span><input type="date" data-f="due" data-id="${x.id}" aria-label="جدولة ليوم"></label>`;
+if (x.kind !== "meeting") acts += `<button class="ic" data-a="tomorrow" data-id="${x.id}" title="انقلها للغد"><i>⏭</i><span>للغد</span></button><button class="ic" data-a="waitreply" data-id="${x.id}" title="أنجزت ما عليك وبانتظار رد — تتحول إلى متابعة في يوم تحدده"><i>⏳</i><span>بانتظار رد</span></button>`;
 if (x.reminder && x.reminder.state === "link") acts += `<a href="${esc(calLink(x))}" target="_blank" rel="noopener">أضف للتقويم</a>`;
 }
-if (x.kind !== "meeting" && TODO.on) acts += `<button class="ic${x.todo ? " on" : ""}" data-a="todo" data-id="${x.id}" title="${x.todo ? "فصلها عن To Do (تبقى في To Do)" : "أرسلها لقائمة WORK DMC في To Do"}" aria-label="To Do" aria-pressed="${!!x.todo}">✅</button>`;
-if (x.kind !== "meeting") acts += `<button class="ic${x.pv ? " on" : ""}" data-a="pv" data-id="${x.id}" title="${x.pv ? "إلغاء الخصوصية" : "انقلها إلى أعمالي الخاصة — تظهر لك كتذكير ولا تُطبع في التقارير"}" aria-label="خاص" aria-pressed="${!!x.pv}">🔒</button>`;
-acts += `<span class="tchev" aria-hidden="true">${open === x.id ? "▴" : "▾"}</span>`;
+if (x.kind !== "meeting" && TODO.on) acts += `<button class="ic${x.todo ? " on" : ""}" data-a="todo" data-id="${x.id}" title="${x.todo ? "فصلها عن To Do (تبقى في To Do)" : "أرسلها لقائمة WORK DMC في To Do"}" aria-pressed="${!!x.todo}"><i>✅</i><span>To Do</span></button>`;
+if (x.kind !== "meeting") acts += `<button class="ic${x.pv ? " on" : ""}" data-a="pv" data-id="${x.id}" title="${x.pv ? "إلغاء الخصوصية" : "انقلها إلى أعمالي الخاصة — تظهر لك كتذكير ولا تُطبع في التقارير"}" aria-pressed="${!!x.pv}"><i>🔒</i><span>خاص</span></button>`;
+acts += `<span class="tchev ic" aria-hidden="true"><i>${open === x.id ? "▴" : "▾"}</i><span>${open === x.id ? "إغلاق" : "تفاصيل"}</span></span>`;
 }
 let more = "";
 if (open === x.id && canWrite && own(x)) {
@@ -923,13 +1025,24 @@ return `<section class="sec sec-${kind} ${extra?.full ? "full" : ""}">${head}${a
 // ---------- render ----------
 // ----- الواجهة: القائمة الجانبية والتنقل -----
 const TITLES = { devs: "المطورون العقاريون", notes: "دفتري — ملاحظات Notability", guide: "دليل الاستخدام", plan: "خطة التطوير", all: "كشف المهام", done: "المهام المنجزة", search: "نتائج البحث", home: "الرئيسية", day: "صفحة اليوم", backlog: "المهام العامة", upcoming: "المهام القادمة", report: "ملخص الأسبوع", projects: "المشاريع", clients: "العملاء", ai: "مساعد الذكاء الاصطناعي", team: "لوحة الفريق", users: "المستخدمين والصلاحيات" };
-function shellSync(){ document.body.dataset.tab = tab; const t = $("#pgTitle"); if (t) t.textContent = TITLES[tab] || ""; { const hb = $("#helpBtn"); if (hb) hb.hidden = tab === "guide"; }
+function shellSync(){ document.body.dataset.tab = tab; const t = $("#pgTitle"); if (t) { let pj = null; try { pj = tab === "projects" && projOpen && PROJECTS.find(p => p.id === projOpen); } catch {} t.innerHTML = pj ? `<span class="crumb" data-crumb>${esc(TITLES.projects)}</span> › ${esc(pj.name || "مشروع جديد")}` : esc(TITLES[tab] || ""); } { const hb = $("#helpBtn"); if (hb) hb.hidden = tab === "guide"; }
   document.querySelectorAll(".ngrp").forEach(g => g.hidden = ![...g.querySelectorAll("[data-tab]")].some(b => !b.hidden));
   document.querySelectorAll("#bnav [data-bt]").forEach(b => { const sb = document.querySelector(`nav.tabs [data-tab="${b.dataset.bt}"]`); b.hidden = !sb || sb.hidden; b.classList.toggle("on", b.dataset.bt === tab); }); }
 const sideOpen = v => document.body.classList.toggle("sideopen", v);
 $("#menuBtn").onclick = () => sideOpen(true); $("#sideClose").onclick = () => sideOpen(false); $("#sideBack").onclick = () => sideOpen(false);
 $("nav.tabs").addEventListener("click", e => { if (e.target.closest("[data-tab]")) { sideOpen(false); window.scrollTo({ top: 0 }); } });
 $("#bnav").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; if (b.hasAttribute("data-more")) { sideOpen(true); return; } const sb = document.querySelector(`nav.tabs [data-tab="${b.dataset.bt}"]`); if (sb) sb.click(); });
+const NAV = { i: 0, restoring: false, key: "" };
+function navKey(){ return tab + "|" + (tab === "projects" ? (projOpen || "") + "|" + (projOpen ? projSec : projTab) : ""); }
+function navSync(){ let k, st; try { k = navKey(); st = { yw: 1, tab, projOpen: tab === "projects" ? projOpen : null, projSec, projTab }; } catch { return; } if (k === NAV.key) return;
+  try { if (!NAV.key || NAV.restoring) history.replaceState({ ...st, i: NAV.i }, ""); else { NAV.i++; history.pushState({ ...st, i: NAV.i }, ""); } } catch {}
+  NAV.key = k; NAV.restoring = false; const b = $("#backBtn"); if (b) b.hidden = NAV.i <= 0; }
+window.addEventListener("popstate", e => { const st = e.state; if (!st || !st.yw) return;
+  if (projOpen && projOpen !== st.projOpen && projDraft && projDirty && pEdit() && String(projDraft.name || "").trim()) { clearTimeout(projSaveT); bgSaveProject(projDraft); }
+  if (projOpen !== st.projOpen) { projDraft = null; projDirty = false; claimCustom.clear(); }
+  tab = st.tab; projOpen = st.projOpen || null; projSec = st.projSec || "status"; projTab = st.projTab || projTab; open = confirmDel = null; NAV.i = st.i || 0; NAV.restoring = true; NAV.key = "";
+  document.querySelectorAll("nav.tabs button").forEach(x => x.setAttribute("aria-selected", x.dataset.tab === tab)); render(); window.scrollTo({ top: 0 }); });
+document.addEventListener("click", e => { if (e.target.closest("#backBtn")) { history.back(); return; } if (e.target.closest("[data-crumb]")) { projOpen = null; projDraft = null; projDirty = false; render(); } });
 function render(){
 shellSync();
 const t = today(); const ws = iso(weekStart()), we = iso(addDays(weekStart(), 6));
@@ -994,7 +1107,7 @@ else if (tab === "notes") h = nbView();
 else if (tab === "search") h = searchView();
 else if (tab === "team") h = teamView(); else if (tab === "users") h = usersView(); else h = report();
 if (ME && viewUid && viewUid !== ME.id && tab !== "team" && tab !== "users" && tab !== "projects" && tab !== "clients" && tab !== "ai" && tab !== "home" && tab !== "search" && tab !== "plan" && tab !== "guide" && tab !== "notes") h = `<div class="viewing">👁 أنت تشاهد مهام: ${esc(uname(viewUid))} — أي مهمة تضيفها هنا تُسند له<button data-view="${ME.id}">العودة إلى مهامي</button></div>` + h;
-if (render.busy) { setTimeout(render, 0); return; } render.busy = true; try { $("#view").innerHTML = h; try { decorate(); } catch {} if (tab === "projects" && projOpen && !pEdit()) document.querySelectorAll(".pdetail input,.pdetail select,.pdetail textarea,.pdetail button:not([data-pback]):not([data-pprint]):not(.cbtns button)").forEach(x => { x.disabled = true; if (x.matches("[data-psave],[data-pdel],[data-add],[data-mkclaim],.rm")) x.hidden = true; }); } finally { render.busy = false; }
+if (render.busy) { setTimeout(render, 0); return; } render.busy = true; try { navSync(); $("#view").innerHTML = h; try { decorate(); } catch {} if (tab === "projects" && projOpen && !pEdit()) document.querySelectorAll(".pdetail input,.pdetail select,.pdetail textarea,.pdetail button:not([data-pback]):not([data-pprint]):not(.cbtns button)").forEach(x => { x.disabled = true; if (x.matches("[data-psave],[data-pdel],[data-add],[data-mkclaim],.rm")) x.hidden = true; }); } finally { render.busy = false; }
 if (open) { const f = document.querySelector(`[data-f="note"][data-id="${open}"]`); }
 }
 function backlogView(){
@@ -1179,7 +1292,7 @@ $("#dayPdf").onclick = () => { const R = dayRows(), work = R.filter(r => r.g !==
   ${secs || '<p class="pde">لا توجد بنود مسجّلة لهذا اليوم.</p>'}
   ${notes[day] ? `<section class="pds"><div class="pdb"><span>${ORD[k] || ""}</span>ملاحظات اليوم</div><div class="pdn">${esc(notes[day])}</div></section>` : ""}
   <footer class="pdf"><div class="sig"><div>المُعِد<br><b>${esc(who)}</b></div><div>التوقيع<br><span></span></div><div>الاعتماد<br><span></span></div></div><p>صدر هذا التقرير آلياً من نظام «يومي» لإدارة المهام والمشاريع — ${esc(new Date().toLocaleString("ar-SA-u-nu-latn-ca-gregory"))}</p></footer>`;
-  document.body.appendChild(box); document.body.classList.add("printday"); const done = () => { document.body.classList.remove("printday"); box.remove(); removeEventListener("afterprint", done); }; addEventListener("afterprint", done); setTimeout(() => { window.print(); setTimeout(() => { if (document.body.classList.contains("printday") && !matchMedia("print").matches) done(); }, 1500); }, 60);
+  document.body.appendChild(box); try { pdColor(box); } catch {} document.body.classList.add("printday"); const done = () => { document.body.classList.remove("printday"); box.remove(); removeEventListener("afterprint", done); }; addEventListener("afterprint", done); setTimeout(() => { window.print(); setTimeout(() => { if (document.body.classList.contains("printday") && !matchMedia("print").matches) done(); }, 1500); }, 60);
   toast("📄 اختر «حفظ بصيغة PDF» من نافذة الطباعة"); };
 // ----- كشف المهام الشامل -----
 let allF = { st: "active", pj: "", cl: "", rs: "", q: "" }, allSort = { k: "", d: 1 }, allMode = "table";
@@ -1236,7 +1349,7 @@ $("#view").addEventListener("click", e => { if (tab !== "all") return; const q =
       <table class="pdm"><tr><th>إعداد</th><td>${esc(who)}</td></tr><tr><th>تاريخ الإصدار</th><td>${esc(new Date().toLocaleDateString("ar-SA-u-nu-latn-ca-gregory"))}</td></tr><tr><th>عدد المهام</th><td>${R.length}</td></tr></table></header>
       <div class="pdk">${[["late"], ["open", "doing"], ["wait"], ["daily"], ["future", "backlog"], ["done"]].map((g, i) => `<div class="${i === 0 ? "hi" : ""}"><b>${R.filter(r => g.includes(r.s)).length}</b>${["متأخرة", "قيد التنفيذ", "بانتظار الرد", "متابعة يومية", "مجدولة / بدون تاريخ", "منجزة"][i]}</div>`).join("")}</div>
       ${secs || '<p class="pde">لا توجد مهام مطابقة.</p>'}<footer class="pdf"><p>صدر هذا الكشف آلياً من نظام «يومي» لإدارة المهام والمشاريع — ${esc(new Date().toLocaleString("ar-SA-u-nu-latn-ca-gregory"))}</p></footer>`;
-    document.body.appendChild(box); document.body.classList.add("printday"); const done = () => { document.body.classList.remove("printday"); box.remove(); removeEventListener("afterprint", done); }; addEventListener("afterprint", done); setTimeout(() => { window.print(); setTimeout(() => { if (document.body.classList.contains("printday") && !matchMedia("print").matches) done(); }, 1500); }, 60);
+    document.body.appendChild(box); try { pdColor(box); } catch {} document.body.classList.add("printday"); const done = () => { document.body.classList.remove("printday"); box.remove(); removeEventListener("afterprint", done); }; addEventListener("afterprint", done); setTimeout(() => { window.print(); setTimeout(() => { if (document.body.classList.contains("printday") && !matchMedia("print").matches) done(); }, 1500); }, 60);
     toast("📄 اختر «حفظ بصيغة PDF» من نافذة الطباعة"); return; } });
 { let dragId = null;
   $("#view").addEventListener("dragstart", e => { const c = e.target.closest && e.target.closest("[data-kbi]"); if (!c) return; dragId = c.dataset.kbi; c.classList.add("drag"); try { e.dataTransfer.setData("text/plain", dragId); e.dataTransfer.effectAllowed = "move"; } catch {} });
@@ -1349,7 +1462,7 @@ $("#view").addEventListener("click", e => { const k = e.target.closest("[data-gd
 $("#ddBox").addEventListener("click", e => { const c = e.target.closest("[data-ddcli]"); if (c) { e.stopPropagation(); $("#ddBox").hidden = true; const k = c.dataset.ddcli; goTab("clients", () => openCli(k)); } }, true);
 
 // ===== ملف العميل وكشف الحساب =====
-function cliFin(P){ const S = (a, f) => a.reduce((s, x) => s + f(x), 0); const R = P.map(p => ({ p, c: pcalc(p) })); const con = R.filter(x => x.p.status !== "quote");
+function cliFin(P){ const S = (a, f) => a.reduce((s, x) => s + f(x), 0); const R = P.map(p => ({ p, c: pcalc(p) })); const con = R.filter(x => !QST.has(x.p.status));
   return { R, con, T: S(con, x => x.c.T), paid: S(con, x => x.c.paid), out: S(con, x => x.c.out), due: S(con, x => S(x.c.dueCl, c => c.inc - c.pd)), late: S(con, x => x.c.late.length) }; }
 function cliFileHTML(c, P){ if (!P.length) return ""; const f = cliFin(P);
   return `<div class="lbl">📁 ملف العميل — المشاريع والموقف المالي</div>
@@ -1371,7 +1484,7 @@ function printCliStatement(c, P){ const f = cliFin(P); const who = (ME && ME.nam
     ${cls.map(({ p, y }) => `<tr><td>${esc(y.date || "—")}</td><td>${esc(p.name)}</td><td>${esc(y.phase || "—")}</td><td>${esc(y.inv || "—")}</td><td class="n">${money(y.inc)}</td><td class="n">${money(y.pd)}</td><td class="n">${money(y.inc - y.pd)}</td></tr>`).join("")}
     <tr class="tt"><td colspan="4">الإجمالي</td><td class="n">${money(cls.reduce((s, z) => s + z.y.inc, 0))}</td><td class="n">${money(cls.reduce((s, z) => s + z.y.pd, 0))}</td><td class="n">${money(cls.reduce((s, z) => s + z.y.inc - z.y.pd, 0))}</td></tr></table>` : `<p class="pde">لا توجد مطالبات مسجّلة.</p>`}</section>
   <footer class="pdf"><div class="sig"><div>المُعِد<br><b>${esc(who)}</b></div><div>المدير المالي<br><span></span></div><div>الاعتماد والختم<br><span></span></div></div><p>صدر هذا الكشف من نظام «يومي» — ${esc(now.toLocaleString("ar-SA-u-nu-latn-ca-gregory"))}</p></footer>`;
-  document.body.appendChild(box); document.body.classList.add("printday"); const done = () => { document.body.classList.remove("printday"); box.remove(); removeEventListener("afterprint", done); }; addEventListener("afterprint", done); setTimeout(() => { window.print(); setTimeout(() => { if (document.body.classList.contains("printday") && !matchMedia("print").matches) done(); }, 1500); }, 60); }
+  document.body.appendChild(box); try { pdColor(box); } catch {} document.body.classList.add("printday"); const done = () => { document.body.classList.remove("printday"); box.remove(); removeEventListener("afterprint", done); }; addEventListener("afterprint", done); setTimeout(() => { window.print(); setTimeout(() => { if (document.body.classList.contains("printday") && !matchMedia("print").matches) done(); }, 1500); }, 60); }
 function cliKeyOf(name){ const e = clientsAll().find(x => normN(x.name) === normN(name)); return e ? (e.saved ? e.id : "n:" + e.name) : ""; }
 function projRenameTasks(oldN, newN){ if (!oldN || !newN || normN(oldN) === normN(newN)) return 0; const L = allItems.filter(x => normN(x.project) === normN(oldN)); L.forEach(x => { x.project = newN; upd(x.id, { project: newN }); }); return L.length; }
 $("#view").addEventListener("click", e => { if (tab !== "projects" || !projDraft) return;
@@ -1440,6 +1553,11 @@ $("#view").addEventListener("click", async e => { if (tab !== "notes") return; c
 $("#view").addEventListener("input", e => { if (tab !== "notes" || e.target.id !== "nbQ") return; nbQ = e.target.value; const pos = e.target.selectionStart; render(); const i = $("#nbQ"); if (i) { i.focus(); i.setSelectionRange(pos, pos); } });
 $("#nbDayBtn").addEventListener("click", () => { const f = nbForDay(day)[0]; if (!f) return; nbSel = f.id; nbDom = null; nbFolder = "all"; nbQ = ""; goTab("notes"); });
 let TODO = { on: false, rw: false };
+function quickNew(){ const go = () => { const i = document.querySelector('form.addrow[data-kind="task"] input[name="title"]'); if (i) { i.scrollIntoView({ block: "center", behavior: "smooth" }); setTimeout(() => i.focus(), 250); } };
+  if (tab !== "day") { day = today(); goTab("day", go); } else go(); }
+document.addEventListener("click", e => { if (e.target.closest("#fabAdd")) quickNew(); if (e.target.closest("#toTop")) window.scrollTo({ top: 0, behavior: "smooth" }); });
+window.addEventListener("scroll", () => { const b = $("#toTop"); if (b) b.hidden = window.scrollY < 600; }, { passive: true });
+document.addEventListener("keydown", e => { if ((e.key === "n" || e.key === "N" || e.key === "ى") && !e.ctrlKey && !e.metaKey && !e.altKey && !/INPUT|TEXTAREA|SELECT/.test(e.target.tagName) && !e.target.isContentEditable && ME) { e.preventDefault(); quickNew(); } });
 let splitNB = (() => { try { return localStorage.getItem("yw_split") === "1"; } catch { return false; } })();
 function setSplit(v){ splitNB = !!v; try { localStorage.setItem("yw_split", v ? "1" : "0"); } catch {} }
 function nbMini(){ if (!NB) { if (!nbLoading) loadNB(); return `<div class="empty">جارٍ قراءة دفترك…</div>`; }
@@ -1519,7 +1637,7 @@ const GUIDE_FAQ = [
   ["كيف أرسل لـClaude صورة مطور عقاري أو ملف Excel؟", "في محادثة Claude اضغط «+» وأرفق لقطة الشاشة أو الملف واكتب مثلاً «أضف هذا المطور»، فيقرأ البيانات ويضيفها إلى العملاء بتصنيف «مطور عقاري»."],
   ["لماذا لا تظهر لي بعض الصفحات؟", "الصفحات تظهر حسب صلاحياتك؛ اطلب من المالك أو مديرك تفعيلها."],
   ["لا أرى آخر تحديث للتطبيق؟", "حدّث الصفحة، وإن استمر أغلق التطبيق وافتحه من جديد."] ];
-const GUIDE_NEW = [["v52", "مزامنة متبادلة مع قائمة WORK DMC في Microsoft To Do (أيقونة ✅ على المهمة ترسلها لـ To Do، وما تنجزه هنا يُنجز هناك)، صفحة المشاريع بتبويبين: «المشاريع» و«لوحة المؤشرات»، وصفحة اليوم بلا حد 15 مهمة ومقسّمة: متأخرة، قيد التنفيذ، منجزة."], ["v51", "صفحة المشروع الجديدة: أيقونات أقسام مرتبة بالأهمية، داشبورد حالة المشروع بجانب الداشبورد المالي، خطوات فنية بقوالب جاهزة ونسبة إنجاز تلقائية، «مطالبة مستحقة» على الخطوة، توزيع تلقائي لنسب الدفعات، نوعا «مخططات تنفيذية» و«إصدار رخص بناء»، البحث بكود المشروع والعميل، الضغط على المهمة يفتح تفاصيلها، خطوات فرعية داخل المهمة، خانة الإدخال أعلى القائمة، علامة 🔒 خاص، اليوم + دفتري جنباً إلى جنب، وربط Microsoft To Do."], ["v50", "رقم الإصدار يظهر في الرئيسية وأسفل القائمة، وإصلاح مشكلة مسح ما تكتبه في خانة المهمة أو العميل أو المشروع عند تحديث البيانات تلقائياً."], ["v49", "صفحة مستقلة «المطورون العقاريون»: قاعدة بيانات المطورين المستهدفين منفصلة عن العملاء، بمراحل التواصل (لم يُتواصل، تم التواصل، اجتماع، عرض مقدَّم، غير مهتم) وتواريخ آخر تواصل والمتابعة القادمة، واتصال وواتساب مباشر، وزر «🤝 تحويل لعميل» لمن تتعاقد معه، وأرقام D- للمطورين."], ["v48", "ثلاث هويات بصرية خاصة بيومي يختار منها كل مستخدم من زر «🎨 المظهر» في القائمة: «ليل مكة» (كحلي ونحاسي بنقشة النجمة الثمانية)، و«روشن حجازي» (أخضر بترولي وذهب رملي بنقشة المشربية وزوايا مميزة)، و«طين ونخيل» (بني تمري وتيراكوتا بشبكة معمارية دافئة)."], ["v47", "تنسيق موحّد لكل الأجهزة (الجوال والآيباد والكمبيوتر): الجداول تتحول لبطاقات مرتبة على الجوال، ولوحة الكانبان تُسحب أفقياً عموداً عموداً، وأزرار أكبر للّمس على الآيباد والجوال."], ["v46", "«دليل الأكواد» في دليل الاستخدام يشرح معنى كل كود (SV، AOR، DS، IFC، PM، RE، ST، ID) ورقم العميل، ويُفتح بالضغط على أي كود أو من زر «🏷️ دليل الأكواد» في المشروع. وتحسينات بصرية: أيقونات لكل مؤشرات لوحة المشاريع والعملاء، ورسوم أعمدة متحركة أوضح."], ["v45", "تحسينات بصرية: أيقونات ملوّنة لكل المؤشرات، و«كشف المهام» بعرضين (جدول قابل للترتيب بالضغط على العناوين مع الأولوية وصورة المسؤول، أو لوحة كانبان تسحب فيها المهمة بين: جديدة، قيد التنفيذ، بانتظار الرد، منجزة)، وشريط نسبة الإنجاز، وإمكانية إخفاء بطاقة التثبيت. وأيضاً تكويد موحد: كود لكل مشروع بحسب نوعه وسنته (مثل IFC-26-003 وSV-26-001) ورقم موحد لكل عميل (C-001)، يظهر في القوائم ورأس المشروع وملف العميل ويمكن تعديله. وفي «تعارضات الأقسام» أصبح لكل قسم مهندس مسؤول يظهر اسمه في المسار."], ["v44", "قسم «تعارضات الأقسام» في المشروع لمتابعة ملاحظات التنسيق بين المعماري والإنشائي والميكانيكا والكهرباء (القسم الحالي والتالي والإغلاق التلقائي ونسبة إنجاز كل قسم)، ونوع مشروع جديد «تصميم مخططات تنفيذية IFC». وأيضاً صندوق «📥 الوارد»: أضف مهمة بسرعة من أي مكان — من رسالة واتساب (زر 📋 للصق، أو اختصار المشاركة في الجوال)، أو اطلبها من Claude فتنزل في يومي تلقائياً — ثم أكمل بياناتها لاحقاً واضغط «✓ رتّبتها». وكذلك استيراد بيانات العملاء والمطورين العقاريين من Excel أو من صورة عبر Claude."], ["v43", "قسم «أعمال ومخرجات المشروع»: أضف أعمال المشروع الفنية (مراجعة مخططات، دراسة، تقرير، زيارة موقع، اعتماد…) بمسؤول ومرحلة وتاريخ تسليم، مع نسبة إنجاز الأعمال بجانب إنجاز المراحل، واقتراح اعتماد المرحلة وإصدار مطالبتها عند اكتمال أعمالها، وقسم «آخر المستجدات» للمشروع."], ["v42", "ملاحق العقد والتعديلات الإضافية (للمشاريع المنتهية التي يُطلب فيها تعديلات جديدة) بزر «🔄 تعديلات جديدة»، ومطالبة مستقلة لكل ملحق. وكذلك: كل الكروت والمؤشرات أصبحت قابلة للضغط في كل الصفحات: الرئيسية تفتح تفاصيل المالية وكشف المهام المفلتر، وكروت العملاء تفلتر أو تعرض العملاء ومشاريعهم، وكروت المشروع تنقلك لقسمها مباشرة."], ["v41", "ملف العميل: كل مشاريع الشركة وموقفها المالي في مكان واحد مع «كشف حساب العميل» للطباعة، وزر «مشروع جديد لهذا العميل»، وتنبيه عند تسمية المشروع باسم العميل مع نقل المهام تلقائياً عند إعادة التسمية."], ["v40", "صفحة «دفتري» لعرض نوتات Notability اليومية من Google Drive، وزر «📝 نوتة اليوم» في صفحة اليوم."], ["v38", "قوالب جاهزة للمراحل (منها الإشراف بدفعات شهرية)، وملخص احترافي للمطالبات، وأرقام فواتير تلقائية، وخطاب مطالبة مالية رسمي للطباعة."], ["v37", "مقترحات لأسماء الدفعات مع الإدخال اليدوي، وكروت لوحة المشاريع أصبحت تعرض التفاصيل عند الضغط."], ["v36", "صور أمثلة للنتائج بجانب برومبتات الصور، وقوالب لوحات عرض المشاريع المعمارية."], ["v35", "برومبتات التوقيعات (4 أنماط، وجاهز للاستخدام، وعربي)."], ["v34", "صفحة خطة التطوير، وشعار «نظام تشغيل المكاتب الهندسية ومكاتب الإشراف»."], ["v33", "صفحة كشف المهام مع التصدير PDF وExcel."]];
+const GUIDE_NEW = [["v54", "يوميات المشروع (النهارده عملنا إيه)، خطوات المشروع بالمسؤول والبداية والتفاصيل + قالب دورة الفيلا كاملة حتى شهادة الإشغال، الجدول الزمني (Gantt)، ساعات العمل وربحية الساعة، إيميلات المشروع (المطلوب وردّي)، تبويب عروض الأسعار بلوحته، السعر المتفق عليه فقط مع متوسط الإيراد والربح الشهري، ربح كل دفعة، مواقيت الصلاة (أم القرى) مع تنبيه قبل الأذان بـ10 دقائق وعند الإقامة والأذكار، انتقال سريع Ctrl+K، تنبيه بالتحديثات الجديدة، تقارير مطبوعة ملوّنة، وتنسيق جديد لصفحة حسابي وكشف المهام."], ["v53", "زر رجوع ⟵ في أعلى كل صفحة (ويشتغل كمان مع زر الرجوع في الجوال)، مسار الصفحة في العنوان (المشاريع › اسم المشروع)، أيقونات المهمة بمسمياتها تحتها، «تراجع» بعد إنجاز أو حذف مهمة، زر ＋ عائم لإضافة مهمة من أي صفحة، زر ↑ للرجوع لأعلى الصفحة، واختصار N لمهمة جديدة."], ["v52", "مزامنة متبادلة مع قائمة WORK DMC في Microsoft To Do (أيقونة ✅ على المهمة ترسلها لـ To Do، وما تنجزه هنا يُنجز هناك)، صفحة المشاريع بتبويبين: «المشاريع» و«لوحة المؤشرات»، وصفحة اليوم بلا حد 15 مهمة ومقسّمة: متأخرة، قيد التنفيذ، منجزة."], ["v51", "صفحة المشروع الجديدة: أيقونات أقسام مرتبة بالأهمية، داشبورد حالة المشروع بجانب الداشبورد المالي، خطوات فنية بقوالب جاهزة ونسبة إنجاز تلقائية، «مطالبة مستحقة» على الخطوة، توزيع تلقائي لنسب الدفعات، نوعا «مخططات تنفيذية» و«إصدار رخص بناء»، البحث بكود المشروع والعميل، الضغط على المهمة يفتح تفاصيلها، خطوات فرعية داخل المهمة، خانة الإدخال أعلى القائمة، علامة 🔒 خاص، اليوم + دفتري جنباً إلى جنب، وربط Microsoft To Do."], ["v50", "رقم الإصدار يظهر في الرئيسية وأسفل القائمة، وإصلاح مشكلة مسح ما تكتبه في خانة المهمة أو العميل أو المشروع عند تحديث البيانات تلقائياً."], ["v49", "صفحة مستقلة «المطورون العقاريون»: قاعدة بيانات المطورين المستهدفين منفصلة عن العملاء، بمراحل التواصل (لم يُتواصل، تم التواصل، اجتماع، عرض مقدَّم، غير مهتم) وتواريخ آخر تواصل والمتابعة القادمة، واتصال وواتساب مباشر، وزر «🤝 تحويل لعميل» لمن تتعاقد معه، وأرقام D- للمطورين."], ["v48", "ثلاث هويات بصرية خاصة بيومي يختار منها كل مستخدم من زر «🎨 المظهر» في القائمة: «ليل مكة» (كحلي ونحاسي بنقشة النجمة الثمانية)، و«روشن حجازي» (أخضر بترولي وذهب رملي بنقشة المشربية وزوايا مميزة)، و«طين ونخيل» (بني تمري وتيراكوتا بشبكة معمارية دافئة)."], ["v47", "تنسيق موحّد لكل الأجهزة (الجوال والآيباد والكمبيوتر): الجداول تتحول لبطاقات مرتبة على الجوال، ولوحة الكانبان تُسحب أفقياً عموداً عموداً، وأزرار أكبر للّمس على الآيباد والجوال."], ["v46", "«دليل الأكواد» في دليل الاستخدام يشرح معنى كل كود (SV، AOR، DS، IFC، PM، RE، ST، ID) ورقم العميل، ويُفتح بالضغط على أي كود أو من زر «🏷️ دليل الأكواد» في المشروع. وتحسينات بصرية: أيقونات لكل مؤشرات لوحة المشاريع والعملاء، ورسوم أعمدة متحركة أوضح."], ["v45", "تحسينات بصرية: أيقونات ملوّنة لكل المؤشرات، و«كشف المهام» بعرضين (جدول قابل للترتيب بالضغط على العناوين مع الأولوية وصورة المسؤول، أو لوحة كانبان تسحب فيها المهمة بين: جديدة، قيد التنفيذ، بانتظار الرد، منجزة)، وشريط نسبة الإنجاز، وإمكانية إخفاء بطاقة التثبيت. وأيضاً تكويد موحد: كود لكل مشروع بحسب نوعه وسنته (مثل IFC-26-003 وSV-26-001) ورقم موحد لكل عميل (C-001)، يظهر في القوائم ورأس المشروع وملف العميل ويمكن تعديله. وفي «تعارضات الأقسام» أصبح لكل قسم مهندس مسؤول يظهر اسمه في المسار."], ["v44", "قسم «تعارضات الأقسام» في المشروع لمتابعة ملاحظات التنسيق بين المعماري والإنشائي والميكانيكا والكهرباء (القسم الحالي والتالي والإغلاق التلقائي ونسبة إنجاز كل قسم)، ونوع مشروع جديد «تصميم مخططات تنفيذية IFC». وأيضاً صندوق «📥 الوارد»: أضف مهمة بسرعة من أي مكان — من رسالة واتساب (زر 📋 للصق، أو اختصار المشاركة في الجوال)، أو اطلبها من Claude فتنزل في يومي تلقائياً — ثم أكمل بياناتها لاحقاً واضغط «✓ رتّبتها». وكذلك استيراد بيانات العملاء والمطورين العقاريين من Excel أو من صورة عبر Claude."], ["v43", "قسم «أعمال ومخرجات المشروع»: أضف أعمال المشروع الفنية (مراجعة مخططات، دراسة، تقرير، زيارة موقع، اعتماد…) بمسؤول ومرحلة وتاريخ تسليم، مع نسبة إنجاز الأعمال بجانب إنجاز المراحل، واقتراح اعتماد المرحلة وإصدار مطالبتها عند اكتمال أعمالها، وقسم «آخر المستجدات» للمشروع."], ["v42", "ملاحق العقد والتعديلات الإضافية (للمشاريع المنتهية التي يُطلب فيها تعديلات جديدة) بزر «🔄 تعديلات جديدة»، ومطالبة مستقلة لكل ملحق. وكذلك: كل الكروت والمؤشرات أصبحت قابلة للضغط في كل الصفحات: الرئيسية تفتح تفاصيل المالية وكشف المهام المفلتر، وكروت العملاء تفلتر أو تعرض العملاء ومشاريعهم، وكروت المشروع تنقلك لقسمها مباشرة."], ["v41", "ملف العميل: كل مشاريع الشركة وموقفها المالي في مكان واحد مع «كشف حساب العميل» للطباعة، وزر «مشروع جديد لهذا العميل»، وتنبيه عند تسمية المشروع باسم العميل مع نقل المهام تلقائياً عند إعادة التسمية."], ["v40", "صفحة «دفتري» لعرض نوتات Notability اليومية من Google Drive، وزر «📝 نوتة اليوم» في صفحة اليوم."], ["v38", "قوالب جاهزة للمراحل (منها الإشراف بدفعات شهرية)، وملخص احترافي للمطالبات، وأرقام فواتير تلقائية، وخطاب مطالبة مالية رسمي للطباعة."], ["v37", "مقترحات لأسماء الدفعات مع الإدخال اليدوي، وكروت لوحة المشاريع أصبحت تعرض التفاصيل عند الضغط."], ["v36", "صور أمثلة للنتائج بجانب برومبتات الصور، وقوالب لوحات عرض المشاريع المعمارية."], ["v35", "برومبتات التوقيعات (4 أنماط، وجاهز للاستخدام، وعربي)."], ["v34", "صفحة خطة التطوير، وشعار «نظام تشغيل المكاتب الهندسية ومكاتب الإشراف»."], ["v33", "صفحة كشف المهام مع التصدير PDF وExcel."]];
 let guideQ = "", guideOpen = "";
 function guideView(){ const q = normN(guideQ);
   const L = GUIDE.filter(x => { const b = document.querySelector(`nav.tabs [data-tab="${x.tab}"]`); return !x.tab || (b && !b.hidden); }).filter(x => !q || normN([x.t, x.w, ...x.s, ...x.tip].join(" ")).includes(q));
@@ -1582,7 +1700,7 @@ function printClaim(i){ const p = projDraft; if (!p) return; const c = pcalc(p),
     <tr><td>قيمة هذه المطالبة</td><td class="n">${money(x.inc)}</td></tr><tr class="tt"><td>المتبقي من قيمة العقد بعد سداد هذه المطالبة</td><td class="n">${money(Math.max(c.T - prevPaid - x.inc, 0))}</td></tr></table></section>
   <section class="pds"><div class="clx"><p>ونأمل التكرم بإيداع المبلغ المذكور في حساب المكتب المعتمد، وإشعارنا بصورة من إيصال التحويل.</p><p>وتفضلوا بقبول فائق الاحترام والتقدير،،،</p></div></section>
   <footer class="pdf"><div class="sig"><div>المُعِد<br><b>${esc(who)}</b></div><div>المدير المالي<br><span></span></div><div>الاعتماد والختم<br><span></span></div></div><p>صدرت هذه المطالبة من نظام «يومي» — ${esc(new Date().toLocaleString("ar-SA-u-nu-latn-ca-gregory"))}</p></footer>`;
-  document.body.appendChild(box); document.body.classList.add("printday"); const done = () => { document.body.classList.remove("printday"); box.remove(); removeEventListener("afterprint", done); }; addEventListener("afterprint", done); setTimeout(() => { window.print(); setTimeout(() => { if (document.body.classList.contains("printday") && !matchMedia("print").matches) done(); }, 1500); }, 60); }
+  document.body.appendChild(box); try { pdColor(box); } catch {} document.body.classList.add("printday"); const done = () => { document.body.classList.remove("printday"); box.remove(); removeEventListener("afterprint", done); }; addEventListener("afterprint", done); setTimeout(() => { window.print(); setTimeout(() => { if (document.body.classList.contains("printday") && !matchMedia("print").matches) done(); }, 1500); }, 60); }
 $("#view").addEventListener("click", e => { if (tab !== "projects" || !projDraft) return;
   const t = e.target.closest("[data-phtpl]"); if (t) { const k = t.dataset.phtpl; if (k === "supM") { phMonOpen = !phMonOpen; phTplArm = ""; render(); return; }
     if (projDraft.phases.some(x => x.name || num(x.pct)) && phTplArm !== k) { phTplArm = k; render(); return; }
@@ -1597,7 +1715,7 @@ $("#view").addEventListener("click", e => { if (tab !== "projects" || !projDraft
 
 // ===== تفاصيل مؤشرات لوحة المشاريع =====
 function ddData(key){
-  const P = PV().map(p => ({ p, c: pcalc(p) })); const con = P.filter(x => x.p.status !== "quote");
+  const P = PV().map(p => ({ p, c: pcalc(p) })); const con = P.filter(x => !QST.has(x.p.status));
   const S = (a, f) => a.reduce((s, x) => s + f(x), 0);
   const pays = con.flatMap(x => x.c.cl.filter(c => c.pd).map(c => ({ p: x.p, rate: x.c.rate, d: c.paidDate || c.date || "", ph: c.phase || "", inv: c.inv || "", v: c.pd })));
   const exps = con.flatMap(x => x.p.expenses.filter(e => num(e.amount)).map(e => ({ p: x.p, d: e.date || "", t: e.desc || "", cat: e.cat || "", v: num(e.amount) })));
@@ -1703,7 +1821,7 @@ if (a === "ckT" || a === "ckDel" || a === "ckAdd") { const L = (Array.isArray(x.
   await upd(x.id, { steps: L }); if (a === "ckAdd") { const n = document.querySelector(`[data-ckin="${x.id}"]`); if (n) n.focus(); }
   if (a === "ckT" && L.length && L.every(y => y.d) && !x.done) toast("👏 كل الخطوات منجزة — علّم المهمة ✓ لإغلاقها"); return; }
 if (a === "inboxok") { await upd(x.id, { addedBy: "" }); toast("✓ نُقلت من الوارد"); return; }
-if (a === "toggle") { const d = !x.done; if (d) toast("أحسنت ✓ تم إنجاز المهمة"); await upd(x.id, { done: d, doneAt: d ? Date.now() : null }); }
+if (a === "toggle") { const d = !x.done, was = { done: x.done, doneAt: x.doneAt || null }; if (d) toast("أحسنت ✓ تم إنجاز المهمة", false, () => upd(x.id, was)); await upd(x.id, { done: d, doneAt: d ? Date.now() : null }); }
 else if (a === "star") { const s = !x.star; await upd(x.id, { star: s, kind: "task" }); toast(s ? "★ حُدّدت كأولوية — ستظهر في الأعلى" : "أُزيلت من الأولوية"); }
 else if (a === "today") { await upd(x.id, { due: today() }); toast("نُقلت إلى مهام اليوم"); }
 else if (a === "unsched") { open = null; await upd(x.id, { due: null }); toast("أُعيدت إلى المهام العامة"); }
@@ -1719,7 +1837,7 @@ else if (a === "tomorrow") { await upd(x.id, { due: iso(addDays(new Date(), 1)) 
 else if (a === "more") { open = open === x.id ? null : x.id; confirmDel = null; render(); }
 else if (a === "del") { confirmDel = x.id; render(); }
 else if (a === "delno") { confirmDel = null; render(); }
-else if (a === "delyes") { confirmDel = open = null; try { await col.doc(x.id).delete(); toast("حُذف");
+else if (a === "delyes") { confirmDel = open = null; const keep = { ...x }; delete keep.id; try { await col.doc(x.id).delete(); toast("🗑 حُذفت المهمة", false, () => { col.doc(x.id).set(keep); toast("↩ رجعت المهمة"); });
 if (assets) for (const f of (x.files || [])) if (f.kind === "file") { try { await assets.delete(f.id); } catch {} } } catch (err) { handleWriteErr(err); } }
 else if (a === "calMeet") { window.open(calLink(x), "_blank"); }
 else if (a === "addlink") {
@@ -1805,7 +1923,7 @@ const snap = obj => ({ docs: Object.entries(obj).map(([id, v]) => ({ id, data: (
 const emit = () => listeners.forEach(f => f(snap(store)));
 const emitN = () => noteListeners.forEach(f => f(snap(Object.fromEntries(Object.entries(noteStore).map(([k, v]) => [k, { text: v }])))));
 const rid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-const APP_VER = "v52", APP_DATE = "2026-10-05";
+const APP_VER = "v54", APP_DATE = "2026-10-05";
 const strip = o => { const r = { ...o }; delete r.id; return r; };
 const SKINS = [["night", "ليل مكة", "كحلي ليلي ونحاسي ذهبي", "#14213d", "#c29a3e", "#2f63b5"], ["roshan", "روشن حجازي", "أخضر بترولي وذهب رملي", "#0e3b43", "#d9b97a", "#c8553d"], ["earth", "طين ونخيل", "بني تمري وتيراكوتا", "#3a2a21", "#e0b66f", "#4f6b3a"]];
 const curSkin = () => document.documentElement.dataset.skin || "night";
@@ -2111,7 +2229,8 @@ $("#view").addEventListener("change", async e => { const s = e.target.closest("[
   bg("updateUser", u.id, { role: s.value }).then(r => { if (!pending) { USERS = r; render(); } }).catch(x => { Object.assign(u, old); render(); banner((x && x.message) || "خطأ", true); }); });
 
 // ---------- projects ----------
-const PST = [["quote","عرض سعر","mut"],["contract","مرحلة التعاقد","wait"],["active","جاري العمل","doing"],["hold","متوقف","late"],["done","منتهي","done"]];
+const QST = new Set(["quote", "lost"]);
+const PST = [["quote","عرض سعر","mut"],["lost","عرض مرفوض","late"],["contract","مرحلة التعاقد","wait"],["active","جاري العمل","doing"],["hold","متوقف","late"],["done","منتهي","done"]];
 const PSTL = Object.fromEntries(PST.map(([k,l,c]) => [k, { l, c }]));
 const PCOL = { mut: "#8b94aa", wait: "#c9962b", doing: "#2f63b5", late: "#c2453b", done: "#2c8a60" };
 const PCODEP = { "إشراف عام ITC": "SV", "إشراف هندسي": "SV", "مستشار معماري AOR": "AOR", "تصميم معماري": "DS", "تصميم مخططات تنفيذية IFC": "IFC", "إدارة مشاريع": "PM", "تطوير عقاري": "RE", "دراسات واستشارات": "ST", "تصميم داخلي": "ID", "مخططات تنفيذية": "WD", "إصدار رخص بناء": "BP" };
@@ -2168,6 +2287,8 @@ function wkView(p, c, W){
 function pTimeline(p, W){
   const ts = s => { try { return s ? parse(s).getTime() : 0; } catch { return 0; } }, ev = [];
   p.log.forEach(x => x.date && ev.push([ts(x.date), "💬", `${x.kind || "حدث"}: ${x.subject || x.details || ""}`]));
+  (p.journal || []).forEach(x => x.date && !x.auto && ev.push([ts(x.date), "📒", x.text || ""]));
+  (p.mails || []).forEach(x => x.date && ev.push([ts(x.date), x.dir === "out" ? "📤" : "📥", `${x.dir === "out" ? "إيميل صادر" : "إيميل وارد"}: ${x.subject || ""}`]));
   W.forEach(x => { if (x.done && x.doneAt) ev.push([x.doneAt, "✅", "أُنجز: " + x.title]); else if (x.createdAt) ev.push([x.createdAt, "➕", "عمل جديد: " + x.title]); });
   p.claims.forEach(x => { if (x.date && num(x.amount)) ev.push([ts(x.date), "🧾", `مطالبة ${x.inv || ""} ${x.phase ? "– " + x.phase : ""} (${money(num(x.amount))})`]); if (x.paidDate && num(x.paid)) ev.push([ts(x.paidDate), "💰", `تحصيل ${money(num(x.paid))}${x.phase ? " – " + x.phase : ""}`]); });
   p.docs.forEach(d => d.at && ev.push([d.at, "📎", `${d.cat || "ملف"}: ${d.name}`]));
@@ -2192,10 +2313,13 @@ function claimSugs(p, x, i){ const d = x.date ? new Date(x.date + "T00:00:00") :
   const other = ["دفعة مقدمة", "دفعة ربع سنوية", "دفعة ختامية", "المحتجزات (ضمان الأعمال)", "أعمال إضافية / أمر تغيير"];
   const adn = (p.adds || []).filter(a => a.status !== "proposed").map(adName);
   return adn.concat(sup ? monthly.concat(other) : other.slice(0, 1).concat(monthly, other.slice(1))); }
-function pmig(p){ if (!p.v2) { const r = prate(p); (p.claims || []).forEach(c => { if (num(c.amount)) c.amount = Math.round(num(c.amount) * (1 + r) * 100) / 100; }); p.taxMode = p.taxMode || "ex"; p.v2 = 1; } p.phases = p.phases || []; p.adds = p.adds || []; p.claims = p.claims || []; p.expenses = p.expenses || []; p.docs = p.docs || []; p.log = p.log || []; p.clash = p.clash || []; p.steps = p.steps || []; return p; }
+function pmig(p){ if (!p.v2) { const r = prate(p); (p.claims || []).forEach(c => { if (num(c.amount)) c.amount = Math.round(num(c.amount) * (1 + r) * 100) / 100; }); p.taxMode = p.taxMode || "ex"; p.v2 = 1; } p.phases = p.phases || []; p.adds = p.adds || []; p.claims = p.claims || []; p.expenses = p.expenses || []; p.docs = p.docs || []; p.log = p.log || []; p.clash = p.clash || []; p.steps = p.steps || []; p.journal = p.journal || []; p.hours = p.hours || []; p.mails = p.mails || []; if (!num(p.agreed) && num(p.price)) p.agreed = p.price; return p; }
+function pMonths(p){ const s = p.start, e = p.end || ((p.steps || []).map(x => x.due).filter(Boolean).sort().pop()) || ""; if (!s || !e || e <= s) return 0; return Math.max(daysBetween(s, e) / 30.44, 0.5); }
+function pTime(p, A, exp){ const mo = pMonths(p), H = (p.hours || []).reduce((t, x) => t + num(x.h), 0), hc = num(p.hourCost), labor = H * hc, estH = num(p.estH);
+  return { mo, moRev: mo ? A / mo : 0, moProfit: mo ? (A - exp) / mo : 0, H, hc, labor, estH, rateAct: H ? A / H : 0, rateEst: estH ? A / estH : 0, netAfterLabor: A - exp - labor, marginLabor: A ? (A - exp - labor) / A : 0 }; }
 function pcalc(p){
   pmig(p); const rate = prate(p);
-  const base = num(p.agreed) || (p.status === "quote" ? num(p.price) : 0);
+  const base = num(p.agreed) || num(p.price);
   const { A: A0, V: V0, T: T0 } = parts(base, p), P = parts(p.price, p);
   const adds = (p.adds || []).map(a => ({ ...a, ...parts(a.amount, p), claimed: p.claims.some(c => c.phase === adName(a)) })), inA = adds.filter(a => a.status !== "proposed");
   const AA = inA.reduce((s, a) => s + a.A, 0), AV = inA.reduce((s, a) => s + a.V, 0), AT = inA.reduce((s, a) => s + a.T, 0), A = A0 + AA, V = V0 + AV, T = T0 + AT;
@@ -2207,7 +2331,7 @@ function pcalc(p){
   const claimed = cl.reduce((s, x) => s + x.inc, 0), paid = cl.reduce((s, x) => s + x.pd, 0);
   const exp = p.expenses.reduce((s, x) => s + num(x.amount), 0), paidNet = paid / (1 + rate);
   return { rate, A, V, T, T0, A0, adds, AT, P, ph, phPct, prog, payProg, stN, stD, cl, claimed, paid, out: Math.max(T - paid, 0), col: T ? paid / T : 0, exp, profit: A - exp, margin: A ? (A - exp) / A : 0,
-    paidNet, realized: paidNet - exp, vatCollected: paid - paidNet, unclaimed: Math.max(T - claimed, 0), dueCl: cl.filter(x => x.inc && x.st !== "paid"), late: cl.filter(x => x.st === "late") };
+    ...pTime(p, A, exp), paidNet, realized: paidNet - exp, vatCollected: paid - paidNet, unclaimed: Math.max(T - claimed, 0), dueCl: cl.filter(x => x.inc && x.st !== "paid"), late: cl.filter(x => x.st === "late") };
 }
 const CLST = { draft: ["مسودة","mut"], due: ["مستحقة","doing"], part: ["مدفوعة جزئياً","wait"], paid: ["مدفوعة","done"], late: ["متأخرة +30 يوماً","late"] };
 const spill = (l, c) => `<span class="spill s-${c}">${esc(l)}</span>`;
@@ -2225,7 +2349,7 @@ const pEdit = () => PRIV() || can("projectsEdit");
 function projectsView(){
   if (!PRIV() && !can("projects")) return `<div class="empty">ليس لديك صلاحية مشاهدة المشاريع</div>`;
   if (projOpen) { if (!projDraft) { const p = PROJECTS.find(x => x.id === projOpen); if (!p) { projOpen = null; return projectsView(); } projDraft = pmig(JSON.parse(JSON.stringify(p))); } return projectDetail(projDraft); }
-  return projHead() + (projTab === "dash" ? projDash() : projList());
+  return projHead() + (projTab === "dash" ? projDash() : projTab === "quotes" ? quotesView() : projList());
 }
 function kpi(label, val, sub, cls, go){ return `<div class="kpi ${cls || ""}" ${go ? `data-pgo="${go}" title="اضغط للانتقال للتفاصيل"` : ""}>${kic(label)}<span class="kl">${label}</span><b>${val}</b>${sub ? `<small>${sub}</small>` : ""}</div>`; }
 function donut(segs, total, center, sub){
@@ -2234,7 +2358,7 @@ function donut(segs, total, center, sub){
   return `<svg viewBox="0 0 140 140" class="donut"><circle r="${R}" cx="70" cy="70" fill="none" stroke="var(--surface2)" stroke-width="18"/>${arcs}<text x="70" y="68" text-anchor="middle" class="dc">${center}</text><text x="70" y="88" text-anchor="middle" class="ds">${sub}</text></svg>`;
 }
 function projDash(){
-  const P = PV().map(p => ({ p, c: pcalc(p) })); const con = P.filter(x => x.p.status !== "quote");
+  const P = PV().map(p => ({ p, c: pcalc(p) })); const con = P.filter(x => !QST.has(x.p.status));
   const sum = (a, f) => a.reduce((s, x) => s + f(x), 0);
   const T = sum(con, x => x.c.T), paid = sum(con, x => x.c.paid), exp = sum(con, x => x.c.exp), A = sum(con, x => x.c.A);
   const quotes = P.filter(x => x.p.status === "quote"), qVal = sum(quotes, x => x.c.P.T || x.c.T), active = P.filter(x => x.p.status === "active").length;
@@ -2248,7 +2372,7 @@ function projDash(){
   </div>
   <div class="sk"><div data-dd="count"><span>عدد المشاريع</span><b>${P.length}</b></div><div data-dd="quotes"><span>عروض أسعار قائمة</span><b>${quotes.length}</b><small>${kmoney(qVal)} ر.س</small></div>
     <div data-dd="pretax"><span>قيمة العقود قبل الضريبة</span><b>${kmoney(A)}</b></div><div data-dd="expenses"><span>المصاريف</span><b>${kmoney(exp)}</b></div>
-    <div data-dd="late" class="${lateN ? "bad" : ""}"><span>مطالبات متأخرة</span><b>${lateN}</b></div><div data-dd="progress"><span>متوسط الإنجاز</span><b>${Math.round(con.length ? sum(con, x => x.c.prog) / con.length : 0)}%</b></div></div>`;
+    <div data-dd="late" class="${lateN ? "bad" : ""}"><span>مطالبات متأخرة</span><b>${lateN}</b></div>${(() => { const run = con.filter(x => (x.p.status === "active" || x.p.status === "contract") && x.c.mo); const mr = run.reduce((s, x) => s + x.c.moRev, 0), mp = run.reduce((s, x) => s + x.c.moProfit, 0); return `<div data-dd="contracts" title="مجموع متوسط الإيراد الشهري للعقود الجارية (قيمة العقد ÷ مدته)"><span>متوسط الدخل الشهري المتوقع</span><b>${kmoney(mr)}</b><small>${run.length} عقد جاري</small></div><div data-dd="profit" class="${mp < 0 ? "bad" : ""}" title="بعد خصم المصاريف"><span>متوسط الربح الشهري بعد المصاريف</span><b>${kmoney(mp)}</b></div>`; })()}<div data-dd="progress"><span>متوسط الإنجاز</span><b>${Math.round(con.length ? sum(con, x => x.c.prog) / con.length : 0)}%</b></div></div>`;
   const segs = PST.map(([k, l, c]) => ({ l, c: PCOL[c], v: P.filter(x => x.p.status === k).length }));
   const stat = `<div class="dwrap">${donut(segs, Math.max(P.length, 1), P.length, "مشروع")}<ul class="dleg">${segs.map(s => `<li><i style="background:${s.c}"></i>${s.l}<b>${s.v}</b></li>`).join("")}</ul></div>`;
   const types = [...new Set(P.map(x => ptLabel(x.p)))].map(t => ({ t, v: sum(con.filter(x => ptLabel(x.p) === t), x => x.c.T), n: P.filter(x => ptLabel(x.p) === t).length })).sort((a, b) => b.v - a.v);
@@ -2293,7 +2417,7 @@ function projDash(){
 let projTab = (() => { try { return localStorage.getItem("yw_ptab") || "list"; } catch { return "list"; } })();
 function projHead(){ const P = PV(), act = P.filter(p => p.status === "active").length, due = P.reduce((n, p) => n + pcalc(p).dueCl.length, 0);
   return `<div class="phead"><div><h2>المشاريع</h2><div class="sub">${PRIV() ? "🔒 مشاريعك الخاصة · " : ""}${P.length} مشروع · ${act} جاري العمل${due ? ` · ${due} مطالبة مستحقة` : ""} · ${esc(gFmtY.format(new Date()))}</div></div>${pEdit() ? `<button class="btn gold" data-pnew>+ مشروع جديد</button>` : `<span class="tag member">عرض فقط</span>`}</div>
-  <div class="ptabs" role="tablist">${[["list", "📋", "المشاريع", P.length], ["dash", "📊", "لوحة المؤشرات", ""]].map(([k, i, l, n]) => `<button type="button" role="tab" class="ptab${projTab === k ? " on" : ""}" data-ptab="${k}" aria-selected="${projTab === k}"><i>${i}</i>${l}${n !== "" ? `<small>${n}</small>` : ""}</button>`).join("")}</div>`; }
+  <div class="ptabs" role="tablist">${[["list", "📋", "المشاريع", P.filter(p => !QST.has(p.status)).length], ["quotes", "📝", "عروض الأسعار", P.filter(p => p.status === "quote").length], ["dash", "📊", "لوحة المؤشرات", ""]].map(([k, i, l, n]) => `<button type="button" role="tab" class="ptab${projTab === k ? " on" : ""}" data-ptab="${k}" aria-selected="${projTab === k}"><i>${i}</i>${l}${n !== "" ? `<small>${n}</small>` : ""}</button>`).join("")}</div>`; }
 function projList(){
   const q = projQ.trim(); const PP = PV(); let L = PP.map(p => ({ p, c: pcalc(p) }));
   if (projF !== "all") L = L.filter(x => x.p.status === projF);
@@ -2335,7 +2459,7 @@ function projectDetail(p){
   const c = pcalc(p); const st = PSTL[p.status] || PSTL.contract;
   const inp = (k, lbl, type, extra) => `<label>${lbl}<input ${type ? `type="${type}"` : ""} data-pf="${k}" value="${esc(p[k] ?? "")}" ${extra || ""}></label>`;
   const phRows = c.ph.map((x, i) => `<tr class="${x.status === "done" ? "phdone" : ""}"><td class="ix">${i + 1}</td><td><input data-row="phases" data-i="${i}" data-k="name" value="${esc(x.name)}" placeholder="اختر أو اكتب اسم المرحلة" list="phSug"></td>
-    <td><input class="nn sm" type="number" step="0.01" data-row="phases" data-i="${i}" data-k="pct" value="${esc(x.pct)}"></td><td class="n" data-c="ph${i}"><b>${money(x.amt)}</b></td><td class="n mutd" data-c="phv${i}">${money(x.amt - x.ex)}</td>
+    <td><input class="nn sm" type="number" step="0.01" data-row="phases" data-i="${i}" data-k="pct" value="${esc(x.pct)}"></td><td class="n" data-c="ph${i}"><b>${money(x.amt)}</b></td><td class="n mutd" data-c="phv${i}">${money(x.amt - x.ex)}</td><td class="n gd">${money(x.ex * c.margin)}</td>
     <td><input type="date" data-row="phases" data-i="${i}" data-k="due" value="${esc(x.due)}"></td><td><select class="phst s-${x.status}" data-row="phases" data-i="${i}" data-k="status">${PHST.map(([k, l]) => `<option value="${k}" ${x.status === k ? "selected" : ""}>${l}</option>`).join("")}</select></td>
     <td>${x.claimed ? spill("صدرت مطالبة", "done") : `<button class="btn ghost xs" data-mkclaim="${i}">إصدار مطالبة</button>`}</td>
     <td><button class="rm" data-rm="phases" data-i="${i}" title="حذف">×</button></td></tr>`).join("");
@@ -2368,7 +2492,7 @@ function projectDetail(p){
     ${kpi("المصاريف", `<span data-c="exp">${SAR(c.exp)}</span>`, "", "", "sec-ex")}
     ${kpi("الربح المتوقع", `<span data-c="profit">${SAR(c.profit)}</span>`, `هامش <span data-c="margin">${pct(c.margin)}</span>`, "", "sec-fin")}
     ${kpi("الربح المحقق", `<span data-c="real">${SAR(c.realized)}</span>`, "المحصّل صافي − المصاريف", "", "sec-fin")}
-    ${kpi("السعر المقترح", `<span data-c="PT">${SAR(c.P.T)}</span>`, "شامل الضريبة", "", "sec-basic")}
+    ${kpi("متوسط الربح الشهري", `<span>${c.mo ? SAR(c.moProfit) : "—"}</span>`, c.mo ? `إيراد شهري ${kmoney(c.moRev)} · مدة ${Math.round(c.mo * 10) / 10} شهر` : "حدد البداية والانتهاء", "", "sec-fin")}
   </div>`)}
   ${S("info", `<div class="panel" id="sec-basic"><h3>البيانات الأساسية</h3><div class="pform">
     ${inp("name", "اسم المشروع *")}${inp("code", "كود المشروع", "", 'dir="ltr" placeholder="يُولَّد تلقائياً"')}<button type="button" class="linkbtn gcl" data-gcodes>🏷️ دليل الأكواد</button>${inp("client", "العميل", "", 'list="cliList"')}
@@ -2381,24 +2505,25 @@ function projectDetail(p){
     ${inp("start", "تاريخ البداية", "date")}${inp("end", "تاريخ الانتهاء المتوقع", "date")}
     <label>المبالغ المدخلة<select data-pf="taxMode"><option value="ex" ${p.taxMode !== "inc" ? "selected" : ""}>غير شاملة الضريبة (تُضاف الضريبة)</option><option value="inc" ${p.taxMode === "inc" ? "selected" : ""}>شاملة الضريبة</option></select></label>
     ${inp("vat", "نسبة الضريبة %", "number", 'step="0.01"')}<span></span>
-    ${inp("price", "السعر المقترح", "number", 'step="0.01"')}${inp("agreed", "السعر المتفق عليه", "number", 'step="0.01"')}<span></span>
+    ${inp("agreed", p.status === "quote" || p.status === "lost" ? "قيمة العرض" : "السعر المتفق عليه (قيمة العقد)", "number", 'step="0.01"')}<span></span><span></span>
   </div>
   <div class="vtable"><table><tr><th></th><th>قبل الضريبة</th><th>الضريبة</th><th>الإجمالي شامل الضريبة</th></tr>
-    <tr><td>السعر المقترح</td><td class="n" data-c="PA">${money(c.P.A)}</td><td class="n" data-c="PV">${money(c.P.V)}</td><td class="n" data-c="PT2"><b>${money(c.P.T)}</b></td></tr>
     <tr class="hl2"><td>المتفق عليه</td><td class="n" data-c="A2">${money(c.A)}</td><td class="n" data-c="V2">${money(c.V)}</td><td class="n" data-c="T2"><b>${money(c.T)}</b></td></tr></table></div>
   <label class="w2 dsc">وصف مختصر<input data-pf="desc" value="${esc(p.desc || "")}"></label></div>`)}
+  ${S("journal", journalView(p))}
   ${S("steps", stepsView(p, c))}
   ${S("pay", `<div class="panel" id="sec-ph"><h3>المراحل والدفعات <small data-c="phpct" class="${Math.round(c.phPct) === 100 ? "" : "warnt"}">مجموع النسب ${Math.round(c.phPct * 100) / 100}%</small></h3>
     <div class="hint">تُحتسب النسب من <b>الإجمالي شامل الضريبة</b>، وتتوزع <b>تلقائياً</b>: عدّل نسبة أي دفعة ويُعاد توزيع الباقي على الدفعات غير المنجزة ليبقى المجموع 100%. عند تحويل حالة المرحلة لـ <b>منجزة</b> تصدر مطالبة تلقائياً بقيمتها.${pEdit() ? ` <button type="button" class="btn ghost xs" data-pheq>⚖️ وزّع النسب بالتساوي</button>` : ""}</div>
     ${pEdit() ? phTplView(p) : ""}<datalist id="phSug">${phSugFor(p).map(s => `<option value="${esc(s)}">`).join("")}</datalist>
-    <div class="tblwrap"><table class="etable"><tr><th>#</th><th>المرحلة</th><th>النسبة %</th><th>المبلغ شامل الضريبة</th><th>منها ضريبة</th><th>تاريخ الاستحقاق</th><th>الحالة</th><th>المطالبة</th><th></th></tr>${phRows}
-    <tr class="tot"><td colspan="3">الإجمالي</td><td class="n" data-c="phsum">${money(c.ph.reduce((s, x) => s + x.amt, 0))}</td><td colspan="5"></td></tr></table></div>
+    <div class="tblwrap"><table class="etable"><tr><th>#</th><th>المرحلة</th><th>النسبة %</th><th>المبلغ شامل الضريبة</th><th>منها ضريبة</th><th title="حصة الدفعة من صافي الربح المتوقع بعد المصاريف">منها ربح متوقع</th><th>تاريخ الاستحقاق</th><th>الحالة</th><th>المطالبة</th><th></th></tr>${phRows}
+    <tr class="tot"><td colspan="3">الإجمالي</td><td class="n" data-c="phsum">${money(c.ph.reduce((s, x) => s + x.amt, 0))}</td><td></td><td class="n gd">${money(c.ph.reduce((s, x) => s + x.ex, 0) * c.margin)}</td><td colspan="4"></td></tr></table></div>
     <button class="btn ghost addr" data-add="phases">+ إضافة مرحلة</button></div>
   ${addsView(p, c)}
   <div class="panel" id="sec-cl"><h3>المطالبات والدفعات</h3>${clSum(c)}
     <div class="tblwrap"><table class="etable"><tr><th>المرحلة</th><th>رقم الفاتورة</th><th>تاريخ المطالبة</th><th>قيمة المطالبة (شامل)</th><th>منها ضريبة</th><th>المدفوع</th><th>تاريخ الدفع</th><th>الحالة</th><th></th></tr>${clRows}
     <tr class="tot"><td colspan="3">الإجمالي</td><td class="n" data-c="claimed">${money(c.claimed)}</td><td></td><td class="n" data-c="paid2">${money(c.paid)}</td><td colspan="3">غير مُطالب به: <b data-c="unclaimed">${money(c.unclaimed)}</b></td></tr></table></div>
     <button class="btn ghost addr" data-add="claims">+ إضافة مطالبة يدوية</button></div>`)}
+  ${S("mails", mailsView(p))}
   ${S("clash", clashView(p))}
   ${S("fin", `<div class="panel" id="sec-ex"><h3>المصاريف</h3>
     <div class="tblwrap"><table class="etable"><tr><th>البند</th><th>التصنيف</th><th>التاريخ</th><th>المبلغ</th><th></th></tr>${exRows}<tr class="tot"><td colspan="3">إجمالي المصاريف</td><td class="n" data-c="exp2">${money(c.exp)}</td><td></td></tr></table></div>
@@ -2409,12 +2534,15 @@ function projectDetail(p){
       <tr><td>إجمالي المصاريف</td><td class="n" data-c="fE">(${money(c.exp)})</td></tr>
       <tr class="b"><td>صافي الربح المتوقع</td><td class="n" data-c="fP">${money(c.profit)}</td></tr>
       <tr><td>هامش الربح</td><td class="n" data-c="fM">${pct(c.margin)}</td></tr>
+      <tr class="sep"><td>مدة المشروع</td><td class="n">${c.mo ? Math.round(c.mo * 10) / 10 + " شهر" : "حدد تاريخ البداية والانتهاء"}</td></tr>
+      <tr><td>متوسط الإيراد الشهري (قبل الضريبة)</td><td class="n">${c.mo ? money(c.moRev) : "—"}</td></tr>
+      <tr class="b"><td>متوسط الربح الشهري بعد المصاريف</td><td class="n">${c.mo ? money(c.moProfit) : "—"}</td></tr>
       <tr class="sep"><td>المحصّل صافي (بدون الضريبة)</td><td class="n" data-c="fN">${money(c.paidNet)}</td></tr>
       <tr class="b"><td>الربح المحقق حتى الآن</td><td class="n" data-c="fR">${money(c.realized)}</td></tr>
       <tr><td>ضريبة القيمة المضافة المحصّلة (للتوريد)</td><td class="n" data-c="fV">${money(c.vatCollected)}</td></tr></table>
     <div class="rvbar"><div><span>الإيراد</span><i class="f-doing" style="width:100%"></i></div><div><span>المصاريف</span><i class="f-late" data-c-w="expw" style="width:${c.A ? Math.min(c.exp / c.A, 1) * 100 : 0}%"></i></div><div><span>المحصّل</span><i class="f-done" data-c-w="paidw" style="width:${c.T ? Math.min(c.paid / c.T, 1) * 100 : 0}%"></i></div></div></div>
     <div class="panel"><h3>المصاريف حسب التصنيف</h3>${byCat.length ? byCat.map(([k, v]) => `<div class="hb" title="${k}: ${money(v)}"><span class="hl">${k}</span><span class="ht"><i class="f-late" style="width:${v / maxCat * 100}%"></i></span><b>${kmoney(v)}</b></div>`).join("") : `<div class="empty" style="padding:10px">لا مصاريف مسجلة</div>`}</div>
-  </div>`)}
+  </div>${hoursView(p, c)}`)}
   ${S("docs", `<div class="panel" id="sec-docs"><h3>ملفات المشروع <small>${p.docs.length} ملف</small></h3>
     <div class="dochead"><select id="docCat" aria-label="تصنيف الملف">${DOCCAT.map(k => `<option ${docCat === k ? "selected" : ""}>${k}</option>`).join("")}</select>
       <label class="upbtn">⬆ رفع ملف<input type="file" data-pupload multiple hidden></label>
@@ -2440,10 +2568,10 @@ function projectDetail(p){
   </div>`)}</div>`;
 }
 let projSec = "status", stTpl = "";
-const PSEC = [["status","📊","حالة المشروع"],["steps","🪜","الخطوات الفنية"],["pay","💰","الدفعات والمطالبات"],["work","📐","الأعمال والمهام"],["clash","⚠️","تعارضات الأقسام"],["docs","📎","الملفات"],["log","💬","المراسلات"],["fin","🧾","المصاريف والربحية"],["info","ℹ️","البيانات الأساسية"],["all","☰","عرض الكل"]];
+const PSEC = [["status","📊","حالة المشروع"],["journal","📒","يوميات المشروع"],["steps","🪜","الخطوات والجدول الزمني"],["pay","💰","الدفعات والمطالبات"],["work","📐","الأعمال والمهام"],["mails","📧","الإيميلات"],["clash","⚠️","تعارضات الأقسام"],["docs","📎","الملفات"],["log","💬","المراسلات والأحداث"],["fin","🧾","المالية والساعات"],["info","ℹ️","البيانات الأساسية"],["all","☰","عرض الكل"]];
 const PSECOF = { "sec-basic": "info", "sec-cl": "pay", "sec-ph": "pay", "sec-wk": "work", "sec-ex": "fin", "sec-fin": "fin", "sec-steps": "steps" };
 function pNav(p, c, W){ const opW = W.filter(x => !x.done).length, cxO = (p.clash || []).filter(x => !x.closedAt).length;
-  const b = { status: Math.round(c.prog) + "%", steps: c.stN ? `${c.stD}/${c.stN}` : "", pay: c.dueCl.length ? `${c.dueCl.length} مستحقة` : "", work: opW ? `${opW} مفتوحة` : "", clash: cxO ? `${cxO} مفتوحة` : "", docs: p.docs.length || "", log: p.log.length || "", fin: p.expenses.length ? kmoney(c.exp) : "", info: p.code || "", all: "" };
+  const mO = (p.mails || []).filter(x => x.st !== "closed" && x.st !== "replied").length; const b = { journal: (p.journal || []).length || "", mails: mO ? `${mO} تحتاج رد` : ((p.mails || []).length || ""), status: Math.round(c.prog) + "%", steps: c.stN ? `${c.stD}/${c.stN}` : "", pay: c.dueCl.length ? `${c.dueCl.length} مستحقة` : "", work: opW ? `${opW} مفتوحة` : "", clash: cxO ? `${cxO} مفتوحة` : "", docs: p.docs.length || "", log: p.log.length || "", fin: p.expenses.length ? kmoney(c.exp) : "", info: p.code || "", all: "" };
   const warn = { pay: c.late.length > 0, clash: (p.clash || []).some(x => !x.closedAt && x.crit), steps: (p.steps || []).some(x => !x.done && x.due && x.due < today()) };
   return `<nav class="psnav" aria-label="أقسام المشروع">${PSEC.map(([k, i, l]) => `<button type="button" class="psn${projSec === k ? " on" : ""}${warn[k] ? " wr" : ""}" data-psec="${k}" aria-pressed="${projSec === k}"><i>${i}</i><span>${l}</span>${b[k] !== "" && b[k] != null ? `<small>${esc(String(b[k]))}</small>` : ""}</button>`).join("")}</nav>`; }
 function pStatusDash(p, c, W){ const t = today(), st = (p.steps || []).filter(x => x.name);
@@ -2471,7 +2599,9 @@ function pStatusDash(p, c, W){ const t = today(), st = (p.steps || []).filter(x 
     <div class="phlg"><span><i class="pd"></i>محصّلة</span><span><i class="cl"></i>صدرت مطالبتها</span><span><i></i>لم يُطالب بها</span></div>` : ""}
     <div class="sdk"><div class="${c.late.length ? "bad" : ""}" data-psec="pay"><b>${c.late.length}</b><span>مطالبات متأخرة</span></div><div data-psec="pay"><b>${c.dueCl.length}</b><span>مطالبات مستحقة</span></div><div data-psec="fin"><b>${pct(c.margin)}</b><span>هامش الربح</span></div><div data-psec="fin"><b>${kmoney(c.exp)}</b><span>المصاريف</span></div></div></div>`;
   return `<div class="pgrid">${sP}${fP}</div>`; }
+const LIFE_TPL = "🏡 دورة مشروع فيلا كاملة (من الرفع المساحي حتى شهادة الإشغال)";
 const STEP_TPL = {
+  [LIFE_TPL]: ["الرفع المساحي", "القرار المساحي", "اختبار التربة", "الفكرة المعمارية", "موافقة العميل على الفكرة", "التصميم المبدئي", "اعتماد التصميم المبدئي", "التصميم النهائي", "المخططات التنفيذية (معماري - إنشائي - كهرباء - ميكانيكا)", "اشتراطات الدفاع المدني", "إصدار رخصة البناء", "استلام الموقع وبدء التنفيذ", "الإشراف — أعمال الحفر والأساسات", "الإشراف — الهيكل الإنشائي", "الإشراف — الأعمال الكهروميكانيكية", "الإشراف — التشطيبات", "الاستلام الابتدائي", "الاستلام النهائي", "إصدار شهادة الإشغال"],
   "تصميم معماري": ["فكرة معمارية", "اعتماد فكرة معمارية", "قرار مساحي", "اختبار تربة", "التصميم المبدئي", "اعتماد التصميم المبدئي", "التصميم النهائي", "تسليم المخططات"],
   "مخططات تنفيذية": ["استلام التصميم المعتمد", "المخططات المعمارية التنفيذية", "المخططات الإنشائية", "المخططات الكهربائية", "المخططات الميكانيكية والصحية", "التنسيق بين الأقسام", "المراجعة الداخلية", "التسليم واعتماد العميل"],
   "إصدار رخص بناء": ["قرار مساحي", "اختبار تربة", "فكرة معمارية", "اعتماد فكرة معمارية", "مخططات الرخصة (معماري - إنشائي - كهرباء - ميكانيكا)", "اشتراطات الدفاع المدني", "الرفع على منصة بلدي", "سداد الرسوم", "إصدار رخصة البناء"],
@@ -2484,16 +2614,17 @@ const STEP_TPL = {
   "دراسات واستشارات": ["جمع البيانات", "زيارة الموقع", "التحليل", "المسودة الأولى", "اعتماد المسودة", "التقرير النهائي"],
   "تصميم داخلي": ["المفهوم التصميمي", "اعتماد المفهوم", "المخططات والواجهات الداخلية", "الإظهار ثلاثي الأبعاد", "جداول المواد والكميات", "تسليم المخططات"] };
 const myStpl = () => (ME && ME.prefs && ME.prefs.stpl) || {};
-function stepTpls(p){ const o = {}; Object.entries(myStpl()).forEach(([k, v]) => o["⭐ " + k] = v); ptypes(p).forEach(t => { if (STEP_TPL[t]) o[t] = STEP_TPL[t]; }); Object.keys(STEP_TPL).forEach(t => { if (!o[t]) o[t] = STEP_TPL[t]; }); return o; }
+function stepTpls(p){ const o = {}; Object.entries(myStpl()).forEach(([k, v]) => o["⭐ " + k] = v); o[LIFE_TPL] = STEP_TPL[LIFE_TPL]; ptypes(p).forEach(t => { if (STEP_TPL[t]) o[t] = STEP_TPL[t]; }); Object.keys(STEP_TPL).forEach(t => { if (!o[t]) o[t] = STEP_TPL[t]; }); return o; }
 const newStep = n => ({ name: n || "", done: false, doneAt: "", due: "", claim: false, ph: "" });
 function stepsView(p, c){ const ed = pEdit(), t = today(), T = stepTpls(p), keys = Object.keys(T); if (!stTpl || !T[stTpl]) stTpl = keys[0];
   const have = new Set(p.steps.map(x => normN(x.name))), phN = p.phases.map(x => x.name).filter(Boolean);
   const rows = p.steps.map((x, i) => { const lt = !x.done && x.due && x.due < t, ph = c.ph.find(y => y.name === x.ph);
     return `<tr class="${x.done ? "phdone" : ""}${lt ? " wl" : ""}"><td class="ix">${i + 1}</td><td><button type="button" class="wkchk" data-stdone="${i}" title="${x.done ? "إرجاع" : "تم الإنجاز"}" ${ed ? "" : "disabled"}>${x.done ? "✓" : ""}</button></td>
-    <td><input data-row="steps" data-i="${i}" data-k="name" value="${esc(x.name || "")}" placeholder="اسم الخطوة" list="stSug"></td>
-    <td><input type="date" data-row="steps" data-i="${i}" data-k="due" value="${esc(x.due || "")}" aria-label="التاريخ المستهدف"></td>
-    <td class="nw">${x.done ? "✓ " + esc(x.doneAt ? nice(x.doneAt) : "") : lt ? `<span class="warnt">متأخرة ${daysBetween(x.due, t)} يوم</span>` : "—"}</td>
-    <td class="stcl"><label class="stc${x.claim ? " on" : ""}"><input type="checkbox" data-stclaim="${i}" ${x.claim ? "checked" : ""} ${ed ? "" : "disabled"}> 💰 مطالبة مستحقة</label>${x.claim ? `<select data-row="steps" data-i="${i}" data-k="ph" aria-label="الدفعة المرتبطة"><option value="">— اختر الدفعة —</option>${phN.map(n => `<option ${x.ph === n ? "selected" : ""}>${esc(n)}</option>`).join("")}</select>${ph ? (ph.claimed ? spill("صدرت المطالبة", "done") : `<small>${num(ph.pct)}% · ${money(ph.amt)} ر.س</small>`) : ""}` : ""}</td>
+    <td><input data-row="steps" data-i="${i}" data-k="name" value="${esc(x.name || "")}" placeholder="اسم الخطوة" list="stSug"><input class="stn" data-row="steps" data-i="${i}" data-k="note" value="${esc(x.note || "")}" placeholder="تفاصيل / ملاحظات الخطوة…"></td>
+    <td><input class="sm" data-row="steps" data-i="${i}" data-k="owner" value="${esc(x.owner || "")}" list="usrList" placeholder="المسؤول"></td>
+    <td class="nw">${x.done ? "✓ " + esc(x.doneAt ? nice(x.doneAt) : "") + (x.doneBy ? `<small>${esc(x.doneBy)}</small>` : "") : lt ? `<span class="warnt">متأخرة ${daysBetween(x.due, t)} يوم</span>` : "—"}</td>
+    <td><input type="date" data-row="steps" data-i="${i}" data-k="start" value="${esc(x.start || "")}" aria-label="تاريخ البداية"></td>
+    <td><input type="date" data-row="steps" data-i="${i}" data-k="due" value="${esc(x.due || "")}" aria-label="التاريخ المستهدف"></td><td class="stcl"><label class="stc${x.claim ? " on" : ""}"><input type="checkbox" data-stclaim="${i}" ${x.claim ? "checked" : ""} ${ed ? "" : "disabled"}> 💰 مطالبة مستحقة</label>${x.claim ? `<select data-row="steps" data-i="${i}" data-k="ph" aria-label="الدفعة المرتبطة"><option value="">— اختر الدفعة —</option>${phN.map(n => `<option ${x.ph === n ? "selected" : ""}>${esc(n)}</option>`).join("")}</select>${ph ? (ph.claimed ? spill("صدرت المطالبة", "done") : `<small>${num(ph.pct)}% · ${money(ph.amt)} ر.س</small>`) : ""}` : ""}</td>
     <td class="nw">${ed && i > 0 ? `<button type="button" class="rm mv" data-stmv="${i}" title="تحريك لأعلى">↑</button>` : ""}${ed ? `<button class="rm" data-rm="steps" data-i="${i}" title="حذف">×</button>` : ""}</td></tr>`; }).join("");
   const miss = (T[stTpl] || []).filter(n => !have.has(normN(n)));
   const tplBar = ed ? `<div class="sttpl"><label>قالب الخطوات <select id="stTplSel">${keys.map(k => `<option ${k === stTpl ? "selected" : ""}>${esc(k)}</option>`).join("")}</select></label>${miss.length ? `<button type="button" class="btn gold xs" data-stapply>➕ أضف خطوات القالب (${miss.length})</button>` : ""}${p.steps.length ? `<button type="button" class="btn ghost xs" data-stsave>⭐ احفظ خطوات المشروع كقالب خاص</button>` : ""}
@@ -2501,13 +2632,14 @@ function stepsView(p, c){ const ed = pEdit(), t = today(), T = stepTpls(p), keys
   return `<div class="panel" id="sec-steps"><h3>🪜 الخطوات الفنية للمشروع <small>${c.stN ? `${c.stD} من ${c.stN} منجزة · ${Math.round(c.prog)}%` : "منفصلة عن مراحل الدفع"}</small></h3>
     <div class="mini g w" style="margin:4px 0 10px"><i style="width:${Math.min(c.prog, 100)}%"></i></div>
     <div class="hint">نسبة إنجاز المشروع تُحسب <b>تلقائياً</b> من عدد الخطوات المنجزة. فعّل <b>«💰 مطالبة مستحقة»</b> على الخطوة واختر الدفعة المرتبطة بها، وعند إنجاز الخطوة تصدر مطالبتها تلقائياً في «الدفعات والمطالبات».</div>
-    ${tplBar}<datalist id="stSug">${[...new Set(Object.values(STEP_TPL).flat())].map(n => `<option value="${esc(n)}">`).join("")}</datalist>
-    ${p.steps.length ? `<div class="tblwrap"><table class="etable sttable"><tr><th>#</th><th></th><th>الخطوة</th><th>التاريخ المستهدف</th><th>الإنجاز</th><th>المطالبة</th><th></th></tr>${rows}</table></div>` : `<div class="empty" style="padding:10px">اختر قالباً بالأعلى وأضف خطواته، أو أضف خطواتك الخاصة</div>`}
+    ${ganttView(p)}${tplBar}<datalist id="stSug">${[...new Set(Object.values(STEP_TPL).flat())].map(n => `<option value="${esc(n)}">`).join("")}</datalist>
+    ${p.steps.length ? `<div class="tblwrap"><table class="etable sttable"><tr><th>#</th><th></th><th>الخطوة والتفاصيل</th><th>المهندس المسؤول</th><th>الإنجاز</th><th>البداية</th><th>الموعد المستهدف</th><th>دفعة مستحقة</th><th></th></tr>${rows}</table></div>` : `<div class="empty" style="padding:10px">اختر قالباً بالأعلى وأضف خطواته، أو أضف خطواتك الخاصة</div>`}
     ${ed ? `<button class="btn ghost addr" data-add="steps">+ إضافة خطوة</button>` : ""}</div>`; }
 function stepClaim(i){ const p = projDraft, x = p.steps[i]; if (!x || !x.claim) return; const idx = p.phases.findIndex(y => y.name && y.name === x.ph);
   if (idx < 0) { toast("اختر الدفعة المرتبطة بالخطوة لتصدر مطالبتها", true); return; }
   if (pcalc(p).ph[idx].claimed) return; p.phases[idx].status = "done"; makeClaim(idx, true); }
-function stepToggle(i){ const p = projDraft, x = p.steps[i]; if (!x) return; x.done = !x.done; x.doneAt = x.done ? today() : "";
+function stepToggle(i){ const p = projDraft, x = p.steps[i]; if (!x) return; x.done = !x.done; x.doneAt = x.done ? today() : ""; x.doneBy = x.done && ME ? ME.name : "";
+  if (x.done) p.journal.push({ date: today(), kind: "done", text: `✅ أُنجزت خطوة «${x.name || "خطوة"}»${x.owner ? " — المسؤول: " + x.owner : ""}`, by: ME ? ME.name : "", step: x.name || "", auto: 1 });
   if (x.done) { p.log.push({ date: today(), kind: "إنجاز خطوة", subject: `إنجاز «${x.name || "خطوة"}»`, details: `الإنجاز الفني ${Math.round(pcalc(p).prog)}%` }); if (x.claim) stepClaim(i); else toast(`✓ أُنجزت «${x.name}» — الإنجاز ${Math.round(pcalc(p).prog)}%`); }
   projTouch(); render(); }
 const phLocked = (p, c, j) => p.phases[j].status === "done" || (c.ph[j] && c.ph[j].claimed);
@@ -2520,6 +2652,68 @@ function phRebalance(i, el){ const p = projDraft, c = pcalc(p); const lockS = p.
 function phNormalize(){ const p = projDraft; if (!p || !p.phases.length) return; const c = pcalc(p); const free = p.phases.map((x, j) => j).filter(j => !phLocked(p, c, j)); if (!free.length) return;
   const lockS = p.phases.reduce((s, x, j) => s + (free.includes(j) ? 0 : num(x.pct)), 0); phFill(free, 100 - lockS); }
 function phEqual(){ const p = projDraft; const c = pcalc(p); const free = p.phases.map((x, j) => j).filter(j => !phLocked(p, c, j)); if (!free.length) return; free.forEach(j => p.phases[j].pct = 0); phNormalize(); }
+
+// ===== v54: يوميات المشروع، Gantt، الساعات، الإيميلات، عروض الأسعار =====
+const JK = [["work", "🛠️", "عمل منجز"], ["visit", "🏗️", "زيارة موقع"], ["meet", "👥", "اجتماع"], ["deliver", "📦", "تسليم"], ["client", "🤝", "تواصل مع العميل"], ["issue", "⚠️", "مشكلة / عائق"], ["note", "📝", "ملاحظة"], ["done", "✅", "إنجاز خطوة"]];
+const jk = k => JK.find(x => x[0] === k) || JK[JK.length - 2];
+function journalView(p){ const ed = pEdit(), t = today(); const L = p.journal.map((x, i) => ({ x, i })).sort((a, b) => String(b.x.date).localeCompare(String(a.x.date)) || b.i - a.i);
+  const days = []; L.forEach(o => { let g = days.find(d => d.d === o.x.date); if (!g) days.push(g = { d: o.x.date, L: [] }); g.L.push(o); });
+  const stN = p.steps.map(x => x.name).filter(Boolean), nextS = p.steps.find(x => x.name && !x.done);
+  const form = ed ? `<div class="jform"><div class="jrow"><input type="date" id="jDate" value="${t}" aria-label="التاريخ"><select id="jKind" aria-label="النوع">${JK.slice(0, 7).map(([k, i, l]) => `<option value="${k}">${i} ${l}</option>`).join("")}</select><select id="jStep" aria-label="الخطوة"><option value="">— الخطوة المرتبطة (اختياري) —</option>${stN.map(n => `<option ${nextS && nextS.name === n ? "selected" : ""}>${esc(n)}</option>`).join("")}</select></div>
+    <textarea id="jText" rows="2" placeholder="إيه اللي اتعمل النهارده؟ مثلاً: خلصنا الرفع المساحي وسلّمنا المخطط للعميل…"></textarea><input id="jNext" placeholder="المطلوب بعد كده / بكرة (اختياري)"><button type="button" class="btn gold" data-jadd>＋ إضافة لليوميات</button></div>` : "";
+  return `<div class="panel" id="sec-journal"><h3>📒 يوميات المشروع <small>${p.journal.length ? p.journal.length + " قيد · آخر تحديث " + esc(nice(L[0].x.date)) : "سجل يومي: النهارده عملنا إيه، وبكرة هنعمل إيه"}</small></h3>
+    ${nextS ? `<div class="jnext">🪜 الخطوة الحالية: <b>${esc(nextS.name)}</b>${nextS.owner ? ` · المسؤول: ${esc(nextS.owner)}` : ""}${nextS.due ? ` · الموعد ${esc(nice(nextS.due))}` : ""}</div>` : ""}${form}
+    ${days.length ? `<div class="jtl">${days.map(g => `<div class="jday"><div class="jdh"><b>${esc(g.d === t ? "النهارده" : nice(g.d))}</b><small>${esc(g.d ? gFmtY.format(parse(g.d)) : "")}</small></div>${g.L.map(({ x, i }) => { const k = jk(x.kind);
+      return `<div class="jit k-${esc(x.kind || "note")}"><i>${k[1]}</i><div><div class="jtx">${esc(x.text || "")}</div>${x.next ? `<div class="jnx">⏭ بعد كده: ${esc(x.next)}</div>` : ""}<small>${esc(k[2])}${x.step ? " · 🪜 " + esc(x.step) : ""}${x.by ? " · " + esc(x.by) : ""}</small></div>${ed ? `<button class="rm" data-rm="journal" data-i="${i}" title="حذف">×</button>` : ""}</div>`; }).join("")}</div>`).join("")}</div>` : `<div class="empty" style="padding:12px">لا يوجد قيود بعد — اكتب أول قيد بالأعلى</div>`}</div>`; }
+function ganttView(p){ const st = p.steps.filter(x => x.name); if (!st.length) return ""; const t = today(); let prevEnd = p.start || "";
+  const und = st.filter(x => !x.done && !x.due).length, lastKnown = st.map(x => x.done ? x.doneAt : x.due).filter(Boolean).sort().pop() || p.start || t;
+  const per = p.end && und && p.end > lastKnown ? Math.max(1, Math.floor(daysBetween(lastKnown, p.end) / und)) : 7;
+  const rows = st.map((x, i) => { const s0 = x.start || prevEnd || x.due || t; let est = false, e0 = x.done ? (x.doneAt || x.due || s0) : x.due; if (!e0) { est = true; e0 = iso(addDays(parse(s0), per)); } if (e0 < s0) e0 = s0; prevEnd = e0; return { x, i, s: s0, e: e0, est }; });
+  const all = rows.flatMap(r => [r.s, r.e]).concat([t]).concat(p.end ? [p.end] : []); const mn = all.reduce((a, b) => a < b ? a : b), mx = all.reduce((a, b) => a > b ? a : b);
+  const span = Math.max(daysBetween(mn, mx), 1) + 1, pos = d => daysBetween(mn, d) / span * 100, cur = st.find(x => !x.done);
+  const ticks = []; { const d = parse(mn); d.setDate(1); for (let k = 0; k < 40; k++) { const v = iso(d); if (v > mx) break; if (v >= mn) ticks.push(`<span style="inset-inline-start:${pos(v)}%">${esc(new Intl.DateTimeFormat("ar-EG-u-nu-latn", { month: "short" }).format(d))}</span>`); d.setMonth(d.getMonth() + 1); } }
+  const tp = pos(t);
+  return `<div class="gantt"><div class="gh"><b>📅 الجدول الزمني للمشروع</b><span class="glg"><i class="d"></i>منجزة<i class="c"></i>الحالية<i class="l"></i>متأخرة<i class="t"></i>قادمة<i class="t est"></i>مدة تقديرية (حدد الموعد)</span></div>
+    <div class="gbody"><div class="grow gtk"><span class="gl"></span><div class="gtrack">${ticks.join("")}</div></div>
+    ${rows.map(r => { const cls = r.x.done ? "d" : r.x === cur ? (r.e < t ? "l" : "c") : (r.e < t ? "l" : "t"); const w = Math.max(pos(r.e) - pos(r.s) + 100 / span, 1.4);
+      return `<div class="grow" data-psec="steps"><span class="gl" title="${esc(r.x.name)}">${r.i + 1}. ${esc(r.x.name)}${r.x.owner ? `<small>${esc(r.x.owner)}</small>` : ""}</span><div class="gtrack"><i class="gb ${cls}${r.est ? " est" : ""}" style="inset-inline-start:${pos(r.s)}%;width:${w}%" title="${esc(r.x.name)}: ${esc(r.s)} ← ${esc(r.e)}${r.x.claim ? " · 💰 دفعة مستحقة" : ""}">${r.x.claim ? "💰" : ""}</i><b class="gnow" style="inset-inline-start:${tp}%"></b></div></div>`; }).join("")}</div></div>`; }
+function hoursView(p, c){ const ed = pEdit(), inN = (k, l) => `<label>${l}<input type="number" step="0.01" data-pf="${k}" value="${esc(p[k] ?? "")}"></label>`;
+  const rows = p.hours.map((x, i) => `<tr><td><input type="date" data-row="hours" data-i="${i}" data-k="date" value="${esc(x.date || "")}"></td><td><input data-row="hours" data-i="${i}" data-k="who" value="${esc(x.who || "")}" list="usrList" placeholder="المهندس"></td><td><input class="nn sm" type="number" step="0.25" data-row="hours" data-i="${i}" data-k="h" value="${esc(x.h ?? "")}"></td><td><input data-row="hours" data-i="${i}" data-k="note" value="${esc(x.note || "")}" placeholder="العمل المنجز"></td><td>${ed ? `<button class="rm" data-rm="hours" data-i="${i}" title="حذف">×</button>` : ""}</td></tr>`).join("");
+  const tg = num(p.hourTarget), hp = c.estH ? c.H / c.estH : 0;
+  return `<div class="panel" id="sec-hours"><h3>⏱ ساعات العمل وربحية الساعة <small>${c.H ? money(c.H) + " ساعة مسجّلة" : "سجّل الساعات لتعرف ربحية الساعة الفعلية"}</small></h3>
+    <div class="pform hrs">${inN("estH", "الساعات المقدّرة للمشروع")}${inN("hourCost", "تكلفة ساعة العمل الفعلية (ر.س)")}${inN("hourTarget", "سعر الساعة المستهدف (ر.س)")}</div>
+    <div class="hkp"><div><span>الساعات المسجّلة</span><b>${money(c.H)}</b><small>${c.estH ? `من ${money(c.estH)} مقدّرة (${Math.round(hp * 100)}%)` : "حدد الساعات المقدّرة"}</small>${c.estH ? `<div class="mini ${hp > 1 ? "r" : "g"} w"><i style="width:${Math.min(hp, 1) * 100}%"></i></div>` : ""}</div>
+      <div class="${tg && c.H ? (c.rateAct >= tg ? "good" : "bad") : ""}"><span>إيراد الساعة الفعلي</span><b>${c.H ? money(c.rateAct) : "—"}</b><small>${tg && c.H ? (c.rateAct >= tg ? "✓ أعلى من المستهدف " : "⚠️ أقل من المستهدف ") + money(tg) : "قيمة العقد قبل الضريبة ÷ الساعات"}</small></div>
+      <div><span>سعر الساعة حسب التقدير</span><b>${c.estH ? money(c.rateEst) : "—"}</b><small>قيمة العقد ÷ الساعات المقدّرة</small></div>
+      <div><span>تكلفة الساعات</span><b>${c.hc ? money(c.labor) : "—"}</b><small>${c.hc ? money(c.H) + " ساعة × " + money(c.hc) : "حدد تكلفة الساعة"}</small></div>
+      <div class="${c.netAfterLabor < 0 ? "bad" : "good"}"><span>الربح بعد المصاريف والساعات</span><b>${money(c.netAfterLabor)}</b><small>هامش ${pct(c.marginLabor)}</small></div></div>
+    ${p.hours.length ? `<div class="tblwrap"><table class="etable"><tr><th>التاريخ</th><th>المهندس</th><th>الساعات</th><th>العمل المنجز</th><th></th></tr>${rows}</table></div>` : ""}
+    ${ed ? `<button class="btn ghost addr" data-add="hours">+ تسجيل ساعات عمل</button>` : ""}</div>`; }
+const MST = [["open", "⏳ تحتاج رد", "late"], ["replied", "✓ تم الرد", "done"], ["wait", "🕓 بانتظارهم", "wait"], ["closed", "🔒 مغلقة", "mut"]];
+function parseMail(t){ const g = re => { const m = re.exec(t); return m ? m[1].trim() : ""; };
+  const from = g(/^(?:From|من|المرسل)\s*[:：]\s*(.+)$/mi), subject = g(/^(?:Subject|الموضوع)\s*[:：]\s*(.+)$/mi), ds = g(/^(?:Date|Sent|التاريخ|تاريخ الإرسال)\s*[:：]\s*(.+)$/mi);
+  let date = today(); try { const d = new Date(ds); if (ds && !isNaN(d)) date = iso(d); } catch {}
+  const body = t.replace(/^(?:From|To|Cc|Subject|Date|Sent|من|إلى|الموضوع|التاريخ|المرسل|نسخة)\s*[:：].*$/gmi, "").replace(/\n{3,}/g, "\n\n").trim();
+  return { date, dir: "in", from, subject: subject || body.split("\n")[0].slice(0, 120), req: body.slice(0, 600), reply: "", st: "open" }; }
+function mailsView(p){ const ed = pEdit(); const L = p.mails.map((x, i) => ({ x, i })).sort((a, b) => String(b.x.date).localeCompare(String(a.x.date)));
+  const open = p.mails.filter(x => x.st === "open").length;
+  return `<div class="panel" id="sec-mails"><h3>📧 إيميلات المشروع <small>${p.mails.length ? `${p.mails.length} إيميل · ${open} تحتاج رد` : "سجل الإيميلات: المطلوب منك، وردّك، وحالة المتابعة"}</small></h3>
+    ${ed ? `<div class="mpaste"><textarea id="mPaste" rows="3" placeholder="انسخ الإيميل كله (من Outlook أو Gmail) والصقه هنا — هيتقري المرسل والموضوع والتاريخ لوحده"></textarea><div class="row2" style="margin:6px 0 0"><button type="button" class="btn gold" data-mparse>📥 إضافة الإيميل الملصوق</button><button type="button" class="btn ghost" data-add="mails">+ إدخال يدوي</button></div></div>` : ""}
+    ${L.length ? `<div class="mlist">${L.map(({ x, i }) => `<div class="mit st-${esc(x.st || "open")}"><div class="mh"><select data-row="mails" data-i="${i}" data-k="dir" aria-label="الاتجاه"><option value="in" ${x.dir !== "out" ? "selected" : ""}>📥 وارد</option><option value="out" ${x.dir === "out" ? "selected" : ""}>📤 صادر</option></select><input type="date" data-row="mails" data-i="${i}" data-k="date" value="${esc(x.date || "")}"><input class="grow" data-row="mails" data-i="${i}" data-k="from" value="${esc(x.from || "")}" placeholder="من / إلى"><select class="mst" data-row="mails" data-i="${i}" data-k="st">${MST.map(([k, l]) => `<option value="${k}" ${(x.st || "open") === k ? "selected" : ""}>${l}</option>`).join("")}</select>${ed ? `<button class="rm" data-rm="mails" data-i="${i}" title="حذف">×</button>` : ""}</div>
+      <input class="msub" data-row="mails" data-i="${i}" data-k="subject" value="${esc(x.subject || "")}" placeholder="الموضوع">
+      <div class="mgrid"><label>📌 المطلوب منّا<textarea data-row="mails" data-i="${i}" data-k="req" rows="2">${esc(x.req || "")}</textarea></label><label>↩️ ردّي / ما تم<textarea data-row="mails" data-i="${i}" data-k="reply" rows="2" placeholder="اكتب ردّك أو الإجراء اللي اتعمل…">${esc(x.reply || "")}</textarea></label></div></div>`).join("")}</div>` : `<div class="empty" style="padding:12px">لا توجد إيميلات مسجّلة لهذا المشروع</div>`}</div>`; }
+function quotesView(){ const P = PV(), Q = P.filter(p => p.status === "quote").map(p => ({ p, c: pcalc(p) })), Lo = P.filter(p => p.status === "lost").map(p => ({ p, c: pcalc(p) })), W = P.filter(p => !QST.has(p.status));
+  const tot = Q.reduce((s, x) => s + x.c.T, 0), avg = Q.length ? tot / Q.length : 0, conv = (W.length + Lo.length) ? W.length / (W.length + Lo.length) : 0, lostV = Lo.reduce((s, x) => s + x.c.T, 0);
+  const ms = []; const now = new Date(); for (let i = 5; i >= 0; i--) { const d = new Date(now.getFullYear(), now.getMonth() - i, 1); ms.push({ k: `${d.getFullYear()}-${pad(d.getMonth() + 1)}`, l: new Intl.DateTimeFormat("ar-EG-u-nu-latn", { month: "short" }).format(d), v: 0, n: 0 }); }
+  P.filter(p => p.status === "quote" || p.status === "lost" || p.qDate).forEach(p => { const m = ms.find(m => m.k === String(p.qDate || p.start || "").slice(0, 7)); if (m) { m.n++; m.v += pcalc(p).T; } });
+  const mxN = Math.max(1, ...ms.map(m => m.n));
+  const row = ({ p, c }) => { const age = p.start ? daysBetween(p.start, today()) : 0; return `<tr data-popen="${p.id}"><td class="pn"><b>${p.code ? `<span class="pcode sm">${esc(p.code)}</span>` : ""}${esc(p.name)}</b><small>${esc(p.client || "—")}${cliCode(p.client) ? ` <span class="ccode">${esc(cliCode(p.client))}</span>` : ""}</small></td><td><span class="tchip">${esc(ptLabel(p))}</span></td><td class="nw">${p.start ? esc(nice(p.start)) : "—"}</td><td class="n"><b>${money(c.T)}</b><small>قبل الضريبة ${money(c.A)}</small></td><td class="nw ${age > 30 ? "warnt" : ""}">${age} يوم</td>
+    <td class="nw">${p.status === "quote" && pEdit() ? `<button type="button" class="btn gold xs" data-qwin="${p.id}">✓ تم التعاقد</button> <button type="button" class="btn ghost xs" data-qlost="${p.id}">✕ مرفوض</button>` : p.status === "lost" && pEdit() ? `<button type="button" class="btn ghost xs" data-qback="${p.id}">↩ إعادة فتح</button>` : ""}</td></tr>`; };
+  return `<div class="qk"><div class="qc navy"><span>📝 عروض قائمة</span><b>${Q.length}</b><small>بانتظار رد العميل</small></div><div class="qc"><span>💼 إجمالي قيمة العروض</span><b>${SAR(tot)}</b><small>شامل الضريبة</small></div><div class="qc"><span>📊 متوسط قيمة العرض</span><b>${SAR(avg)}</b></div><div class="qc good"><span>🏆 نسبة الفوز</span><b>${Math.round(conv * 100)}%</b><small>${W.length} تعاقد · ${Lo.length} مرفوض</small></div><div class="qc bad"><span>✕ عروض مرفوضة</span><b>${Lo.length}</b><small>${kmoney(lostV)} ر.س</small></div></div>
+  <div class="pgrid"><div class="panel"><h3>العروض حسب الشهر <small>آخر 6 أشهر</small></h3><div class="vchart sm">${ms.map((m, i) => `<div class="vc ${i === 5 ? "cur" : ""}" title="${m.l}: ${m.n} عرض · ${money(m.v)} ر.س"><span class="vv">${m.n || ""}</span><span class="vb"><i style="height:${m.n / mxN * 100}%"></i></span><span class="vl">${m.l}</span></div>`).join("")}</div></div>
+  <div class="panel"><h3>أكبر العروض القائمة</h3>${Q.length ? Q.slice().sort((a, b) => b.c.T - a.c.T).slice(0, 5).map(x => `<div class="hb" data-popen="${x.p.id}" style="cursor:pointer"><span class="hl">${esc(x.p.name)}</span><span class="ht"><i style="width:${x.c.T / Math.max(1, Q[0] ? Math.max(...Q.map(y => y.c.T)) : 1) * 100}%;background:var(--gold)"></i></span><b>${kmoney(x.c.T)}</b></div>`).join("") : `<div class="empty" style="padding:10px">لا عروض قائمة</div>`}</div></div>
+  <div class="panel"><h3>📝 عروض الأسعار القائمة <small>${Q.length}</small></h3>${Q.length ? `<div class="tblwrap"><table class="ptable plist"><tr><th>المشروع / العميل</th><th>النوع</th><th>تاريخ العرض</th><th>القيمة شامل الضريبة</th><th>منذ</th><th></th></tr>${Q.map(row).join("")}</table></div>` : `<div class="empty"><b>لا توجد عروض قائمة</b>أضف مشروعاً جديداً بحالة «عرض سعر».</div>`}</div>
+  ${Lo.length ? `<details class="panel"><summary><b>✕ العروض المرفوضة (${Lo.length})</b></summary><div class="tblwrap"><table class="ptable plist"><tr><th>المشروع / العميل</th><th>النوع</th><th>تاريخ العرض</th><th>القيمة</th><th>منذ</th><th></th></tr>${Lo.map(row).join("")}</table></div></details>` : ""}`; }
 function projRecalc(){
   const p = projDraft; if (!p) return; const c = pcalc(p);
   const set = (k, html) => document.querySelectorAll(`[data-c="${k}"]`).forEach(e => e.innerHTML = html);
@@ -2537,7 +2731,7 @@ function projRecalc(){
   set("fA", money(c.A)); set("fE", `(${money(c.exp)})`); set("fP", money(c.profit)); set("fM", pct(c.margin)); set("fN", money(c.paidNet)); set("fR", money(c.realized)); set("fV", money(c.vatCollected));
   w("expw", (c.A ? Math.min(c.exp / c.A, 1) * 100 : 0) + "%"); w("paidw", (c.T ? Math.min(c.paid / c.T, 1) * 100 : 0) + "%");
 }
-const NUMK = new Set(["pct", "amount", "paid", "price", "agreed", "vat"]);
+const NUMK = new Set(["pct", "amount", "paid", "price", "agreed", "vat", "h", "estH", "hourCost", "hourTarget"]);
 function projInput(el){
   const p = projDraft; if (!p) return false;
   if (el.dataset.pf) { const k = el.dataset.pf; p[k] = NUMK.has(k) && el.value !== "" ? num(el.value) : el.value; }
@@ -2708,6 +2902,125 @@ $("#view").addEventListener("input", e => { if (tab !== "ai" || e.target.id !== 
 // ----- الصفحة الرئيسية: لوحة المؤشرات -----
 const QRDATA = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIQAAACEAQAAAAB5P74KAAAEFklEQVR42s2Wv6okxxXGf11qvD0g9mvdRBssvkeiU7nAiR2OhYNR1C/gwE/gJ3AwBgWrqJd9GafzCotRpjV9zWKc+UyDAoHoz0HNvVrbuXFFh0P9uqrOv6878+/rWvjP9b/1dF03ch3HcWzmf+/pmf7w579Tjis0EwNySpIBZUE2nR6AUTYUAgI4R9xMy9bkTVKVrWxnfccesLbDXFFFxqmKamIhTYtxLkJKrGkR8uRNmhYlrtzXoRpnrdw3atZnuGCJuVESOLA0SVmId0R/4h8nIt4RdB5/eMYnD3thH/nhGQ8FXhx5+89uf36FF0fAtVPNDSuX2rUb9tKWd66b1EtZ4GWw8wvWPXgZgKtdUym5mYUV1tLitMJ6i/x+3I/rU3YCggsXaGbnDgQQK1fQQwE4E0SjzuDpzUlVVZKmNydl547uOe0jb+meP2DbZsZCtp3NEwqL5QNPv/Su04d7EBb15pGtaiuvqcS3nK7QqoQPKiFKKcdygg+oTGXn7GG8pkaujHj86EYBRDkM8BJ61vi+EHy7/+qBeAtYIi2RYA1OXCVkp+4zZWdhjRjOUMieM41SyM55zk129sTK376A7gJ7ANhxTHAvRLa3Q54xddRw8/SvtsPkWMocW/NEycC9QqXtSQKXxBncav6bdeDnvKasr1vNbxw+87AV59fFrolzPGMS5zjYSuwyGnPSxlmpdpbxAeWXo3JJbI6+c5Q5h65uSuzDYExo47fKmtg1VdV/Xf2bTDmxdZUULB6ePFlVGWVym50FoqyxHjaIsl8Ak3I6a7WwHnsZ+P0KAwE9UxcUyhniygo933llZydYr20meLNSIjOd7awdCrf0X25TK/ZjvKcUCtBDYeXCx2WH/dhyaktKAeLpPhEdwysYAddqVylrdNNS5nyiNpWghhKDxJyYbUwrC/EK4sJA7L9sd+5Zar9sR/fJZiXmSwll8bgNaSWug/NUdW+Y1ToFZyfJn3+iVpkExUTw19qe69o7T7Pkoa9PFLbMzFkoscIHuxoFC0pce4ctT0s/aFoSa7xRGv9UuX/sXI6ZVeanXobcVI0fO/fuq7uyn1fugM4AHST3ZGeubfKnkz5nhR6pQhn+yIX3AJ7efFXTeRw3icX5SF37knP9/P5xbmzZ54KsdLYpsfMj58Oj7rSxeCpx1S0+jSLFYm3OphemWBtg5Y06fMpxh9eNmhY5BiunN8X1phfm/EQ1vbCUiZ2tnqdLq8IBeoKmF6xRyq/hx/MK1qBGFTtry84sR6ZGUXA2vTC5CTHg7Fk/YqUv+/EvX3z7uzvAitooxNgou1rubXNsqmfLMranMv9U4QTw7meXoG+TduU98OyF1ptSyyidqcd8nWmh6bjl66TqSZu3rLXlq3uiFjm7/7P/ln8Bf8zXB7p5x9YAAAAASUVORK5CYII=";
 function goTab(t, then){ const b = document.querySelector(`nav.tabs [data-tab="${t}"]`); if (b && !b.hidden) b.click(); if (then) setTimeout(then, 60); }
+// ===== v54: مواقيت الصلاة (أم القرى) + التنبيهات + الأذكار =====
+const PCITY = [["makkah", "مكة المكرمة", 21.4225, 39.8262], ["jeddah", "جدة", 21.4858, 39.1925], ["madinah", "المدينة المنورة", 24.4672, 39.6111], ["taif", "الطائف", 21.2703, 40.4158], ["riyadh", "الرياض", 24.7136, 46.6753], ["dammam", "الدمام", 26.4207, 50.0888], ["abha", "أبها", 18.2164, 42.5053], ["tabuk", "تبوك", 28.3835, 36.5662], ["qassim", "بريدة", 26.3592, 43.9818], ["jazan", "جازان", 16.8892, 42.5511]];
+const PNAMES = [["fajr", "الفجر"], ["sunrise", "الشروق"], ["dhuhr", "الظهر"], ["asr", "العصر"], ["maghrib", "المغرب"], ["isha", "العشاء"]];
+const PIQ = { fajr: 25, dhuhr: 20, asr: 20, maghrib: 10, isha: 20 };
+function prCfg(){ let c = {}; try { c = JSON.parse(localStorage.getItem("yw_pray") || "{}") || {}; } catch {} return { city: "makkah", alerts: true, before: 10, adhkar: true, iq: { ...PIQ }, ...c, iq: { ...PIQ, ...(c.iq || {}) } }; }
+function prSave(c){ try { localStorage.setItem("yw_pray", JSON.stringify(c)); } catch {} }
+function prLoc(c){ if (c.city === "gps" && c.lat) return { n: "موقعي الحالي", lat: c.lat, lng: c.lng }; const x = PCITY.find(y => y[0] === c.city) || PCITY[0]; return { n: x[1], lat: x[2], lng: x[3] }; }
+function prTimes(date, lat, lng){ // حساب فلكي — طريقة أم القرى: الفجر 18.5°، العشاء بعد المغرب بـ 90 دقيقة (120 في رمضان)
+  const R = Math.PI / 180, sin = d => Math.sin(d * R), cos = d => Math.cos(d * R), tan = d => Math.tan(d * R), asin = x => Math.asin(x) / R, acos = x => Math.acos(Math.max(-1, Math.min(1, x))) / R, atan2 = (y, x) => Math.atan2(y, x) / R, acot = x => Math.atan(1 / x) / R, fix = (a, b) => { a = a - b * Math.floor(a / b); return a < 0 ? a + b : a; };
+  const y = date.getFullYear(), m = date.getMonth() + 1, d = date.getDate(); const A = Math.floor((m <= 2 ? y - 1 : y) / 100);
+  const jd0 = Math.floor(365.25 * ((m <= 2 ? y - 1 : y) + 4716)) + Math.floor(30.6001 * ((m <= 2 ? m + 12 : m) + 1)) + d + 2 - A + Math.floor(A / 4) - 1524.5 - lng / 360;
+  const sun = jd => { const D = jd - 2451545, g = fix(357.529 + 0.98560028 * D, 360), q = fix(280.459 + 0.98564736 * D, 360), L = fix(q + 1.915 * sin(g) + 0.020 * sin(2 * g), 360), e = 23.439 - 0.00000036 * D;
+    const RA = fix(atan2(cos(e) * sin(L), cos(L)) / 15, 24); return { decl: asin(sin(e) * sin(L)), eqt: q / 15 - RA }; };
+  const noonAt = t => fix(12 - sun(jd0 + t).eqt, 24);
+  const angT = (ang, t, ccw) => { const s = sun(jd0 + t), n = noonAt(t), T = acos((-sin(ang) - sin(s.decl) * sin(lat)) / (cos(s.decl) * cos(lat))) / 15; return n + (ccw ? -T : T); };
+  const asrT = t => { const s = sun(jd0 + t); return angT(-acot(1 + tan(Math.abs(lat - s.decl))), t); };
+  const tz = 3, adj = h => h + tz - lng / 15;
+  let fajr = angT(18.5, 5 / 24, true), sunrise = angT(0.833, 6 / 24, true), dhuhr = noonAt(12 / 24), asr = asrT(13 / 24), maghrib = angT(0.833, 18 / 24);
+  fajr = angT(18.5, fajr / 24, true); sunrise = angT(0.833, sunrise / 24, true); asr = asrT(asr / 24); maghrib = angT(0.833, maghrib / 24);
+  let ram = false; try { ram = new Intl.DateTimeFormat("en-u-ca-islamic-umalqura", { month: "numeric" }).format(date) === "9"; } catch {}
+  const H = { fajr: adj(fajr), sunrise: adj(sunrise), dhuhr: adj(dhuhr) + 1 / 60, asr: adj(asr), maghrib: adj(maghrib) + 1 / 60 }; H.isha = H.maghrib + (ram ? 2 : 1.5);
+  const out = {}; Object.entries(H).forEach(([k, h]) => { const mins = Math.round(h * 60); const dt = new Date(y, m - 1, d, 0, 0, 0); dt.setMinutes(mins); out[k] = dt; }); return out; }
+const hm = d => d.toLocaleTimeString("ar-SA-u-nu-latn", { hour: "numeric", minute: "2-digit" });
+const AZK = {
+  morning: { t: "🌅 أذكار الصباح", L: [
+    ["آية الكرسي", "﴿الله لا إله إلا هو الحي القيوم لا تأخذه سنة ولا نوم له ما في السماوات وما في الأرض من ذا الذي يشفع عنده إلا بإذنه يعلم ما بين أيديهم وما خلفهم ولا يحيطون بشيء من علمه إلا بما شاء وسع كرسيه السماوات والأرض ولا يئوده حفظهما وهو العلي العظيم﴾", 1, "البقرة: 255"],
+    ["سورة الإخلاص", "بسم الله الرحمن الرحيم ﴿قل هو الله أحد ۝ الله الصمد ۝ لم يلد ولم يولد ۝ ولم يكن له كفوا أحد﴾", 3, "أبو داود والترمذي"],
+    ["سورة الفلق", "بسم الله الرحمن الرحيم ﴿قل أعوذ برب الفلق ۝ من شر ما خلق ۝ ومن شر غاسق إذا وقب ۝ ومن شر النفاثات في العقد ۝ ومن شر حاسد إذا حسد﴾", 3, "أبو داود والترمذي"],
+    ["سورة الناس", "بسم الله الرحمن الرحيم ﴿قل أعوذ برب الناس ۝ ملك الناس ۝ إله الناس ۝ من شر الوسواس الخناس ۝ الذي يوسوس في صدور الناس ۝ من الجنة والناس﴾", 3, "أبو داود والترمذي"],
+    ["", "أصبحنا وأصبح الملك لله، والحمد لله، لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير، رب أسألك خير ما في هذا اليوم وخير ما بعده، وأعوذ بك من شر ما في هذا اليوم وشر ما بعده، رب أعوذ بك من الكسل وسوء الكبر، رب أعوذ بك من عذاب في النار وعذاب في القبر", 1, "مسلم"],
+    ["", "اللهم بك أصبحنا، وبك أمسينا، وبك نحيا، وبك نموت، وإليك النشور", 1, "الترمذي"],
+    ["سيد الاستغفار", "اللهم أنت ربي لا إله إلا أنت، خلقتني وأنا عبدك، وأنا على عهدك ووعدك ما استطعت، أعوذ بك من شر ما صنعت، أبوء لك بنعمتك علي، وأبوء بذنبي فاغفر لي فإنه لا يغفر الذنوب إلا أنت", 1, "البخاري"],
+    ["", "اللهم إني أسألك العفو والعافية في الدنيا والآخرة، اللهم إني أسألك العفو والعافية في ديني ودنياي وأهلي ومالي، اللهم استر عوراتي، وآمن روعاتي، اللهم احفظني من بين يدي، ومن خلفي، وعن يميني، وعن شمالي، ومن فوقي، وأعوذ بعظمتك أن أغتال من تحتي", 1, "أبو داود وابن ماجه"],
+    ["", "بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء وهو السميع العليم", 3, "أبو داود والترمذي"],
+    ["", "رضيت بالله ربا، وبالإسلام دينا، وبمحمد صلى الله عليه وسلم نبيا", 3, "أبو داود والترمذي"],
+    ["", "يا حي يا قيوم برحمتك أستغيث، أصلح لي شأني كله، ولا تكلني إلى نفسي طرفة عين", 1, "النسائي في عمل اليوم والليلة والحاكم"],
+    ["", "سبحان الله وبحمده، عدد خلقه، ورضا نفسه، وزنة عرشه، ومداد كلماته", 3, "مسلم"],
+    ["", "لا إله إلا الله وحده لا شريك له، له الملك وله الحمد، وهو على كل شيء قدير", 10, "أحمد والنسائي — ومن قالها مائة مرة في يوم فله فضل عظيم (البخاري ومسلم)"],
+    ["", "سبحان الله وبحمده", 100, "مسلم"]] },
+  evening: { t: "🌇 أذكار المساء", L: [] },
+  prayer: { t: "🕌 الأذكار بعد الصلاة", L: [
+    ["", "أستغفر الله، أستغفر الله، أستغفر الله", 1, "مسلم"],
+    ["", "اللهم أنت السلام ومنك السلام، تباركت يا ذا الجلال والإكرام", 1, "مسلم"],
+    ["", "لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير، اللهم لا مانع لما أعطيت، ولا معطي لما منعت، ولا ينفع ذا الجد منك الجد", 1, "البخاري ومسلم"],
+    ["", "سبحان الله", 33, "مسلم"], ["", "الحمد لله", 33, "مسلم"], ["", "الله أكبر", 33, "مسلم"],
+    ["تمام المائة", "لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير", 1, "مسلم"],
+    ["آية الكرسي", "﴿الله لا إله إلا هو الحي القيوم لا تأخذه سنة ولا نوم له ما في السماوات وما في الأرض من ذا الذي يشفع عنده إلا بإذنه يعلم ما بين أيديهم وما خلفهم ولا يحيطون بشيء من علمه إلا بما شاء وسع كرسيه السماوات والأرض ولا يئوده حفظهما وهو العلي العظيم﴾", 1, "النسائي في الكبرى"],
+    ["المعوذات", "سورة الإخلاص، وسورة الفلق، وسورة الناس", 1, "أبو داود والترمذي"]] } };
+AZK.evening.L = AZK.morning.L.map(x => [x[0], x[1].replace("أصبحنا وأصبح الملك لله", "أمسينا وأمسى الملك لله").replace("خير ما في هذا اليوم وخير ما بعده، وأعوذ بك من شر ما في هذا اليوم وشر ما بعده", "خير ما في هذه الليلة وخير ما بعدها، وأعوذ بك من شر ما في هذه الليلة وشر ما بعدها").replace("اللهم بك أصبحنا، وبك أمسينا، وبك نحيا، وبك نموت، وإليك النشور", "اللهم بك أمسينا، وبك أصبحنا، وبك نحيا، وبك نموت، وإليك المصير"), x[2], x[3]]).filter(x => !/عدد خلقه/.test(x[1]));
+AZK.evening.L.splice(9, 0, ["", "أعوذ بكلمات الله التامات من شر ما خلق", 3, "مسلم"]);
+function prState(){ const c = prCfg(), loc = prLoc(c), now = new Date(), T = prTimes(now, loc.lat, loc.lng), tm = prTimes(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1), loc.lat, loc.lng);
+  const order = ["fajr", "dhuhr", "asr", "maghrib", "isha"]; let nx = order.find(k => T[k] > now), nt = nx ? T[nx] : tm.fajr; if (!nx) nx = "fajr";
+  return { c, loc, T, nx, nt, now }; }
+function prayWidget(){ const { c, loc, T, nx, nt, now } = prState(); const left = Math.max(0, Math.round((nt - now) / 60000)), lh = Math.floor(left / 60), lm = left % 60;
+  const nm = k => (PNAMES.find(x => x[0] === k) || [k, k])[1];
+  const notif = "Notification" in window ? Notification.permission : "na";
+  return `<div class="pray"><div class="prh"><div class="prn"><span>🕌 الصلاة القادمة</span><b>${nm(nx)}</b><em>${hm(nt)}</em><small>بعد ${lh ? lh + " ساعة و" : ""}${lm} دقيقة · الإقامة ${hm(new Date(nt.getTime() + c.iq[nx] * 60000))}</small></div>
+    <div class="prt">${PNAMES.map(([k, l]) => `<div class="${k === nx ? "on" : ""}${T[k] < now && k !== nx ? " past" : ""}"><span>${l}</span><b>${hm(T[k])}</b>${c.iq[k] ? `<small>إقامة +${c.iq[k]}</small>` : "<small>&nbsp;</small>"}</div>`).join("")}</div></div>
+    <div class="prf"><label>📍<select data-prcity>${PCITY.map(([k, n]) => `<option value="${k}" ${c.city === k ? "selected" : ""}>${n}</option>`).join("")}<option value="gps" ${c.city === "gps" ? "selected" : ""}>📡 موقعي الحالي</option></select></label>
+      <button type="button" class="chip" data-prazk="morning">🌅 أذكار الصباح</button><button type="button" class="chip" data-prazk="evening">🌇 أذكار المساء</button><button type="button" class="chip" data-prazk="prayer">📿 بعد الصلاة</button>
+      <button type="button" class="chip ${c.alerts ? "on" : ""}" data-pralert>${c.alerts ? "🔔 التنبيهات مفعّلة" : "🔕 التنبيهات متوقفة"}</button>${c.alerts && notif === "default" ? `<button type="button" class="chip gold" data-prperm>📲 فعّل إشعارات الجهاز</button>` : ""}
+      <small class="prm">حسب تقويم أم القرى · ${esc(loc.n)} · تنبيه قبل الأذان بـ ${c.before} دقائق وعند الإقامة</small></div></div>`; }
+function azkOpen(k){ const A = AZK[k]; if (!A) return; let m = $("#azkM"); if (!m) { m = document.createElement("div"); m.id = "azkM"; m.className = "auth"; document.body.appendChild(m);
+    m.addEventListener("click", e => { if (e.target === m || e.target.closest("[data-azx]")) { m.hidden = true; return; } const it = e.target.closest("[data-azc]"); if (it) { const b = it.querySelector("b"); let n = +it.dataset.left - 1; if (n < 0) return; it.dataset.left = n; b.textContent = n || "✓"; if (!n) it.classList.add("ok"); try { navigator.vibrate && navigator.vibrate(15); } catch {} } }); }
+  m.innerHTML = `<div class="auth-card azk"><div class="azh"><h2>${A.t}</h2><button type="button" class="btn ghost xs" data-azx>إغلاق ✕</button></div><p class="sub">اضغط على الذكر لتعدّ — يتحوّل للأخضر عند اكتمال العدد</p>${A.L.map(([h, t, n, src]) => `<div class="azi" data-azc data-left="${n}">${h ? `<div class="azt">${esc(h)}</div>` : ""}<div class="azx">${esc(t)}</div><div class="azf"><small>${esc(src)}</small><b>${n}</b></div></div>`).join("")}</div>`; m.hidden = false; m.scrollTop = 0; }
+function prNotify(title, body, tag){ toast(title + (body ? " — " + body : "")); try { if ("Notification" in window && Notification.permission === "granted") { const o = { body, tag, icon: "icon-192.png", badge: "icon-192.png", dir: "rtl", lang: "ar" };
+  if (navigator.serviceWorker && navigator.serviceWorker.controller) navigator.serviceWorker.ready.then(r => r.showNotification(title, o)).catch(() => new Notification(title, o)); else new Notification(title, o); } } catch {} }
+function prTick(){ const { c, T } = prState(); if (!c.alerts) return; const now = Date.now(), day = iso(new Date()); let fired = {}; try { fired = JSON.parse(localStorage.getItem("yw_prf") || "{}"); } catch {} if (fired.d !== day) fired = { d: day };
+  const fire = (key, at, title, body, after) => { if (fired[key] || now < at || now - at > 5 * 60000) return; fired[key] = 1; prNotify(title, body, key); if (after) setTimeout(after, 400); };
+  ["fajr", "dhuhr", "asr", "maghrib", "isha"].forEach(k => { const t = T[k].getTime(), nm = PNAMES.find(x => x[0] === k)[1], iq = t + c.iq[k] * 60000;
+    fire(k + "b", t - c.before * 60000, `⏰ باقي ${c.before} دقائق على أذان ${nm}`, `الأذان الساعة ${hm(T[k])}`);
+    fire(k + "a", t, `🕌 حان الآن موعد أذان ${nm}`, `الإقامة الساعة ${hm(new Date(iq))}`);
+    fire(k + "i", iq, `🕌 أُقيمت صلاة ${nm}`, "حيّ على الصلاة");
+    if (c.adhkar) fire(k + "z", iq + 12 * 60000, "📿 الأذكار بعد الصلاة", "اضغط «بعد الصلاة» في الرئيسية لقراءتها"); });
+  if (c.adhkar) { fire("am", T.fajr.getTime() + 40 * 60000, "🌅 وقت أذكار الصباح", "أذكار الصباح جاهزة في الرئيسية"); fire("pm", T.asr.getTime() + 30 * 60000, "🌇 وقت أذكار المساء", "أذكار المساء جاهزة في الرئيسية"); }
+  try { localStorage.setItem("yw_prf", JSON.stringify(fired)); } catch {}
+  if (tab === "home" && document.visibilityState === "visible") { const w = document.querySelector(".pray"); if (w) w.outerHTML = prayWidget(); } }
+setInterval(prTick, 30000); setTimeout(prTick, 4000);
+document.addEventListener("change", e => { const s = e.target.closest("[data-prcity]"); if (!s) return; const c = prCfg();
+  if (s.value === "gps") { if (!navigator.geolocation) return; navigator.geolocation.getCurrentPosition(p => { c.city = "gps"; c.lat = p.coords.latitude; c.lng = p.coords.longitude; prSave(c); render(); toast("📍 تم ضبط المواقيت على موقعك"); }, () => toast("اسمح بالوصول للموقع", true)); return; }
+  c.city = s.value; prSave(c); render(); });
+document.addEventListener("click", async e => { const a = e.target.closest("[data-prazk]"); if (a) { azkOpen(a.dataset.prazk); return; }
+  if (e.target.closest("[data-pralert]")) { const c = prCfg(); c.alerts = !c.alerts; prSave(c); render(); toast(c.alerts ? "🔔 تنبيهات الصلاة مفعّلة" : "🔕 أُوقفت تنبيهات الصلاة"); return; }
+  if (e.target.closest("[data-prperm]")) { try { const r = await Notification.requestPermission(); toast(r === "granted" ? "✓ ستصلك إشعارات الصلاة على الجهاز" : "لم يُسمح بالإشعارات"); } catch {} render(); } });
+
+// ===== v54: فحص التحديثات، لوحة الأوامر (Ctrl+K)، تلوين التقارير المطبوعة =====
+async function verCheck(){ try { const t = await (await fetch("./index.html?vc=" + Date.now(), { cache: "no-store" })).text(); const m = /const APP_VER = "([^"]+)"/.exec(t);
+  if (m && m[1] !== APP_VER) { let b = $("#updBar"); if (!b) { b = document.createElement("div"); b.id = "updBar"; b.className = "updbar"; document.body.appendChild(b); } b.innerHTML = `🎉 نسخة جديدة <b>${esc(m[1])}</b> جاهزة <button type="button" data-upd>تحديث الآن</button>`; b.hidden = false; } } catch {} }
+setInterval(verCheck, 5 * 60000); setTimeout(verCheck, 9000); document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") verCheck(); });
+document.addEventListener("click", async e => { if (!e.target.closest("[data-upd]")) return; try { const rs = await navigator.serviceWorker.getRegistrations(); await Promise.all(rs.map(r => r.update())); const ks = await caches.keys(); await Promise.all(ks.filter(k => !/fonts/.test(k)).map(k => caches.delete(k))); } catch {} location.reload(); });
+function cmdItems(){ const L = []; Object.entries(TITLES).forEach(([k, l]) => { const b = document.querySelector(`nav.tabs [data-tab="${k}"]`); if (b && !b.hidden) L.push(["tab:" + k, "📄", l, "صفحة"]); });
+  L.push(["act:task", "➕", "مهمة جديدة", "إجراء"]); if (pEdit()) L.push(["act:proj", "🏗️", "مشروع جديد", "إجراء"]); L.push(["act:azk", "📿", "الأذكار", "إجراء"]);
+  PV().forEach(p => L.push(["proj:" + p.id, "🏗️", (p.code ? p.code + " · " : "") + p.name + (p.client ? " — " + p.client : ""), PSTL[p.status] ? PSTL[p.status].l : "مشروع"]));
+  CONTACTS.forEach(c => L.push(["cli:" + c.id, isPros(c) ? "🏘️" : "🏢", (c.code ? c.code + " · " : "") + c.name, isPros(c) ? "مطور" : "عميل"]));
+  items.filter(x => !x.done && x.kind !== "meeting").slice(0, 400).forEach(x => L.push(["item:" + x.id, "☑", x.title, x.project ? "مهمة · " + x.project : "مهمة"])); return L; }
+function cmdDraw(){ const q = normN($("#cmdQ").value).toLowerCase(), ks = q.split(/\s+/).filter(Boolean); const L = cmdItems().filter(x => !ks.length || ks.every(k => normN(x[2] + " " + x[3]).toLowerCase().includes(k))).slice(0, 40);
+  $("#cmdL").innerHTML = L.map(([k, i, l, t], n) => `<button type="button" class="cmdi${n === 0 ? " on" : ""}" data-cmd="${esc(k)}"><i>${i}</i><span>${esc(l)}</span><small>${esc(t)}</small></button>`).join("") || `<div class="empty" style="padding:14px">لا نتائج</div>`; }
+function cmdOpen(){ let m = $("#cmdM"); if (!m) { m = document.createElement("div"); m.id = "cmdM"; m.className = "auth"; m.innerHTML = `<div class="auth-card cmd"><div class="cmdq"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="cmdQ" placeholder="انتقل بسرعة: صفحة، مشروع، كود، عميل، مهمة…" autocomplete="off"><kbd>Esc</kbd></div><div id="cmdL" class="cmdl"></div><div class="cmdf">↑↓ للتنقل · Enter للفتح · Ctrl+K لفتح هذه النافذة من أي مكان</div></div>`; document.body.appendChild(m);
+    m.addEventListener("click", e => { if (e.target === m) { m.hidden = true; return; } const it = e.target.closest("[data-cmd]"); if (it) cmdGo(it.dataset.cmd); });
+    m.querySelector("#cmdQ").addEventListener("input", cmdDraw);
+    m.querySelector("#cmdQ").addEventListener("keydown", e => { const L = [...m.querySelectorAll("[data-cmd]")], i = L.findIndex(x => x.classList.contains("on"));
+      if (e.key === "Escape") m.hidden = true; else if (e.key === "Enter") { const f = L[i] || L[0]; if (f) cmdGo(f.dataset.cmd); }
+      else if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); if (!L.length) return; const j = (i + (e.key === "ArrowDown" ? 1 : -1) + L.length) % L.length; L.forEach(x => x.classList.remove("on")); L[j].classList.add("on"); L[j].scrollIntoView({ block: "nearest" }); } }); }
+  m.hidden = false; const q = $("#cmdQ"); q.value = ""; cmdDraw(); setTimeout(() => q.focus(), 30); }
+function cmdGo(k){ $("#cmdM").hidden = true; const i = k.indexOf(":"), t = k.slice(0, i), v = k.slice(i + 1);
+  if (t === "tab") goTab(v); else if (t === "item") goItem(v);
+  else if (t === "act") { if (v === "task") quickNew(); else if (v === "azk") azkOpen(new Date().getHours() < 12 ? "morning" : "evening"); else goTab("projects", () => { const b = document.querySelector("[data-pnew]"); if (b) b.click(); }); }
+  else if (t === "proj") { projTab = "list"; const go = () => { claimCustom.clear(); projOpen = v; projDraft = null; projDirty = false; projSec = "status"; render(); window.scrollTo({ top: 0 }); }; if (tab === "projects") go(); else goTab("projects", go); }
+  else if (t === "cli") { const c = CONTACTS.find(x => x.id === v); goTab(c && isPros(c) ? "devs" : "clients"); } }
+document.addEventListener("keydown", e => { if ((e.ctrlKey || e.metaKey) && (e.key === "k" || e.key === "K" || e.key === "ن") && ME) { e.preventDefault(); cmdOpen(); } });
+document.addEventListener("click", e => { if (e.target.closest("#cmdBtn")) cmdOpen(); });
+function pdColor(b){ const K = [[/منجز/, "g-done"], [/مرحّل|متأخر/, "g-late"], [/بانتظار/, "g-wait"], [/قيد التنفيذ|مفتوحة|المهام قيد/, "g-open"], [/متابع/, "g-daily"], [/اجتماع|مواعيد/, "g-meet"], [/مجدولة|بدون تاريخ/, "g-fut"]];
+  const cls = t => (K.find(([r]) => r.test(t)) || [0, ""])[1];
+  b.querySelectorAll(".pdk>div").forEach(d => { if (!d.classList.contains("hi")) { const c = cls(d.textContent); if (c) d.classList.add(c); } });
+  b.querySelectorAll(".pds").forEach(s => { const h = s.querySelector(".pdb"); const c = h && cls(h.textContent); if (c) s.classList.add(c); });
+  const pk = b.querySelector(".pdk"); if (pk && !b.querySelector(".pdbar")) { const seg = [...pk.querySelectorAll("div")].filter(d => !d.classList.contains("hi") && /g-/.test(d.className) && !/g-meet/.test(d.className)).map(d => ({ n: num(d.querySelector("b") && d.querySelector("b").textContent), c: [...d.classList].find(x => x.startsWith("g-")), l: d.textContent.replace(/^[\d.,]+/, "").trim() })).filter(x => x.n > 0);
+    const tot = seg.reduce((s, x) => s + x.n, 0); if (tot) pk.insertAdjacentHTML("afterend", `<div class="pdbar">${seg.map(x => `<i class="${x.c}" style="flex:${x.n}"><span>${esc(x.l)} ${x.n}</span></i>`).join("")}</div>`); } }
+
+
 function homeView(){ try { return homeView0(); } catch (e) { if (e instanceof ReferenceError) { setTimeout(render, 30); return `<div class="empty">جارٍ التحميل…</div>`; } throw e; } }
 function homeView0(){
   if (!ME) return `<div class="empty">جارٍ التحميل…</div>`;
@@ -2741,7 +3054,7 @@ function homeView0(){
     <div class="panel"><h3>حِمل كل عضو <small>مفتوحة · متأخرة · أُنجزت هذا الأسبوع</small></h3><div class="lg"><span><i style="background:var(--navy2)"></i>مفتوحة</span><span><i style="background:var(--late)"></i>منها متأخرة</span><span><i style="background:var(--done)"></i>أُنجزت</span></div>
     ${st.slice(0, 10).map(x => { const on = x.s.open - x.s.late; return `<div class="hb3" data-view="${x.u.id}" title="${esc(x.u.name)}: ${x.s.open} مفتوحة (${x.s.late} متأخرة) · ${x.s.doneW} أُنجزت"><span class="hl">${esc(x.u.name)} <small>${RICON[x.u.role] || ""} ${esc((x.u.org || {}).dept || (x.u.org || {}).branch || ROLEL[x.u.role] || "")}</small></span><span class="ht">${on ? `<i style="width:${on / mx * 100}%;background:var(--navy2)"></i>` : ""}${x.s.late ? `<i style="width:${x.s.late / mx * 100}%;background:var(--late)"></i>` : ""}${x.s.doneW ? `<i style="width:${x.s.doneW / mx * 100}%;background:var(--done)"></i>` : ""}</span><b>${x.s.open}${x.s.late ? ` <small class="lt">⏰${x.s.late}</small>` : ""}</b></div>`; }).join("")}</div></div>`; } }
   let proj = "";
-  if (P || can("projects")) { const PP = PV().map(p => ({ p, c: pcalc(p) })), con = PP.filter(x => x.p.status !== "quote");
+  if (P || can("projects")) { const PP = PV().map(p => ({ p, c: pcalc(p) })), con = PP.filter(x => !QST.has(x.p.status));
     const sum = (a, f) => a.reduce((s, x) => s + f(x), 0), T = sum(con, x => x.c.T), paid = sum(con, x => x.c.paid);
     const now = new Date(); const ms = []; for (let i = 5; i >= 0; i--) { const d = new Date(now.getFullYear(), now.getMonth() - i, 1); ms.push({ k: `${d.getFullYear()}-${pad(d.getMonth() + 1)}`, l: new Intl.DateTimeFormat("ar-EG-u-nu-latn", { month: "short" }).format(d), v: 0 }); }
     PP.forEach(x => x.p.claims.forEach(c => { const d = c.paidDate || c.date; if (num(c.paid) && d) { const m = ms.find(m => m.k === String(d).slice(0, 7)); if (m) m.v += num(c.paid); } }));
@@ -2754,7 +3067,7 @@ function homeView0(){
     <div class="hgrid"><div class="panel"><h3>الدخل الشهري (المحصّل) — آخر 6 أشهر</h3><div class="vchart sm">${ms.map((m, i) => `<div class="vc ${i === 5 ? "cur" : ""}" data-gdd="mon:${m.k}" style="cursor:pointer" title="${m.l}: ${money(m.v)} ر.س — اضغط للتفاصيل"><span class="vv">${m.v ? kmoney(m.v) : ""}</span><span class="vb"><i style="height:${m.v / maxM * 100}%"></i></span><span class="vl">${m.l}</span></div>`).join("")}</div></div>
     <div class="panel"><h3>المشاريع حسب الحالة</h3><div class="dwrap">${donut(segs, Math.max(PP.length, 1), PP.length, "مشروع")}<ul class="dleg">${segs.map(x => `<li data-gdd="count" style="cursor:pointer"><i style="background:${x.c}"></i>${x.l}<b>${x.v}</b></li>`).join("")}</ul></div></div>
     <div class="panel"><h3>مطالبات مستحقة <small>${kmoney(dueSum)} ر.س</small></h3>${due.length ? `<ul class="hlist">${due.slice(0, 5).map(c => `<li class="${c.st === "late" ? "late" : ""}" data-hp="${c.p.id}"><span>${esc(c.p.name)} · ${esc(c.phase || c.inv || "")}</span><small>${money(c.inc - c.pd)} ر.س${c.date ? " · من " + c.age + " يوم" : ""}</small></li>`).join("")}</ul>` : `<div class="empty" style="padding:12px">لا توجد مطالبات مستحقة 👌</div>`}</div></div></div>`; }
-  return greet + inst + my + team + proj;
+  return greet + prayWidget() + inst + my + team + proj;
 }
 $("#view").addEventListener("click", e => { if (tab !== "home") return;
   const g = e.target.closest("[data-go]"); if (g && !e.target.closest("[data-view]")) { const v = g.dataset.go; if (v.startsWith("dd:")) goDD(v.slice(3)); else if (v.startsWith("all:")) goAll(v.slice(4)); else goTab(v); return; }
@@ -2780,7 +3093,7 @@ function clientsAll(){
   PV().forEach(p => { const k = normN(p.client); if (!k) return; let e = map.get(k);
     if (!e) { e = { id: "", name: String(p.client).trim(), cat: "client", rel: "current", people: [], city: "", saved: false, projects: [] }; map.set(k, e); }
     e.projects.push(p); if (!e.saved && !e.city && p.loc) e.city = p.loc; });
-  return [...map.values()].map(e => { let T = 0, paid = 0; e.projects.forEach(p => { if (p.status !== "quote") { const c = pcalc(p); T += c.T; paid += c.paid; } });
+  return [...map.values()].map(e => { let T = 0, paid = 0; e.projects.forEach(p => { if (!QST.has(p.status)) { const c = pcalc(p); T += c.T; paid += c.paid; } });
     const fromP = e.projects.filter(p => p.cname || p.cphone || p.cemail).map(p => ({ name: p.cname || "", title: "من مشروع: " + p.name, phone: p.cphone || "", email: p.cemail || "", auto: true }))
       .filter(x => !e.people.some(y => (x.phone && normPh(y.phone) === normPh(x.phone)) || (x.email && y.email === x.email)));
     const main = e.people[0] || fromP[0] || {}; return { ...e, fromP, T, paid, mphone: e.phone || main.phone || "", memail: e.email || main.email || "", mname: main.name || "" }; });
@@ -2978,6 +3291,7 @@ $("#view").addEventListener("change", async e => { if (tab !== "projects" || !pr
   if (isPhSt && el.value === "done" && oldSt !== "done") makeClaim(+el.dataset.i, true);
   if (el.dataset.row === "steps" && el.dataset.k === "ph") { const x = projDraft.steps[+el.dataset.i]; if (x && x.done && x.claim) stepClaim(+el.dataset.i); }
   if (el.dataset.row === "phases" && el.dataset.k === "pct") { el.value = projDraft.phases[+el.dataset.i].pct; projTouch(); projRecalc(); return; }
+  if (el.dataset.row === "hours" || el.dataset.row === "steps" && /^(start|due|owner)$/.test(el.dataset.k) || /^(estH|hourCost|hourTarget|start|end|agreed|status)$/.test(el.dataset.pf || "")) { projTouch(); render(); return; }
   if (el.dataset.row === "claims" && el.dataset.k === "phase") { const r = projDraft.claims[+el.dataset.i]; const ph = pcalc(projDraft).ph.find(x => x.name === el.value); if (ph && !num(r.amount)) r.amount = Math.round(ph.amt * 100) / 100; }
   projTouch();
   if (el.tagName === "SELECT" || el.dataset.pf === "name" || el.dataset.k === "name" || el.dataset.clcustom) render(); else projRecalc(); });
@@ -2990,6 +3304,12 @@ $("#view").addEventListener("click", async e => {
   const f = e.target.closest("[data-pf-filter]"); if (f) { projF = f.dataset.pfFilter; render(); return; }
   const pt = e.target.closest("[data-ptab]"); if (pt) { projTab = pt.dataset.ptab; try { localStorage.setItem("yw_ptab", projTab); } catch {} render(); return; }
   if (e.target.closest("[data-pnew]")) { openPModal(); return; }
+  const qw = e.target.closest("[data-qwin],[data-qlost],[data-qback]"); if (qw && pEdit()) { const id = qw.dataset.qwin || qw.dataset.qlost || qw.dataset.qback, p = PROJECTS.find(x => x.id === id); if (!p) return; pmig(p); p.qDate = p.qDate || p.start || today();
+    p.status = qw.dataset.qwin ? "contract" : qw.dataset.qlost ? "lost" : "quote"; if (qw.dataset.qwin) { p.wonAt = today(); p.log.push({ date: today(), kind: "قرار / اعتماد", subject: "تم التعاقد على العرض", details: "" }); }
+    bgSaveProject(p); render(); toast(qw.dataset.qwin ? "🏆 مبروك — تحوّل العرض إلى تعاقد" : qw.dataset.qlost ? "سُجّل العرض كمرفوض" : "أُعيد فتح العرض"); return; }
+  if (e.target.closest("[data-jadd]") && pEdit()) { const v = id => ($("#" + id) || {}).value || ""; const text = v("jText").trim(); if (!text) { const j = $("#jText"); if (j) j.focus(); return; }
+    projDraft.journal.push({ date: v("jDate") || today(), kind: v("jKind") || "work", step: v("jStep"), text, next: v("jNext").trim(), by: ME ? ME.name : "" }); projTouch(); render(); toast("📒 أُضيف للّيوميات"); return; }
+  if (e.target.closest("[data-mparse]") && pEdit()) { const t = ($("#mPaste") || {}).value || ""; if (!t.trim()) { toast("الصق نص الإيميل أولاً", true); return; } projDraft.mails.push(parseMail(t)); projTouch(); render(); toast("📧 أُضيف الإيميل — اكتب المطلوب وردّك"); return; }
   const ps = e.target.closest("[data-psec]"); if (ps) { projSec = ps.dataset.psec; render(); const nv = document.querySelector(".psnav"); if (nv && nv.getBoundingClientRect().top < 0) nv.scrollIntoView({ block: "start", behavior: "smooth" }); return; }
   const sd = e.target.closest("[data-stdone]"); if (sd && pEdit()) { stepToggle(+sd.dataset.stdone); return; }
   const sa = e.target.closest("[data-stadd]"); if (sa && pEdit()) { projDraft.steps.push(newStep(sa.dataset.stadd)); projTouch(); render(); return; }
@@ -3007,7 +3327,7 @@ $("#view").addEventListener("click", async e => {
   const cd = e.target.closest("[data-cxdone]"); if (cd && pEdit()) { const x = projDraft.clash[+cd.dataset.cxdone]; x.done = x.done || {}; const d = cd.dataset.d; if (x.done[d]) delete x.done[d]; else x.done[d] = today(); const f = cxFlow(x); if (f.closed) { x.closedAt = today(); toast("✓ أُغلقت الملاحظة — أنهت جميع الأقسام المعنية"); } else { delete x.closedAt; if (x.done[d]) toast(`✓ ${CXL[d].l} — انتقلت الملاحظة إلى ${CXL[f.cur].l}`); } projTouch(); render(); return; }
   const cc = e.target.closest("[data-cxcrit]"); if (cc && pEdit()) { const x = projDraft.clash[+cc.dataset.cxcrit]; x.crit = !x.crit; projTouch(); render(); return; }
   const add = e.target.closest("[data-add]"); if (add) { const k = add.dataset.add;
-    projDraft[k].push(k === "steps" ? newStep("") : k === "phases" ? { name: "", pct: 0, due: "", status: "todo" } : k === "claims" ? { phase: "", inv: nextInv(projDraft), date: today(), amount: "", paid: "", paidDate: "" } : k === "adds" ? { title: "", date: today(), amount: "", status: "proposed", note: "" } : k === "clash" ? { n: Math.max(0, ...projDraft.clash.map(x => num(x.n))) + 1, note: "", main: "arch", aff: [], kind: "", action: "", extra: "", done: {}, crit: false, date: today() } : k === "log" ? { date: today(), kind: LOGK[0], subject: "", details: "" } : { desc: "", cat: EXCAT[0], date: today(), amount: "" });
+    projDraft[k].push(k === "hours" ? { date: today(), who: ME ? ME.name : "", h: "", note: "" } : k === "mails" ? { date: today(), dir: "in", from: "", subject: "", req: "", reply: "", st: "open" } : k === "steps" ? newStep("") : k === "phases" ? { name: "", pct: 0, due: "", status: "todo" } : k === "claims" ? { phase: "", inv: nextInv(projDraft), date: today(), amount: "", paid: "", paidDate: "" } : k === "adds" ? { title: "", date: today(), amount: "", status: "proposed", note: "" } : k === "clash" ? { n: Math.max(0, ...projDraft.clash.map(x => num(x.n))) + 1, note: "", main: "arch", aff: [], kind: "", action: "", extra: "", done: {}, crit: false, date: today() } : k === "log" ? { date: today(), kind: LOGK[0], subject: "", details: "" } : { desc: "", cat: EXCAT[0], date: today(), amount: "" });
     projTouch(); render(); return; }
   const rm = e.target.closest("[data-rm]"); if (rm) { if (rm.dataset.rm === "claims") claimCustom.clear(); projDraft[rm.dataset.rm].splice(+rm.dataset.i, 1); if (rm.dataset.rm === "phases") phNormalize(); projTouch(); render(); return; }
   if (e.target.closest("[data-pprint]")) { const was = projSec; projSec = "all"; render(); setTimeout(() => { window.print(); projSec = was; render(); }, 60); return; }
