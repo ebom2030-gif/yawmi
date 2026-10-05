@@ -1,0 +1,8 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.dmc.yawmi",
+    "sha256_cert_fingerprints": ["1A:9D:54:F0:CA:F9:26:D7:1E:96:F2:F4:3F:55:0D:A6:93:FE:39:7E:53:1F:7D:79:16:67:2B:2B:83:95:21:12"]
+  }
+}]
