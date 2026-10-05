@@ -529,6 +529,60 @@ body.private .hero{background:radial-gradient(1200px 300px at 85% -40%,rgba(111,
 :root[data-skin="night"] .panel h3:before,:root:not([data-skin]) .panel h3:before{content:"✦";color:var(--gold);font-size:12px;margin-inline-end:7px;vertical-align:middle}
 #skinBox{position:fixed;inset:0;background:rgba(0,0,0,.45);display:grid;place-items:center;z-index:1000;padding:16px}#skinBox[hidden]{display:none}.skincard{background:var(--surface);color:var(--ink);border-radius:18px;padding:18px;max-width:520px;width:100%;box-shadow:0 20px 50px rgba(0,0,0,.3)}.skincard h3{margin:0 0 6px}.skins{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:8px 0 4px}.skin{border:2px solid var(--line);border-radius:14px;padding:0;overflow:hidden;background:var(--surface);cursor:pointer;text-align:center;font:inherit}.skin[aria-pressed=true]{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-soft)}.skin .sv{height:58px;position:relative}.skin .sv i{position:absolute;bottom:8px;width:16px;height:16px;border-radius:50%;border:2px solid #fff}.skin b{display:block;font-size:13px;padding:6px 4px 0;color:var(--ink)}.skin small{display:block;font-size:11px;color:var(--mut);padding:0 4px 8px}
 </style>
+<style id="v51css">
+/* v51: أقسام المشروع */
+.psnav{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:8px;margin:14px 0}
+.psn{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 6px 9px;border:1px solid var(--line);background:var(--surface);border-radius:14px;cursor:pointer;color:var(--ink);font:700 12.5px/1.3 inherit;transition:transform .15s,box-shadow .15s,border-color .15s;text-align:center}
+.psn i{font-style:normal;font-size:22px;line-height:1}.psn small{font-size:11px;color:var(--mut);font-weight:600}
+.psn:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:var(--gold)}
+.psn.on{background:var(--navy);color:#fff;border-color:var(--navy)}.psn.on small{color:var(--gold2)}
+.psn.wr::after{content:"";position:absolute;top:7px;inset-inline-end:8px;width:8px;height:8px;border-radius:50%;background:var(--late)}
+.stdash h3{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.sdrow{display:flex;gap:16px;align-items:center;margin:6px 0 10px}.sdrow .gauge{width:92px;height:92px}.sdrow .gauge span{font-size:19px;font-weight:800}
+.sdrow .gauge>span{width:72px;height:72px;border-radius:50%;background:var(--surface);display:grid;place-items:center}
+.sdl{display:grid;gap:7px;flex:1;min-width:0}.sdl>div{display:flex;flex-direction:column;min-width:0}.sdl span{font-size:11.5px;color:var(--mut);font-weight:700}.sdl b{font-size:14px;overflow-wrap:anywhere}.sdl small{font-size:11.5px;color:var(--ink2)}
+.sdk{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:10px}.sdk>div{border:1px solid var(--line);border-radius:10px;padding:7px 4px;text-align:center;cursor:pointer;background:var(--surface)}
+.sdk b{display:block;font-size:17px}.sdk span{font-size:11px;color:var(--mut);font-weight:600}.sdk .bad{border-color:var(--late);background:var(--late-soft,#fdecea)}.sdk .bad b{color:var(--late)}
+.sttrack{display:flex;flex-wrap:wrap;gap:5px;margin:4px 0}.sttrack span{min-width:26px;height:26px;padding:0 4px;border-radius:99px;display:grid;place-items:center;font:700 11.5px/1 inherit;background:var(--surface2);color:var(--mut);border:1px solid var(--line)}
+.sttrack span.d{background:var(--done);color:#fff;border-color:var(--done)}.sttrack span.c{background:var(--gold-soft);border-color:var(--gold);color:var(--ink)}
+.phbar{display:flex;gap:2px;height:12px;border-radius:99px;overflow:hidden;margin:8px 0 4px}.phbar i{background:var(--surface2)}.phbar i.cl{background:var(--gold)}.phbar i.pd{background:var(--done)}
+.phlg{display:flex;gap:12px;flex-wrap:wrap;font-size:11px;color:var(--mut)}.phlg i{display:inline-block;width:10px;height:10px;border-radius:3px;background:var(--surface2);margin-inline-end:4px;vertical-align:-1px}.phlg i.cl{background:var(--gold)}.phlg i.pd{background:var(--done)}
+.sttpl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}.sttpl label{display:flex;gap:6px;align-items:center;font-weight:700;font-size:12.5px}.sttpl select{max-width:240px}
+.stchips{flex-basis:100%;display:flex;flex-wrap:wrap;gap:6px}.stchips .chip{font-size:12px}
+.sttable td.stcl{min-width:190px}.stc{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;border:1px dashed var(--line);border-radius:8px;padding:3px 8px;cursor:pointer;white-space:nowrap}.stc.on{border:1px solid var(--gold);background:var(--gold-soft)}
+.sttable td.stcl select{margin-top:4px;max-width:180px}.sttable td.stcl small{display:block;color:var(--mut);font-size:11px}.rm.mv{font-size:13px}
+.ccode{direction:ltr;display:inline-block;font:700 10.5px/1.5 ui-monospace,Consolas,monospace;border:1px solid var(--line);border-radius:5px;padding:0 5px;color:var(--ink2);background:var(--surface2)}
+/* v51: صف المهمة */
+.task.tclick{cursor:pointer}.task.tclick:hover{background:var(--surface)}.task.topen{box-shadow:inset 3px 0 0 var(--gold)}
+.acts{align-items:center;max-width:none}
+.acts .ic{width:32px;height:32px;padding:0!important;display:inline-grid;place-items:center;font-size:15px!important;border-radius:9px!important;position:relative}
+.acts .ic.on{background:var(--navy)!important;border-color:var(--navy)!important;color:#fff!important}
+.acts select{height:32px;border-radius:9px}
+.acts .sch.ic{border:1px solid var(--line);color:inherit;padding:0;gap:0;overflow:hidden}.acts .sch.ic input{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer;padding:0}
+.tchev{color:var(--mut);font-size:12px;padding:0 4px;align-self:center}
+.pill.pv{background:var(--navy);color:#fff;border-color:var(--navy)}.pill.ck{background:var(--surface2)}.pill.ck.all{background:var(--done);color:#fff}
+.cklist{flex-basis:100%;border:1px solid var(--line);border-radius:12px;padding:8px 10px;background:var(--surface);margin-bottom:6px}
+.ckh{display:flex;align-items:center;gap:8px;font-weight:800;font-size:13px;margin-bottom:4px}.ckh small{color:var(--mut);font-weight:600}.ckh .mini{flex:1;max-width:160px}
+.cki{display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px dashed var(--line)}.cki span{flex:1;font-size:13.5px}.cki.on span{text-decoration:line-through;color:var(--mut)}
+.ckb{width:22px;height:22px;border-radius:7px;border:1.5px solid var(--gold);background:var(--surface);color:#fff;font-size:13px;line-height:1;cursor:pointer;flex:none}.cki.on .ckb{background:var(--done);border-color:var(--done)}
+.ckx{border:0;background:none;color:var(--mut);font-size:16px;cursor:pointer}.ckx:hover{color:var(--late)}
+.ckadd{display:flex;gap:6px;margin-top:6px}.ckadd input{flex:1;min-width:0}.ckadd button{border:1px solid var(--gold);background:var(--gold-soft);border-radius:8px;padding:0 12px;font-weight:800;cursor:pointer}
+.sec>.addrow{border-top:0;border-bottom:1px dashed var(--line);background:linear-gradient(180deg,var(--acc-soft),transparent 140%)}
+/* v51: الخاص */
+.pvday{background:var(--navy)!important;color:#fff!important;border-color:var(--navy)!important}
+.pvstrip{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;background:var(--navy);color:#fff;border-radius:12px;padding:7px 12px;font-size:12.5px;cursor:pointer;max-width:720px}
+.pvstrip b{color:var(--gold2)}.pvstrip span{background:rgba(255,255,255,.12);border-radius:99px;padding:2px 9px}
+/* v51: اليوم + دفتري */
+.splitw{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:14px;align-items:start;margin-top:14px}
+.spl-a .sheet{grid-template-columns:1fr}
+.spl-b{position:sticky;top:10px;max-height:calc(100vh - 20px);overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:10px;box-shadow:var(--shadow)}
+.nbmh{display:flex;gap:6px;align-items:center;position:sticky;top:-10px;background:var(--surface);padding:4px 0 8px;z-index:2}.nbmh b{white-space:nowrap}.nbmh select{flex:1;min-width:0}
+.nbpages canvas{max-width:100%;height:auto!important;display:block;margin:0 auto 8px;border-radius:6px;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+@media (max-width:900px){.splitw{grid-template-columns:1fr}.spl-b{position:static;max-height:75vh}}
+.todocode{font:800 20px/1.4 ui-monospace,Consolas,monospace;letter-spacing:2px;background:var(--gold-soft);padding:2px 10px;border-radius:8px}
+@media (max-width:700px){.psnav{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.psn{padding:8px 4px}.psn i{font-size:19px}.psn span{font-size:11.5px}.sdk{grid-template-columns:repeat(2,minmax(0,1fr))}.sdrow .gauge{width:76px;height:76px}.sdrow .gauge>span{width:58px;height:58px}}
+@media print{.psnav,.sttpl,.tchev{display:none!important}}
+</style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="ylg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0d68f"/><stop offset="1" stop-color="#c29a3e"/></linearGradient><linearGradient id="ylb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22335a"/><stop offset="1" stop-color="#14213d"/></linearGradient></defs><symbol id="yl" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="url(#ylb)"/><g stroke="#e4c77f" stroke-width="3.2" stroke-linecap="round"><path d="M32 11v6"/><path d="M17.2 17.2l4.2 4.2"/><path d="M46.8 17.2l-4.2 4.2"/><path d="M11 32h6"/><path d="M47 32h6"/></g><path d="M16 44a16 16 0 0 1 32 0z" fill="url(#ylg)"/><path d="M24.5 36.5l5 5 10-10.5" fill="none" stroke="#14213d" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 48h42" stroke="#e4c77f" stroke-width="3.2" stroke-linecap="round"/></symbol></svg>
@@ -565,7 +619,7 @@ body.private .hero{background:radial-gradient(1200px 300px at 85% -40%,rgba(111,
 <div id="dayWrap">
 <div class="daynav">
 <button class="nb" id="prevDay" aria-label="اليوم السابق">‹ السابق</button>
-<div class="dl"><b id="dayName"></b><span id="dayHijri"></span><button type="button" class="nbday" id="nbDayBtn" hidden>📝 نوتة اليوم</button></div>
+<div class="dl"><b id="dayName"></b><span id="dayHijri"></span><button type="button" class="nbday" id="nbDayBtn" hidden>📝 نوتة اليوم</button><button type="button" class="nbday" id="splitBtn" hidden>⧉ اليوم + دفتري</button><button type="button" class="nbday pvday" id="pvBtn" hidden></button></div>
 <button class="nb" id="nextDay" aria-label="اليوم التالي">التالي ›</button>
 <button class="nb" id="goToday">اليوم</button>
 <input type="date" id="pickDay" aria-label="اذهب لتاريخ">
@@ -712,6 +766,9 @@ if (x.kind === "task" && x.star && page === "2" && tab === "day") pills.push(`<s
 if ((x.kind === "task" || x.kind === "top") && x.ttype) pills.push(`<span class="pill ${({admin:"adm",fin:"fin"})[x.ttype] || "tech"}">${TTYPE[x.ttype] || ""}</span>`);
 if (x.kind === "task" && x.project) pills.push(`<span class="pill proj lnk" data-pj="${esc(x.project)}" title="افتح المشروع">🏗️ ${esc(x.project)}</span>`);
 if (x.client) pills.push(`<span class="pill proj lnk" data-cj="${esc(x.client)}" title="افتح بيانات العميل">🏢 ${esc(x.client)}</span>`);
+if (x.pv) pills.push(`<span class="pill pv" title="خاص بك — يظهر لك كتذكير ولا يُطبع في أي تقرير ولا يراه غيرك">🔒 خاص</span>`);
+if (Array.isArray(x.steps) && x.steps.length) { const dn = x.steps.filter(y => y.d).length; pills.push(`<span class="pill ck${dn === x.steps.length ? " all" : ""}" title="الخطوات الفرعية">☑ ${dn}/${x.steps.length}</span>`); }
+if (/^todo:/.test(x.addedBy || "")) pills.push(`<span class="pill ib" title="نزلت تلقائياً من Microsoft To Do">✅ To Do · ${esc(String(x.addedBy).slice(5))}</span>`);
 if (isInbox(x)) pills.push(`<span class="pill ib" title="وصلت عبر الإدخال السريع — أكمل بياناتها">📥 الوارد · ${esc(ibSrc(x))}</span><button type="button" class="pill ibok" data-a="inboxok" data-id="${x.id}">✓ رتّبتها</button>`);
 if (late) { const n = daysBetween(x.due, t); pills.push(`<span class="pill late">مرحّلة من ${esc(nice(x.due))}${n > 1 ? ` · ${n} أيام` : ""}</span>`); }
 if (x.kind === "follow" && x.from) pills.push(`<span class="pill wait">من: ${esc(x.from)}</span>`);
@@ -726,17 +783,22 @@ if (x.done && x.doneAt && iso(new Date(x.doneAt)) !== x.due) pills.push(`<span c
 let acts = "";
 if (canWrite && own(x)) {
 if (!x.done) {
-if (x.kind === "task") acts += `<button data-a="star" data-id="${x.id}" title="${x.star ? "إزالة الأولوية" : "تعليم كأولوية"}" aria-pressed="${!!x.star}" style="${x.star ? "color:var(--gold);border-color:var(--gold)" : ""}">${x.star ? "★" : "☆"}</button>`;
+if (x.kind === "task") acts += `<button class="ic" data-a="star" data-id="${x.id}" title="${x.star ? "إزالة الأولوية" : "تعليم كأولوية (من أهم 6)"}" aria-label="أولوية" aria-pressed="${!!x.star}" style="${x.star ? "color:var(--gold);border-color:var(--gold)" : ""}">${x.star ? "★" : "☆"}</button>`;
 if (x.kind === "task") acts += `<select data-a="status" data-id="${x.id}" aria-label="الحالة">${Object.keys(STATUS).map(s => `<option value="${s}" ${ (x.status||"todo")===s?"selected":""}>${STATUS[s]}</option>`).join("")}</select>`;
-if (!x.due && x.kind !== "meeting") acts += `<button data-a="today" data-id="${x.id}">لليوم</button><label class="sch" title="حدد يوماً للمهمة">📅<input type="date" data-f="due" data-id="${x.id}" aria-label="جدولة ليوم"></label>`;
-if (x.kind !== "meeting") acts += `<button data-a="tomorrow" data-id="${x.id}">للغد</button><button data-a="waitreply" data-id="${x.id}" title="أنجزت ما عليك وبانتظار رد — تتحول إلى متابعة في يوم تحدده">⏳ بانتظار رد</button>`;
+if (!x.due && x.kind !== "meeting") acts += `<button class="ic" data-a="today" data-id="${x.id}" title="انقلها لمهام اليوم" aria-label="لليوم">☀️</button><label class="sch ic" title="حدد يوماً للمهمة">📅<input type="date" data-f="due" data-id="${x.id}" aria-label="جدولة ليوم"></label>`;
+if (x.kind !== "meeting") acts += `<button class="ic" data-a="tomorrow" data-id="${x.id}" title="انقلها للغد" aria-label="للغد">⏭</button><button class="ic" data-a="waitreply" data-id="${x.id}" title="أنجزت ما عليك وبانتظار رد — تتحول إلى متابعة في يوم تحدده" aria-label="بانتظار رد">⏳</button>`;
 if (x.reminder && x.reminder.state === "link") acts += `<a href="${esc(calLink(x))}" target="_blank" rel="noopener">أضف للتقويم</a>`;
 }
-acts += `<button data-a="more" data-id="${x.id}" aria-expanded="${open===x.id}" title="تفاصيل ومرفقات">📎 …</button>`;
+if (x.kind !== "meeting") acts += `<button class="ic${x.pv ? " on" : ""}" data-a="pv" data-id="${x.id}" title="${x.pv ? "إلغاء الخصوصية" : "انقلها إلى أعمالي الخاصة — تظهر لك كتذكير ولا تُطبع في التقارير"}" aria-label="خاص" aria-pressed="${!!x.pv}">🔒</button>`;
+acts += `<span class="tchev" aria-hidden="true">${open === x.id ? "▴" : "▾"}</span>`;
 }
 let more = "";
 if (open === x.id && canWrite && own(x)) {
+const ckL = Array.isArray(x.steps) ? x.steps : [], ckD = ckL.filter(y => y.d).length;
 more = `<div class="more">
+<div class="cklist"><div class="ckh">☑ خطوات المهمة ${ckL.length ? `<small>${ckD} من ${ckL.length}</small><span class="mini g"><i style="width:${ckD / ckL.length * 100}%"></i></span>` : `<small>قسّم المهمة لخطوات صغيرة</small>`}</div>
+${ckL.map((y, i) => `<div class="cki${y.d ? " on" : ""}"><button type="button" class="ckb" data-a="ckT" data-id="${x.id}" data-i="${i}" aria-label="${y.d ? "إرجاع" : "تمت"}">${y.d ? "✓" : ""}</button><span>${esc(y.t)}</span><button type="button" class="ckx" data-a="ckDel" data-id="${x.id}" data-i="${i}" title="حذف الخطوة">×</button></div>`).join("")}
+<div class="ckadd"><input data-ckin="${x.id}" placeholder="أضف خطوة فرعية واضغط Enter…" aria-label="خطوة فرعية"><button type="button" data-a="ckAdd" data-id="${x.id}">+</button></div></div>
 <label>التاريخ <input type="date" data-f="due" data-id="${x.id}" value="${x.due || ""}"></label>
 ${x.kind === "meeting" ? `<label>الوقت <input type="time" data-f="time" data-id="${x.id}" value="${x.time || ""}"></label>` : ""}
 ${x.kind === "task" ? `<label>المشروع <input data-f="project" data-id="${x.id}" value="${esc(x.project)}" list="projList" style="width:130px"></label>
@@ -759,10 +821,10 @@ ${confirmDel === x.id ? `<span class="confirm">حذف نهائي؟ <button data-
 }
 const lead = x.kind === "meeting" ? `<span class="time">${esc(x.time || "—")}</span>` : (x.kind === "top" || x.kind === "task") ? `<span class="num">${i+1}</span>` : "";
 const cls = ["task","compact", x.done ? "isdone" : "", !x.done && x.priority === 2 ? "hi" : "", !x.done && x.priority === 1 ? "mid" : ""].join(" ");
-return `<div class="${cls}" data-lead="${lead ? 1 : 0}">
+return `<div class="${cls}${canWrite && own(x) ? " tclick" : ""}${open === x.id ? " topen" : ""}" data-lead="${lead ? 1 : 0}" data-tid="${x.id}">
 <button class="tick" data-a="toggle" data-id="${x.id}" aria-label="${x.done?"إرجاع":"تمت"}" ${canWrite && own(x)?"":"disabled"}>${CHECK}</button>
 ${lead}
-<div><div class="tt" data-id="${x.id}" ${canWrite && own(x) && !x.done ? 'contenteditable="true" spellcheck="false"' : ""}>${esc(x.title)}</div>
+<div><div class="tt" data-id="${x.id}" ${canWrite && own(x) && !x.done && open === x.id ? 'contenteditable="true" spellcheck="false" title="عدّل العنوان"' : ""}>${esc(x.title)}</div>
 ${pills.length ? `<div class="meta">${pills.join("")}</div>` : ""}
 ${x.note && open !== x.id ? `<div class="note">${esc(x.note)}</div>` : ""}
 ${filesHTML(x)}</div>
@@ -837,7 +899,7 @@ else if (kind === "follow") add = `<form class="addrow" data-kind="follow"><inpu
 else if (kind === "task") add = `<form class="addrow" data-kind="task"><input name="title" placeholder="اكتب مهمة واضغط Enter…" aria-label="مهمة"><button type="button" class="pastebtn" data-paste title="الصق نصاً منسوخاً (من واتساب مثلاً)">📋</button><input class="sm" name="project" list="projList" placeholder="المشروع" aria-label="المشروع"><input class="sm" name="client" list="cliList" placeholder="العميل / المالك" aria-label="العميل أو المالك"><select name="ttype" aria-label="نوع المهمة"><option value="tech">فنية</option><option value="admin">إدارية</option><option value="fin">مالية</option></select><select name="priority" aria-label="الأولوية"><option value="0">عادية</option><option value="1">مهمة</option><option value="2">عاجلة</option></select><button>+</button></form>`;
 else add = `<form class="addrow" data-kind="${kind}"><input name="title" placeholder="${kind === "top" ? "أضف مهمة مهمة…" : "أضف مهمة إدارية…"}" aria-label="${KIND[kind]}">${kind === "top" ? '<select name="ttype" aria-label="نوع المهمة"><option value="tech">فنية</option><option value="admin">إدارية</option><option value="fin">مالية</option></select>' : ""}<button>+</button></form>`;
 }
-return `<section class="sec sec-${kind} ${extra?.full ? "full" : ""}">${head}${extra?.filter || ""}${body}${add}</section>`;
+return `<section class="sec sec-${kind} ${extra?.full ? "full" : ""}">${head}${add}${extra?.filter || ""}${body}</section>`;
 }
 // ---------- render ----------
 // ----- الواجهة: القائمة الجانبية والتنقل -----
@@ -865,6 +927,7 @@ $("#cBk").textContent = items.filter(x => !x.done && !x.due && x.kind !== "meeti
 { const cl = $("#cliList"); if (cl) cl.innerHTML = [...new Set(CONTACTS.map(c => c.name).concat(PROJECTS.map(p => p.client)).filter(Boolean))].map(n => `<option value="${esc(n)}">`).join(""); }
 $("#projList").innerHTML = [...new Set(PROJECTS.map(p => p.name).concat(items.map(x => x.project)).filter(Boolean))].map(p => `<option value="${esc(p)}">`).join("");
 $("#dayWrap").hidden = tab !== "day";
+{ const pb = $("#pvBtn"); if (pb) { const n = items.filter(x => x.pv && !x.done).length; pb.hidden = !n; pb.textContent = `🔒 أعمالي الخاصة (${n})`; } }
 let h = "";
 if (tab === "day") {
 const d = parse(day);
@@ -891,6 +954,7 @@ ${section("follow", by("follow"), { empty: "لا متابعات" })}
 ${section("admin", by("admin"), { empty: "لا مهام إدارية" })}
 ${!ME || viewUid !== ME.id ? "" : `<section class="sec sec-notes"><h3>ملاحظات</h3><textarea class="notes" id="notes" ${canWrite ? "" : "readonly"} placeholder="${canWrite ? "اكتب ملاحظاتك هنا…" : ""}">${esc(notes[day] || "")}</textarea><div class="saved" id="savedLbl"></div></section>`}
 </div>`;
+if (splitNB && nbOK()) h = `<div class="splitw"><div class="spl-a">${h}</div><aside class="spl-b">${nbMini()}</aside></div>`;
 }
 } else if (tab === "backlog") { h = backlogView();
 } else if (tab === "upcoming") {
@@ -904,7 +968,7 @@ else if (tab === "devs") h = devsView();
 else if (tab === "ai") h = aiView();
 else if (tab === "home") h = homeView();
 else if (tab === "done") h = doneView();
-else if (tab === "all") h = allView();
+else if (tab === "all") h = (allF.pv ? `<div class="viewing">🔒 تعرض الآن أعمالك الخاصة فقط — لا تظهر في أي تقرير مطبوع<button data-pvclr>عرض كل المهام</button></div>` : "") + allView();
 else if (tab === "plan") h = planView();
 else if (tab === "guide") h = guideView();
 else if (tab === "notes") h = nbView();
@@ -933,7 +997,7 @@ const rkpi = (lab, v, sub, cls, go) => `<button type="button" class="hk ${cls ||
 function reportData(){
   const W0 = addDays(weekStart(), rw * 7), ws = iso(W0), we = iso(addDays(W0, 6)), t = today(), cur = rw === 0;
   const inW = d => !!d && d >= ws && d <= we;
-  const nm = items.filter(x => x.kind !== "meeting");
+  const nm = items.filter(x => x.kind !== "meeting" && !x.pv);
   const done = nm.filter(x => x.done && inW(doneDay(x))).sort((a, b) => doneDay(b).localeCompare(doneDay(a)));
   const pend = nm.filter(x => !x.done);
   const cut = rw === 0 ? t : rw < 0 ? iso(addDays(parse(we), 1)) : "";
@@ -1060,7 +1124,7 @@ function ensureRefs(pn, cn){
 function respUser(x){ if (!ME || !x.from || !can("assign") || PRIV()) return null; const n = normN(x.from); return scopeUsers().find(u => u.active && u.id !== x.owner && (normN(u.name) === n || normN(u.username) === n)) || null; }
 { const ul = document.getElementById("usrList"); const fill = () => { if (ul) ul.innerHTML = scopeUsers().filter(u => u.active).map(u => `<option value="${esc(u.name)}">`).join(""); }; setInterval(fill, 5000); setTimeout(fill, 1500); }
 function waitBox(x){ return `<div class="wbox"><b>⏳ هل أنجزت ما عليك؟</b><small>ستُغلق المهمة اعتباراً من اليوم وتتحول إلى «متابعات — بانتظار رد» وتعود إليك يوم المتابعة.</small><label>أتابع يوم <input type="date" data-wdate value="${iso(addDays(new Date(), 2))}"></label><label>بانتظار رد من <input data-wfrom value="${esc(x.from || x.client || "")}" placeholder="العميل أو الشخص"></label><button data-a="waitok" data-id="${x.id}" class="ok">حسناً</button><button data-a="waitno" data-id="${x.id}">إلغاء</button></div>`; }
-function dayRows(){ const d = day; const seen = new Set(); const tag = "✓ " + d + ":"; const L = forDay(d).concat(items.filter(x => x.done && doneDay(x) === d), items.filter(x => String(x.note || "").includes(tag))).filter(x => !seen.has(x.id) && seen.add(x.id));
+function dayRows(){ const d = day; const seen = new Set(); const tag = "✓ " + d + ":"; const L = forDay(d).concat(items.filter(x => x.done && doneDay(x) === d), items.filter(x => String(x.note || "").includes(tag))).filter(x => !x.pv && !seen.has(x.id) && seen.add(x.id));
   const cat = x => { const tg = !x.done && x.due !== d && String(x.note || "").includes(tag);
     if (x.kind === "meeting") return ["meet", "اجتماع" + (x.time ? " — الساعة " + x.time : "")];
     if (x.done) return ["done", "منجزة"];
@@ -1112,7 +1176,7 @@ function taskState(x){ const t = today();
 function allRows(){ const qq = normA(allF.q).split(/\s+/).filter(Boolean);
   return items.filter(x => x.kind !== "meeting").map(x => ({ x, s: taskState(x) })).filter(r =>
     (allF.st === "all" || (allF.st === "active" ? r.s !== "done" : r.s === allF.st)) &&
-    (!allF.pj || normN(r.x.project) === normN(allF.pj)) && (!allF.cl || normN(r.x.client) === normN(allF.cl)) && (!allF.rs || normN(r.x.from) === normN(allF.rs)) &&
+    (!allF.pv || r.x.pv) && (!allF.pj || normN(r.x.project) === normN(allF.pj)) && (!allF.cl || normN(r.x.client) === normN(allF.cl)) && (!allF.rs || normN(r.x.from) === normN(allF.rs)) &&
     (!qq.length || qq.every(k => normA([r.x.title, r.x.note, r.x.project, r.x.client, r.x.from].join(" ")).includes(k))))
     .sort((a, b) => { if (allSort.k) { const v = r => allSort.k === "st" ? AST.findIndex(s => s[0] === r.s) : allSort.k === "due" ? String(r.x.due || "9999") : allSort.k === "pr" ? -(r.x.priority || 0) : String(r.x[allSort.k] || "\uffff"); const A = v(a), B = v(b); const c = typeof A === "number" ? A - B : A.localeCompare(B, "ar"); if (c) return c * allSort.d; }
       return AST.findIndex(s => s[0] === a.s) - AST.findIndex(s => s[0] === b.s) || String(a.x.due || "9999").localeCompare(String(b.x.due || "9999")) || (b.x.doneAt || 0) - (a.x.doneAt || 0); }); }
@@ -1138,12 +1202,12 @@ $("#view").addEventListener("click", e => { if (tab !== "all") return; const q =
   if ((el = q("[data-asort]"))) { const k = el.dataset.asort; allSort = allSort.k === k ? (allSort.d > 0 ? { k, d: -1 } : { k: "", d: 1 }) : { k, d: 1 }; render(); return; }
   if ((el = q("[data-amode]"))) { allMode = el.dataset.amode; if (allMode === "kanban" && allF.st !== "all" && allF.st !== "active") allF.st = "active"; render(); return; }
   if ((el = q("[data-kbi]"))) { goItem(el.dataset.kbi); return; }
-  if (q("[data-aclr]")) { allF = { ...allF, pj: "", cl: "", rs: "", q: "" }; render(); return; }
+  if (q("[data-aclr]")) { allF = { ...allF, pj: "", cl: "", rs: "", q: "", pv: 0 }; render(); return; }
   if ((el = q("tr[data-sr]"))) { goItem(el.dataset.sr); return; }
-  if (q("[data-axls]")) { const R = allRows(); const qv = v => `"${String(v ?? "").replace(/"/g, '""')}"`; const lines = [qv("كشف المهام — " + (ME ? (uname(viewUid) || ME.name) : "") + " — " + gFmtY.format(new Date())), "", ["م", "المهمة", "النوع", "الحالة", "تاريخ المهمة", "تاريخ الإنجاز", "المشروع", "العميل", "المسؤول", "الملاحظات"].map(qv).join(",")];
+  if (q("[data-axls]")) { const R = allRows().filter(r => !r.x.pv); const qv = v => `"${String(v ?? "").replace(/"/g, '""')}"`; const lines = [qv("كشف المهام — " + (ME ? (uname(viewUid) || ME.name) : "") + " — " + gFmtY.format(new Date())), "", ["م", "المهمة", "النوع", "الحالة", "تاريخ المهمة", "تاريخ الإنجاز", "المشروع", "العميل", "المسؤول", "الملاحظات"].map(qv).join(",")];
     R.forEach((r, i) => lines.push([i + 1, r.x.title, r.x.kind === "follow" ? "متابعة" : r.x.kind === "admin" ? "إدارية" : (TTYPE[r.x.ttype] || "مهمة"), ASTL[r.s].l, r.x.due || "", r.x.doneAt ? iso(new Date(r.x.doneAt)) : "", r.x.project, r.x.client, r.x.from, fmtNote(r.x.note)].map(qv).join(",")));
     const blob = new Blob(["﻿" + lines.join("\r\n")], { type: "text/csv;charset=utf-8" }); const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `كشف-المهام-${today()}.csv`; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500); toast("📊 تم تنزيل كشف المهام"); return; }
-  if (q("[data-apdf]")) { const R = allRows(), who = ME ? (uname(viewUid) || ME.name) : ""; const ORD = ["أولاً", "ثانياً", "ثالثاً", "رابعاً", "خامساً", "سادساً", "سابعاً", "ثامناً"]; let k = 0;
+  if (q("[data-apdf]")) { const R = allRows().filter(r => !r.x.pv), who = ME ? (uname(viewUid) || ME.name) : ""; const ORD = ["أولاً", "ثانياً", "ثالثاً", "رابعاً", "خامساً", "سادساً", "سابعاً", "ثامناً"]; let k = 0;
     const secs = AST.map(([s, t]) => { const rows = R.filter(r => r.s === s); if (!rows.length) return ""; return `<section class="pds"><div class="pdb"><span>${ORD[k++]}</span>${t}<em>${rows.length === 1 ? "بند واحد" : rows.length === 2 ? "بندان" : rows.length + (rows.length < 11 ? " بنود" : " بنداً")}</em></div>
       <table><colgroup><col style="width:5%"><col style="width:30%"><col style="width:12%"><col style="width:14%"><col style="width:13%"><col style="width:26%"></colgroup><tr><th>م</th><th>المهمة</th><th>التاريخ</th><th>المشروع</th><th>العميل / المسؤول</th><th>الملاحظات</th></tr>
       ${rows.map((r, i) => `<tr><td class="c">${i + 1}</td><td><b>${esc(r.x.title)}</b></td><td>${esc(r.x.done ? (r.x.doneAt ? iso(new Date(r.x.doneAt)) : "") : (r.x.due || "—"))}</td><td>${esc(r.x.project || "—")}</td><td>${esc([r.x.client, r.x.from].filter(Boolean).join(" — ") || "—")}</td><td>${esc(fmtNote(r.x.note)) || "—"}</td></tr>`).join("")}</table></section>`; }).join("");
@@ -1261,7 +1325,7 @@ function ddClients(){ const L = clientsAll().filter(e => e.projects.length).sort
   return { t: "العملاء ومشاريعهم", s: `${L.length} عميل · قيمة العقود ${money(S(L, e => e.T))} ر.س`, h: L.length ? `<div class="tblwrap"><table class="ptable compact dd"><tr><th>العميل</th><th>المشاريع</th><th>قيمة العقود</th><th>المحصّل</th><th>المتبقي</th></tr>${L.map(e => `<tr data-ddcli="${esc(e.saved ? e.id : "n:" + e.name)}"><td><b>${esc(e.name)}</b><small class="ddc">${esc(e.projects.map(p => p.name).join("، "))}</small></td><td class="n">${e.projects.length}</td><td class="n">${money(e.T)}</td><td class="n">${money(e.paid)}</td><td class="n"><b>${money(Math.max(e.T - e.paid, 0))}</b></td></tr>`).join("")}<tr class="ddt"><td>الإجمالي</td><td class="n">${S(L, e => e.projects.length)}</td><td class="n">${money(S(L, e => e.T))}</td><td class="n">${money(S(L, e => e.paid))}</td><td class="n">${money(S(L, e => Math.max(e.T - e.paid, 0)))}</td></tr></table></div>` : `<div class="empty" style="padding:14px">لا توجد بيانات</div>` }; }
 $("#view").addEventListener("click", e => { const k = e.target.closest("[data-gdd]"); if (k) { e.stopPropagation(); if (k.dataset.gdd === "clients") { const r = ddClients(); ddStack = ["__cl"]; $("#ddCard").innerHTML = `<div class="ddhd"><div><h3>${esc(r.t)}</h3><div class="sub">${esc(r.s)}</div></div><button type="button" class="btn ghost xs" data-ddx>إغلاق ✕</button></div>${r.h}<div class="sub" style="margin-top:8px">💡 اضغط على أي عميل لفتح ملفه.</div>`; $("#ddBox").hidden = false; } else goDD(k.dataset.gdd); return; }
   const a = e.target.closest("[data-gall]"); if (a) { e.stopPropagation(); goAll(a.dataset.gall); return; }
-  const s = e.target.closest("[data-pgo]"); if (s) { const el = document.getElementById(s.dataset.pgo); if (el) { el.scrollIntoView({ behavior: "smooth", block: "start" }); el.classList.add("flash"); setTimeout(() => el.classList.remove("flash"), 1400); } return; }
+  const s = e.target.closest("[data-pgo]"); if (s) { let el = document.getElementById(s.dataset.pgo); if (!el && projOpen && PSECOF[s.dataset.pgo]) { projSec = PSECOF[s.dataset.pgo]; render(); el = document.getElementById(s.dataset.pgo); } if (el) { el.scrollIntoView({ behavior: "smooth", block: "start" }); el.classList.add("flash"); setTimeout(() => el.classList.remove("flash"), 1400); } return; }
   const cf = e.target.closest("[data-cfk]"); if (cf) { cliF = cf.dataset.cfk; render(); return; } }, true);
 $("#ddBox").addEventListener("click", e => { const c = e.target.closest("[data-ddcli]"); if (c) { e.stopPropagation(); $("#ddBox").hidden = true; const k = c.dataset.ddcli; goTab("clients", () => openCli(k)); } }, true);
 
@@ -1316,7 +1380,7 @@ function nbForDay(d){ return nbScope().filter(f => f.date === d).sort((a, b) => 
 function nbView(){
   if (!nbOK()) return `<div class="empty">هذه الصفحة متاحة للمالك فقط</div>`;
   if (!NB) { loadNB(); return `<div class="empty">جارٍ قراءة ملاحظاتك من Google Drive…</div>`; }
-  const head = `<div class="phead"><div><h2>📝 دفتري — ملاحظات Notability</h2><div class="sub">${PRIV() ? "🔒 نوتاتك الشخصية (كل المجلدات عدا Work Dmc 2026)" : "🏢 نوتات العمل — مجلد Work Dmc 2026"} · تظهر تلقائياً من النسخة الاحتياطية على Google Drive${NB.at ? ` · آخر تحديث للقائمة ${esc(new Date(NB.at).toLocaleTimeString("ar-SA-u-nu-latn", { hour: "2-digit", minute: "2-digit" }))}` : ""}</div></div><button type="button" class="btn ghost" data-nbre>${nbLoading ? "جارٍ التحديث…" : "🔄 تحديث"}</button></div>`;
+  const head = `<div class="phead"><div><h2>📝 دفتري — ملاحظات Notability</h2><div class="sub">${PRIV() ? "🔒 نوتاتك الشخصية (كل المجلدات عدا Work Dmc 2026)" : "🏢 نوتات العمل — مجلد Work Dmc 2026"} · تظهر تلقائياً من النسخة الاحتياطية على Google Drive${NB.at ? ` · آخر تحديث للقائمة ${esc(new Date(NB.at).toLocaleTimeString("ar-SA-u-nu-latn", { hour: "2-digit", minute: "2-digit" }))}` : ""}</div></div><div class="hq"><button type="button" class="btn ghost" data-nbsplit title="اكتب في صفحة اليوم وأنت ترى النوتة بجانبها">⧉ افتحه مع صفحة اليوم</button><button type="button" class="btn ghost" data-nbre>${nbLoading ? "جارٍ التحديث…" : "🔄 تحديث"}</button></div></div>`;
   if (!NB.found) return head + `<div class="panel nbsetup"><h3>🔗 ربط Notability بالنظام (مرة واحدة)</h3>${nbErr ? `<div class="warnt">${esc(nbErr)}</div>` : ""}
     <ol><li>افتح <b>Notability</b> على الآيباد ← <b>الإعدادات ⚙️</b> ← <b>Auto-Backup</b>.</li><li>اختر <b>Google Drive</b> كوجهة للنسخ الاحتياطي.</li><li>اجعل صيغة الملفات <b>PDF</b>، وفعّل النسخ للمواد المطلوبة (مثل «Work Dmc 2026»).</li><li>انتظر حتى تكتمل أول نسخة (قد تستغرق دقائق)، ثم اضغط «🔄 تحديث».</li></ol>
     <p class="sub">إذا كان حساب Google المرتبط بـ Notability هو نفس حساب النظام فسيُعثر على مجلد <b>Notability</b> تلقائياً. وإن كان حساباً آخر: افتح Google Drive بذلك الحساب، واضغط على مجلد <b>Notability</b> ← مشاركة ← أضف حساب النظام (عارض)، ثم انسخ رابط المجلد والصقه هنا:</p>
@@ -1356,7 +1420,35 @@ $("#view").addEventListener("click", async e => { if (tab !== "notes") return; c
   if (q("[data-nbset]")) { const v = ($("#nbFolderIn") || {}).value || ""; try { NB = await api("setNoteFolder", v); toast(NB.found ? "✓ تم ربط المجلد" : "لم يُعثر على ملفات PDF في المجلد", !NB.found); render(); } catch (x) { toast((x && x.message) || "تعذّر الربط", true); } return; } });
 $("#view").addEventListener("input", e => { if (tab !== "notes" || e.target.id !== "nbQ") return; nbQ = e.target.value; const pos = e.target.selectionStart; render(); const i = $("#nbQ"); if (i) { i.focus(); i.setSelectionRange(pos, pos); } });
 $("#nbDayBtn").addEventListener("click", () => { const f = nbForDay(day)[0]; if (!f) return; nbSel = f.id; nbDom = null; nbFolder = "all"; nbQ = ""; goTab("notes"); });
-function nbDaySync(){ const b = $("#nbDayBtn"); if (!b) return; if (!nbOK()) { b.hidden = true; return; } if (!NB && !nbLoading) loadNB(); const n = nbForDay(day).length; b.hidden = !n; b.textContent = n > 1 ? `📝 نوتات اليوم (${n})` : "📝 نوتة اليوم"; }
+let splitNB = (() => { try { return localStorage.getItem("yw_split") === "1"; } catch { return false; } })();
+function setSplit(v){ splitNB = !!v; try { localStorage.setItem("yw_split", v ? "1" : "0"); } catch {} }
+function nbMini(){ if (!NB) { if (!nbLoading) loadNB(); return `<div class="empty">جارٍ قراءة دفترك…</div>`; }
+  const all = nbScope().slice().sort((a, b) => (b.date || "").localeCompare(a.date || "") || b.mod - a.mod);
+  if (!all.length) return `<div class="nbmh"><b>📝 دفتري</b><button type="button" class="btn ghost xs" data-splitx>✕</button></div><div class="empty">لا توجد نوتات — افتح «دفتري» لربط Notability</div>`;
+  if (!nbSel || !all.some(f => f.id === nbSel)) { nbSel = (nbForDay(day)[0] || all[0]).id; nbDom = null; }
+  setTimeout(nbAfter, 0);
+  return `<div class="nbmh"><b>📝 دفتري</b><select id="nbPick" aria-label="اختر النوتة">${all.slice(0, 300).map(f => `<option value="${esc(f.id)}" ${f.id === nbSel ? "selected" : ""}>${f.date === day ? "📅 " : ""}${esc(f.name)}${f.date ? " · " + esc(f.date) : ""}</option>`).join("")}</select><a class="btn ghost xs" href="https://drive.google.com/file/d/${esc(nbSel)}/view" target="_blank" rel="noopener" title="فتح في Drive">↗</a><button type="button" class="btn ghost xs" data-splitx title="إغلاق العرض الجانبي">✕</button></div><div id="nbPages" class="nbpages"></div>`; }
+document.addEventListener("change", e => { if (e.target.id !== "nbPick") return; nbSel = e.target.value; nbDom = null; render(); });
+document.addEventListener("click", e => { if (e.target.closest("[data-splitx]")) { setSplit(false); render(); return; }
+  if (e.target.closest("#splitBtn")) { setSplit(!splitNB); if (splitNB) { const f = nbForDay(day)[0]; if (f && nbSel !== f.id) { nbSel = f.id; nbDom = null; } } render(); return; }
+  if (e.target.closest("#pvBtn") || e.target.closest("[data-pvgo]")) { allF = { st: "active", pj: "", cl: "", rs: "", q: "", pv: 1 }; goTab("all"); return; }
+  if (e.target.closest("[data-pvclr]")) { allF.pv = 0; render(); return; }
+  if (e.target.closest("[data-nbsplit]")) { setSplit(true); const cur = nbScope().find(f => f.id === nbSel); if (cur && cur.date) day = cur.date; goTab("day"); return; } });
+async function todoUI(){ const b = $("#todoIn"), tg = $("#todoTag"); if (!b || !tg) return; if (isDemo) { tg.textContent = "غير متاح في نسخة العرض"; return; }
+  let st; try { st = await api("todoStatus"); } catch (x) { tg.textContent = "—"; return; }
+  if (st.on) { tg.className = "tag member"; tg.textContent = "مربوط ✓"; b.innerHTML = `<small style="color:var(--mut);font-size:12px">المهام ذات التاريخ أو اليومية تنزل تلقائياً كل ~30 دقيقة${st.at ? " · آخر مزامنة " + esc(new Date(st.at).toLocaleString("ar-SA-u-nu-latn-ca-gregory", { dateStyle: "short", timeStyle: "short" })) : ""}. وما تنجزه في To Do يُعلَّم منجزاً هنا.</small><div class="row2"><button type="button" class="btn ghost" id="todoSync">🔄 مزامنة الآن</button><button type="button" class="btn ghost" id="todoOff">إلغاء الربط</button></div>`; }
+  else { tg.className = "tag off"; tg.textContent = "غير مربوط"; } }
+async function todoPollLoop(until){ while (Date.now() < until) { await new Promise(r => setTimeout(r, 5000)); if (!$("#todoWait")) return; let r; try { r = await api("todoPoll"); } catch (x) { continue; }
+  if (r.state === "ok") { toast(`✓ تم ربط Microsoft To Do${r.n ? ` — نزلت ${r.n} مهمة` : ""}`); try { await load(); } catch {} todoUI(); return; }
+  if (r.state !== "pending") { const w = $("#todoWait"); if (w) w.textContent = "⚠️ " + (r.msg || "انتهت مهلة الرمز — اضغط ربط مرة أخرى"); return; } } }
+document.addEventListener("click", async e => { const id = e.target.id;
+  if (id === "todoCopy") { try { await navigator.clipboard.writeText(e.target.dataset.c); toast("نُسخ الرمز"); } catch {} return; }
+  if (!["todoLink", "todoSync", "todoOff"].includes(id)) return; e.preventDefault(); const b = $("#todoIn"); e.target.disabled = true;
+  try { if (id === "todoSync") { const r = await api("todoNow"); toast(r.n ? `✓ نزلت ${r.n} مهمة جديدة من To Do` : "✓ لا توجد مهام جديدة في To Do"); try { await load(); } catch {} todoUI(); }
+    else if (id === "todoOff") { await api("todoOff"); toast("أُلغي ربط Microsoft To Do"); todoUI(); }
+    else { const r = await api("todoStart"); b.innerHTML = `<ol><li>اضغط «فتح صفحة Microsoft»</li><li>اكتب الرمز: <b class="todocode" dir="ltr">${esc(r.code)}</b> <button type="button" class="btn ghost xs" id="todoCopy" data-c="${esc(r.code)}">نسخ</button></li><li>سجّل دخولك بحساب Microsoft اللي فيه To Do، ووافق على القراءة</li></ol><a class="btn gold" href="${esc(r.url)}" target="_blank" rel="noopener">فتح صفحة Microsoft ↗</a><div id="todoWait" class="sub" style="margin-top:8px">⏳ في انتظار تسجيل الدخول…</div>`; todoPollLoop(Date.now() + (r.exp || 900) * 1000); } }
+  catch (x) { toast((x && x.message) || "تعذّر", true); e.target.disabled = false; } });
+function nbDaySync(){ const b = $("#nbDayBtn"); const sb = $("#splitBtn"); if (sb) { sb.hidden = !nbOK(); sb.textContent = splitNB ? "✕ إغلاق دفتري الجانبي" : "⧉ اليوم + دفتري"; sb.setAttribute("aria-pressed", splitNB); } if (!b) return; if (!nbOK()) { b.hidden = true; return; } if (!NB && !nbLoading) loadNB(); const n = nbForDay(day).length; b.hidden = !n; b.textContent = n > 1 ? `📝 نوتات اليوم (${n})` : "📝 نوتة اليوم"; }
 
 // ===== دليل الاستخدام =====
 const GUIDE = [
@@ -1380,7 +1472,7 @@ const GUIDE = [
     s: ["اضغط «+ مشروع جديد» واكتب الاسم والعميل ونوع الخدمة (تصميم، إشراف…).", "في صفحة المشروع اكتب «السعر المتفق عليه» وحدّد إن كان شاملاً للضريبة.", "في «المراحل والدفعات» اختر قالباً جاهزاً (تصميم معماري، إشراف حسب التنفيذ، تصميم + إشراف، أو إشراف بدفعات شهرية) ثم عدّل النسب والتواريخ.", "عند تحويل حالة المرحلة إلى «منجزة» تصدر مطالبة تلقائياً برقم فاتورة متسلسل (INV-2026-001…).", "في «المطالبات والدفعات» سجّل المبلغ المدفوع وتاريخه، أو اضغط «✓ تم التحويل» وأرفق الإيصال.", "اضغط 🖨️ بجانب أي مطالبة لإصدار خطاب «مطالبة مالية» رسمي جاهز للطباعة أو PDF.", "سجّل المصاريف في قسمها ليُحسب صافي الربح، وارفع العقود والمستندات في قسم الملفات.", "في «أعمال ومخرجات المشروع» أضف أعمال المشروع الفنية (مراجعة مخططات، دراسة، تقرير، زيارة موقع، اعتماد…) مع المسؤول والمرحلة وتاريخ التسليم؛ تظهر في المهام اليومية للمسؤول، وتُحدّث نسبة إنجاز المشروع عند إنجازها."],
     tip: ["كل كارت في لوحة المؤشرات قابل للضغط ويعرض تفاصيله (المحصّل، المتبقي، دخل الشهر…)، والضغط على أي صف يفتح المشروع.", "اسم الدفعة في المطالبات يقترح عليك: أتعاب الإشراف عن شهر كذا، الدفعة الشهرية رقم (n)… مع خيار «إدخال يدوي».", "ملخص أعلى المطالبات يوضح: المُطالَب به، المحصّل، المستحق، وما لم يُطالَب به بعد.", "قسم «تعارضات الأقسام»: سجّل ملاحظات التنسيق بين المعماري والإنشائي والميكانيكا والكهرباء؛ حدّد القسم الأساسي والأقسام المتأثرة، وعند انتهاء كل قسم اضغط اسمه ✓ فتنتقل الملاحظة تلقائياً للقسم التالي، وتُغلق عند انتهاء الجميع، مع نسبة إنجاز لكل قسم.", "اربط كل عمل بمرحلته: عند إنجاز كل أعمال المرحلة يقترح عليك النظام اعتمادها كمنجزة وإصدار مطالبتها بضغطة.", "قسم «آخر المستجدات» يجمع لك تلقائياً آخر ما حدث في المشروع: أعمال أُنجزت، مراسلات، مطالبات، تحصيل، وملفات مرفوعة."] },
   { k: "codes", ic: "🏷️", t: "دليل الأكواد", tab: "projects", g: "الأعمال", w: "كل مشروع له كود ثابت يُولَّد تلقائياً بصيغة «نوع الخدمة - السنة - الرقم المسلسل» مثل IFC-26-003، وكل عميل له رقم موحد مثل C-001؛ للاستخدام في المراسلات والفواتير والأرشفة وأسماء الملفات.",
-    s: ["SV = إشراف (إشراف عام ITC أو إشراف هندسي).", "AOR = مستشار معماري.", "DS = تصميم معماري.", "IFC = تصميم مخططات تنفيذية.", "PM = إدارة مشاريع.", "RE = تطوير عقاري.", "ST = دراسات واستشارات.", "ID = تصميم داخلي.", "GN = أخرى / عام.", "السنة = آخر رقمين من سنة بداية المشروع (26 = 2026)، والرقم المسلسل يبدأ من 001 كل سنة.", "رقم العميل: C- ثم رقم مسلسل ثابت لا يتغير (C-001، C-002…)."],
+    s: ["SV = إشراف (إشراف عام ITC أو إشراف هندسي).", "AOR = مستشار معماري.", "DS = تصميم معماري.", "IFC = تصميم مخططات تنفيذية.", "PM = إدارة مشاريع.", "RE = تطوير عقاري.", "ST = دراسات واستشارات.", "ID = تصميم داخلي.", "WD = مخططات تنفيذية.", "BP = إصدار رخص بناء.", "GN = أخرى / عام.", "السنة = آخر رقمين من سنة بداية المشروع (26 = 2026)، والرقم المسلسل يبدأ من 001 كل سنة.", "رقم العميل: C- ثم رقم مسلسل ثابت لا يتغير (C-001، C-002…)."],
     tip: ["يُولَّد الكود تلقائياً عند إنشاء المشروع أو العميل، ويمكن تعديله من «البيانات الأساسية» في المشروع.", "نوع الخدمة في الكود يؤخذ من أول نوع مختار للمشروع.", "استخدم الكود في أسماء المجلدات والملفات مثل: IFC-26-003 – مخططات معمارية Rev01.", "مقترح لأرقام المخاطبات: كود المشروع ثم رقم الخطاب، مثل SV-26-001/OUT-012."] },
   { k: "devs", ic: "🏙️", t: "قاعدة بيانات المطورين العقاريين", tab: "devs", g: "الأعمال", w: "قاعدة مستقلة عن العملاء للمطورين العقاريين المستهدفين (فرص التطوير العقاري): تتابع فيها التواصل معهم مرحلة بمرحلة، ومن يتعاقد معك تحوّله بضغطة إلى عميل.",
     s: ["لكل مطور مرحلة: لم يُتواصل معه، تم التواصل، اجتماع / زيارة، عرض مقدَّم، غير مهتم حالياً.", "سجّل «آخر تواصل» و«المتابعة القادمة»؛ المتابعات المستحقة تظهر باللون الأحمر وفي كرت «متابعات مستحقة».", "اضغط 📞 للاتصال أو 💬 للواتساب مباشرة، و📅 لإضافة مهمة متابعة في يومي.", "عند التعاقد اضغط «🤝 تحويل لعميل» فينتقل إلى صفحة العملاء برقم عميل موحد (C-…)."],
@@ -1406,7 +1498,7 @@ const GUIDE_FAQ = [
   ["كيف أرسل لـClaude صورة مطور عقاري أو ملف Excel؟", "في محادثة Claude اضغط «+» وأرفق لقطة الشاشة أو الملف واكتب مثلاً «أضف هذا المطور»، فيقرأ البيانات ويضيفها إلى العملاء بتصنيف «مطور عقاري»."],
   ["لماذا لا تظهر لي بعض الصفحات؟", "الصفحات تظهر حسب صلاحياتك؛ اطلب من المالك أو مديرك تفعيلها."],
   ["لا أرى آخر تحديث للتطبيق؟", "حدّث الصفحة، وإن استمر أغلق التطبيق وافتحه من جديد."] ];
-const GUIDE_NEW = [["v50", "رقم الإصدار يظهر في الرئيسية وأسفل القائمة، وإصلاح مشكلة مسح ما تكتبه في خانة المهمة أو العميل أو المشروع عند تحديث البيانات تلقائياً."], ["v49", "صفحة مستقلة «المطورون العقاريون»: قاعدة بيانات المطورين المستهدفين منفصلة عن العملاء، بمراحل التواصل (لم يُتواصل، تم التواصل، اجتماع، عرض مقدَّم، غير مهتم) وتواريخ آخر تواصل والمتابعة القادمة، واتصال وواتساب مباشر، وزر «🤝 تحويل لعميل» لمن تتعاقد معه، وأرقام D- للمطورين."], ["v48", "ثلاث هويات بصرية خاصة بيومي يختار منها كل مستخدم من زر «🎨 المظهر» في القائمة: «ليل مكة» (كحلي ونحاسي بنقشة النجمة الثمانية)، و«روشن حجازي» (أخضر بترولي وذهب رملي بنقشة المشربية وزوايا مميزة)، و«طين ونخيل» (بني تمري وتيراكوتا بشبكة معمارية دافئة)."], ["v47", "تنسيق موحّد لكل الأجهزة (الجوال والآيباد والكمبيوتر): الجداول تتحول لبطاقات مرتبة على الجوال، ولوحة الكانبان تُسحب أفقياً عموداً عموداً، وأزرار أكبر للّمس على الآيباد والجوال."], ["v46", "«دليل الأكواد» في دليل الاستخدام يشرح معنى كل كود (SV، AOR، DS، IFC، PM، RE، ST، ID) ورقم العميل، ويُفتح بالضغط على أي كود أو من زر «🏷️ دليل الأكواد» في المشروع. وتحسينات بصرية: أيقونات لكل مؤشرات لوحة المشاريع والعملاء، ورسوم أعمدة متحركة أوضح."], ["v45", "تحسينات بصرية: أيقونات ملوّنة لكل المؤشرات، و«كشف المهام» بعرضين (جدول قابل للترتيب بالضغط على العناوين مع الأولوية وصورة المسؤول، أو لوحة كانبان تسحب فيها المهمة بين: جديدة، قيد التنفيذ، بانتظار الرد، منجزة)، وشريط نسبة الإنجاز، وإمكانية إخفاء بطاقة التثبيت. وأيضاً تكويد موحد: كود لكل مشروع بحسب نوعه وسنته (مثل IFC-26-003 وSV-26-001) ورقم موحد لكل عميل (C-001)، يظهر في القوائم ورأس المشروع وملف العميل ويمكن تعديله. وفي «تعارضات الأقسام» أصبح لكل قسم مهندس مسؤول يظهر اسمه في المسار."], ["v44", "قسم «تعارضات الأقسام» في المشروع لمتابعة ملاحظات التنسيق بين المعماري والإنشائي والميكانيكا والكهرباء (القسم الحالي والتالي والإغلاق التلقائي ونسبة إنجاز كل قسم)، ونوع مشروع جديد «تصميم مخططات تنفيذية IFC». وأيضاً صندوق «📥 الوارد»: أضف مهمة بسرعة من أي مكان — من رسالة واتساب (زر 📋 للصق، أو اختصار المشاركة في الجوال)، أو اطلبها من Claude فتنزل في يومي تلقائياً — ثم أكمل بياناتها لاحقاً واضغط «✓ رتّبتها». وكذلك استيراد بيانات العملاء والمطورين العقاريين من Excel أو من صورة عبر Claude."], ["v43", "قسم «أعمال ومخرجات المشروع»: أضف أعمال المشروع الفنية (مراجعة مخططات، دراسة، تقرير، زيارة موقع، اعتماد…) بمسؤول ومرحلة وتاريخ تسليم، مع نسبة إنجاز الأعمال بجانب إنجاز المراحل، واقتراح اعتماد المرحلة وإصدار مطالبتها عند اكتمال أعمالها، وقسم «آخر المستجدات» للمشروع."], ["v42", "ملاحق العقد والتعديلات الإضافية (للمشاريع المنتهية التي يُطلب فيها تعديلات جديدة) بزر «🔄 تعديلات جديدة»، ومطالبة مستقلة لكل ملحق. وكذلك: كل الكروت والمؤشرات أصبحت قابلة للضغط في كل الصفحات: الرئيسية تفتح تفاصيل المالية وكشف المهام المفلتر، وكروت العملاء تفلتر أو تعرض العملاء ومشاريعهم، وكروت المشروع تنقلك لقسمها مباشرة."], ["v41", "ملف العميل: كل مشاريع الشركة وموقفها المالي في مكان واحد مع «كشف حساب العميل» للطباعة، وزر «مشروع جديد لهذا العميل»، وتنبيه عند تسمية المشروع باسم العميل مع نقل المهام تلقائياً عند إعادة التسمية."], ["v40", "صفحة «دفتري» لعرض نوتات Notability اليومية من Google Drive، وزر «📝 نوتة اليوم» في صفحة اليوم."], ["v38", "قوالب جاهزة للمراحل (منها الإشراف بدفعات شهرية)، وملخص احترافي للمطالبات، وأرقام فواتير تلقائية، وخطاب مطالبة مالية رسمي للطباعة."], ["v37", "مقترحات لأسماء الدفعات مع الإدخال اليدوي، وكروت لوحة المشاريع أصبحت تعرض التفاصيل عند الضغط."], ["v36", "صور أمثلة للنتائج بجانب برومبتات الصور، وقوالب لوحات عرض المشاريع المعمارية."], ["v35", "برومبتات التوقيعات (4 أنماط، وجاهز للاستخدام، وعربي)."], ["v34", "صفحة خطة التطوير، وشعار «نظام تشغيل المكاتب الهندسية ومكاتب الإشراف»."], ["v33", "صفحة كشف المهام مع التصدير PDF وExcel."]];
+const GUIDE_NEW = [["v51", "صفحة المشروع الجديدة: أيقونات أقسام مرتبة بالأهمية، داشبورد حالة المشروع بجانب الداشبورد المالي، خطوات فنية بقوالب جاهزة ونسبة إنجاز تلقائية، «مطالبة مستحقة» على الخطوة، توزيع تلقائي لنسب الدفعات، نوعا «مخططات تنفيذية» و«إصدار رخص بناء»، البحث بكود المشروع والعميل، الضغط على المهمة يفتح تفاصيلها، خطوات فرعية داخل المهمة، خانة الإدخال أعلى القائمة، علامة 🔒 خاص، اليوم + دفتري جنباً إلى جنب، وربط Microsoft To Do."], ["v50", "رقم الإصدار يظهر في الرئيسية وأسفل القائمة، وإصلاح مشكلة مسح ما تكتبه في خانة المهمة أو العميل أو المشروع عند تحديث البيانات تلقائياً."], ["v49", "صفحة مستقلة «المطورون العقاريون»: قاعدة بيانات المطورين المستهدفين منفصلة عن العملاء، بمراحل التواصل (لم يُتواصل، تم التواصل، اجتماع، عرض مقدَّم، غير مهتم) وتواريخ آخر تواصل والمتابعة القادمة، واتصال وواتساب مباشر، وزر «🤝 تحويل لعميل» لمن تتعاقد معه، وأرقام D- للمطورين."], ["v48", "ثلاث هويات بصرية خاصة بيومي يختار منها كل مستخدم من زر «🎨 المظهر» في القائمة: «ليل مكة» (كحلي ونحاسي بنقشة النجمة الثمانية)، و«روشن حجازي» (أخضر بترولي وذهب رملي بنقشة المشربية وزوايا مميزة)، و«طين ونخيل» (بني تمري وتيراكوتا بشبكة معمارية دافئة)."], ["v47", "تنسيق موحّد لكل الأجهزة (الجوال والآيباد والكمبيوتر): الجداول تتحول لبطاقات مرتبة على الجوال، ولوحة الكانبان تُسحب أفقياً عموداً عموداً، وأزرار أكبر للّمس على الآيباد والجوال."], ["v46", "«دليل الأكواد» في دليل الاستخدام يشرح معنى كل كود (SV، AOR، DS، IFC، PM، RE، ST، ID) ورقم العميل، ويُفتح بالضغط على أي كود أو من زر «🏷️ دليل الأكواد» في المشروع. وتحسينات بصرية: أيقونات لكل مؤشرات لوحة المشاريع والعملاء، ورسوم أعمدة متحركة أوضح."], ["v45", "تحسينات بصرية: أيقونات ملوّنة لكل المؤشرات، و«كشف المهام» بعرضين (جدول قابل للترتيب بالضغط على العناوين مع الأولوية وصورة المسؤول، أو لوحة كانبان تسحب فيها المهمة بين: جديدة، قيد التنفيذ، بانتظار الرد، منجزة)، وشريط نسبة الإنجاز، وإمكانية إخفاء بطاقة التثبيت. وأيضاً تكويد موحد: كود لكل مشروع بحسب نوعه وسنته (مثل IFC-26-003 وSV-26-001) ورقم موحد لكل عميل (C-001)، يظهر في القوائم ورأس المشروع وملف العميل ويمكن تعديله. وفي «تعارضات الأقسام» أصبح لكل قسم مهندس مسؤول يظهر اسمه في المسار."], ["v44", "قسم «تعارضات الأقسام» في المشروع لمتابعة ملاحظات التنسيق بين المعماري والإنشائي والميكانيكا والكهرباء (القسم الحالي والتالي والإغلاق التلقائي ونسبة إنجاز كل قسم)، ونوع مشروع جديد «تصميم مخططات تنفيذية IFC». وأيضاً صندوق «📥 الوارد»: أضف مهمة بسرعة من أي مكان — من رسالة واتساب (زر 📋 للصق، أو اختصار المشاركة في الجوال)، أو اطلبها من Claude فتنزل في يومي تلقائياً — ثم أكمل بياناتها لاحقاً واضغط «✓ رتّبتها». وكذلك استيراد بيانات العملاء والمطورين العقاريين من Excel أو من صورة عبر Claude."], ["v43", "قسم «أعمال ومخرجات المشروع»: أضف أعمال المشروع الفنية (مراجعة مخططات، دراسة، تقرير، زيارة موقع، اعتماد…) بمسؤول ومرحلة وتاريخ تسليم، مع نسبة إنجاز الأعمال بجانب إنجاز المراحل، واقتراح اعتماد المرحلة وإصدار مطالبتها عند اكتمال أعمالها، وقسم «آخر المستجدات» للمشروع."], ["v42", "ملاحق العقد والتعديلات الإضافية (للمشاريع المنتهية التي يُطلب فيها تعديلات جديدة) بزر «🔄 تعديلات جديدة»، ومطالبة مستقلة لكل ملحق. وكذلك: كل الكروت والمؤشرات أصبحت قابلة للضغط في كل الصفحات: الرئيسية تفتح تفاصيل المالية وكشف المهام المفلتر، وكروت العملاء تفلتر أو تعرض العملاء ومشاريعهم، وكروت المشروع تنقلك لقسمها مباشرة."], ["v41", "ملف العميل: كل مشاريع الشركة وموقفها المالي في مكان واحد مع «كشف حساب العميل» للطباعة، وزر «مشروع جديد لهذا العميل»، وتنبيه عند تسمية المشروع باسم العميل مع نقل المهام تلقائياً عند إعادة التسمية."], ["v40", "صفحة «دفتري» لعرض نوتات Notability اليومية من Google Drive، وزر «📝 نوتة اليوم» في صفحة اليوم."], ["v38", "قوالب جاهزة للمراحل (منها الإشراف بدفعات شهرية)، وملخص احترافي للمطالبات، وأرقام فواتير تلقائية، وخطاب مطالبة مالية رسمي للطباعة."], ["v37", "مقترحات لأسماء الدفعات مع الإدخال اليدوي، وكروت لوحة المشاريع أصبحت تعرض التفاصيل عند الضغط."], ["v36", "صور أمثلة للنتائج بجانب برومبتات الصور، وقوالب لوحات عرض المشاريع المعمارية."], ["v35", "برومبتات التوقيعات (4 أنماط، وجاهز للاستخدام، وعربي)."], ["v34", "صفحة خطة التطوير، وشعار «نظام تشغيل المكاتب الهندسية ومكاتب الإشراف»."], ["v33", "صفحة كشف المهام مع التصدير PDF وExcel."]];
 let guideQ = "", guideOpen = "";
 function guideView(){ const q = normN(guideQ);
   const L = GUIDE.filter(x => { const b = document.querySelector(`nav.tabs [data-tab="${x.tab}"]`); return !x.tab || (b && !b.hidden); }).filter(x => !q || normN([x.t, x.w, ...x.s, ...x.tip].join(" ")).includes(q));
@@ -1576,11 +1668,18 @@ $("#view").addEventListener("click", async e => {
 const tf = e.target.closest("[data-tf]"); if (tf) { tfilter = tf.dataset.tf; render(); return; }
 const bf = e.target.closest("[data-bf]"); if (bf) { bfilter = bf.dataset.bf; render(); return; }
 if (viewClick(e)) return;
+{ const sc = e.target.closest(".acts .sch"); if (sc && e.target.tagName !== "INPUT") { const i = sc.querySelector("input"); try { i.showPicker(); } catch { i.focus(); } return; } }
+{ const tr = e.target.closest(".task[data-tid]"); if (tr && !e.target.closest("button,a,input,select,textarea,label,.more,.wbox,.lnk,.pill,[contenteditable='true']")) { const x = find(tr.dataset.tid); if (x && canWrite && own(x)) { open = open === x.id ? null : x.id; confirmDel = null; render(); } return; } }
 const b = e.target.closest("[data-a]"); if (!b) return; const a = b.dataset.a;
 if (a === "print") { window.print(); return; }
 if (a === "copy") { try { await navigator.clipboard.writeText(reportText()); toast("نُسخ الملخص — الصقه في واتساب أو البريد الإلكتروني"); } catch { banner("تعذّر النسخ تلقائياً في هذا المتصفح."); } return; }
 const x = find(b.dataset.id); if (!x || !canWrite || !own(x)) return; if (isMgr && ["toggle","calMeet","remind"].includes(a)) return;
 if (a === "toggle" && !x.done && x.status === "daily") { const nd = iso(addDays(new Date(), 1)); await upd(x.id, { due: nd, note: (x.note ? x.note + "\n" : "") + "✓ " + today() + ": تمت المتابعة" }); toast("🔁 سُجّلت متابعة اليوم — ستظهر لك مجدداً غداً"); return; }
+if (a === "pv") { const v = !x.pv; await upd(x.id, { pv: v }); toast(v ? "🔒 نُقلت إلى أعمالي الخاصة — تبقى أمامك كتذكير، ولا تُطبع في أي تقرير ولا يراها غيرك" : "أُعيدت مهمة عادية"); return; }
+if (a === "ckT" || a === "ckDel" || a === "ckAdd") { const L = (Array.isArray(x.steps) ? x.steps : []).map(y => ({ ...y })); const i = +b.dataset.i;
+  if (a === "ckT" && L[i]) { L[i].d = !L[i].d; } else if (a === "ckDel") L.splice(i, 1); else { const inp = document.querySelector(`[data-ckin="${x.id}"]`); const v = (inp && inp.value || "").trim(); if (!v) { if (inp) inp.focus(); return; } L.push({ t: v.slice(0, 200), d: false }); }
+  await upd(x.id, { steps: L }); if (a === "ckAdd") { const n = document.querySelector(`[data-ckin="${x.id}"]`); if (n) n.focus(); }
+  if (a === "ckT" && L.length && L.every(y => y.d) && !x.done) toast("👏 كل الخطوات منجزة — علّم المهمة ✓ لإغلاقها"); return; }
 if (a === "inboxok") { await upd(x.id, { addedBy: "" }); toast("✓ نُقلت من الوارد"); return; }
 if (a === "toggle") { const d = !x.done; if (d) toast("أحسنت ✓ تم إنجاز المهمة"); await upd(x.id, { done: d, doneAt: d ? Date.now() : null }); }
 else if (a === "star") { const s = !x.star; await upd(x.id, { star: s, kind: "task" }); toast(s ? "★ حُدّدت كأولوية — ستظهر في الأعلى" : "أُزيلت من الأولوية"); }
@@ -1635,7 +1734,8 @@ const el = e.target; if (!el.classList?.contains("tt") || !el.isContentEditable)
 const x = find(el.dataset.id); const v = el.textContent.trim();
 if (x && v && v !== x.title) await upd(x.id, { title: v }); else if (x && !v) el.textContent = x.title;
 });
-$("#view").addEventListener("keydown", e => { if (e.target.classList?.contains("tt") && e.key === "Enter") { e.preventDefault(); e.target.blur(); } });
+$("#view").addEventListener("keydown", e => { if (e.target.classList?.contains("tt") && e.key === "Enter") { e.preventDefault(); e.target.blur(); }
+  if (e.target.dataset?.ckin && e.key === "Enter") { e.preventDefault(); const b = document.querySelector(`[data-a="ckAdd"][data-id="${e.target.dataset.ckin}"]`); if (b) b.click(); } });
 // notes autosave (debounced, one write per pause)
 let noteTimer = null;
 $("#view").addEventListener("input", e => {
@@ -1683,7 +1783,7 @@ const snap = obj => ({ docs: Object.entries(obj).map(([id, v]) => ({ id, data: (
 const emit = () => listeners.forEach(f => f(snap(store)));
 const emitN = () => noteListeners.forEach(f => f(snap(Object.fromEntries(Object.entries(noteStore).map(([k, v]) => [k, { text: v }])))));
 const rid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-const APP_VER = "v50", APP_DATE = "2026-10-05";
+const APP_VER = "v51", APP_DATE = "2026-10-05";
 const strip = o => { const r = { ...o }; delete r.id; return r; };
 const SKINS = [["night", "ليل مكة", "كحلي ليلي ونحاسي ذهبي", "#14213d", "#c29a3e", "#2f63b5"], ["roshan", "روشن حجازي", "أخضر بترولي وذهب رملي", "#0e3b43", "#d9b97a", "#c8553d"], ["earth", "طين ونخيل", "بني تمري وتيراكوتا", "#3a2a21", "#e0b66f", "#4f6b3a"]];
 const curSkin = () => document.documentElement.dataset.skin || "night";
@@ -1815,7 +1915,8 @@ function showAuth(mode, msg){
       <label>مفتاح الواتساب (apikey)<input name="waKey" dir="ltr" autocomplete="off" inputmode="numeric" placeholder="${pr.waOn ? "مفعّل — اكتب مفتاحاً جديداً إذا أردت تغييره" : "مثال: 123456"}"></label>
       <div class="row2"><button type="button" class="btn ghost" id="testWa">جرّب رسالة واتساب</button>${pr.waOn ? '<button type="button" class="btn ghost" id="waOff">إلغاء ربط الواتساب</button>' : ""}</div>
       <small style="color:var(--mut);font-size:11.5px">🔒 هذه الخدمة (CallMeBot) مجانية وتُرسل إلى رقمك فقط. يمر نص التذكير عبرها، فلا تكتب بيانات بالغة السرية في عنوان المهمة. لا يطّلع أحد على المفتاح سواك، حتى المالك.</small></details>
-    <div class="row2"><button type="button" class="btn ghost" id="testMail">إرسال بريد تجريبي</button><button type="button" class="btn ghost" id="goPw">تغيير كلمة المرور</button><button type="button" class="btn ghost" id="goSetPin">🔒 الرقم السري لأعمالي الخاصة</button><button type="button" class="btn ghost" id="authCancel">إلغاء</button></div>`; $("#authBtn").textContent = "حفظ"; }
+    <details class="wabox" id="todoBox" open><summary>✅ Microsoft To Do <span class="tag off" id="todoTag">…</span></summary><div id="todoIn"><small style="color:var(--mut);font-size:12px">المهام اللي ليها تاريخ أو متكررة يومياً في To Do تنزل تلقائياً في «يومي» كل ~30 دقيقة، وما تنجزه في To Do يُعلَّم منجزاً هنا.</small><div class="row2"><button type="button" class="btn ghost" id="todoLink">🔗 ربط حساب Microsoft</button></div></div></details>
+    <div class="row2"><button type="button" class="btn ghost" id="testMail">إرسال بريد تجريبي</button><button type="button" class="btn ghost" id="goPw">تغيير كلمة المرور</button><button type="button" class="btn ghost" id="goSetPin">🔒 الرقم السري لأعمالي الخاصة</button><button type="button" class="btn ghost" id="authCancel">إلغاء</button></div>`; $("#authBtn").textContent = "حفظ"; setTimeout(todoUI, 0); }
   else if (mode === "forgot") { $("#authTitle").textContent = "نسيت كلمة المرور"; $("#authSub").textContent = "اكتب اسم المستخدم أو البريد الإلكتروني أو الجوال، وسيصلك رمز على البريد الإلكتروني المسجّل في حسابك";
     f.innerHTML = `<label>اسم المستخدم أو البريد الإلكتروني أو الجوال<input autocapitalize="off" spellcheck="false" name="username" autocomplete="username" dir="ltr" required value="${esc(showAuth.un || "")}"></label><button type="button" class="linkbtn" id="goLogin">العودة إلى تسجيل الدخول</button>`; $("#authBtn").textContent = "أرسل الرمز"; }
   else if (mode === "reset") { $("#authTitle").textContent = "كلمة مرور جديدة"; $("#authSub").textContent = "إذا كان للحساب بريد إلكتروني، فسيصلك رمز من 6 أرقام خلال دقيقة (راجع مجلد Spam أيضاً). الرمز صالح لمدة 15 دقيقة.";
@@ -1990,9 +2091,10 @@ $("#view").addEventListener("change", async e => { const s = e.target.closest("[
 const PST = [["quote","عرض سعر","mut"],["contract","مرحلة التعاقد","wait"],["active","جاري العمل","doing"],["hold","متوقف","late"],["done","منتهي","done"]];
 const PSTL = Object.fromEntries(PST.map(([k,l,c]) => [k, { l, c }]));
 const PCOL = { mut: "#8b94aa", wait: "#c9962b", doing: "#2f63b5", late: "#c2453b", done: "#2c8a60" };
-const PCODEP = { "إشراف عام ITC": "SV", "إشراف هندسي": "SV", "مستشار معماري AOR": "AOR", "تصميم معماري": "DS", "تصميم مخططات تنفيذية IFC": "IFC", "إدارة مشاريع": "PM", "تطوير عقاري": "RE", "دراسات واستشارات": "ST", "تصميم داخلي": "ID" };
+const PCODEP = { "إشراف عام ITC": "SV", "إشراف هندسي": "SV", "مستشار معماري AOR": "AOR", "تصميم معماري": "DS", "تصميم مخططات تنفيذية IFC": "IFC", "إدارة مشاريع": "PM", "تطوير عقاري": "RE", "دراسات واستشارات": "ST", "تصميم داخلي": "ID", "مخططات تنفيذية": "WD", "إصدار رخص بناء": "BP" };
 function nextPCode(p){ const yy = String(p.start || today()).slice(2, 4); const pre = PCODEP[(p.types || [])[0] || p.type] || "GN";
   const mx = Math.max(0, ...PROJECTS.map(x => { const m = /-(\d\d)-(\d+)$/.exec(x.code || ""); return m && m[1] === yy ? +m[2] : 0; })); return `${pre}-${yy}-${String(mx + 1).padStart(3, "0")}`; }
+function cliCode(n){ if (!n) return ""; const k = normN(n); const c = CONTACTS.find(x => normN(x.name) === k); return (c && c.code) || ""; }
 function nextDCode(){ const mx = Math.max(0, ...CONTACTS.map(c => { const m = /^D-(\d+)$/.exec(c.code || ""); return m ? +m[1] : 0; })); return "D-" + String(mx + 1).padStart(3, "0"); }
 function nextCCode(){ const mx = Math.max(0, ...CONTACTS.map(c => { const m = /^C-(\d+)$/.exec(c.code || ""); return m ? +m[1] : 0; })); return "C-" + String(mx + 1).padStart(3, "0"); }
 let codesDone = false;
@@ -2001,14 +2103,14 @@ function ensureCodes(){ if (codesDone || !ME || !pEdit() || PRIV()) return; code
   CONTACTS.filter(c => isPros(c) && /^C-/.test(c.code || "")).forEach(c => { c.code = ""; });
   CONTACTS.filter(c => !c.code && c.name && c.space !== "p").sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0) || String(a.id).localeCompare(String(b.id))).forEach(c => { c.code = isPros(c) ? nextDCode() : nextCCode(); nc++; if (!isDemo) bg("saveContact", c).catch(x => console.warn(x)); });
   if (np || nc) { saveCache(); if (tab === "projects" || tab === "clients") render(); } }
-const PTYPES = ["إشراف عام ITC","مستشار معماري AOR","تصميم معماري","تصميم مخططات تنفيذية IFC","إشراف هندسي","إدارة مشاريع","تطوير عقاري","دراسات واستشارات","تصميم داخلي","أخرى"];
+const PTYPES = ["إشراف عام ITC","مستشار معماري AOR","تصميم معماري","تصميم مخططات تنفيذية IFC","إشراف هندسي","إدارة مشاريع","تطوير عقاري","دراسات واستشارات","تصميم داخلي","مخططات تنفيذية","إصدار رخص بناء","أخرى"];
 const ptypes = p => (p.types && p.types.length) ? p.types : (p.type ? String(p.type).split(" + ").filter(Boolean) : []);
 const ptLabel = p => ptypes(p).join(" + ") || "أخرى";
 const mapURL = p => { const m = String(p.map || "").trim(); if (/^https?:\/\//i.test(m)) return m; const q = m || String(p.loc || "").trim(); return q ? "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q) : ""; };
 const tpick = (p, attr) => `<div class="tpick">${PTYPES.concat(ptypes(p).filter(t => !PTYPES.includes(t))).map(t => `<label><input type="checkbox" ${attr} value="${esc(t)}" ${ptypes(p).includes(t) ? "checked" : ""}><span>${esc(t)}</span></label>`).join("")}</div>`;
 const PHST = [["todo","لم تبدأ"],["doing","جارية"],["done","منجزة"]];
 const DOCCAT = ["عقد","عرض سعر","اعتمادات","مطالبة","تحويل / إيصال دفع","مراسلات","مخططات","محضر اجتماع","أخرى"];
-const LOGK = ["مراسلة واردة","مراسلة صادرة","اجتماع","قرار / اعتماد","إنهاء مرحلة","تحصيل دفعة","ملاحظة مهمة"];
+const LOGK = ["مراسلة واردة","مراسلة صادرة","اجتماع","قرار / اعتماد","إنهاء مرحلة","إنجاز خطوة","تحصيل دفعة","ملاحظة مهمة"];
 const EXCAT = ["رواتب وأتعاب","مقاولين باطن","مواد وطباعة","رسوم حكومية","مواصلات وسفر","أخرى"];
 let docCat = "عقد", docF = "all", wkF = "open";
 const WKT = [["review", "📐", "مراجعة مخططات"], ["study", "📊", "دراسة"], ["report", "📝", "تقرير"], ["visit", "🏗️", "زيارة موقع"], ["approve", "✅", "اعتماد / تسليم"], ["letter", "✉️", "مخاطبة / خطاب"], ["meet", "👥", "اجتماع"], ["other", "📌", "أخرى"]];
@@ -2023,7 +2125,7 @@ function wkView(p, c, W){
   const us = scopeUsers(), ed = canWrite;
   const cnt = k => W.filter(x => x.wtype === k || (!x.wtype && k === "other")).length;
   return `<div class="panel" id="sec-wk"><h3>أعمال ومخرجات المشروع <small>${tot ? `${done} من ${tot} منجزة` : "مراجعات، دراسات، تقارير، زيارات…"}</small></h3>
-    <div class="wkprog"><div><span>إنجاز المراحل (التعاقدي)</span><div class="mini g w"><i style="width:${Math.min(c.prog, 100)}%"></i></div><b>${Math.round(c.prog)}%</b></div>
+    <div class="wkprog"><div><span>${c.stN ? "الإنجاز الفني (الخطوات)" : "إنجاز مراحل الدفع"}</span><div class="mini g w"><i style="width:${Math.min(c.prog, 100)}%"></i></div><b>${Math.round(c.prog)}%</b></div>
       <div><span>إنجاز الأعمال</span><div class="mini g w"><i style="width:${wp}%"></i></div><b>${Math.round(wp)}%</b></div>
       <div class="wkk">${WKT.filter(k => cnt(k[0])).map(k => `<span class="tchip">${k[1]} ${k[2]} ${cnt(k[0])}</span>`).join("")}${late ? spill(late + " متأخرة", "late") : ""}</div></div>
     ${ready.map(o => `<div class="wkready">✓ كل أعمال مرحلة «${esc(o.x.name)}» منجزة (${o.w.length})${pEdit() ? ` <button type="button" class="btn gold xs" data-wkph="${o.i}">اعتمد المرحلة كمنجزة وأصدر مطالبتها</button>` : ""}</div>`).join("")}
@@ -2067,7 +2169,7 @@ function claimSugs(p, x, i){ const d = x.date ? new Date(x.date + "T00:00:00") :
   const other = ["دفعة مقدمة", "دفعة ربع سنوية", "دفعة ختامية", "المحتجزات (ضمان الأعمال)", "أعمال إضافية / أمر تغيير"];
   const adn = (p.adds || []).filter(a => a.status !== "proposed").map(adName);
   return adn.concat(sup ? monthly.concat(other) : other.slice(0, 1).concat(monthly, other.slice(1))); }
-function pmig(p){ if (!p.v2) { const r = prate(p); (p.claims || []).forEach(c => { if (num(c.amount)) c.amount = Math.round(num(c.amount) * (1 + r) * 100) / 100; }); p.taxMode = p.taxMode || "ex"; p.v2 = 1; } p.phases = p.phases || []; p.adds = p.adds || []; p.claims = p.claims || []; p.expenses = p.expenses || []; p.docs = p.docs || []; p.log = p.log || []; p.clash = p.clash || []; return p; }
+function pmig(p){ if (!p.v2) { const r = prate(p); (p.claims || []).forEach(c => { if (num(c.amount)) c.amount = Math.round(num(c.amount) * (1 + r) * 100) / 100; }); p.taxMode = p.taxMode || "ex"; p.v2 = 1; } p.phases = p.phases || []; p.adds = p.adds || []; p.claims = p.claims || []; p.expenses = p.expenses || []; p.docs = p.docs || []; p.log = p.log || []; p.clash = p.clash || []; p.steps = p.steps || []; return p; }
 function pcalc(p){
   pmig(p); const rate = prate(p);
   const base = num(p.agreed) || (p.status === "quote" ? num(p.price) : 0);
@@ -2075,12 +2177,13 @@ function pcalc(p){
   const adds = (p.adds || []).map(a => ({ ...a, ...parts(a.amount, p), claimed: p.claims.some(c => c.phase === adName(a)) })), inA = adds.filter(a => a.status !== "proposed");
   const AA = inA.reduce((s, a) => s + a.A, 0), AV = inA.reduce((s, a) => s + a.V, 0), AT = inA.reduce((s, a) => s + a.T, 0), A = A0 + AA, V = V0 + AV, T = T0 + AT;
   const ph = p.phases.map(x => { const amt = T0 * num(x.pct) / 100; return { ...x, amt, ex: amt / (1 + rate), claimed: p.claims.some(c => c.phase && c.phase === x.name) }; });
-  const phPct = ph.reduce((s, x) => s + num(x.pct), 0), prog = ph.filter(x => x.status === "done").reduce((s, x) => s + num(x.pct), 0);
+  const phPct = ph.reduce((s, x) => s + num(x.pct), 0), payProg = ph.filter(x => x.status === "done").reduce((s, x) => s + num(x.pct), 0);
+  const stN = (p.steps || []).filter(x => x.name).length, stD = (p.steps || []).filter(x => x.name && x.done).length, prog = stN ? stD / stN * 100 : payProg;
   const cl = p.claims.map(x => { const inc = num(x.amount), pd = num(x.paid), age = x.date ? daysBetween(x.date, today()) : 0;
     const st = !inc ? "draft" : pd >= inc - 0.5 ? "paid" : pd > 0 ? "part" : age > 30 ? "late" : "due"; return { ...x, inc, ex: inc / (1 + rate), vat: inc - inc / (1 + rate), pd, st, age }; });
   const claimed = cl.reduce((s, x) => s + x.inc, 0), paid = cl.reduce((s, x) => s + x.pd, 0);
   const exp = p.expenses.reduce((s, x) => s + num(x.amount), 0), paidNet = paid / (1 + rate);
-  return { rate, A, V, T, T0, A0, adds, AT, P, ph, phPct, prog, cl, claimed, paid, out: Math.max(T - paid, 0), col: T ? paid / T : 0, exp, profit: A - exp, margin: A ? (A - exp) / A : 0,
+  return { rate, A, V, T, T0, A0, adds, AT, P, ph, phPct, prog, payProg, stN, stD, cl, claimed, paid, out: Math.max(T - paid, 0), col: T ? paid / T : 0, exp, profit: A - exp, margin: A ? (A - exp) / A : 0,
     paidNet, realized: paidNet - exp, vatCollected: paid - paidNet, unclaimed: Math.max(T - claimed, 0), dueCl: cl.filter(x => x.inc && x.st !== "paid"), late: cl.filter(x => x.st === "late") };
 }
 const CLST = { draft: ["مسودة","mut"], due: ["مستحقة","doing"], part: ["مدفوعة جزئياً","wait"], paid: ["مدفوعة","done"], late: ["متأخرة +30 يوماً","late"] };
@@ -2167,15 +2270,15 @@ function projDash(){
 function projList(){
   const q = projQ.trim(); const PP = PV(); let L = PP.map(p => ({ p, c: pcalc(p) }));
   if (projF !== "all") L = L.filter(x => x.p.status === projF);
-  if (q) L = L.filter(x => [x.p.name, x.p.client, ptLabel(x.p), x.p.loc || ""].join(" ").includes(q));
+  if (q) { const ql = q.toLowerCase(); L = L.filter(x => [x.p.name, x.p.client, ptLabel(x.p), x.p.loc || "", x.p.code || "", cliCode(x.p.client)].join(" ").toLowerCase().includes(ql)); }
   L.sort((a, b) => (b.p.start || "").localeCompare(a.p.start || ""));
   const chips = [["all", `الكل (${PP.length})`], ...PST.map(([k, l]) => [k, `${l} (${PP.filter(p => p.status === k).length})`])].map(([k, l]) => `<button type="button" class="chip" data-pf-filter="${k}" aria-pressed="${projF === k}">${l}</button>`).join("");
-  const rows = L.map(({ p, c }) => { const st = PSTL[p.status] || PSTL.contract; return `<tr data-popen="${p.id}" style="--sc:${PCOL[st.c]}"><td class="pn"><b>${p.code ? `<span class="pcode sm">${esc(p.code)}</span>` : ""}${esc(p.name)}</b><small>${esc(p.client || "—")}</small></td><td><span class="tchip">${esc(ptLabel(p))}</span>${p.loc ? `<small>📍 ${esc(p.loc)}</small>` : ""}</td>
+  const rows = L.map(({ p, c }) => { const st = PSTL[p.status] || PSTL.contract; return `<tr data-popen="${p.id}" style="--sc:${PCOL[st.c]}"><td class="pn"><b>${p.code ? `<span class="pcode sm">${esc(p.code)}</span>` : ""}${esc(p.name)}</b><small>${esc(p.client || "—")}${cliCode(p.client) ? ` <span class="ccode">${esc(cliCode(p.client))}</span>` : ""}</small></td><td><span class="tchip">${esc(ptLabel(p))}</span>${p.loc ? `<small>📍 ${esc(p.loc)}</small>` : ""}</td>
     <td>${spill(st.l, st.c)}</td><td class="nw">${p.start ? esc(gFmtY.format(parse(p.start))) : "—"}</td><td class="n"><b>${money(c.T)}</b><small>قبل الضريبة ${money(c.A)}</small></td>
     <td><div class="mini"><i style="width:${Math.min(c.col, 1) * 100}%"></i></div><small>${pct(c.col)} · ${kmoney(c.paid)}</small></td>
     <td><div class="mini g"><i style="width:${Math.min(c.prog, 100)}%"></i></div><small>${Math.round(c.prog)}%</small></td><td class="go">‹</td></tr>`; }).join("");
-  return `<div class="panel"><div class="plbar"><h3>قائمة المشاريع</h3><input type="search" id="projSearch" placeholder="بحث باسم المشروع أو العميل…" value="${esc(projQ)}"></div><div class="tfilter" style="border:0;padding:0 0 10px">${chips}</div>
-  ${L.length ? `<div class="tblwrap"><table class="ptable plist"><tr><th>المشروع / العميل</th><th>النوع</th><th>الحالة</th><th>البداية</th><th>الإجمالي شامل الضريبة</th><th>التحصيل</th><th>الإنجاز</th><th></th></tr>${rows}</table></div>`
+  return `<div class="panel"><div class="plbar"><h3>قائمة المشاريع</h3><input type="search" id="projSearch" placeholder="بحث بالاسم أو العميل أو الكود (مثل DS-26-004 أو C-012)…" value="${esc(projQ)}"></div><div class="tfilter" style="border:0;padding:0 0 10px">${chips}</div>
+  ${L.length ? `<div class="tblwrap"><table class="ptable plist"><tr><th>المشروع / العميل (الأكواد)</th><th>النوع</th><th>الحالة</th><th>البداية</th><th>الإجمالي شامل الضريبة</th><th>التحصيل</th><th>الإنجاز</th><th></th></tr>${rows}</table></div>`
   : `<div class="empty"><b>${PP.length ? "لا نتائج" : "لا توجد مشاريع بعد"}</b>${PP.length || !pEdit() ? "" : "اضغط «+ مشروع جديد» وابدأ."}</div>`}</div>`;
 }
 // ----- new project modal -----
@@ -2223,12 +2326,14 @@ function projectDetail(p){
   const tasks = pWork(p);
   const byCat = EXCAT.map(k => [k, p.expenses.filter(x => x.cat === k).reduce((s, x) => s + num(x.amount), 0)]).filter(x => x[1]); const maxCat = Math.max(1, ...byCat.map(x => x[1]));
   const docs = p.docs.map((d, i) => ({ d, i })).filter(({ d }) => docF === "all" || d.cat === docF).sort((a, b) => (b.d.at || 0) - (a.d.at || 0));
+  const S = (k, h) => (projSec === k || projSec === "all") ? h : "";
   return `<div class="pdetail">
   <div class="pband" style="--sc:${PCOL[st.c]}"><div class="pbl"><button class="bk" data-pback title="كل المشاريع">→</button><div><div class="pbt">${p.code ? `<span class="pcode" title="كود المشروع">${esc(p.code)}</span>` : ""}<h2 data-c="title">${esc(p.name || "مشروع جديد")}</h2>${spill(st.l, st.c)}${ptypes(p).map(t => `<span class="tchip">${esc(t)}</span>`).join("")}</div>
     <div class="pbm">${p.client ? `<button type="button" class="pclib" data-pcli title="افتح ملف العميل">🏢 ${esc(p.client)}${(() => { const n = PV().filter(x => normN(x.client) === normN(p.client)).length; return n > 1 ? ` · ${n} مشاريع` : ""; })()}</button>` : "—"}${p.loc || p.map ? ` · <a class="ploc" href="${esc(mapURL(p))}" target="_blank" rel="noopener">📍 ${esc(p.loc || "الموقع على الخريطة")}</a>` : ""} · بداية ${p.start ? esc(gFmtY.format(parse(p.start))) : "—"}${p.end ? " · الانتهاء المتوقع " + esc(gFmtY.format(parse(p.end))) : ""}</div></div></div>
     <div class="pbr"><span class="saved-st" id="psaveState">${projDirty ? "تعديلات غير محفوظة…" : "✓ محفوظ"}</span>${pEdit() && (p.status === "done" || p.status === "hold") ? `<button class="btn ghost" data-reopen title="أضف ملحق تعديلات وأعد فتح المشروع">🔄 تعديلات جديدة</button>` : ""}<button class="btn gold" data-psave>حفظ والعودة للمشاريع</button><button class="btn ghost" data-pprint>طباعة / PDF</button><button class="btn ghost danger" data-pdel>حذف</button></div></div>
   ${pEdit() && p.client && normN(p.name) === normN(p.client) ? `<div class="prnw"><div><b>⚠️ اسم المشروع مطابق لاسم العميل</b><small>العميل «${esc(p.client)}» قد يكون له أكثر من مشروع معنا — الأفضل أن يبقى العميل كما هو، ويُسمّى المشروع باسمه الفعلي (المبنى أو الموقع أو نطاق العمل). وستنتقل المهام المرتبطة للاسم الجديد تلقائياً.</small></div><div class="prnf"><input id="prnIn" placeholder="مثال: إشراف برج راز – جدة"><button type="button" class="btn gold" data-prn>تسمية المشروع</button></div></div>` : ""}
-  <div class="kpis k8">
+  ${pNav(p, c, tasks)}
+  ${S("status", pStatusDash(p, c, tasks) + `<div class="kpis k8">
     ${kpi("الإجمالي شامل الضريبة", `<span data-c="T">${SAR(c.T)}</span>`, `قبل الضريبة <span data-c="A">${money(c.A)}</span> · ضريبة <span data-c="V">${money(c.V)}</span>`, "gold", "sec-basic")}
     ${kpi("المحصّل", `<span data-c="paid">${SAR(c.paid)}</span>`, `<span data-c="col">${pct(c.col)}</span> من الإجمالي`, "good", "sec-cl")}
     ${kpi("المتبقي للتحصيل", `<span data-c="out">${SAR(c.out)}</span>`, `غير مُطالب به <span data-c="unclaimed2">${money(c.unclaimed)}</span>`, "warn", "sec-cl")}
@@ -2237,8 +2342,8 @@ function projectDetail(p){
     ${kpi("الربح المتوقع", `<span data-c="profit">${SAR(c.profit)}</span>`, `هامش <span data-c="margin">${pct(c.margin)}</span>`, "", "sec-fin")}
     ${kpi("الربح المحقق", `<span data-c="real">${SAR(c.realized)}</span>`, "المحصّل صافي − المصاريف", "", "sec-fin")}
     ${kpi("السعر المقترح", `<span data-c="PT">${SAR(c.P.T)}</span>`, "شامل الضريبة", "", "sec-basic")}
-  </div>
-  <div class="panel" id="sec-basic"><h3>البيانات الأساسية</h3><div class="pform">
+  </div>`)}
+  ${S("info", `<div class="panel" id="sec-basic"><h3>البيانات الأساسية</h3><div class="pform">
     ${inp("name", "اسم المشروع *")}${inp("code", "كود المشروع", "", 'dir="ltr" placeholder="يُولَّد تلقائياً"')}<button type="button" class="linkbtn gcl" data-gcodes>🏷️ دليل الأكواد</button>${inp("client", "العميل", "", 'list="cliList"')}
     ${inp("cname", "مسؤول التواصل")}${inp("cphone", "جوال التواصل", "tel", 'dir="ltr" placeholder="05xxxxxxxx"')}${inp("cemail", "البريد الإلكتروني للتواصل", "email", 'dir="ltr" placeholder="name@company.com"')}
     <div class="cbtns"><button type="button" class="wa" data-pwa>💬 واتساب</button><button type="button" data-pmail>✉️ البريد الإلكتروني</button><button type="button" data-pcall>📞 اتصال</button></div>
@@ -2254,20 +2359,21 @@ function projectDetail(p){
   <div class="vtable"><table><tr><th></th><th>قبل الضريبة</th><th>الضريبة</th><th>الإجمالي شامل الضريبة</th></tr>
     <tr><td>السعر المقترح</td><td class="n" data-c="PA">${money(c.P.A)}</td><td class="n" data-c="PV">${money(c.P.V)}</td><td class="n" data-c="PT2"><b>${money(c.P.T)}</b></td></tr>
     <tr class="hl2"><td>المتفق عليه</td><td class="n" data-c="A2">${money(c.A)}</td><td class="n" data-c="V2">${money(c.V)}</td><td class="n" data-c="T2"><b>${money(c.T)}</b></td></tr></table></div>
-  <label class="w2 dsc">وصف مختصر<input data-pf="desc" value="${esc(p.desc || "")}"></label></div>
-  <div class="panel" id="sec-ph"><h3>المراحل والدفعات <small data-c="phpct" class="${Math.round(c.phPct) === 100 ? "" : "warnt"}">مجموع النسب ${Math.round(c.phPct * 100) / 100}%</small></h3>
-    <div class="hint">تُحتسب النسب من <b>الإجمالي شامل الضريبة</b>. عند تحويل حالة المرحلة لـ <b>منجزة</b> تصدر مطالبة تلقائياً بقيمتها ويصلك تنبيه.</div>
+  <label class="w2 dsc">وصف مختصر<input data-pf="desc" value="${esc(p.desc || "")}"></label></div>`)}
+  ${S("steps", stepsView(p, c))}
+  ${S("pay", `<div class="panel" id="sec-ph"><h3>المراحل والدفعات <small data-c="phpct" class="${Math.round(c.phPct) === 100 ? "" : "warnt"}">مجموع النسب ${Math.round(c.phPct * 100) / 100}%</small></h3>
+    <div class="hint">تُحتسب النسب من <b>الإجمالي شامل الضريبة</b>، وتتوزع <b>تلقائياً</b>: عدّل نسبة أي دفعة ويُعاد توزيع الباقي على الدفعات غير المنجزة ليبقى المجموع 100%. عند تحويل حالة المرحلة لـ <b>منجزة</b> تصدر مطالبة تلقائياً بقيمتها.${pEdit() ? ` <button type="button" class="btn ghost xs" data-pheq>⚖️ وزّع النسب بالتساوي</button>` : ""}</div>
     ${pEdit() ? phTplView(p) : ""}<datalist id="phSug">${phSugFor(p).map(s => `<option value="${esc(s)}">`).join("")}</datalist>
     <div class="tblwrap"><table class="etable"><tr><th>#</th><th>المرحلة</th><th>النسبة %</th><th>المبلغ شامل الضريبة</th><th>منها ضريبة</th><th>تاريخ الاستحقاق</th><th>الحالة</th><th>المطالبة</th><th></th></tr>${phRows}
     <tr class="tot"><td colspan="3">الإجمالي</td><td class="n" data-c="phsum">${money(c.ph.reduce((s, x) => s + x.amt, 0))}</td><td colspan="5"></td></tr></table></div>
     <button class="btn ghost addr" data-add="phases">+ إضافة مرحلة</button></div>
   ${addsView(p, c)}
-  ${clashView(p)}
   <div class="panel" id="sec-cl"><h3>المطالبات والدفعات</h3>${clSum(c)}
     <div class="tblwrap"><table class="etable"><tr><th>المرحلة</th><th>رقم الفاتورة</th><th>تاريخ المطالبة</th><th>قيمة المطالبة (شامل)</th><th>منها ضريبة</th><th>المدفوع</th><th>تاريخ الدفع</th><th>الحالة</th><th></th></tr>${clRows}
     <tr class="tot"><td colspan="3">الإجمالي</td><td class="n" data-c="claimed">${money(c.claimed)}</td><td></td><td class="n" data-c="paid2">${money(c.paid)}</td><td colspan="3">غير مُطالب به: <b data-c="unclaimed">${money(c.unclaimed)}</b></td></tr></table></div>
-    <button class="btn ghost addr" data-add="claims">+ إضافة مطالبة يدوية</button></div>
-  <div class="panel" id="sec-ex"><h3>المصاريف</h3>
+    <button class="btn ghost addr" data-add="claims">+ إضافة مطالبة يدوية</button></div>`)}
+  ${S("clash", clashView(p))}
+  ${S("fin", `<div class="panel" id="sec-ex"><h3>المصاريف</h3>
     <div class="tblwrap"><table class="etable"><tr><th>البند</th><th>التصنيف</th><th>التاريخ</th><th>المبلغ</th><th></th></tr>${exRows}<tr class="tot"><td colspan="3">إجمالي المصاريف</td><td class="n" data-c="exp2">${money(c.exp)}</td><td></td></tr></table></div>
     <button class="btn ghost addr" data-add="expenses">+ إضافة مصروف</button></div>
   <div class="pgrid">
@@ -2281,8 +2387,8 @@ function projectDetail(p){
       <tr><td>ضريبة القيمة المضافة المحصّلة (للتوريد)</td><td class="n" data-c="fV">${money(c.vatCollected)}</td></tr></table>
     <div class="rvbar"><div><span>الإيراد</span><i class="f-doing" style="width:100%"></i></div><div><span>المصاريف</span><i class="f-late" data-c-w="expw" style="width:${c.A ? Math.min(c.exp / c.A, 1) * 100 : 0}%"></i></div><div><span>المحصّل</span><i class="f-done" data-c-w="paidw" style="width:${c.T ? Math.min(c.paid / c.T, 1) * 100 : 0}%"></i></div></div></div>
     <div class="panel"><h3>المصاريف حسب التصنيف</h3>${byCat.length ? byCat.map(([k, v]) => `<div class="hb" title="${k}: ${money(v)}"><span class="hl">${k}</span><span class="ht"><i class="f-late" style="width:${v / maxCat * 100}%"></i></span><b>${kmoney(v)}</b></div>`).join("") : `<div class="empty" style="padding:10px">لا مصاريف مسجلة</div>`}</div>
-  </div>
-  <div class="panel"><h3>ملفات المشروع <small>${p.docs.length} ملف</small></h3>
+  </div>`)}
+  ${S("docs", `<div class="panel" id="sec-docs"><h3>ملفات المشروع <small>${p.docs.length} ملف</small></h3>
     <div class="dochead"><select id="docCat" aria-label="تصنيف الملف">${DOCCAT.map(k => `<option ${docCat === k ? "selected" : ""}>${k}</option>`).join("")}</select>
       <label class="upbtn">⬆ رفع ملف<input type="file" data-pupload multiple hidden></label>
       <input id="docLName" placeholder="اسم الرابط" style="width:130px"><input id="docLUrl" type="url" placeholder="أو الصق رابط (Drive / OneDrive)…" style="flex:1;min-width:160px"><button class="btn ghost" data-plink>إضافة رابط</button></div>
@@ -2291,21 +2397,102 @@ function projectDetail(p){
       <td><select data-row="docs" data-i="${i}" data-k="cat">${DOCCAT.map(k => `<option ${d.cat === k ? "selected" : ""}>${k}</option>`).join("")}</select></td>
       <td><a class="doclink" href="${esc(d.url)}" target="_blank" rel="noopener">${/\.pdf$/i.test(d.name || "") ? "📕" : d.kind === "link" ? "🔗" : "📄"} ${esc(d.name)}</a></td>
       <td class="nw">${d.at ? esc(gFmtY.format(new Date(d.at))) + " · " + new Date(d.at).toLocaleTimeString("ar-EG-u-nu-latn", { hour: "2-digit", minute: "2-digit" }) : "—"}</td><td>${esc(d.by || "")}</td>
-      <td><input data-row="docs" data-i="${i}" data-k="note" value="${esc(d.note || "")}" placeholder="مثلاً: النسخة الموقعة"></td><td><button class="rm" data-rm="docs" data-i="${i}" title="إزالة من القائمة">×</button></td></tr>`).join("")}</table></div>` : `<div class="empty" style="padding:10px">ارفع العقد، عروض الأسعار، الاعتمادات، المطالبات، إيصالات التحويل… يُسجَّل كل ملف بتاريخ رفعه</div>`}</div>
-  <div class="panel"><h3>سجل المراسلات والأحداث المهمة</h3>
+      <td><input data-row="docs" data-i="${i}" data-k="note" value="${esc(d.note || "")}" placeholder="مثلاً: النسخة الموقعة"></td><td><button class="rm" data-rm="docs" data-i="${i}" title="إزالة من القائمة">×</button></td></tr>`).join("")}</table></div>` : `<div class="empty" style="padding:10px">ارفع العقد، عروض الأسعار، الاعتمادات، المطالبات، إيصالات التحويل… يُسجَّل كل ملف بتاريخ رفعه</div>`}</div>`)}
+  ${S("log", `<div class="panel" id="sec-log"><h3>سجل المراسلات والأحداث المهمة</h3>
     <div class="tblwrap"><table class="etable"><tr><th>التاريخ</th><th>النوع</th><th>الجهة / الموضوع</th><th>التفاصيل</th><th></th></tr>${p.log.map((x, i) => `<tr>
       <td><input type="date" data-row="log" data-i="${i}" data-k="date" value="${esc(x.date || "")}"></td>
       <td><select data-row="log" data-i="${i}" data-k="kind">${LOGK.map(k => `<option ${x.kind === k ? "selected" : ""}>${k}</option>`).join("")}</select></td>
       <td><input data-row="log" data-i="${i}" data-k="subject" value="${esc(x.subject || "")}" placeholder="مثلاً: خطاب المالك بخصوص التعديلات"></td>
       <td><input data-row="log" data-i="${i}" data-k="details" value="${esc(x.details || "")}" placeholder="الخلاصة / المطلوب" style="min-width:220px"></td>
       <td><button class="rm" data-rm="log" data-i="${i}" title="حذف">×</button></td></tr>`).join("")}</table></div>
-    <button class="btn ghost addr" data-add="log">+ إضافة مراسلة / حدث</button></div>
-  ${wkView(p, c, tasks)}
-  <div class="pgrid">
+    <button class="btn ghost addr" data-add="log">+ إضافة مراسلة / حدث</button></div>`)}
+  ${S("work", wkView(p, c, tasks))}
+  ${S("status", `<div class="pgrid">
     ${pTimeline(p, tasks)}
     <div class="panel"><h3>ملاحظات</h3><textarea class="pnotes" data-pf="notes" placeholder="ملاحظات عن المشروع…">${esc(p.notes || "")}</textarea></div>
-  </div></div>`;
+  </div>`)}</div>`;
 }
+let projSec = "status", stTpl = "";
+const PSEC = [["status","📊","حالة المشروع"],["steps","🪜","الخطوات الفنية"],["pay","💰","الدفعات والمطالبات"],["work","📐","الأعمال والمهام"],["clash","⚠️","تعارضات الأقسام"],["docs","📎","الملفات"],["log","💬","المراسلات"],["fin","🧾","المصاريف والربحية"],["info","ℹ️","البيانات الأساسية"],["all","☰","عرض الكل"]];
+const PSECOF = { "sec-basic": "info", "sec-cl": "pay", "sec-ph": "pay", "sec-wk": "work", "sec-ex": "fin", "sec-fin": "fin", "sec-steps": "steps" };
+function pNav(p, c, W){ const opW = W.filter(x => !x.done).length, cxO = (p.clash || []).filter(x => !x.closedAt).length;
+  const b = { status: Math.round(c.prog) + "%", steps: c.stN ? `${c.stD}/${c.stN}` : "", pay: c.dueCl.length ? `${c.dueCl.length} مستحقة` : "", work: opW ? `${opW} مفتوحة` : "", clash: cxO ? `${cxO} مفتوحة` : "", docs: p.docs.length || "", log: p.log.length || "", fin: p.expenses.length ? kmoney(c.exp) : "", info: p.code || "", all: "" };
+  const warn = { pay: c.late.length > 0, clash: (p.clash || []).some(x => !x.closedAt && x.crit), steps: (p.steps || []).some(x => !x.done && x.due && x.due < today()) };
+  return `<nav class="psnav" aria-label="أقسام المشروع">${PSEC.map(([k, i, l]) => `<button type="button" class="psn${projSec === k ? " on" : ""}${warn[k] ? " wr" : ""}" data-psec="${k}" aria-pressed="${projSec === k}"><i>${i}</i><span>${l}</span>${b[k] !== "" && b[k] != null ? `<small>${esc(String(b[k]))}</small>` : ""}</button>`).join("")}</nav>`; }
+function pStatusDash(p, c, W){ const t = today(), st = (p.steps || []).filter(x => x.name);
+  const cur = st.find(x => !x.done), nxt = cur ? st[st.indexOf(cur) + 1] : null, lateS = st.filter(x => !x.done && x.due && x.due < t);
+  const opW = W.filter(x => !x.done), lateW = opW.filter(x => x.due && x.due < t), cxO = (p.clash || []).filter(x => !x.closedAt);
+  let tp = null; if (p.start && p.end) { const tot = daysBetween(p.start, p.end), el = daysBetween(p.start, t); if (tot > 0) tp = Math.max(0, Math.min(1, el / tot)) * 100; }
+  const left = p.end ? daysBetween(t, p.end) : null;
+  const health = lateS.length || lateW.length > 2 || (tp != null && tp - c.prog > 20) ? ["متأخر عن الخطة", "late"] : (tp != null && tp - c.prog > 5) || lateW.length ? ["يحتاج متابعة", "wait"] : ["على المسار", "done"];
+  const track = st.length ? `<div class="sttrack">${st.map((x, i) => `<span class="${x.done ? "d" : x === cur ? "c" : ""}" title="${esc(x.name)}${x.done && x.doneAt ? " ✓ " + esc(x.doneAt) : x.due ? " · " + esc(x.due) : ""}">${x.done ? "✓" : i + 1}</span>`).join("")}</div>` : "";
+  const sP = `<div class="panel stdash"><h3>📊 حالة المشروع ${spill(health[0], health[1])}</h3>
+    <div class="sdrow"><div class="gauge" style="--p:${Math.round(c.prog)}"><span>${Math.round(c.prog)}%</span></div><div class="sdl">
+      <div><span>الإنجاز الفني</span><b>${c.stN ? `${c.stD} من ${c.stN} خطوة` : "لم تُضف خطوات بعد"}</b></div>
+      <div><span>الخطوة الحالية</span><b>${cur ? esc(cur.name) : c.stN ? "✓ اكتملت جميع الخطوات" : "—"}</b>${nxt ? `<small>التالية: ${esc(nxt.name)}</small>` : ""}</div>
+      <div><span>الوقت المنقضي</span><b>${tp == null ? "—" : Math.round(tp) + "%"}</b>${left != null ? `<small>${left >= 0 ? `متبقٍ ${left} يوم على الانتهاء` : `تجاوز الموعد بـ ${-left} يوم`}</small>` : `<small>حدد تاريخ الانتهاء في البيانات الأساسية</small>`}</div></div></div>
+    ${track}
+    <div class="sdk"><div class="${lateS.length ? "bad" : ""}" data-psec="steps"><b>${lateS.length}</b><span>خطوات متأخرة</span></div><div data-psec="work"><b>${opW.length}</b><span>أعمال مفتوحة${lateW.length ? ` (${lateW.length} متأخرة)` : ""}</span></div><div class="${cxO.some(x => x.crit) ? "bad" : ""}" data-psec="clash"><b>${cxO.length}</b><span>تعارضات مفتوحة</span></div><div data-psec="docs"><b>${p.docs.length}</b><span>ملف</span></div></div>
+    ${!c.stN && pEdit() ? `<button type="button" class="btn gold xs" data-psec="steps">🪜 أضف الخطوات الفنية من قالب جاهز</button>` : ""}</div>`;
+  const nextCl = c.ph.find(x => !x.claimed), dueS = c.dueCl.reduce((s, x) => s + x.inc - x.pd, 0);
+  const fP = `<div class="panel stdash"><h3>💰 الوضع المالي</h3>
+    <div class="sdrow"><div class="gauge" style="--p:${Math.round(c.col * 100)}"><span>${Math.round(c.col * 100)}%</span></div><div class="sdl">
+      <div><span>المحصّل</span><b>${SAR(c.paid)}</b><small>من ${money(c.T)} ر.س</small></div>
+      <div><span>المتبقي للتحصيل</span><b>${SAR(c.out)}</b><small>مطالبات مستحقة ${money(dueS)}</small></div>
+      <div><span>الدفعة القادمة</span><b>${nextCl ? esc(nextCl.name || "—") : c.ph.length ? "✓ صدرت كل المطالبات" : "—"}</b>${nextCl ? `<small>${num(nextCl.pct)}% · ${money(nextCl.amt)} ر.س</small>` : ""}</div></div></div>
+    ${c.ph.length ? `<div class="phbar">${c.ph.map(x => `<i class="${x.claimed ? (c.cl.some(y => y.phase === x.name && y.st === "paid") ? "pd" : "cl") : ""}" style="flex:${Math.max(num(x.pct), 1)}" title="${esc(x.name)} ${num(x.pct)}%"></i>`).join("")}</div>
+    <div class="phlg"><span><i class="pd"></i>محصّلة</span><span><i class="cl"></i>صدرت مطالبتها</span><span><i></i>لم يُطالب بها</span></div>` : ""}
+    <div class="sdk"><div class="${c.late.length ? "bad" : ""}" data-psec="pay"><b>${c.late.length}</b><span>مطالبات متأخرة</span></div><div data-psec="pay"><b>${c.dueCl.length}</b><span>مطالبات مستحقة</span></div><div data-psec="fin"><b>${pct(c.margin)}</b><span>هامش الربح</span></div><div data-psec="fin"><b>${kmoney(c.exp)}</b><span>المصاريف</span></div></div></div>`;
+  return `<div class="pgrid">${sP}${fP}</div>`; }
+const STEP_TPL = {
+  "تصميم معماري": ["فكرة معمارية", "اعتماد فكرة معمارية", "قرار مساحي", "اختبار تربة", "التصميم المبدئي", "اعتماد التصميم المبدئي", "التصميم النهائي", "تسليم المخططات"],
+  "مخططات تنفيذية": ["استلام التصميم المعتمد", "المخططات المعمارية التنفيذية", "المخططات الإنشائية", "المخططات الكهربائية", "المخططات الميكانيكية والصحية", "التنسيق بين الأقسام", "المراجعة الداخلية", "التسليم واعتماد العميل"],
+  "إصدار رخص بناء": ["قرار مساحي", "اختبار تربة", "فكرة معمارية", "اعتماد فكرة معمارية", "مخططات الرخصة (معماري - إنشائي - كهرباء - ميكانيكا)", "اشتراطات الدفاع المدني", "الرفع على منصة بلدي", "سداد الرسوم", "إصدار رخصة البناء"],
+  "تصميم مخططات تنفيذية IFC": ["استلام التصميم المعتمد", "المخططات المعمارية التنفيذية", "المخططات الإنشائية", "المخططات الكهربائية", "المخططات الميكانيكية والصحية", "التنسيق بين الأقسام (Clash)", "المراجعة الداخلية", "إصدار مخططات IFC"],
+  "إشراف عام ITC": ["استلام الموقع", "اجتماع بدء الأعمال", "اعتماد المخططات والمواد", "أعمال الهيكل الإنشائي", "أعمال التشطيبات", "الأعمال الكهروميكانيكية", "الاستلام الابتدائي", "الاستلام النهائي"],
+  "إشراف هندسي": ["استلام الموقع", "اجتماع بدء الأعمال", "اعتماد المخططات والمواد", "أعمال الهيكل الإنشائي", "أعمال التشطيبات", "الأعمال الكهروميكانيكية", "الاستلام الابتدائي", "الاستلام النهائي"],
+  "مستشار معماري AOR": ["مراجعة التصميم", "اعتماد المواد والعينات", "زيارات الموقع الدورية", "مراجعة المخططات التنفيذية", "تقرير المطابقة النهائي"],
+  "إدارة مشاريع": ["خطة المشروع", "الجدول الزمني", "طرح المناقصة", "ترسية العقود", "متابعة التنفيذ", "الإغلاق والتسليم"],
+  "تطوير عقاري": ["دراسة الجدوى", "تأمين الأرض", "التصميم", "التراخيص", "التمويل", "التنفيذ", "البيع / التأجير"],
+  "دراسات واستشارات": ["جمع البيانات", "زيارة الموقع", "التحليل", "المسودة الأولى", "اعتماد المسودة", "التقرير النهائي"],
+  "تصميم داخلي": ["المفهوم التصميمي", "اعتماد المفهوم", "المخططات والواجهات الداخلية", "الإظهار ثلاثي الأبعاد", "جداول المواد والكميات", "تسليم المخططات"] };
+const myStpl = () => (ME && ME.prefs && ME.prefs.stpl) || {};
+function stepTpls(p){ const o = {}; Object.entries(myStpl()).forEach(([k, v]) => o["⭐ " + k] = v); ptypes(p).forEach(t => { if (STEP_TPL[t]) o[t] = STEP_TPL[t]; }); Object.keys(STEP_TPL).forEach(t => { if (!o[t]) o[t] = STEP_TPL[t]; }); return o; }
+const newStep = n => ({ name: n || "", done: false, doneAt: "", due: "", claim: false, ph: "" });
+function stepsView(p, c){ const ed = pEdit(), t = today(), T = stepTpls(p), keys = Object.keys(T); if (!stTpl || !T[stTpl]) stTpl = keys[0];
+  const have = new Set(p.steps.map(x => normN(x.name))), phN = p.phases.map(x => x.name).filter(Boolean);
+  const rows = p.steps.map((x, i) => { const lt = !x.done && x.due && x.due < t, ph = c.ph.find(y => y.name === x.ph);
+    return `<tr class="${x.done ? "phdone" : ""}${lt ? " wl" : ""}"><td class="ix">${i + 1}</td><td><button type="button" class="wkchk" data-stdone="${i}" title="${x.done ? "إرجاع" : "تم الإنجاز"}" ${ed ? "" : "disabled"}>${x.done ? "✓" : ""}</button></td>
+    <td><input data-row="steps" data-i="${i}" data-k="name" value="${esc(x.name || "")}" placeholder="اسم الخطوة" list="stSug"></td>
+    <td><input type="date" data-row="steps" data-i="${i}" data-k="due" value="${esc(x.due || "")}" aria-label="التاريخ المستهدف"></td>
+    <td class="nw">${x.done ? "✓ " + esc(x.doneAt ? nice(x.doneAt) : "") : lt ? `<span class="warnt">متأخرة ${daysBetween(x.due, t)} يوم</span>` : "—"}</td>
+    <td class="stcl"><label class="stc${x.claim ? " on" : ""}"><input type="checkbox" data-stclaim="${i}" ${x.claim ? "checked" : ""} ${ed ? "" : "disabled"}> 💰 مطالبة مستحقة</label>${x.claim ? `<select data-row="steps" data-i="${i}" data-k="ph" aria-label="الدفعة المرتبطة"><option value="">— اختر الدفعة —</option>${phN.map(n => `<option ${x.ph === n ? "selected" : ""}>${esc(n)}</option>`).join("")}</select>${ph ? (ph.claimed ? spill("صدرت المطالبة", "done") : `<small>${num(ph.pct)}% · ${money(ph.amt)} ر.س</small>`) : ""}` : ""}</td>
+    <td class="nw">${ed && i > 0 ? `<button type="button" class="rm mv" data-stmv="${i}" title="تحريك لأعلى">↑</button>` : ""}${ed ? `<button class="rm" data-rm="steps" data-i="${i}" title="حذف">×</button>` : ""}</td></tr>`; }).join("");
+  const miss = (T[stTpl] || []).filter(n => !have.has(normN(n)));
+  const tplBar = ed ? `<div class="sttpl"><label>قالب الخطوات <select id="stTplSel">${keys.map(k => `<option ${k === stTpl ? "selected" : ""}>${esc(k)}</option>`).join("")}</select></label>${miss.length ? `<button type="button" class="btn gold xs" data-stapply>➕ أضف خطوات القالب (${miss.length})</button>` : ""}${p.steps.length ? `<button type="button" class="btn ghost xs" data-stsave>⭐ احفظ خطوات المشروع كقالب خاص</button>` : ""}
+    ${miss.length ? `<div class="stchips">${miss.map(n => `<button type="button" class="chip" data-stadd="${esc(n)}">+ ${esc(n)}</button>`).join("")}</div>` : ""}</div>` : "";
+  return `<div class="panel" id="sec-steps"><h3>🪜 الخطوات الفنية للمشروع <small>${c.stN ? `${c.stD} من ${c.stN} منجزة · ${Math.round(c.prog)}%` : "منفصلة عن مراحل الدفع"}</small></h3>
+    <div class="mini g w" style="margin:4px 0 10px"><i style="width:${Math.min(c.prog, 100)}%"></i></div>
+    <div class="hint">نسبة إنجاز المشروع تُحسب <b>تلقائياً</b> من عدد الخطوات المنجزة. فعّل <b>«💰 مطالبة مستحقة»</b> على الخطوة واختر الدفعة المرتبطة بها، وعند إنجاز الخطوة تصدر مطالبتها تلقائياً في «الدفعات والمطالبات».</div>
+    ${tplBar}<datalist id="stSug">${[...new Set(Object.values(STEP_TPL).flat())].map(n => `<option value="${esc(n)}">`).join("")}</datalist>
+    ${p.steps.length ? `<div class="tblwrap"><table class="etable sttable"><tr><th>#</th><th></th><th>الخطوة</th><th>التاريخ المستهدف</th><th>الإنجاز</th><th>المطالبة</th><th></th></tr>${rows}</table></div>` : `<div class="empty" style="padding:10px">اختر قالباً بالأعلى وأضف خطواته، أو أضف خطواتك الخاصة</div>`}
+    ${ed ? `<button class="btn ghost addr" data-add="steps">+ إضافة خطوة</button>` : ""}</div>`; }
+function stepClaim(i){ const p = projDraft, x = p.steps[i]; if (!x || !x.claim) return; const idx = p.phases.findIndex(y => y.name && y.name === x.ph);
+  if (idx < 0) { toast("اختر الدفعة المرتبطة بالخطوة لتصدر مطالبتها", true); return; }
+  if (pcalc(p).ph[idx].claimed) return; p.phases[idx].status = "done"; makeClaim(idx, true); }
+function stepToggle(i){ const p = projDraft, x = p.steps[i]; if (!x) return; x.done = !x.done; x.doneAt = x.done ? today() : "";
+  if (x.done) { p.log.push({ date: today(), kind: "إنجاز خطوة", subject: `إنجاز «${x.name || "خطوة"}»`, details: `الإنجاز الفني ${Math.round(pcalc(p).prog)}%` }); if (x.claim) stepClaim(i); else toast(`✓ أُنجزت «${x.name}» — الإنجاز ${Math.round(pcalc(p).prog)}%`); }
+  projTouch(); render(); }
+const phLocked = (p, c, j) => p.phases[j].status === "done" || (c.ph[j] && c.ph[j].claimed);
+function phFill(free, rest, el){ const p = projDraft; rest = Math.max(rest, 0); const cur = free.reduce((s, j) => s + num(p.phases[j].pct), 0); let acc = 0;
+  free.forEach((j, k) => { let nv = k === free.length - 1 ? rest - acc : (cur > 0 ? num(p.phases[j].pct) * rest / cur : rest / free.length); nv = Math.round(Math.max(nv, 0) * 100) / 100; acc += nv; p.phases[j].pct = nv;
+    const inp = document.querySelector(`[data-row="phases"][data-i="${j}"][data-k="pct"]`); if (inp && inp !== el) inp.value = nv; }); }
+function phRebalance(i, el){ const p = projDraft, c = pcalc(p); const lockS = p.phases.reduce((s, x, j) => s + (j !== i && phLocked(p, c, j) ? num(x.pct) : 0), 0);
+  const v = Math.round(Math.max(0, Math.min(num(p.phases[i].pct), 100 - lockS)) * 100) / 100; p.phases[i].pct = v;
+  const free = p.phases.map((x, j) => j).filter(j => j !== i && !phLocked(p, c, j)); if (free.length) phFill(free, 100 - lockS - v, el); }
+function phNormalize(){ const p = projDraft; if (!p || !p.phases.length) return; const c = pcalc(p); const free = p.phases.map((x, j) => j).filter(j => !phLocked(p, c, j)); if (!free.length) return;
+  const lockS = p.phases.reduce((s, x, j) => s + (free.includes(j) ? 0 : num(x.pct)), 0); phFill(free, 100 - lockS); }
+function phEqual(){ const p = projDraft; const c = pcalc(p); const free = p.phases.map((x, j) => j).filter(j => !phLocked(p, c, j)); if (!free.length) return; free.forEach(j => p.phases[j].pct = 0); phNormalize(); }
 function projRecalc(){
   const p = projDraft; if (!p) return; const c = pcalc(p);
   const set = (k, html) => document.querySelectorAll(`[data-c="${k}"]`).forEach(e => e.innerHTML = html);
@@ -2506,7 +2693,7 @@ function homeView0(){
   const days = []; for (let i = 6; i >= 0; i--) { const d = iso(addDays(new Date(), -i)); days.push({ d, l: DAYN[parse(d).getDay()].replace("ال", "").slice(0, 3), v: tasks.filter(x => x.done && x.doneAt && iso(new Date(x.doneAt)) === d).length }); }
   const maxD = Math.max(1, ...days.map(x => x.v));
   const o = ME.org || {};
-  const greet = `<div class="hgreet"><div><div class="hg1">${hr < 12 ? "صباح الخير" : "مساء الخير"}، <b>${esc(String(ME.name).split(" ")[0])}</b> 👋</div><div class="hg2"><span class="verchip" title="آخر تحديث للنظام">الإصدار ${APP_VER} · ${APP_DATE}</span> ${RICON[ME.role] || ""} ${ROLEL[ME.role] || ""}${orgLine(ME) ? " · " + esc(orgLine(ME)) : ""}${P ? " · 🔒 " + esc(spName()) : ""}</div></div>
+  const greet = `<div class="hgreet"><div><div class="hg1">${hr < 12 ? "صباح الخير" : "مساء الخير"}، <b>${esc(String(ME.name).split(" ")[0])}</b> 👋</div><div class="hg2"><span class="verchip" title="آخر تحديث للنظام">الإصدار ${APP_VER} · ${APP_DATE}</span> ${RICON[ME.role] || ""} ${ROLEL[ME.role] || ""}${orgLine(ME) ? " · " + esc(orgLine(ME)) : ""}${P ? " · 🔒 " + esc(spName()) : ""}</div>${(() => { const pv = mine.filter(x => x.pv && !x.done).sort((a, b) => String(a.due || "9999").localeCompare(String(b.due || "9999"))); return pv.length ? `<div class="pvstrip" data-pvgo title="أعمالك الخاصة — تذكير لك فقط"><b>🔒 تذكير خاص (${pv.length})</b>${pv.slice(0, 4).map(x => `<span>${esc(x.title)}${x.due ? ` · ${esc(nice(x.due))}` : ""}</span>`).join("")}${pv.length > 4 ? `<span>+${pv.length - 4}</span>` : ""}</div>` : ""; })()}</div>
     <div class="hq"><button class="btn gold" data-hq="task">+ مهمة</button>${(PRIV() || can("projectsEdit")) ? `<button class="btn ghost" data-hq="proj">+ مشروع</button><button class="btn ghost" data-hq="cli">+ عميل</button>` : ""}<button class="btn ghost" data-hq="ai">✨ الذكاء الاصطناعي</button></div></div>`;
   const SA = matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
   let instX = false; try { instX = localStorage.getItem("yw_inst_x") === "1"; } catch {}
@@ -2741,9 +2928,13 @@ function makeClaim(i, auto){
 }
 $("#view").addEventListener("change", e => { const t = e.target.closest("[data-ptype]"); if (!t || !projDraft) return; const set = new Set(ptypes(projDraft)); if (t.checked) set.add(t.value); else set.delete(t.value);
   projDraft.types = PTYPES.filter(x => set.has(x)).concat([...set].filter(x => !PTYPES.includes(x))); projDraft.type = projDraft.types.join(" + "); projTouch(); render(); });
-$("#view").addEventListener("input", e => { if (tab !== "projects") return; if (e.target.id === "projSearch") { projQ = e.target.value; const pos = e.target.selectionStart; render(); const s = $("#projSearch"); if (s) { s.focus(); s.setSelectionRange(pos, pos); } return; } if (e.target.tagName === "SELECT") return; if (projInput(e.target)) { projRecalc(); projTouch(); } });
+$("#view").addEventListener("input", e => { if (tab !== "projects") return; if (projDraft && e.target.dataset.row === "phases" && e.target.dataset.k === "pct" && e.target.value !== "" && projInput(e.target)) { phRebalance(+e.target.dataset.i, e.target); projRecalc(); projTouch(); return; } if (e.target.id === "projSearch") { projQ = e.target.value; const pos = e.target.selectionStart; render(); const s = $("#projSearch"); if (s) { s.focus(); s.setSelectionRange(pos, pos); } return; } if (e.target.tagName === "SELECT") return; if (projInput(e.target)) { projRecalc(); projTouch(); } });
 $("#view").addEventListener("change", async e => { if (tab !== "projects" || !projDraft) return;
   if (e.target.id === "docCat") { docCat = e.target.value; return; }
+  if (e.target.id === "stTplSel") { stTpl = e.target.value; render(); return; }
+  if (e.target.matches("[data-stclaim]")) { const i = +e.target.dataset.stclaim, x = projDraft.steps[i]; x.claim = e.target.checked;
+    if (x.claim && !x.ph) { const f = pcalc(projDraft).ph.find(y => y.name && !y.claimed && !projDraft.steps.some(z => z !== x && z.claim && z.ph === y.name)); if (f) x.ph = f.name; }
+    if (x.claim && x.done) stepClaim(i); projTouch(); render(); return; }
   if (e.target.matches("[data-pupload]")) { const fl = [...e.target.files]; e.target.value = ""; if (!fl.length) return;
     if (!String(projDraft.name || "").trim()) { toast("اكتب اسم المشروع أولاً لإنشاء مجلد له", true); return; }
     let ok = 0;
@@ -2758,17 +2949,27 @@ $("#view").addEventListener("change", async e => { if (tab !== "projects" || !pr
   const el = e.target; const isPhSt = el.dataset.row === "phases" && el.dataset.k === "status"; const oldSt = isPhSt ? projDraft.phases[+el.dataset.i].status : null;
   if (!projInput(el)) return;
   if (isPhSt && el.value === "done" && oldSt !== "done") makeClaim(+el.dataset.i, true);
+  if (el.dataset.row === "steps" && el.dataset.k === "ph") { const x = projDraft.steps[+el.dataset.i]; if (x && x.done && x.claim) stepClaim(+el.dataset.i); }
+  if (el.dataset.row === "phases" && el.dataset.k === "pct") { el.value = projDraft.phases[+el.dataset.i].pct; projTouch(); projRecalc(); return; }
   if (el.dataset.row === "claims" && el.dataset.k === "phase") { const r = projDraft.claims[+el.dataset.i]; const ph = pcalc(projDraft).ph.find(x => x.name === el.value); if (ph && !num(r.amount)) r.amount = Math.round(ph.amt * 100) / 100; }
   projTouch();
   if (el.tagName === "SELECT" || el.dataset.pf === "name" || el.dataset.k === "name" || el.dataset.clcustom) render(); else projRecalc(); });
 $("#view").addEventListener("click", async e => {
   if (tab !== "projects") return;
-  const o = e.target.closest("[data-popen]"); if (o) { claimCustom.clear(); projOpen = o.dataset.popen; projDraft = null; projDirty = false; render(); window.scrollTo({ top: 0, behavior: "smooth" }); return; }
+  const o = e.target.closest("[data-popen]"); if (o) { claimCustom.clear(); projSec = "status"; projOpen = o.dataset.popen; projDraft = null; projDirty = false; render(); window.scrollTo({ top: 0, behavior: "smooth" }); return; }
   const df = e.target.closest("[data-docf]"); if (df) { docF = df.dataset.docf; render(); return; }
   if (e.target.closest("[data-plink]")) { let url = ($("#docLUrl").value || "").trim(); if (!url) return; if (!/^https?:[\/][\/]/i.test(url)) url = "https:\/\/" + url;
     projDraft.docs.push({ kind: "link", name: ($("#docLName").value || "").trim() || new URL(url).hostname, url, cat: docCat, at: Date.now(), by: ME.name, note: "" }); projDirty = true; render(); await projSaveNow(); toast("أُضيف الرابط ✓"); return; }
   const f = e.target.closest("[data-pf-filter]"); if (f) { projF = f.dataset.pfFilter; render(); return; }
   if (e.target.closest("[data-pnew]")) { openPModal(); return; }
+  const ps = e.target.closest("[data-psec]"); if (ps) { projSec = ps.dataset.psec; render(); const nv = document.querySelector(".psnav"); if (nv && nv.getBoundingClientRect().top < 0) nv.scrollIntoView({ block: "start", behavior: "smooth" }); return; }
+  const sd = e.target.closest("[data-stdone]"); if (sd && pEdit()) { stepToggle(+sd.dataset.stdone); return; }
+  const sa = e.target.closest("[data-stadd]"); if (sa && pEdit()) { projDraft.steps.push(newStep(sa.dataset.stadd)); projTouch(); render(); return; }
+  if (e.target.closest("[data-stapply]") && pEdit()) { const have = new Set(projDraft.steps.map(x => normN(x.name))); const L = (stepTpls(projDraft)[stTpl] || []).filter(n => !have.has(normN(n))); L.forEach(n => projDraft.steps.push(newStep(n))); projTouch(); render(); toast(L.length ? `✓ أُضيفت ${L.length} خطوة — النسبة تُحسب تلقائياً` : "كل خطوات القالب موجودة"); return; }
+  if (e.target.closest("[data-stsave]") && ME) { const nm = (ptypes(projDraft)[0] || "قالبي") + " (" + (projDraft.name || "مشروع").slice(0, 25) + ")"; const L = projDraft.steps.map(x => x.name).filter(Boolean); if (!L.length) return;
+    const st = { ...myStpl(), [nm]: L }; ME.prefs = { ...(ME.prefs || {}), stpl: st }; if (!isDemo) bg("updateUser", ME.id, { prefs: { stpl: st } }).catch(() => {}); stTpl = "⭐ " + nm; render(); toast("⭐ حُفظ القالب «" + nm + "» — يظهر لك في كل المشاريع"); return; }
+  const mv = e.target.closest("[data-stmv]"); if (mv && pEdit()) { const i = +mv.dataset.stmv, a = projDraft.steps; [a[i - 1], a[i]] = [a[i], a[i - 1]]; projTouch(); render(); return; }
+  if (e.target.closest("[data-pheq]") && pEdit()) { phEqual(); projTouch(); render(); toast("⚖️ وُزّعت النسب بالتساوي على الدفعات غير المنجزة"); return; }
   const mk = e.target.closest("[data-mkclaim]"); if (mk) { makeClaim(+mk.dataset.mkclaim, false); projTouch(); render(); return; }
   if (e.target.closest("[data-pback]") || e.target.closest("[data-psave]")) { clearTimeout(projSaveT); const p = projDraft;
     if (p && projDirty && pEdit()) { if (!String(p.name || "").trim()) { pState("اكتب اسم المشروع ليتم حفظه"); return; } bgSaveProject(p); }
@@ -2778,10 +2979,10 @@ $("#view").addEventListener("click", async e => {
   const cd = e.target.closest("[data-cxdone]"); if (cd && pEdit()) { const x = projDraft.clash[+cd.dataset.cxdone]; x.done = x.done || {}; const d = cd.dataset.d; if (x.done[d]) delete x.done[d]; else x.done[d] = today(); const f = cxFlow(x); if (f.closed) { x.closedAt = today(); toast("✓ أُغلقت الملاحظة — أنهت جميع الأقسام المعنية"); } else { delete x.closedAt; if (x.done[d]) toast(`✓ ${CXL[d].l} — انتقلت الملاحظة إلى ${CXL[f.cur].l}`); } projTouch(); render(); return; }
   const cc = e.target.closest("[data-cxcrit]"); if (cc && pEdit()) { const x = projDraft.clash[+cc.dataset.cxcrit]; x.crit = !x.crit; projTouch(); render(); return; }
   const add = e.target.closest("[data-add]"); if (add) { const k = add.dataset.add;
-    projDraft[k].push(k === "phases" ? { name: "", pct: 0, due: "", status: "todo" } : k === "claims" ? { phase: "", inv: nextInv(projDraft), date: today(), amount: "", paid: "", paidDate: "" } : k === "adds" ? { title: "", date: today(), amount: "", status: "proposed", note: "" } : k === "clash" ? { n: Math.max(0, ...projDraft.clash.map(x => num(x.n))) + 1, note: "", main: "arch", aff: [], kind: "", action: "", extra: "", done: {}, crit: false, date: today() } : k === "log" ? { date: today(), kind: LOGK[0], subject: "", details: "" } : { desc: "", cat: EXCAT[0], date: today(), amount: "" });
+    projDraft[k].push(k === "steps" ? newStep("") : k === "phases" ? { name: "", pct: 0, due: "", status: "todo" } : k === "claims" ? { phase: "", inv: nextInv(projDraft), date: today(), amount: "", paid: "", paidDate: "" } : k === "adds" ? { title: "", date: today(), amount: "", status: "proposed", note: "" } : k === "clash" ? { n: Math.max(0, ...projDraft.clash.map(x => num(x.n))) + 1, note: "", main: "arch", aff: [], kind: "", action: "", extra: "", done: {}, crit: false, date: today() } : k === "log" ? { date: today(), kind: LOGK[0], subject: "", details: "" } : { desc: "", cat: EXCAT[0], date: today(), amount: "" });
     projTouch(); render(); return; }
-  const rm = e.target.closest("[data-rm]"); if (rm) { if (rm.dataset.rm === "claims") claimCustom.clear(); projDraft[rm.dataset.rm].splice(+rm.dataset.i, 1); projTouch(); render(); return; }
-  if (e.target.closest("[data-pprint]")) { window.print(); return; }
+  const rm = e.target.closest("[data-rm]"); if (rm) { if (rm.dataset.rm === "claims") claimCustom.clear(); projDraft[rm.dataset.rm].splice(+rm.dataset.i, 1); if (rm.dataset.rm === "phases") phNormalize(); projTouch(); render(); return; }
+  if (e.target.closest("[data-pprint]")) { const was = projSec; projSec = "all"; render(); setTimeout(() => { window.print(); projSec = was; render(); }, 60); return; }
   if (e.target.closest("[data-pay]")) { openPay(+e.target.closest("[data-pay]").dataset.pay); return; }
   if (e.target.closest("[data-pmap]")) { const u = mapURL(projDraft); if (!u) { toast("اكتب الموقع أو الصق رابط الموقع أولاً", true); return; } window.open(u, "_blank", "noopener"); return; }
   if (e.target.closest("[data-pgeo]")) { if (!navigator.geolocation) { toast("المتصفح لا يدعم تحديد الموقع", true); return; } toast("جارٍ تحديد موقعك…");
