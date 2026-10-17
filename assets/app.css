@@ -673,6 +673,27 @@ body.private .hero{background:radial-gradient(1200px 300px at 85% -40%,rgba(111,
 #printDay .pdbar{display:flex;height:16px;border-radius:8px;overflow:hidden;margin:-6px 0 14px;gap:2px}#printDay .pdbar i{display:block;position:relative;font-style:normal}#printDay .pdbar span{position:absolute;inset:0;color:#fff;font-size:8.5px;text-align:center;line-height:16px;white-space:nowrap;overflow:hidden;font-weight:700}
 #printDay .pdbar .g-done{background:#2c8a60}#printDay .pdbar .g-late{background:#c2453b}#printDay .pdbar .g-wait{background:#c9962b}#printDay .pdbar .g-open{background:#2f63b5}#printDay .pdbar .g-daily{background:#6b4fbb}#printDay .pdbar .g-fut{background:#8b94aa}
 @media print{.pray,.updbar,#cmdM,.pxbar{display:none!important}}
+/* ===== v100: أقسام المشروع بلا ترقيم + الخدمات + الجهة المسؤولة ===== */
+.psnav .psn::before{content:none!important;display:none!important}
+.psnav{counter-reset:none}
+.svct select{min-width:170px}.svcw{background:var(--wait-soft);color:var(--wait);border-radius:10px;padding:8px 12px;margin:8px 0;font-weight:700;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.svcf{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:0 0 10px;padding:8px 10px;background:var(--surface);border:1px solid var(--line);border-radius:12px}.svcf span{font-size:12.5px;color:var(--mut);font-weight:700}
+.svcf button{border:1px solid var(--line);background:var(--surface2);border-radius:999px;padding:5px 12px;font:inherit;font-size:12.5px;font-weight:700;cursor:pointer}.svcf button[aria-pressed=true]{background:var(--navy);color:#fff;border-color:transparent}
+.svcsel{min-width:130px}
+.presp{display:block;color:var(--ink2);font-size:11px;font-weight:600;margin-top:2px}
+.pdetail[data-svcflt="0"] tr[data-svc]:not([data-svc="0"]){display:none}
+.pdetail[data-svcflt="1"] tr[data-svc]:not([data-svc="1"]){display:none}
+.pdetail[data-svcflt="2"] tr[data-svc]:not([data-svc="2"]){display:none}
+.pdetail[data-svcflt="3"] tr[data-svc]:not([data-svc="3"]){display:none}
+.pdetail[data-svcflt="4"] tr[data-svc]:not([data-svc="4"]){display:none}
+.pdetail[data-svcflt="5"] tr[data-svc]:not([data-svc="5"]){display:none}
+.pdetail[data-svcflt="6"] tr[data-svc]:not([data-svc="6"]){display:none}
+.pdetail[data-svcflt="7"] tr[data-svc]:not([data-svc="7"]){display:none}
+.pdetail[data-svcflt="8"] tr[data-svc]:not([data-svc="8"]){display:none}
+.pdetail[data-svcflt="9"] tr[data-svc]:not([data-svc="9"]){display:none}
+.pdetail[data-svcflt="10"] tr[data-svc]:not([data-svc="10"]){display:none}
+.pdetail[data-svcflt="11"] tr[data-svc]:not([data-svc="11"]){display:none}
+
 /* ===== v99: العملاء CRM + ملف العميل 360° ===== */
 .cav{width:34px;height:34px;border-radius:50%;display:inline-grid;place-items:center;flex:none;background:color-mix(in srgb,var(--cc) 16%,var(--surface));color:var(--cc);font-weight:900;font-size:14px;border:2px solid color-mix(in srgb,var(--cc) 35%,transparent)}
 .cav.big{width:56px;height:56px;font-size:21px}

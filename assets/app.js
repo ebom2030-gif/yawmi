@@ -1129,7 +1129,7 @@ const snap = obj => ({ docs: Object.entries(obj).map(([id, v]) => ({ id, data: (
 const emit = () => listeners.forEach(f => f(snap(store)));
 const emitN = () => noteListeners.forEach(f => f(snap(Object.fromEntries(Object.entries(noteStore).map(([k, v]) => [k, { text: v }])))));
 const rid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-const APP_VER = "v99", APP_DATE = "2026-10-17";
+const APP_VER = "v100", APP_DATE = "2026-10-17";
 const strip = o => { const r = { ...o }; delete r.id; return r; };
 const SKINS = [["night", "ليل مكة", "كحلي ليلي ونحاسي ذهبي", "#14213d", "#c29a3e", "#2f63b5"], ["roshan", "روشن حجازي", "أخضر بترولي وذهب رملي", "#0e3b43", "#d9b97a", "#c8553d"], ["earth", "طين ونخيل", "بني تمري وتيراكوتا", "#3a2a21", "#e0b66f", "#4f6b3a"]];
 const curSkin = () => document.documentElement.dataset.skin || "night";
@@ -4048,6 +4048,7 @@ function demoSample(){ const r = {}; if (!/[?&]sample/.test(location.search)) re
     P("sp4", "منتجع المخواة", "ماشي العمري", "تصميم معماري", 95000, [["دفعة مقدمة", 20, "todo"]], [], [], "quote"),
     P("sp5", "الكامل 2", "صرح الأفق الجديدة", "تصميم معماري", 60000, [["دفعة مقدمة", 30, "done"], ["التسليم النهائي", 70, "done"]], [["دفعة مقدمة", 20700, 20700, -150], ["التسليم النهائي", 48300, 0, -45]], [], "done"),
     P("sp6", "باسقات الخير", "شركة بيادر النمو", "إشراف هندسي", 180000, [["دفعة مقدمة", 20, "todo"]], [], [], "contract")];
+  Object.assign(r.projects[1], { types: ["إشراف هندسي", "تصميم معماري"], svcs: [{ t: "تصميم معماري", v: 40000, st: "done" }, { t: "إشراف هندسي", v: 80000, st: "doing" }], srcBranch: "فرع مكة", pmUser: "م. أحمد" }); r.projects[1].phases.forEach((x, i) => x.svc = i ? "1" : "0");
   r.projects[1].expenses.push({ desc: "تحويل إلى مؤسسة الرفع المساحي — أعمال الرفع", cat: TRX, date: d(-8), amount: 4500, to: "مؤسسة الرفع المساحي", reason: "أعمال الرفع" });
   r.contacts = [{ id: "sc1", name: "شركة راز الماسية العقارية", cat: "dev", rel: "current", code: "C-001", people: [], createdAt: 1 }, { id: "sc2", name: "مؤسسة البناء الحديث للمقاولات", cat: "contractor", rel: "partner", code: "C-002", phone: "0500000000", people: [], createdAt: 2,
     refs: [{ co: "شركة المدار العالمية", site: "مكة — الشوقية", proj: "عمارة سكنية", date: d(-40), st: "award", val: 1800000, pct: 2, coll: 12000, next: d(-2), note: "" }, { co: "مجموعة الأفق", site: "جدة", proj: "مجمع تجاري", date: d(-10), st: "nego", val: 4200000, pct: 1.5, coll: "", next: d(5), note: "" }] },
@@ -4288,6 +4289,85 @@ drawCli = (f => function(){ const r = f.apply(this, arguments); try { const c = 
     F.dataset.ctab = c.name ? cliTab : "data"; } catch (x) { console.warn(x); } return r; })(drawCli);
 document.addEventListener("click", e => { const t = e.target.closest && e.target.closest("[data-ctab]"); if (t) { e.preventDefault(); cliTab = t.dataset.ctab; const F = $("#cliForm"); if (F) { F.dataset.ctab = cliTab; F.querySelectorAll("[data-ctab]").forEach(b => b.setAttribute("aria-pressed", b.dataset.ctab === cliTab)); } return; }
   const p = e.target.closest && e.target.closest("[data-c3p]"); if (p && !e.target.closest("a")) { const b = $("#cliBox"); if (b) b.hidden = true; openProj(p.dataset.c3p); } });
+// ===== v100: مشروع متعدد الخدمات + خطوات قياسية تلقائية + الجهة المسؤولة + ترتيب أقسام المشروع =====
+// ---- ترتيب الأقسام: البداية ← التخطيط والتنفيذ ← المالية ← الوثائق والتواصل ----
+PSEC.splice(PSEC.findIndex(x => x[0] === "info") + 1, 0, ["svc", "🧩", "الخدمات والأتعاب"]);
+PSECOF["sec-svc"] = "svc";
+LIFE = ["status", "info", "svc", "quote", "steps", "timeline", "work", "visits", "journal", "pay", "boq", "fin", "docs", "mails", "log", "clash", "all"];
+lifeSort = a => a.slice().sort((x, y) => (LIFE.indexOf(x) + 1 || 99) - (LIFE.indexOf(y) + 1 || 99));
+Object.keys(FAMO).forEach(k => { if (!FAMO[k].includes("svc")) FAMO[k].push("svc"); FAMO[k] = lifeSort(FAMO[k]); });
+Object.keys(FAMQ).forEach(k => { if (!FAMQ[k].includes("svc")) FAMQ[k].push("svc"); });
+FAMQ = Object.fromEntries(Object.entries(FAMQ).map(([k, v]) => [k, ["quote", "info", "svc", ...v.filter(x => !["quote", "info", "svc"].includes(x))]]));
+PSO_C = lifeSort(PSO_C.includes("svc") ? PSO_C : PSO_C.concat("svc")); PSO_Q = ["quote", "info", "svc", ...PSO_Q.filter(x => !["quote", "info", "svc"].includes(x))];
+pmig = (f => function(p){ f.apply(this, arguments); p.svcs = p.svcs || []; return p; })(pmig);
+// ---- الخدمات داخل المشروع: لكل خدمة قيمتها ودفعاتها ومطالباتها ----
+var SVST = [["todo", "لم تبدأ", "mut"], ["doing", "جارية", "doing"], ["done", "منتهية", "done"]];
+function svcCalc(p, c){ const r = c.rate, L = (p.svcs || []).map((s, i) => { const ph = c.ph.filter(x => x.svc === String(i)), names = new Set(ph.map(x => x.name)), cl = c.cl.filter(x => names.has(x.phase));
+    const T = num(s.v) * (1 + r); return { s, i, T, A: num(s.v), plan: ph.reduce((a, x) => a + x.amt, 0), claimed: cl.reduce((a, x) => a + x.inc, 0), paid: cl.reduce((a, x) => a + x.pd, 0), nph: ph.length }; });
+  return { L, A: L.reduce((a, x) => a + x.A, 0), T: L.reduce((a, x) => a + x.T, 0) }; }
+function svcView(p, c){ const ed = pEdit(), K = svcCalc(p, c), fin = can("finance") || PRIV(), base = c.A0 || 0;
+  const rows = K.L.map(({ s, i, T, A, plan, claimed, paid, nph }) => `<tr><td class="ix">${i + 1}</td>
+    <td>${ed ? `<select data-row="svcs" data-i="${i}" data-k="t">${PTYPES.map(t => `<option ${s.t === t ? "selected" : ""}>${esc(t)}</option>`).join("")}</select>` : esc(s.t)}</td>
+    ${fin ? `<td>${ed ? `<input class="nn" type="number" step="0.01" data-row="svcs" data-i="${i}" data-k="v" value="${esc(s.v ?? "")}">` : money(A)}</td><td class="n">${money(T)}</td><td class="n">${K.A ? pct(A / K.A) : "—"}</td><td class="n">${nph ? nph + " دفعة · " + money(plan) : `<span class="mutd">اربط الدفعات بالخدمة</span>`}</td><td class="n">${money(claimed)}</td><td class="n"><b>${money(paid)}</b></td><td class="n">${money(Math.max(T - paid, 0))}</td>` : ""}
+    <td>${ed ? `<select data-row="svcs" data-i="${i}" data-k="st">${SVST.map(([k, l]) => `<option value="${k}" ${(s.st || "todo") === k ? "selected" : ""}>${l}</option>`).join("")}</select>` : spill((SVST.find(x => x[0] === s.st) || SVST[0])[1], (SVST.find(x => x[0] === s.st) || SVST[0])[2])}</td>
+    <td>${ed ? `<button class="rm" data-rm="svcs" data-i="${i}" title="حذف">×</button>` : ""}</td></tr>`).join("");
+  const diff = fin && K.L.length && Math.abs(K.A - base) > 1;
+  return `<div class="panel" id="sec-svc"><h3>🧩 الخدمات والأتعاب <small>لمشروع يضم أكثر من خدمة (مثلاً: تصميم + IFC + إشراف): لكل خدمة قيمتها ودفعاتها وتحصيلها</small></h3>
+    ${K.L.length ? `<div class="tblwrap"><table class="etable svct"><tr><th>#</th><th>الخدمة</th>${fin ? "<th>القيمة قبل الضريبة</th><th>شامل الضريبة</th><th>من العقد</th><th>الدفعات المرتبطة</th><th>المطالَب</th><th>المحصّل</th><th>المتبقي</th>" : ""}<th>الحالة</th><th></th></tr>${rows}
+      ${fin ? `<tr class="tot"><td colspan="2">الإجمالي</td><td class="n">${money(K.A)}</td><td class="n">${money(K.T)}</td><td></td><td></td><td class="n">${money(K.L.reduce((a, x) => a + x.claimed, 0))}</td><td class="n">${money(K.L.reduce((a, x) => a + x.paid, 0))}</td><td class="n">${money(Math.max(K.T - K.L.reduce((a, x) => a + x.paid, 0), 0))}</td><td colspan="2"></td></tr>` : ""}</table></div>
+      ${diff ? `<div class="svcw">⚠️ مجموع الخدمات (${money(K.A)}) لا يساوي قيمة العقد قبل الضريبة (${money(base)}).${ed ? ` <button type="button" class="btn xs" data-svcsync>اعتماد المجموع كقيمة للعقد</button>` : ""}</div>` : ""}
+      <div class="sub">💡 في قسم «الدفعات والمطالبات» اختر لكل دفعة الخدمة التابعة لها، ثم استخدم أزرار التصفية لعرض دفعات ومطالبات كل خدمة على حدة.</div>`
+    : `<div class="empty" style="padding:12px">المشروع بخدمة واحدة حالياً. أضف الخدمات إذا كان العقد يشمل أكثر من خدمة بقيم ودفعات منفصلة.</div>`}
+    ${ed ? `<div class="row2"><button class="btn ghost addr" type="button" data-svcadd>+ إضافة خدمة</button>${!K.L.length && ptypes(p).length > 1 ? `<button class="btn ghost addr" type="button" data-svcseed>⚡ إنشاء الخدمات من أنواع المشروع (${ptypes(p).length})</button>` : ""}</div>` : ""}</div>`; }
+projectDetail = (f => function(p){ let h = f.apply(this, arguments); const c = pcalc(p);
+  if (projSec === "svc" || projSec === "all") { const v = svcView(p, c), i = h.indexOf('<div class="panel" id="sec-basic"'); h = i >= 0 && projSec === "all" ? h.slice(0, i) + v + h.slice(i) : h.replace(/(<\/div>)\s*$/, v + "$1"); }
+  if ((p.svcs || []).length && (projSec === "pay" || projSec === "all")) { const S = p.svcs;
+    h = h.replace('<th>#</th><th>المرحلة</th><th>النسبة %</th>', '<th>#</th><th>المرحلة</th><th>الخدمة</th><th>النسبة %</th>');
+    p.phases.forEach((x, i) => { const sel = `<td><select data-row="phases" data-i="${i}" data-k="svc" class="svcsel"><option value="">—</option>${S.map((s, j) => `<option value="${j}" ${String(x.svc) === String(j) ? "selected" : ""}>${esc(s.t)}</option>`).join("")}</select></td>`;
+      h = h.replace(new RegExp(`(<tr class="[^"]*"><td class="ix">${i + 1}</td>)(<td><input data-row="phases" data-i="${i}" data-k="name"[^>]*></td>)`), (m, a, b) => a.replace("<tr ", `<tr data-svc="${x.svc ?? ""}" `) + b + sel); });
+    h = h.replace(/<tr class="tot"><td colspan="3">الإجمالي<\/td><td class="n" data-c="phsum">/, '<tr class="tot"><td colspan="4">الإجمالي</td><td class="n" data-c="phsum">');
+    const phSvc = {}; p.phases.forEach(x => { if (x.name) phSvc[x.name] = x.svc ?? ""; });
+    p.claims.forEach((x, i) => { h = h.replace(new RegExp(`<tr><td>(<select data-row="claims" data-i="${i}" data-k="phase"|<input data-row="claims" data-i="${i}" data-k="phase")`), m => m.replace("<tr>", `<tr data-svc="${phSvc[x.phase] ?? ""}">`)); });
+    const chips = `<div class="svcf"><span>عرض حسب الخدمة:</span><button type="button" data-svcf="" aria-pressed="${!svcF}">الكل</button>${S.map((s, j) => `<button type="button" data-svcf="${j}" aria-pressed="${svcF === String(j)}">${esc(s.t)}</button>`).join("")}</div>`;
+    h = h.replace('<div class="panel" id="sec-ph"', chips + '<div class="panel" id="sec-ph"');
+    if (!h.includes('class="svcf"')) h = h.replace('<div class="panel" id="sec-cl"', chips + '<div class="panel" id="sec-cl"');
+    h = h.replace('<div class="pdetail"', `<div class="pdetail" data-svcflt="${esc(svcF)}"`); }
+  return h; })(projectDetail);
+var svcF = "";
+document.addEventListener("click", e => { const t = e.target.closest && e.target.closest("[data-svcadd],[data-svcseed],[data-svcsync],[data-svcf]"); if (!t || !projDraft) return; e.preventDefault(); e.stopPropagation(); const p = projDraft;
+  if (t.hasAttribute("data-svcf")) { svcF = t.dataset.svcf; render(); return; }
+  if (t.hasAttribute("data-svcadd")) p.svcs.push({ t: ptypes(p)[p.svcs.length] || PTYPES[0], v: "", st: "todo", note: "" });
+  if (t.hasAttribute("data-svcseed")) ptypes(p).forEach(x => p.svcs.push({ t: x, v: "", st: "todo", note: "" }));
+  if (t.hasAttribute("data-svcsync")) { const A = p.svcs.reduce((a, s) => a + num(s.v), 0); p.taxMode = "ex"; p.agreed = A; if (QST.has(p.status) || !num(p.price)) p.price = A; toast("✓ قيمة العقد = مجموع الخدمات " + money(A) + " ر.س قبل الضريبة"); }
+  projTouch(); render(); }, true);
+document.addEventListener("change", e => { const el = e.target; if (el.dataset && el.dataset.row === "svcs" && projDraft) setTimeout(() => { projInput(el); projTouch(); render(); }, 0);
+  if (el.dataset && el.dataset.row === "phases" && el.dataset.k === "svc" && projDraft) setTimeout(() => { projInput(el); projTouch(); render(); }, 0); });
+// ---- الخطوات المتعارف عليها لكل خدمة (تُضاف تلقائياً للمشروع الجديد) ----
+Object.assign(STEP_TPL, {
+  "أعمال مساحية": ["استلام بيانات الموقع والصك", "الرفع المساحي الميداني", "معالجة البيانات وإعداد المخطط", "مراجعة واعتماد المخطط داخلياً", "تقديم الطلب في منصة بلدي", "استلام القرار المساحي", "تسليم المخطط والقرار للعميل"],
+  "السلامة والدفاع المدني": ["استلام المخططات المعمارية", "دراسة اشتراطات الدفاع المدني", "تصميم أنظمة الإنذار والإطفاء", "تصميم مخارج الطوارئ والإخلاء", "مراجعة واعتماد العميل", "التقديم لاعتماد الدفاع المدني", "الرد على الملاحظات", "استلام الاعتماد"],
+  "وافي — الإشراف العام وتقارير الإنجاز الدورية": ["استلام العقد والمخططات المعتمدة", "زيارة الموقع الأولى وتقرير الوضع الراهن", "اعتماد الجدول الزمني للمشروع", "تقرير الإنجاز الشهري الأول", "تقارير الإنجاز الدورية", "تقرير اكتمال الهيكل الإنشائي", "تقرير اكتمال التشطيبات", "تقرير الإنجاز النهائي"],
+  "وافي — الإشراف الفعلي على التنفيذ": ["استلام الموقع من المقاول", "اعتماد المواد والعينات", "الإشراف على أعمال الحفر والأساسات", "الإشراف على الهيكل الخرساني", "الإشراف على أعمال المباني", "الإشراف على التمديدات (كهرباء - ميكانيكا)", "الإشراف على التشطيبات", "الاستلام الابتدائي", "الاستلام النهائي"],
+  "وافي — متابعة وإدارة إصدار ترخيص البيع على الخارطة": ["تجهيز مستندات المطوّر والمشروع", "فتح حساب الضمان", "التعاقد مع المحاسب القانوني والمستشار الهندسي", "رفع الطلب في منصة وافي", "الرد على ملاحظات وافي", "صدور الترخيص المبدئي", "صدور ترخيص البيع على الخارطة"] });
+function stdSteps(p){ const T = ptypes(p).filter(t => STEP_TPL[t]), multi = T.length > 1, seen = new Set(), L = [];
+  T.forEach(t => STEP_TPL[t].forEach(n => { const nm = multi ? `${t.replace(/^وافي — /, "وافي: ")} — ${n}` : n; if (!seen.has(normN(nm))) { seen.add(normN(nm)); L.push(newStep(nm)); } })); return L; }
+projectDetail = (f => function(p){ if (p && !p.stAuto && !(p.steps || []).some(x => x.name) && !QST.has(p.status) && pEdit()) { const L = stdSteps(p); if (L.length) { p.steps = L; p.stAuto = 1; setTimeout(() => { if (projDraft && projDraft.id === p.id) { projTouch(); toast(`🪜 أُضيفت ${L.length} خطوة متعارف عليها لـ «${ptypes(p).join(" + ")}» — عدّلها كما تشاء`); } }, 50); } }
+  return f.apply(this, arguments); })(projectDetail);
+// ---- الجهة المسؤولة: الفرع صاحب العرض ومسؤول إدارة المشروع ----
+projectDetail = (f => function(p){ let h = f.apply(this, arguments); if (projSec !== "info" && projSec !== "all") return h;
+  const brs = [...new Set(PROJECTS.flatMap(x => [x.branch, x.srcBranch]).filter(Boolean).concat(["المكتب الرئيسي", "فرع مكة", "فرع جدة", "فرع الرياض"]))];
+  const ed = pEdit(), I = (k, l, ph, list) => `<label>${l}<input data-pf="${k}" value="${esc(p[k] || "")}" placeholder="${ph}" ${list ? `list="${list}"` : ""} ${ed ? "" : "disabled"}></label>`;
+  const panel = `<div class="panel" id="sec-resp"><h3>🧭 الجهة المسؤولة عن المشروع</h3><div class="pform">${I("srcBranch", "الفرع / الجهة صاحبة العرض (جلبت المشروع)", "مثلاً: فرع مكة", "brList")}${I("branch", "الفرع المنفّذ", "مثلاً: المكتب الرئيسي", "brList")}${I("pmUser", "مسؤول إدارة المشروع", "اسم المسؤول", "usrList2")}${I("pmTeam", "فريق العمل", "أسماء مختصرة مفصولة بفاصلة", "")}</div>
+    <datalist id="brList">${brs.map(b => `<option value="${esc(b)}">`).join("")}</datalist><datalist id="usrList2">${USERS.filter(u => u.active !== false).map(u => `<option value="${esc(u.name)}">`).join("")}</datalist>
+    <div class="sub">تظهر هذه البيانات في قائمة المشاريع وتقارير الفروع (الأتعاب والمحصّل لكل فرع).</div></div>`;
+  const i = h.indexOf('<div class="panel" id="sec-basic"'); if (i < 0) return h; const j = h.indexOf('<div class="panel"', i + 20); return j > 0 ? h.slice(0, j) + panel + h.slice(j) : h + panel; })(projectDetail);
+projList = (f => function(){ let h = f.apply(this, arguments); PV().forEach(p => { if (!p.srcBranch && !p.pmUser) return; const tag = `<small class="presp">${p.srcBranch ? "🏢 " + esc(p.srcBranch) : ""}${p.srcBranch && p.pmUser ? " · " : ""}${p.pmUser ? "👤 " + esc(p.pmUser) : ""}</small>`;
+  h = h.replace(new RegExp(`(<tr data-popen="${p.id}"[^>]*><td class="pn"><b>[\\s\\S]*?</b>)`), "$1" + tag); }); return h; })(projList);
+// تقرير الفروع: إضافة «المشاريع التي جلبها كل فرع»
+grpPanel = (f => function(){ let h = f.apply(this, arguments); const fin = can("finance") || PRIV(); if (!fin) return h; const P = PV().filter(p => p.status !== "lost").map(p => ({ p, c: pcalc(p) }));
+  const B = [...new Set(P.map(x => x.p.srcBranch).filter(Boolean))]; if (!B.length) return h;
+  const R = B.map(b => { const L = P.filter(x => x.p.srcBranch === b), W = L.filter(x => !FINX.has(x.p.status)); return [b, L.filter(x => QST.has(x.p.status)).length, W.length, W.reduce((a, x) => a + x.c.T, 0), W.reduce((a, x) => a + x.c.paid, 0)]; });
+  return h + `<div class="panel" id="dSrc"><h3>🧲 المشاريع حسب الجهة صاحبة العرض <small>من جلب المشروع</small></h3><div class="tblwrap"><table class="ptable compact"><tr><th>الجهة</th><th>عروض قائمة</th><th>عقود</th><th>قيمة العقود</th><th>المحصّل</th></tr>${R.map(r => `<tr><td><b>${esc(r[0])}</b></td><td class="n">${r[1]}</td><td class="n">${r[2]}</td><td class="n">${money(r[3])}</td><td class="n">${money(r[4])}</td></tr>`).join("")}</table></div></div>`; })(grpPanel);
 // ===== v54: فحص التحديثات، لوحة الأوامر (Ctrl+K)، تلوين التقارير المطبوعة =====
 async function verCheck(){ try { const t = await (await fetch("./index.html?vc=" + Date.now(), { cache: "no-store" })).text(); const m = /const APP_VER = "([^"]+)"/.exec(t);
   if (m && m[1] !== APP_VER) { let b = $("#updBar"); if (!b) { b = document.createElement("div"); b.id = "updBar"; b.className = "updbar"; document.body.appendChild(b); } b.innerHTML = `🎉 نسخة جديدة <b>${esc(m[1])}</b> جاهزة <button type="button" data-upd>تحديث الآن</button>`; b.hidden = false; } } catch {} }
