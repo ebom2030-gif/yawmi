@@ -700,9 +700,9 @@ body.private .hero{background:radial-gradient(1200px 300px at 85% -40%,rgba(111,
 #printDay .pdbar .g-done{background:#2c8a60}#printDay .pdbar .g-late{background:#c2453b}#printDay .pdbar .g-wait{background:#c9962b}#printDay .pdbar .g-open{background:#2f63b5}#printDay .pdbar .g-daily{background:#6b4fbb}#printDay .pdbar .g-fut{background:#8b94aa}
 @media print{.pray,.updbar,#cmdM,.pxbar{display:none!important}}
 /* v90: المحتوى يملأ عرض الشاشة بدل عمود ضيق في المنتصف */
-.wrap,.hero-in,.main .wrap,.main .hero-in{max-width:min(100%,1720px)!important}
+.wrap,.hero-in,.main .wrap,.main .hero-in{max-width:100%!important}
 .main{padding-inline:28px}.main .hero{margin-inline:-28px;padding-inline:28px}
-#auth[data-mode=profile] .auth-card{max-width:min(100%,1720px)}
+#auth[data-mode=profile] .auth-card{max-width:100%}
 
 .psnav{counter-reset:pst}.psnav .psn:not(.pfhid):not([data-psec=all]):not([data-psec=status]){counter-increment:pst}
 .psnav .psn:not(.pfhid):not([data-psec=all]):not([data-psec=status])::before{content:counter(pst);font-size:10px;font-weight:700;min-width:16px;height:16px;line-height:16px;border-radius:8px;background:var(--surface2);color:var(--muted);text-align:center;margin-inline-end:4px;display:inline-block}
