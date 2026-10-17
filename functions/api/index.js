@@ -251,7 +251,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
 }
 export async function onRequestGet({ request, env }) { // حالة الخادم؛ التفاصيل لمستخدم مسجّل (?t=رمز الجلسة) وتخص مساحته
   const o = { ok: true, gateway: true, d1: !!env.DB }; const t = new URL(request.url).searchParams.get('t');
-  if (env.DB) { try { const db = env.DB; await init(db); o.lastSync = (await db.prepare('SELECT MAX(at) n FROM sync_log WHERE ok = 1').first()).n;
+  if (env.DB) { try { const db = env.DB; await init(db); o.lastSync = (await db.prepare('SELECT MAX(at) n FROM sync_log WHERE ok = 1').first()).n; o.recentErrors = (await db.prepare('SELECT at, fn, substr(err, 1, 160) err FROM sync_log WHERE ok = 0 ORDER BY at DESC LIMIT 4').all()).results;
     const th = t ? await sha('yw|' + t) : '', s = th ? await db.prepare('SELECT tn FROM ss WHERE th = ?').bind(th).first() || await db.prepare('SELECT tn FROM sess WHERE th = ?').bind(th).first() : null;
     if (s) { const tn = s.tn || '', c = async q => (await db.prepare(q).bind(tn).first()).n;
       Object.assign(o, { native: (await cfgGet(db, 'native:' + tn)) === '1', items: await c('SELECT COUNT(*) n FROM items WHERE tn = ?'), projects: await c('SELECT COUNT(*) n FROM projects WHERE tn = ?'), contacts: await c('SELECT COUNT(*) n FROM contacts WHERE tn = ?'), users: await c('SELECT COUNT(*) n FROM users WHERE tn = ?'),
