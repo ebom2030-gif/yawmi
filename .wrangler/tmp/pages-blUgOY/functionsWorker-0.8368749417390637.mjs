@@ -3,7 +3,7 @@ var __name = (target, value) => __defProp(target, "name", { value, configurable:
 
 // api/index.js
 var GAS = "https://script.google.com/macros/s/AKfycbwgvjkn2Op3hg-sSwxMi3PJO4MmIot0udoa8FXKOGTK9LBjqKuGtqlLYY1FaAkMwnI9/exec";
-var FULL_SYNC_MIN = 20;
+var FULL_SYNC_MIN = 60;
 var H = { "content-type": "application/json; charset=utf-8", "cache-control": "no-store", "x-yw-gw": "1" };
 var SCHEMA = [
   `CREATE TABLE IF NOT EXISTS items (tn TEXT NOT NULL DEFAULT '', id TEXT NOT NULL, owner TEXT, space TEXT, due TEXT, done INTEGER DEFAULT 0, title TEXT, data TEXT NOT NULL, updated_at INTEGER, PRIMARY KEY (tn, id))`,
@@ -48,11 +48,11 @@ async function mirror(env, req, res, ms) {
       S.push(db.prepare("INSERT INTO sess (th, tn, uid, full_at, seen_at) VALUES (?, ?, ?, ?, ?) ON CONFLICT(th) DO UPDATE SET tn = excluded.tn, uid = excluded.uid, seen_at = excluded.seen_at").bind(th, tn, uid, s ? s.full_at || 0 : 0, now));
       if (!s || !s.full_at || now - s.full_at > FULL_SYNC_MIN * 6e4) {
         S.push(db.prepare("UPDATE sess SET full_at = ? WHERE th = ?").bind(now, th));
-        if (res.ten) S.push(db.prepare("INSERT INTO tenants (id, data, updated_at) VALUES (?, ?, ?) ON CONFLICT(id) DO UPDATE SET data = excluded.data, updated_at = excluded.updated_at").bind(tn, J(res.ten), now));
+        if (res.ten) S.push(db.prepare("INSERT INTO tenants (id, data, updated_at) VALUES (?, ?, ?) ON CONFLICT(id) DO UPDATE SET data = excluded.data, updated_at = excluded.updated_at WHERE tenants.data IS NOT excluded.data").bind(tn, J(res.ten), now));
         (res.items || []).forEach((o) => o && o.id && S.push(upItem(db, tn, o, now)));
         (res.projects || []).filter((p) => p && p.id && !p._nofin).forEach((p) => S.push(upProj(db, tn, p, now)));
         (res.contacts || []).forEach((c) => c && c.id && S.push(upCont(db, tn, c, now)));
-        (res.users || []).forEach((u) => u && u.id && S.push(db.prepare("INSERT INTO users (tn, id, username, name, role, active, data, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(tn, id) DO UPDATE SET username = excluded.username, name = excluded.name, role = excluded.role, active = excluded.active, data = excluded.data, updated_at = excluded.updated_at").bind(tn, u.id, u.username || "", u.name || "", u.role || "", u.active === false ? 0 : 1, J(u), now)));
+        (res.users || []).forEach((u) => u && u.id && S.push(db.prepare("INSERT INTO users (tn, id, username, name, role, active, data, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(tn, id) DO UPDATE SET username = excluded.username, name = excluded.name, role = excluded.role, active = excluded.active, data = excluded.data, updated_at = excluded.updated_at WHERE users.data IS NOT excluded.data").bind(tn, u.id, u.username || "", u.name || "", u.role || "", u.active === false ? 0 : 1, J(u), now)));
         Object.entries(res.notes || {}).forEach(([d, x]) => S.push(upNote(db, tn, uid, d, x, now)));
       }
     } else if (s) {
@@ -76,10 +76,10 @@ async function mirror(env, req, res, ms) {
   }
 }
 __name(mirror, "mirror");
-var upItem = /* @__PURE__ */ __name((db, tn, o, now) => db.prepare("INSERT INTO items (tn, id, owner, space, due, done, title, data, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(tn, id) DO UPDATE SET owner = excluded.owner, space = excluded.space, due = excluded.due, done = excluded.done, title = excluded.title, data = excluded.data, updated_at = excluded.updated_at").bind(tn, String(o.id), o.owner || "", o.space || "", o.due || "", o.done ? 1 : 0, String(o.title || "").slice(0, 300), J(o), now), "upItem");
-var upProj = /* @__PURE__ */ __name((db, tn, p, now) => db.prepare("INSERT INTO projects (tn, id, name, status, space, data, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?) ON CONFLICT(tn, id) DO UPDATE SET name = excluded.name, status = excluded.status, space = excluded.space, data = excluded.data, updated_at = excluded.updated_at").bind(tn, String(p.id), p.name || "", p.status || "", p.space || "", J(p), now), "upProj");
-var upCont = /* @__PURE__ */ __name((db, tn, c, now) => db.prepare("INSERT INTO contacts (tn, id, name, cat, space, data, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?) ON CONFLICT(tn, id) DO UPDATE SET name = excluded.name, cat = excluded.cat, space = excluded.space, data = excluded.data, updated_at = excluded.updated_at").bind(tn, String(c.id), c.name || "", c.cat || "", c.space || "", J(c), now), "upCont");
-var upNote = /* @__PURE__ */ __name((db, tn, uid, d, x, now) => db.prepare("INSERT INTO notes (tn, owner, date, text, updated_at) VALUES (?, ?, ?, ?, ?) ON CONFLICT(tn, owner, date) DO UPDATE SET text = excluded.text, updated_at = excluded.updated_at").bind(tn, uid || "", d, String(x ?? ""), now), "upNote");
+var upItem = /* @__PURE__ */ __name((db, tn, o, now) => db.prepare("INSERT INTO items (tn, id, owner, space, due, done, title, data, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(tn, id) DO UPDATE SET owner = excluded.owner, space = excluded.space, due = excluded.due, done = excluded.done, title = excluded.title, data = excluded.data, updated_at = excluded.updated_at WHERE items.data IS NOT excluded.data").bind(tn, String(o.id), o.owner || "", o.space || "", o.due || "", o.done ? 1 : 0, String(o.title || "").slice(0, 300), J(o), now), "upItem");
+var upProj = /* @__PURE__ */ __name((db, tn, p, now) => db.prepare("INSERT INTO projects (tn, id, name, status, space, data, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?) ON CONFLICT(tn, id) DO UPDATE SET name = excluded.name, status = excluded.status, space = excluded.space, data = excluded.data, updated_at = excluded.updated_at WHERE projects.data IS NOT excluded.data").bind(tn, String(p.id), p.name || "", p.status || "", p.space || "", J(p), now), "upProj");
+var upCont = /* @__PURE__ */ __name((db, tn, c, now) => db.prepare("INSERT INTO contacts (tn, id, name, cat, space, data, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?) ON CONFLICT(tn, id) DO UPDATE SET name = excluded.name, cat = excluded.cat, space = excluded.space, data = excluded.data, updated_at = excluded.updated_at WHERE contacts.data IS NOT excluded.data").bind(tn, String(c.id), c.name || "", c.cat || "", c.space || "", J(c), now), "upCont");
+var upNote = /* @__PURE__ */ __name((db, tn, uid, d, x, now) => db.prepare("INSERT INTO notes (tn, owner, date, text, updated_at) VALUES (?, ?, ?, ?, ?) ON CONFLICT(tn, owner, date) DO UPDATE SET text = excluded.text, updated_at = excluded.updated_at WHERE notes.text IS NOT excluded.text").bind(tn, uid || "", d, String(x ?? ""), now), "upNote");
 async function onRequestPost({ request, env, waitUntil }) {
   const body = await request.text();
   const t0 = Date.now();
@@ -629,7 +629,7 @@ var jsonError = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx)
 }, "jsonError");
 var middleware_miniflare3_json_error_default = jsonError;
 
-// ../.wrangler/tmp/bundle-ReS4D1/middleware-insertion-facade.js
+// ../.wrangler/tmp/bundle-ZXVrbL/middleware-insertion-facade.js
 var __INTERNAL_WRANGLER_MIDDLEWARE__ = [
   middleware_ensure_req_body_drained_default,
   middleware_miniflare3_json_error_default
@@ -661,7 +661,7 @@ function __facade_invoke__(request, env, ctx, dispatch, finalMiddleware) {
 }
 __name(__facade_invoke__, "__facade_invoke__");
 
-// ../.wrangler/tmp/bundle-ReS4D1/middleware-loader.entry.ts
+// ../.wrangler/tmp/bundle-ZXVrbL/middleware-loader.entry.ts
 var __Facade_ScheduledController__ = class ___Facade_ScheduledController__ {
   constructor(scheduledTime, cron, noRetry) {
     this.scheduledTime = scheduledTime;

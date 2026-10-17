@@ -3,7 +3,7 @@
 // وفي الخلفية تُنسخ البيانات إلى قاعدة Cloudflare D1 (نسخة مطابقة) تمهيداً للنقل الكامل.
 // أي خطأ في النسخ لا يؤثر على الطلب، وإذا تعطلت البوابة ترجع الواجهة تلقائياً للاتصال المباشر بـ Google.
 const GAS = 'https://script.google.com/macros/s/AKfycbwgvjkn2Op3hg-sSwxMi3PJO4MmIot0udoa8FXKOGTK9LBjqKuGtqlLYY1FaAkMwnI9/exec';
-const FULL_SYNC_MIN = 20; // أقصى تكرار لنسخ البيانات الكاملة لكل مستخدم (دقائق)
+const FULL_SYNC_MIN = 60; // أقصى تكرار لنسخ البيانات الكاملة لكل مستخدم (دقائق)
 const H = { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store', 'x-yw-gw': '1' };
 
 const SCHEMA = [
@@ -35,11 +35,11 @@ async function mirror(env, req, res, ms) {
       S.push(db.prepare('INSERT INTO sess (th, tn, uid, full_at, seen_at) VALUES (?, ?, ?, ?, ?) ON CONFLICT(th) DO UPDATE SET tn = excluded.tn, uid = excluded.uid, seen_at = excluded.seen_at').bind(th, tn, uid, s ? s.full_at || 0 : 0, now));
       if (!s || !s.full_at || now - s.full_at > FULL_SYNC_MIN * 60000) {
         S.push(db.prepare('UPDATE sess SET full_at = ? WHERE th = ?').bind(now, th));
-        if (res.ten) S.push(db.prepare('INSERT INTO tenants (id, data, updated_at) VALUES (?, ?, ?) ON CONFLICT(id) DO UPDATE SET data = excluded.data, updated_at = excluded.updated_at').bind(tn, J(res.ten), now));
+        if (res.ten) S.push(db.prepare('INSERT INTO tenants (id, data, updated_at) VALUES (?, ?, ?) ON CONFLICT(id) DO UPDATE SET data = excluded.data, updated_at = excluded.updated_at WHERE tenants.data IS NOT excluded.data').bind(tn, J(res.ten), now));
         (res.items || []).forEach(o => o && o.id && S.push(upItem(db, tn, o, now)));
         (res.projects || []).filter(p => p && p.id && !p._nofin).forEach(p => S.push(upProj(db, tn, p, now)));
         (res.contacts || []).forEach(c => c && c.id && S.push(upCont(db, tn, c, now)));
-        (res.users || []).forEach(u => u && u.id && S.push(db.prepare('INSERT INTO users (tn, id, username, name, role, active, data, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(tn, id) DO UPDATE SET username = excluded.username, name = excluded.name, role = excluded.role, active = excluded.active, data = excluded.data, updated_at = excluded.updated_at')
+        (res.users || []).forEach(u => u && u.id && S.push(db.prepare('INSERT INTO users (tn, id, username, name, role, active, data, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(tn, id) DO UPDATE SET username = excluded.username, name = excluded.name, role = excluded.role, active = excluded.active, data = excluded.data, updated_at = excluded.updated_at WHERE users.data IS NOT excluded.data')
           .bind(tn, u.id, u.username || '', u.name || '', u.role || '', u.active === false ? 0 : 1, J(u), now)));
         Object.entries(res.notes || {}).forEach(([d, x]) => S.push(upNote(db, tn, uid, d, x, now)));
       }
@@ -58,13 +58,13 @@ async function mirror(env, req, res, ms) {
     for (let i = 0; i < S.length; i += 90) await db.batch(S.slice(i, i + 90));
   } catch (e) { try { await db.prepare('INSERT INTO sync_log (at, tn, uid, fn, ok, ms, err) VALUES (?, ?, ?, ?, 0, ?, ?)').bind(now, '', '', fn, ms, String(e && e.message || e).slice(0, 400)).run(); } catch (x) {} }
 }
-const upItem = (db, tn, o, now) => db.prepare('INSERT INTO items (tn, id, owner, space, due, done, title, data, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(tn, id) DO UPDATE SET owner = excluded.owner, space = excluded.space, due = excluded.due, done = excluded.done, title = excluded.title, data = excluded.data, updated_at = excluded.updated_at')
+const upItem = (db, tn, o, now) => db.prepare('INSERT INTO items (tn, id, owner, space, due, done, title, data, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(tn, id) DO UPDATE SET owner = excluded.owner, space = excluded.space, due = excluded.due, done = excluded.done, title = excluded.title, data = excluded.data, updated_at = excluded.updated_at WHERE items.data IS NOT excluded.data')
   .bind(tn, String(o.id), o.owner || '', o.space || '', o.due || '', o.done ? 1 : 0, String(o.title || '').slice(0, 300), J(o), now);
-const upProj = (db, tn, p, now) => db.prepare('INSERT INTO projects (tn, id, name, status, space, data, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?) ON CONFLICT(tn, id) DO UPDATE SET name = excluded.name, status = excluded.status, space = excluded.space, data = excluded.data, updated_at = excluded.updated_at')
+const upProj = (db, tn, p, now) => db.prepare('INSERT INTO projects (tn, id, name, status, space, data, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?) ON CONFLICT(tn, id) DO UPDATE SET name = excluded.name, status = excluded.status, space = excluded.space, data = excluded.data, updated_at = excluded.updated_at WHERE projects.data IS NOT excluded.data')
   .bind(tn, String(p.id), p.name || '', p.status || '', p.space || '', J(p), now);
-const upCont = (db, tn, c, now) => db.prepare('INSERT INTO contacts (tn, id, name, cat, space, data, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?) ON CONFLICT(tn, id) DO UPDATE SET name = excluded.name, cat = excluded.cat, space = excluded.space, data = excluded.data, updated_at = excluded.updated_at')
+const upCont = (db, tn, c, now) => db.prepare('INSERT INTO contacts (tn, id, name, cat, space, data, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?) ON CONFLICT(tn, id) DO UPDATE SET name = excluded.name, cat = excluded.cat, space = excluded.space, data = excluded.data, updated_at = excluded.updated_at WHERE contacts.data IS NOT excluded.data')
   .bind(tn, String(c.id), c.name || '', c.cat || '', c.space || '', J(c), now);
-const upNote = (db, tn, uid, d, x, now) => db.prepare('INSERT INTO notes (tn, owner, date, text, updated_at) VALUES (?, ?, ?, ?, ?) ON CONFLICT(tn, owner, date) DO UPDATE SET text = excluded.text, updated_at = excluded.updated_at').bind(tn, uid || '', d, String(x ?? ''), now);
+const upNote = (db, tn, uid, d, x, now) => db.prepare('INSERT INTO notes (tn, owner, date, text, updated_at) VALUES (?, ?, ?, ?, ?) ON CONFLICT(tn, owner, date) DO UPDATE SET text = excluded.text, updated_at = excluded.updated_at WHERE notes.text IS NOT excluded.text').bind(tn, uid || '', d, String(x ?? ''), now);
 
 export async function onRequestPost({ request, env, waitUntil }) {
   const body = await request.text(); const t0 = Date.now();
