@@ -699,6 +699,51 @@ body.private .hero{background:radial-gradient(1200px 300px at 85% -40%,rgba(111,
 #printDay .pdbar{display:flex;height:16px;border-radius:8px;overflow:hidden;margin:-6px 0 14px;gap:2px}#printDay .pdbar i{display:block;position:relative;font-style:normal}#printDay .pdbar span{position:absolute;inset:0;color:#fff;font-size:8.5px;text-align:center;line-height:16px;white-space:nowrap;overflow:hidden;font-weight:700}
 #printDay .pdbar .g-done{background:#2c8a60}#printDay .pdbar .g-late{background:#c2453b}#printDay .pdbar .g-wait{background:#c9962b}#printDay .pdbar .g-open{background:#2f63b5}#printDay .pdbar .g-daily{background:#6b4fbb}#printDay .pdbar .g-fut{background:#8b94aa}
 @media print{.pray,.updbar,#cmdM,.pxbar{display:none!important}}
+/* ===== v92: توحيد الجداول + أدوات الطباعة + القائمة حسب الدور + جدول الكميات + الوساطة ===== */
+.ptable,.etable,.ftable{font-variant-numeric:tabular-nums}
+.ptable th,.etable th,.ftable th{background:var(--surface2);color:var(--mut);font-size:12px;font-weight:800;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:bottom}
+.ptable th:first-child,.etable th:first-child,.ftable th:first-child{border-start-start-radius:10px}
+.ptable th:last-child,.etable th:last-child,.ftable th:last-child{border-start-end-radius:10px}
+.ptable td,.ftable td{padding:10px 8px}.ptable.compact td{padding:8px 8px}
+.ptable tr:not(.ddt):not(.tot):hover>td{background:color-mix(in srgb,var(--gold) 5%,transparent)}
+.ptable tr.tot td,.ptable tr.ddt td,.etable tr.tot td,.ftable tr.tot td{background:color-mix(in srgb,var(--gold) 12%,var(--surface));font-weight:800;border-top:2px solid color-mix(in srgb,var(--gold) 55%,var(--line))}
+.tblwrap.tlong{max-height:72vh;overflow:auto;border:1px solid var(--line);border-radius:12px}
+.tblwrap.tlong th{position:sticky;top:0;z-index:2;box-shadow:0 1px 0 var(--line)}
+.tbltools{display:flex;justify-content:flex-end;gap:4px;margin:0 0 4px}
+.tbltools button{border:1px solid var(--line);background:var(--surface);color:var(--mut);border-radius:8px;padding:3px 9px;font:inherit;font-size:11.5px;font-weight:700;cursor:pointer}
+.tbltools button:hover{color:var(--ink);border-color:var(--gold)}
+@media print{.tbltools,.nstar{display:none!important}}
+/* القائمة: نجمة المفضلة السريعة */
+nav.tabs button.nfav span::after{content:none!important}
+nav.tabs button .nstar{margin-inline-start:auto;opacity:0;font-size:13px;line-height:1;color:var(--gold2);padding:2px 4px;border-radius:6px;transition:opacity .15s}
+nav.tabs button:hover .nstar,nav.tabs button.nfav .nstar{opacity:1}
+nav.tabs button .nstar:hover{background:rgba(228,199,127,.15)}
+nav.tabs button .c+.nstar,nav.tabs button .nstar+.c{margin-inline-start:6px}
+/* جدول الكميات */
+.boqq{display:flex;flex-wrap:wrap;gap:10px;align-items:end;margin:6px 0 12px;padding:10px 12px;border:1px dashed var(--line);border-radius:12px;background:var(--surface2)}
+.boqq label{display:grid;gap:4px;font-size:12px;font-weight:700;color:var(--mut)}
+.boqq input,.boqq select{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:7px 9px;font:inherit;min-width:120px}
+.boqq b{font-size:18px;color:var(--ink)}
+.boqt td .mutd{font-size:11px}
+.boqt input.boqc{width:130px;direction:ltr;text-align:left}
+.boqt input.nn{width:100px}
+/* الوساطة والعمولات */
+.brkk{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.brkk>div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:2px}
+.brkk span{font-size:12px;color:var(--mut);font-weight:700}.brkk b{font-size:20px}
+.brkk .hi{background:var(--navy,#14213d);color:#fff;border-color:transparent}.brkk .hi span{color:#e4c77f}
+@media (max-width:1000px){.brkk{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:560px){.brkk{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.brkf{display:flex;flex-wrap:wrap;gap:8px;align-items:end;margin-bottom:10px}
+.brkf label{display:grid;gap:3px;font-size:12px;font-weight:700;color:var(--mut)}
+.brkf input,.brkf select{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:7px 9px;font:inherit;min-width:130px}
+.brkt input,.brkt select{border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:6px 7px;font:inherit;font-size:12.5px;width:100%;min-width:72px;max-width:150px}.brkt input[type=date]{min-width:118px;max-width:130px}.brkt td{padding:7px 5px}
+.brkt input.nn{width:100px;min-width:80px;text-align:left;direction:ltr}.brkt input.sm{width:58px;min-width:52px}
+.brkt tr.due td{background:color-mix(in srgb,var(--late) 8%,transparent)}
+.brkst{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px}
+.brkst button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font:inherit;font-size:12.5px;font-weight:700;cursor:pointer}
+.brkst button[aria-pressed=true]{background:var(--ink);color:var(--surface);border-color:transparent}
+
 /* v91: محاذاة عناوين الأعمدة الرقمية مع بياناتها + أدوات تقارير المؤشرات */
 .ptable th.thn,.etable th.thn,table th.thn{text-align:left}
 .ptable th.thc,.etable th.thc,table th.thc{text-align:center}
@@ -1407,7 +1452,7 @@ body[data-tab=all] .main .wrap,body[data-tab=all] .main .hero-in{max-width:1500p
 <nav class="tabs" role="tablist" aria-label="الصفحات">
 <div class="ngrp"><button role="tab" data-tab="home" aria-selected="true"><i><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg></i><span>الرئيسية</span></button><button role="tab" data-tab="dash" aria-selected="false"><i><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg></i><span>لوحة المؤشرات</span></button></div>
 <div class="ngrp"><div class="ngl">المهام</div><button role="tab" data-tab="day" aria-selected="false"><i><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M8 2v4M16 2v4M3 10h18"/><path d="M9 15l2 2 4-4"/></svg></i><span>صفحة اليوم</span></button><button role="tab" data-tab="all" aria-selected="false"><i><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></i><span>كشف المهام</span></button><button role="tab" data-tab="todo" aria-selected="false" id="tabTodo"><i><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 12.5l2.5 2.5 5.5-6"/></svg></i><span>Microsoft To Do</span><span class="c" id="cTd">0</span></button><button role="tab" data-tab="approvals" aria-selected="false" id="tabAp"><i><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></i><span>الموافقات</span><span class="c" id="cAp">0</span></button><button role="tab" data-tab="backlog" aria-selected="false"><i><svg viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg></i><span>المهام العامة</span><span class="c" id="cBk">0</span></button><button role="tab" data-tab="upcoming" aria-selected="false"><i><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></i><span>القادمة</span><span class="c" id="cUp">0</span></button><button role="tab" data-tab="report" aria-selected="false"><i><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15v3M11 11v7M15 7v11M19 12v6"/></svg></i><span>ملخص الأسبوع</span></button><button role="tab" data-tab="done" aria-selected="false"><i><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5.5-5.5"/></svg></i><span>المهام المنجزة</span></button><button role="tab" data-tab="notes" aria-selected="false" id="tabNotes" hidden><i><svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13l3 3 5-6"/></svg></i><span>دفتري (Notability)</span></button></div>
-<div class="ngrp"><div class="ngl">الأعمال</div><button role="tab" data-tab="projects" aria-selected="false" id="tabProj" hidden><i><svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-5h6v5M9 9h.01M15 9h.01M9 12.5h.01M15 12.5h.01"/></svg></i><span>المشاريع</span></button><button role="tab" data-tab="clients" aria-selected="false" id="tabCli" hidden><i><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg></i><span>العملاء</span></button><button role="tab" data-tab="devs" aria-selected="false" id="tabDevs" hidden><i><svg viewBox="0 0 24 24"><path d="M3 21h18M6 21V10l6-4 6 4v11"/><path d="M10 21v-4h4v4M9 13h.01M15 13h.01M12 3v3"/></svg></i><span>المطورون العقاريون</span></button></div>
+<div class="ngrp"><div class="ngl">الأعمال</div><button role="tab" data-tab="projects" aria-selected="false" id="tabProj" hidden><i><svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-5h6v5M9 9h.01M15 9h.01M9 12.5h.01M15 12.5h.01"/></svg></i><span>المشاريع</span></button><button role="tab" data-tab="clients" aria-selected="false" id="tabCli" hidden><i><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg></i><span>العملاء</span></button><button role="tab" data-tab="devs" aria-selected="false" id="tabDevs" hidden><i><svg viewBox="0 0 24 24"><path d="M3 21h18M6 21V10l6-4 6 4v11"/><path d="M10 21v-4h4v4M9 13h.01M15 13h.01M12 3v3"/></svg></i><span>المطورون العقاريون</span></button><button role="tab" data-tab="brk" aria-selected="false" id="tabBrk" hidden><i><svg viewBox="0 0 24 24"><path d="M8 11l3 3 5-5"/><path d="M2 12l4-4 4 2 4-3 4 3 4-2"/><path d="M6 8v8l6 4 6-4V8"/></svg></i><span>الوساطة والعمولات</span><span class="c" hidden></span></button></div>
 <div class="ngrp"><div class="ngl">الأدوات</div><button role="tab" data-tab="mat" aria-selected="false"><i><svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V10l4-3v14"/><path d="M9 21V4l6 3v14"/><path d="M15 21v-9l4 2v7"/></svg></i><span>أسعار مواد البناء</span></button><button role="tab" data-tab="ai" aria-selected="false" id="tabAi" hidden><i><svg viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg></i><span>مساعد الذكاء الاصطناعي</span><span class="c new">جديد</span></button><button role="tab" data-tab="plan" aria-selected="false"><i><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.8.8 1 1.5 1 2.5h6c0-1 .2-1.7 1-2.5A6 6 0 0 0 12 3z"/></svg></i><span>خطة التطوير</span></button><button role="tab" data-tab="guide" aria-selected="false"><i><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5M8 7h7M8 11h7"/></svg></i><span>دليل الاستخدام</span></button></div>
 <div class="ngrp"><div class="ngl">الإدارة</div><button role="tab" data-tab="team" aria-selected="false" id="tabTeam" hidden><i><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/></svg></i><span>لوحة الفريق</span></button><button role="tab" data-tab="users" aria-selected="false" id="tabUsers" hidden><i><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></i><span>المستخدمين والصلاحيات</span></button><button role="tab" data-tab="audit" aria-selected="false" id="tabAudit" hidden><i><svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg></i><span>سجل النشاط</span></button><button role="tab" data-tab="tenants" aria-selected="false" id="tabTen" hidden><i><svg viewBox="0 0 24 24"><path d="M3 21V8l6-4 6 4v13"/><path d="M15 21V11h6v10M7 10h4M7 14h4M7 18h4"/></svg></i><span>المشتركون</span></button><button role="tab" data-tab="health" aria-selected="false" id="tabHealth" hidden><i><svg viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg></i><span>صحة النظام</span></button><button role="tab" data-tab="appearance" aria-selected="false"><i><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18c1.7 0 2-1.3 1.2-2.3-.8-1-.3-2.7 1.3-2.7H17a4 4 0 0 0 4-4c0-5-4-9-9-9z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7" r="1"/><circle cx="15" cy="7.5" r="1"/></svg></i><span>مظهر البرنامج</span></button></div>
 </nav>
@@ -1770,7 +1815,7 @@ Object.keys(g).sort().forEach(d => { h += `<div class="grp"><h3>${esc(nice(d))}<
 else if (tab === "clients") h = clientsView();
 else if (tab === "devs") h = devsView();
 else if (tab === "ai") h = aiView();
-else if (tab === "home") h = launchView(); else if (tab === "mat") h = matView(); else if (tab === "health") h = healthView(); else if (tab === "appearance") h = appearanceView(); else if (tab === "dash") h = homeView();
+else if (tab === "home") h = launchView(); else if (tab === "mat") h = matView(); else if (tab === "brk") h = brkView(); else if (tab === "health") h = healthView(); else if (tab === "appearance") h = appearanceView(); else if (tab === "dash") h = homeView();
 else if (tab === "done") h = doneView();
 else if (tab === "todo") h = tdView(); else if (tab === "approvals") h = wfBoard() + apView(); else if (tab === "audit") h = audView(); else if (tab === "tenants") h = tenView(); else if (tab === "all") h = allF.pv ? pvView() : allView();
 else if (tab === "plan") h = planView();
@@ -2566,7 +2611,7 @@ let demoUsers = [DEMO_ME, { id: "demo_u0", username: "khaled", name: "خالد (
 let demoPriv = { pin: "", open: false };
 let demoIdeas = null; const demoIdeaSeed = [["high", "مهام متكررة", "مهام تُنشأ تلقائياً يومياً أو أسبوعياً أو شهرياً، مثل تقرير الإشراف الأسبوعي ومتابعة التحصيل."], ["high", "مهام فرعية (قائمة تحقق)", "تقسيم المهمة إلى بنود فرعية يُعلَّم كل منها على حدة، مثل: تسليم المخططات (معماري، إنشائي، كهرباء)."], ["high", "تنبيه قبل موعد المطالبة", "تنبيه قبل موعد استحقاق أي دفعة بثلاثة أيام، مع رسالة واتساب جاهزة للعميل."], ["high", "ملخص صباحي ذكي على الواتساب", "رسالة صباحية بالمهام المتأخرة والمطالبات المستحقة واجتماعات اليوم، وملخص مسائي بما أُنجز."], ["os", "تقرير زيارة موقع من الجوال", "صور وملاحظات ميدانية مع الموقع الجغرافي تُحوَّل تلقائياً إلى تقرير PDF رسمي بشعار المكتب."], ["os", "سجل الصادر والوارد", "ترقيم تلقائي للخطابات الصادرة والواردة (صادر رقم …/1448) مرتبط بالمشروع والعميل مع متابعة الرد."], ["os", "متابعة الرخص والتصاريح", "رخص البناء وشهادات الدفاع المدني وغيرها مع تاريخ الانتهاء وتنبيه مسبق."], ["os", "الاعتمادات وطلبات الاستفسار (RFI / Submittals)", "متابعة حالة كل طلب: معتمد، معتمد بملاحظات، مرفوض، ومدة الرد."], ["os", "إدخال المهام بالكلام", "كتابة أو تسجيل صوتي بلغة طبيعية يُحوَّل تلقائياً إلى مهمة أو اجتماع مرتبط بالمشروع والعميل."], ["os", "التدفق النقدي المتوقع", "توقع إيرادات المكتب للأشهر القادمة من المطالبات المستحقة والمجدولة."], ["os", "بوابة العميل", "رابط خاص للعميل يعرض نسبة الإنجاز وصور الموقع والدفعات فقط."], ["os", "قوالب المشاريع", "إنشاء مشروع جاهز بمراحله ومهامه ودفعاته، مثل: تصميم وإشراف فيلا."], ["mid", "تقرير أداء الفريق الشهري", "لكل موظف: المنجز والمتأخر ومتوسط التأخير، مع تصدير PDF."], ["mid", "الجدول الزمني للمشروع (Gantt مبسّط)", "عرض المراحل والدفعات والمهام على خط زمني واحد."], ["mid", "تسجيل ساعات العمل على المشاريع", "تسجيل ساعات كل موظف لحساب التكلفة الفعلية وربحية المشروع."], ["launch", "تصدير Excel شامل", "تصدير جميع المهام والمشاريع والمطالبات في ملف واحد."], ["launch", "الأرشفة التلقائية", "أرشفة المهام المنجزة الأقدم من سنة للحفاظ على سرعة النظام."], ["launch", "الحماية المبكرة", "تسجيل الاسم التجاري وحجز النطاق (الدومين)."], ["launch", "الانتقال إلى خادم مستقل", "إعادة بناء النظام على خادم وقاعدة بيانات مستقلة قبل البيع للمكاتب."], ["launch", "الامتثال لنظام حماية البيانات الشخصية", "مراجعة متطلبات نظام حماية البيانات الشخصية السعودي (PDPL)."], ["launch", "الفوترة الإلكترونية", "التوافق مع متطلبات هيئة الزكاة والضريبة والجمارك (ZATCA) عند إضافة الفواتير."], ["pending", "تفعيل الواتساب", "تجربة إرسال الإشعارات والتذكيرات عبر واتساب مع المالك."], ["pending", "ربط البريد pro202611@outlook.com", "يُنفَّذ كآخر خطوة."]];
 function demoApi(fn, args){
-  if (fn === "getAll") return { me: DEMO_ME, users: demoUsers.map(u => ({ ...u })), items: [], notes: {}, projects: [], priv: { pin: !!demoPriv.pin, open: demoPriv.open } };
+  if (fn === "getAll") return { me: DEMO_ME, users: demoUsers.map(u => ({ ...u })), items: [], notes: {}, projects: [], priv: { pin: !!demoPriv.pin, open: demoPriv.open }, ...demoSample() };
   if (fn === "setPrivPin") { if (!args[0]) throw new Error("اكتب كلمة مرور حسابك"); demoPriv = { pin: String(args[1]), open: true }; return { priv: { pin: true, open: true } }; }
   if (fn === "unlockPriv") { if (String(args[0]) !== demoPriv.pin) throw new Error("الرقم السري غير صحيح"); demoPriv.open = true; return { priv: { pin: true, open: true } }; }
   if (fn === "lockPriv") { demoPriv.open = false; return true; }
@@ -2595,7 +2640,7 @@ const snap = obj => ({ docs: Object.entries(obj).map(([id, v]) => ({ id, data: (
 const emit = () => listeners.forEach(f => f(snap(store)));
 const emitN = () => noteListeners.forEach(f => f(snap(Object.fromEntries(Object.entries(noteStore).map(([k, v]) => [k, { text: v }])))));
 const rid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-const APP_VER = "v89", APP_DATE = "2026-10-05";
+const APP_VER = "v92", APP_DATE = "2026-10-17";
 const strip = o => { const r = { ...o }; delete r.id; return r; };
 const SKINS = [["night", "ليل مكة", "كحلي ليلي ونحاسي ذهبي", "#14213d", "#c29a3e", "#2f63b5"], ["roshan", "روشن حجازي", "أخضر بترولي وذهب رملي", "#0e3b43", "#d9b97a", "#c8553d"], ["earth", "طين ونخيل", "بني تمري وتيراكوتا", "#3a2a21", "#e0b66f", "#4f6b3a"]];
 const curSkin = () => document.documentElement.dataset.skin || "night";
@@ -4873,7 +4918,7 @@ document.addEventListener("click", e => { const b = e.target.closest && e.target
 
 // ===== v74: مظهر البرنامج + ترتيب القائمة حسب الاستخدام اليومي =====
 // ---- القائمة الجانبية: ترتيب افتراضي حسب الاستخدام ----
-var NAVG = [["", ["home", "day", "approvals", "projects", "clients", "all"]], ["المزيد", ["upcoming", "backlog", "done", "report", "dash", "devs"]], ["التكاملات", ["todo", "notes"]], ["الأدوات", ["mat", "ai", "plan", "guide", "appearance"]], ["الإدارة", ["team", "users", "audit", "tenants", "health"]]];
+var NAVG = [["", ["home", "day", "approvals", "projects", "clients", "all"]], ["المزيد", ["upcoming", "backlog", "done", "report", "dash", "devs", "brk"]], ["التكاملات", ["todo", "notes"]], ["الأدوات", ["mat", "ai", "plan", "guide", "appearance"]], ["الإدارة", ["team", "users", "audit", "tenants", "health"]]];
 function navBuild(){ const nav = document.querySelector("nav.tabs"); if (!nav || nav.dataset.v74) return; nav.dataset.v74 = 1; const B = {}; nav.querySelectorAll("button[data-tab]").forEach(b => B[b.dataset.tab] = b);
   const old = [...nav.querySelectorAll(".ngrp")]; const frag = document.createDocumentFragment();
   NAVG.forEach(([l, K]) => { const g = document.createElement("div"); g.className = "ngrp"; if (l) g.innerHTML = `<div class="ngl">${l}</div>`; K.forEach(k => { if (B[k]) { g.appendChild(B[k]); delete B[k]; } }); frag.appendChild(g); });
@@ -5326,7 +5371,7 @@ document.addEventListener("change", e => { if (e.target.matches && e.target.matc
 // ===== v91: محاذاة عناوين الأعمدة + طباعة/Excel لتفاصيل المؤشرات + فتح المشروع على القسم المناسب =====
 var thAlignT = 0;
 function thAlign(){ document.querySelectorAll("table").forEach(t => { const hr = t.rows[0]; if (!hr || !hr.querySelector("th")) return; const H = [...hr.cells]; if (H.some(c => c.colSpan > 1)) return;
-  const R = [...t.rows].slice(1).filter(r => r.cells.length === H.length && !r.classList.contains("ddt") && !r.querySelector("th")); if (!R.length) return;
+  const R = [...t.rows].slice(1, 40).filter(r => r.cells.length === H.length && !r.classList.contains("ddt") && !r.classList.contains("tot") && !r.querySelector("th")); if (!R.length) return;
   H.forEach((th, i) => { let n = 0, c = 0; R.forEach(r => { const td = r.cells[i], st = td.classList.contains("n") || getComputedStyle(td).textAlign; if (st === true || st === "left") n++; else if (st === "center") c++; });
     th.classList.toggle("thn", n > R.length / 2); th.classList.toggle("thc", !(n > R.length / 2) && c > R.length / 2); }); }); }
 new MutationObserver(() => { clearTimeout(thAlignT); thAlignT = setTimeout(thAlign, 60); }).observe(document.body, { childList: true, subtree: true });
@@ -5355,6 +5400,175 @@ document.getElementById("ddBox").addEventListener("click", e => { const t = e.ta
     const f = () => { claimCustom.clear(); projOpen = r.dataset.ddp; projDraft = null; projDirty = false; projSec = sec; render(); window.scrollTo({ top: 0 }); };
     if (tab !== "projects") goTab("projects", f); else f(); } }, true);
 
+// ===== v92: القائمة حسب الدور + المفضلة السريعة + توحيد الجداول وأدوات الطباعة لكل جدول + جدول الكميات + الوساطة والعمولات =====
+// ---- (1) القائمة حسب دور المستخدم ----
+var NAVR = { owner: ["home", "dash", "day", "approvals", "projects", "clients", "all"], ceo: ["home", "dash", "day", "approvals", "projects", "clients", "all"], branch: ["home", "dash", "day", "approvals", "projects", "clients", "all"],
+  admin: ["home", "day", "approvals", "projects", "clients", "all"], member: ["home", "day", "all", "upcoming", "done"] };
+var navRoleK = "";
+function navRole(){ const nav = document.querySelector("nav.tabs"); if (!nav || !ME) return; const G = [...nav.querySelectorAll(".ngrp")], top = G[0];
+  const more = G.find(g => { const l = g.querySelector(".ngl"); return l && l.textContent.trim() === "المزيد"; }); if (!top || !more) return;
+  const main = NAVR[ME.role] || NAVR.member, B = k => nav.querySelector(`button[data-tab="${k}"]`);
+  [...top.querySelectorAll("button[data-tab]")].filter(b => !main.includes(b.dataset.tab) && !b.classList.contains("nfav")).reverse().forEach(b => { const l = more.querySelector(".ngl"); l ? l.after(b) : more.prepend(b); });
+  main.forEach(k => { const b = B(k); if (b && !b.classList.contains("nfav")) top.appendChild(b); });
+  nav.querySelectorAll("button[data-tab]").forEach(b => { if (!b.querySelector(".nstar")) b.insertAdjacentHTML("beforeend", `<span class="nstar" data-nstar="${b.dataset.tab}" title="تثبيت في المفضلة أعلى القائمة" aria-hidden="true">☆</span>`); }); navStars(); }
+function navStars(){ const c = navCfg(); document.querySelectorAll("nav.tabs .nstar").forEach(s => s.textContent = c.fav.includes(s.dataset.nstar) ? "★" : "☆"); }
+document.addEventListener("click", e => { const s = e.target.closest && e.target.closest("[data-nstar]"); if (!s) return; e.preventDefault(); e.stopPropagation();
+  const c = navCfg(), k = s.dataset.nstar, i = c.fav.indexOf(k); if (i >= 0) c.fav.splice(i, 1); else c.fav.push(k); try { localStorage.setItem("yw_nav", JSON.stringify(c)); } catch {}
+  navPrefs(); navStars(); toast(i >= 0 ? "أُزيلت من المفضلة" : "★ ثُبّتت في أعلى القائمة"); }, true);
+
+// ---- (2/3) توحيد الجداول: عنوان ثابت للجداول الطويلة + زرا طباعة وExcel لكل جدول ----
+function repHTML(title, sub, html){ const d = new Date(), who = (ME && ME.name) || "";
+  return `<header class="pdh"><div class="pdt"><div class="pdbrand">يومي <small>Yawmi</small></div><h1>${esc(title)}</h1>${sub ? `<div class="pdd">${esc(sub)}</div>` : ""}</div><table class="pdm"><tr><th>التاريخ</th><td>${esc(d.toLocaleDateString("ar-SA-u-nu-latn-ca-gregory", { year: "numeric", month: "long", day: "numeric" }))}</td></tr><tr><th>الموافق</th><td>${esc(hij(d))}</td></tr>${who ? `<tr><th>أعدّه</th><td>${esc(who)}</td></tr>` : ""}</table></header>${html}<footer>صدر هذا التقرير من نظام «يومي» — ${esc(d.toLocaleString("ar-SA-u-nu-latn-ca-gregory"))}</footer>`; }
+function repPrint(title, sub, html){ { const o = document.getElementById("printDay"); if (o) o.remove(); } const box = document.createElement("div"); box.id = "printDay"; box.className = "ddrep"; box.innerHTML = repHTML(title, sub, html);
+  document.body.appendChild(box); thAlign(); document.body.classList.add("printday"); const done = () => { document.body.classList.remove("printday"); box.remove(); removeEventListener("afterprint", done); }; addEventListener("afterprint", done); setTimeout(() => window.print(), 80); }
+function repExcel(title, sub, html){ const tmp = document.createElement("div"); tmp.innerHTML = html;
+  tmp.querySelectorAll("small.ddc").forEach(x => x.replaceWith(" — " + x.textContent));
+  tmp.querySelectorAll("h3,h4").forEach(x => { const t = document.createElement("table"); t.innerHTML = `<tr><td style="font-weight:bold;font-size:13pt">${esc(x.textContent)}</td></tr>`; x.replaceWith(t); });
+  tmp.querySelectorAll("th").forEach(x => x.setAttribute("style", "background:#14213d;color:#ffffff;font-weight:bold;border:1px solid #999"));
+  tmp.querySelectorAll("td").forEach(x => { const n = x.classList.contains("n"); x.setAttribute("style", (n ? "mso-number-format:'#,##0.##';" : "") + "border:1px solid #ccc" + (x.closest("tr.ddt,tr.tot") ? ";background:#E4C77F;font-weight:bold" : "")); if (n) { const v = x.textContent.replace(/[,\s%]/g, ""); if (/^-?\d+(\.\d+)?$/.test(v)) x.textContent = v; } });
+  const xml = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="utf-8"><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>التقرير</x:Name><x:WorksheetOptions><x:DisplayRightToLeft/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body dir="rtl" style="font-family:Arial"><table><tr><td style="font-size:16pt;font-weight:bold">${esc(title)}</td></tr><tr><td>${esc(sub || "")} — ${esc(iso(new Date()))}</td></tr></table>${tmp.innerHTML}</body></html>`;
+  bkSave(new Blob(["﻿" + xml], { type: "application/vnd.ms-excel" }), `يومي-${String(title).replace(/[\\/:*?"<>|—]/g, "").trim().slice(0, 60)}-${iso(new Date())}.xls`); toast("تم تنزيل الملف (Excel)"); }
+// نسخة نظيفة من الجدول للطباعة: قيم الحقول بدل المدخلات، وحذف الأزرار والأعمدة الفارغة
+function tblClean(t){ const c = t.cloneNode(true), src = t.querySelectorAll("input,select,textarea"), dst = c.querySelectorAll("input,select,textarea");
+  dst.forEach((el, i) => { const o = src[i]; let v = ""; if (o.tagName === "SELECT") v = o.selectedIndex >= 0 ? o.options[o.selectedIndex].text : ""; else if (o.type === "checkbox" || o.type === "radio") v = o.checked ? "✓" : ""; else v = o.value || "";
+    if (v === "—" || v === "__custom") v = ""; el.replaceWith(document.createTextNode(v)); });
+  c.querySelectorAll("button,.tbltools,.nstar,svg,datalist").forEach(x => x.remove());
+  const R = [...c.rows], n = R.length ? R[0].cells.length : 0;
+  if (n && R.every(r => r.cells.length === n)) for (let i = n - 1; i >= 0; i--) if (R.every(r => !r.cells[i].textContent.trim())) R.forEach(r => r.cells[i].remove());
+  c.removeAttribute("style"); c.className = "ptable"; return c.outerHTML; }
+function tblTitle(w){ const h = w.closest(".panel,section,.card,.hsec"); let t = h && h.querySelector("h3,h2"); t = t ? t.textContent.replace(/[✕×]/g, "").replace(/\s+/g, " ").trim() : "";
+  const base = TITLES[tab] || ""; const pj = tab === "projects" && projOpen && projDraft ? "مشروع " + (projDraft.name || "") : "";
+  return { t: t || base || "تقرير", s: [pj, t && base && !pj ? base : ""].filter(Boolean).join(" — ") }; }
+var TT_SKIP = "#ddCard,#printDay,.pdm,.tlgrid,.auth,#auth,.mcard";
+function tblPass(){ document.querySelectorAll("#view .tblwrap, #cliBox .tblwrap").forEach(w => { const t = w.querySelector("table"); if (!t || w.closest(TT_SKIP)) return; const n = t.rows.length - 1;
+    w.classList.toggle("tlong", n > 14);
+    const prev = w.previousElementSibling; if (n >= 2) { if (!prev || !prev.classList.contains("tbltools")) w.insertAdjacentHTML("beforebegin", `<div class="tbltools"><button type="button" data-ttp title="طباعة الجدول أو حفظه PDF">🖨️ طباعة</button><button type="button" data-ttx title="تنزيل الجدول Excel">📊 Excel</button></div>`); }
+    else if (prev && prev.classList.contains("tbltools")) prev.remove(); }); }
+var tblPassT = 0; new MutationObserver(() => { clearTimeout(tblPassT); tblPassT = setTimeout(tblPass, 80); }).observe(document.body, { childList: true, subtree: true });
+document.addEventListener("click", e => { const b = e.target.closest && e.target.closest("[data-ttp],[data-ttx]"); if (!b) return; e.preventDefault(); e.stopPropagation();
+  const w = b.parentElement.nextElementSibling, t = w && w.querySelector("table"); if (!t) return; const { t: ti, s } = tblTitle(w), h = tblClean(t);
+  if (b.hasAttribute("data-ttp")) repPrint(ti, s, h); else repExcel(ti, s, h); }, true);
+
+// ---- (9) جدول الكميات والتكلفة التقديرية داخل المشروع (مربوط بأكواد أسعار المواد) ----
+PSEC.splice(PSEC.findIndex(x => x[0] === "fin"), 0, ["boq", "📦", "جدول الكميات والتكلفة"]);
+PSECOF["sec-boq"] = "boq";
+[FAMO.design, FAMO.full, FAMO.other, FAMQ.design, FAMQ.full, FAMQ.other, PSO_C, PSO_Q, LIFE].forEach(a => { if (a && !a.includes("boq")) { const i = a.indexOf("fin"); a.splice(i < 0 ? a.length - 1 : i, 0, "boq"); } });
+pmig = (f => function(p){ f.apply(this, arguments); p.boq = p.boq || []; return p; })(pmig);
+var matByC = () => { const m = {}; matRows().forEach(r => m[r.c] = r); return m; };
+function boqCalc(p){ const M = matByC(); const L = (p.boq || []).map(x => { const r = M[x.c] || null, q = num(x.q), up = x.pr !== "" && x.pr != null && num(x.pr) ? num(x.pr) : r ? matP(r) : 0; return { ...x, r, q, up, tot: q * up }; });
+  const sq = MATSQ.find(z => z[0] === p.boqSq) || MATSQ[1], sqP = sq ? ((MATO.o || {})[sq[0]] ? (MATO.o || {})[sq[0]][0] : sq[2]) : 0;
+  return { L, sum: L.reduce((s, x) => s + x.tot, 0), sq, sqP, est: num(p.boqArea) * sqP }; }
+function boqView(p){ matLoad(); const ed = pEdit(), b = boqCalc(p), vat = 0.15;
+  const rows = b.L.map((x, i) => `<tr><td class="ix">${i + 1}</td>
+    <td>${ed ? `<input class="boqc" list="boqList" data-row="boq" data-i="${i}" data-k="c" value="${esc(x.c || "")}" placeholder="الكود">` : esc(x.c || "")}</td>
+    <td>${x.r ? `<b>${esc(x.r.n)}</b>` : x.c ? `<span class="mutd">كود غير موجود في أسعار المواد</span>` : `<span class="mutd">اختر الكود من القائمة</span>`}</td><td><small>${esc(x.r ? x.r.u : "")}</small></td>
+    <td>${ed ? `<input class="nn" type="number" step="0.01" data-row="boq" data-i="${i}" data-k="q" value="${esc(x.q || x.q === 0 ? x.q : "")}">` : money(x.q)}</td>
+    <td class="n">${ed ? `<input class="nn" type="number" step="0.01" data-row="boq" data-i="${i}" data-k="pr" value="${esc(x.pr ?? "")}" placeholder="${x.r ? matP(x.r) : ""}" title="اتركه فارغاً لاستخدام سعر النشرة">` : money(x.up)}</td>
+    <td class="n"><b>${money(x.tot)}</b></td><td>${ed ? `<input data-row="boq" data-i="${i}" data-k="note" value="${esc(x.note || "")}" placeholder="ملاحظة">` : esc(x.note || "")}</td>
+    <td>${ed ? `<button class="rm" data-rm="boq" data-i="${i}" title="حذف">×</button>` : ""}</td></tr>`).join("");
+  return `<div class="panel" id="sec-boq"><h3>📦 جدول الكميات والتكلفة التقديرية <small>الأسعار تُسحب تلقائياً من صفحة «أسعار مواد البناء» بالكود</small></h3>
+  <div class="boqq"><label>مساحة البناء (م²)<input type="number" step="1" data-pf="boqArea" value="${esc(p.boqArea || "")}" ${ed ? "" : "disabled"}></label>
+    <label>مستوى التشطيب<select data-pf="boqSq" ${ed ? "" : "disabled"}>${MATSQ.map(z => `<option value="${z[0]}" ${(p.boqSq || MATSQ[1][0]) === z[0] ? "selected" : ""}>${esc(z[1])}</option>`).join("")}</select></label>
+    <div><small class="mutd">تقدير سريع بسعر المتر (${money(b.sqP)} ر.س/م²)</small><br><b>${money(b.est)} ر.س</b></div>
+    <div><small class="mutd">إجمالي جدول الكميات</small><br><b>${money(b.sum)} ر.س</b></div></div>
+  ${b.L.length ? `<div class="tblwrap"><table class="etable boqt"><tr><th>#</th><th>الكود</th><th>البند</th><th>الوحدة</th><th>الكمية</th><th>سعر الوحدة (ر.س)</th><th>الإجمالي (ر.س)</th><th>ملاحظة</th><th></th></tr>${rows}
+    <tr class="tot"><td colspan="6">الإجمالي قبل الضريبة</td><td class="n">${money(b.sum)}</td><td colspan="2"></td></tr>
+    <tr class="tot"><td colspan="6">ضريبة القيمة المضافة 15%</td><td class="n">${money(b.sum * vat)}</td><td colspan="2"></td></tr>
+    <tr class="tot"><td colspan="6">الإجمالي شامل الضريبة</td><td class="n">${money(b.sum * (1 + vat))}</td><td colspan="2"></td></tr></table></div>`
+    : `<div class="empty" style="padding:12px">أضف بنود الكميات بالكود (مثل C-1-4 أو STL-12)، ويُسحب اسم البند ووحدته وسعره تلقائياً من صفحة أسعار المواد.</div>`}
+  ${ed ? `<button class="btn ghost addr" data-add="boq">+ إضافة بند</button>` : ""}
+  <datalist id="boqList">${matRows().map(r => `<option value="${esc(r.c)}">${esc(r.n)} — ${esc(r.u)}</option>`).join("")}</datalist></div>`; }
+projectDetail = (f => function(p){ let h = f.apply(this, arguments); if (projSec === "boq" || projSec === "all") { const v = boqView(p), i = h.lastIndexOf("</div>"); h = h.slice(0, i) + v + h.slice(i); } return h; })(projectDetail);
+document.addEventListener("click", e => { const a = e.target.closest && e.target.closest('[data-add="boq"]'); if (!a || !projDraft) return; e.preventDefault(); e.stopPropagation();
+  projDraft.boq = projDraft.boq || []; projDraft.boq.push({ c: "", q: "", pr: "", note: "" }); projTouch(); render(); setTimeout(() => { const L = document.querySelectorAll("input.boqc"); if (L.length) L[L.length - 1].focus(); }, 30); }, true);
+document.addEventListener("change", e => { const el = e.target; if (!el.dataset || el.dataset.row !== "boq" && el.dataset.pf !== "boqArea" && el.dataset.pf !== "boqSq") return;
+  if (el.dataset.k === "c") el.value = el.value.split(/\s/)[0].toUpperCase(); setTimeout(() => { if (projDraft) { projInput(el); projTouch(); render(); } }, 0); });
+
+// ---- (10) الوساطة والعمولات: سجل التعريفات لكل مقاول ----
+TITLES.brk = "الوساطة والعمولات";
+var BRKS = [["intro", "تعريف", "mut"], ["nego", "تفاوض", "wait"], ["award", "ترسية", "doing"], ["collect", "تحصيل النسبة", "doing"], ["done", "تم التحصيل", "done"], ["lost", "لم يتم", "late"]];
+var BRKSL = Object.fromEntries(BRKS.map(([k, l, c]) => [k, { l, c }]));
+var brkF = { c: "", st: "", q: "" }, brkSaveT = {};
+var brkCons = () => CV().filter(c => c.cat === "contractor").sort((a, b) => String(a.name).localeCompare(String(b.name), "ar"));
+function brkRefs(){ return brkCons().flatMap(c => (c.refs || []).map((r, i) => ({ c, r, i }))); }
+var brkComm = r => num(r.val) * num(r.pct) / 100;
+function brkSave(c){ c.updatedAt = Date.now(); if (isDemo) return; clearTimeout(brkSaveT[c.id]); brkSaveT[c.id] = setTimeout(() => bg("saveContact", c).then(saveCache).catch(x => toast("تعذّر الحفظ: " + ((x && x.message) || ""), true)), 700); }
+function brkView(){ if (!PRIV() && !can("projects")) return `<div class="empty">ليس لديك صلاحية</div>`;
+  const ed = pEdit(), t = today(), A = brkRefs(), cons = brkCons(), q = normN(brkF.q);
+  const L = A.filter(x => (!brkF.c || x.c.id === brkF.c) && (!brkF.st || (x.r.st || "intro") === brkF.st) && (!q || normN([x.c.name, x.r.co, x.r.site, x.r.proj, x.r.note].join(" ")).includes(q)))
+    .sort((a, b) => String(b.r.date || "").localeCompare(String(a.r.date || "")));
+  const S = (a, f) => a.reduce((s, x) => s + f(x), 0), won = A.filter(x => ["award", "collect", "done"].includes(x.r.st));
+  const due = S(won, x => brkComm(x.r)), coll = S(won, x => num(x.r.coll)), late = A.filter(x => x.r.next && x.r.next <= t && !["done", "lost"].includes(x.r.st)).length;
+  const kp = `<div class="brkk"><div><span>إجمالي التعريفات</span><b>${A.length}</b></div><div><span>قيد التفاوض</span><b>${A.filter(x => x.r.st === "nego").length}</b></div><div><span>تمت الترسية</span><b>${won.length}</b></div>
+    <div class="hi"><span>العمولات المستحقة</span><b>${money(due)}</b></div><div><span>المحصّل</span><b>${money(coll)}</b></div><div><span>المتبقي${late ? ` · ⏰ ${late} متابعة مستحقة` : ""}</span><b>${money(Math.max(due - coll, 0))}</b></div></div>`;
+  const add = ed ? `<div class="panel"><h3>➕ تعريف جديد</h3><div class="brkf">
+    <label>المقاول<select id="brkNc"><option value="">— اختر —</option>${cons.map(c => `<option value="${c.id}">${esc(c.name)}</option>`).join("")}<option value="__new">➕ مقاول جديد…</option></select></label>
+    <label id="brkNnW" hidden>اسم المقاول الجديد<input id="brkNn" placeholder="اسم المقاول"></label>
+    <label>الشركة التي عُرّف بها<input id="brkNco" placeholder="اسم الشركة / المالك"></label><label>الموقع<input id="brkNsite" placeholder="المدينة / الحي"></label>
+    <label>المشروع<input id="brkNproj" placeholder="اسم المشروع"></label><label>تاريخ التعريف<input id="brkNdate" type="date" value="${t}"></label>
+    <label>نسبة العمولة %<input id="brkNpct" type="number" step="0.1" placeholder="مثلاً 2.5" style="min-width:90px"></label>
+    <button type="button" class="btn" data-brkadd>إضافة</button></div></div>` : "";
+  const rows = L.map(({ c, r, i }) => { const k = `${c.id}:${i}`, st = r.st || "intro", cm = brkComm(r), isDue = r.next && r.next <= t && !["done", "lost"].includes(st);
+    const I = (f, type, cls, ph) => ed ? `<input ${type ? `type="${type}"` : ""} ${type === "number" ? 'step="0.01"' : ""} class="${cls || ""}" data-brk="${k}" data-f="${f}" value="${esc(r[f] ?? "")}" placeholder="${ph || ""}">` : esc(r[f] ?? "");
+    return `<tr class="${isDue ? "due" : ""}"><td><b>${esc(c.name)}</b>${c.phone ? `<small class="ddc">${esc(c.phone)}</small>` : ""}</td><td>${I("co")}</td><td>${I("site")}</td><td>${I("proj")}</td><td class="nw">${I("date", "date")}</td>
+      <td>${ed ? `<select data-brk="${k}" data-f="st">${BRKS.map(([v, l]) => `<option value="${v}" ${st === v ? "selected" : ""}>${l}</option>`).join("")}</select>` : spill(BRKSL[st].l, BRKSL[st].c)}</td>
+      <td class="n">${I("val", "number", "nn")}</td><td class="n">${I("pct", "number", "sm")}</td><td class="n"><b>${money(cm)}</b></td><td class="n">${I("coll", "number", "nn")}</td><td class="n">${money(Math.max(cm - num(r.coll), 0))}</td>
+      <td class="nw">${I("next", "date")}</td><td>${I("note", "", "", "ملاحظات")}</td><td>${ed ? `<button class="rm" data-brkrm="${k}" title="حذف">×</button>` : ""}</td></tr>`; }).join("");
+  const tbl = L.length ? `<div class="tblwrap"><table class="ptable brkt"><tr><th>المقاول</th><th>الشركة</th><th>الموقع</th><th>المشروع</th><th>تاريخ التعريف</th><th>المرحلة</th><th>قيمة العقد</th><th>النسبة %</th><th>العمولة المستحقة</th><th>المحصّل</th><th>المتبقي</th><th>المتابعة القادمة</th><th>ملاحظات</th><th></th></tr>${rows}
+    <tr class="tot"><td colspan="6">الإجمالي (${L.length})</td><td class="n">${money(S(L, x => num(x.r.val)))}</td><td></td><td class="n">${money(S(L, x => brkComm(x.r)))}</td><td class="n">${money(S(L, x => num(x.r.coll)))}</td><td class="n">${money(S(L, x => Math.max(brkComm(x.r) - num(x.r.coll), 0)))}</td><td colspan="3"></td></tr></table></div>`
+    : `<div class="empty" style="padding:14px">${A.length ? "لا توجد نتائج بهذه التصفية" : "سجّل كل شركة عرّفت بها مقاولاً: الشركة والموقع والمشروع وتاريخ التعريف، ثم تابع المرحلة حتى تحصيل النسبة."}</div>`;
+  return `<div class="pghead"><h2>🤝 الوساطة والعمولات</h2><div class="sub">لكل مقاول: الشركات التي عُرّف بها، ومرحلة كل تعريف (تعريف ← تفاوض ← ترسية ← تحصيل النسبة)، ونسبة العمولة والمستحق تلقائياً، وتذكير المتابعة.</div></div>${kp}${add}
+  <div class="panel"><h3>سجل التعريفات</h3><div class="brkst"><button type="button" data-brkst="" aria-pressed="${!brkF.st}">الكل</button>${BRKS.map(([k, l]) => `<button type="button" data-brkst="${k}" aria-pressed="${brkF.st === k}">${l} (${A.filter(x => (x.r.st || "intro") === k).length})</button>`).join("")}</div>
+  <div class="brkf"><label>المقاول<select data-brkfc><option value="">كل المقاولين</option>${cons.map(c => `<option value="${c.id}" ${brkF.c === c.id ? "selected" : ""}>${esc(c.name)} (${(c.refs || []).length})</option>`).join("")}</select></label><label>بحث<input data-brkq value="${esc(brkF.q)}" placeholder="شركة، موقع، مشروع…"></label></div>${tbl}</div>`; }
+document.addEventListener("change", e => { const el = e.target; if (!el.dataset) return;
+  if (el.id === "brkNc") { const w = $("#brkNnW"); if (w) w.hidden = el.value !== "__new"; return; }
+  if (el.dataset.brkfc !== undefined) { brkF.c = el.value; render(); return; }
+  if (el.dataset.brk) { const [cid, i] = el.dataset.brk.split(":"), c = CONTACTS.find(x => x.id === cid); if (!c || !c.refs || !c.refs[+i]) return; const f = el.dataset.f;
+    c.refs[+i][f] = ["val", "pct", "coll"].includes(f) && el.value !== "" ? num(el.value) : el.value; brkSave(c); render(); } });
+document.addEventListener("input", e => { const el = e.target; if (el.dataset && el.dataset.brkq !== undefined) { brkF.q = el.value; clearTimeout(brkF.t); brkF.t = setTimeout(() => { render(); const i = document.querySelector("[data-brkq]"); if (i) { i.focus(); i.setSelectionRange(i.value.length, i.value.length); } }, 250); } });
+document.addEventListener("click", e => { const t = e.target; if (!t.closest) return;
+  const sb = t.closest("[data-brkst]"); if (sb) { brkF.st = sb.dataset.brkst; render(); return; }
+  const rm = t.closest("[data-brkrm]"); if (rm) { const [cid, i] = rm.dataset.brkrm.split(":"), c = CONTACTS.find(x => x.id === cid); if (!c) return; const snap = JSON.stringify(c.refs); c.refs.splice(+i, 1); brkSave(c); render();
+    toast("🗑️ تم الحذف", false, () => { c.refs = JSON.parse(snap); brkSave(c); render(); toast("↩ تمت الاستعادة"); }); return; }
+  if (t.closest("[data-brkadd]")) { const v = id => (($("#" + id) || {}).value || "").trim(); let cid = v("brkNc"), c;
+    if (cid === "__new") { const n = v("brkNn"); if (!n) { toast("اكتب اسم المقاول", true); return; } c = CV().find(x => normN(x.name) === normN(n));
+      if (!c) { c = { id: rid(), name: n, cat: "contractor", rel: "current", space: PRIV() ? "p" : "", code: nextCCode(), people: [], notes: "", createdAt: Date.now(), updatedAt: Date.now() }; CONTACTS.push(c); } else c.cat = c.cat || "contractor"; }
+    else c = CONTACTS.find(x => x.id === cid);
+    if (!c) { toast("اختر المقاول", true); return; } if (!v("brkNco")) { toast("اكتب اسم الشركة التي عُرّف بها", true); return; }
+    c.refs = c.refs || []; c.refs.push({ co: v("brkNco"), site: v("brkNsite"), proj: v("brkNproj"), date: v("brkNdate") || today(), st: "intro", val: "", pct: v("brkNpct") ? num(v("brkNpct")) : "", coll: "", next: iso(addDays(new Date(), 7)), note: "" });
+    brkSave(c); brkF.c = ""; brkF.st = ""; render(); toast("✓ أُضيف التعريف — موعد المتابعة بعد أسبوع"); } });
+
+// ---- ربط الصفحة الجديدة بالقائمة والعرض + القائمة حسب الدور ----
+render = (f => function(){ const r = f.apply(this, arguments); try { const b = document.querySelector('nav.tabs [data-tab="brk"]'); if (b) { b.hidden = !ME || !(PRIV() || can("projects"));
+      const n = ME ? brkRefs().filter(x => x.r.next && x.r.next <= today() && !["done", "lost"].includes(x.r.st)).length : 0, c = b.querySelector(".c"); if (c) { c.textContent = n || ""; c.hidden = !n; } }
+    { const v = document.getElementById("sverN"); if (v && v.textContent !== APP_VER) v.textContent = APP_VER; }
+    if (ME && navRoleK !== ME.role + "|" + PRIV()) { navRoleK = ME.role + "|" + PRIV(); navRole(); navPrefs(); navStars(); } } catch (x) { console.warn(x); } return r; })(render);
+
+// ---- بيانات مثال لنسخة العرض (?demo&sample) لتجربة كل الشاشات ----
+function demoSample(){ const r = {}; if (!/[?&]sample/.test(location.search)) return r;
+  const d = n => iso(addDays(new Date(), n)), P = (id, name, client, type, agreed, ph, cl, ex, st) => ({ id, v2: 1, space: "", name, client, type, types: [type], loc: "مكة المكرمة", status: st || "contract", start: d(-120), end: d(120), price: agreed, agreed, taxMode: "ex", vat: 15, desc: "",
+    phases: ph.map(([n, p, s]) => ({ name: n, pct: p, due: d(-30), status: s })), claims: cl.map(([ph, a, pd, dd]) => ({ phase: ph, inv: "INV-" + Math.floor(Math.random() * 900 + 100), date: d(dd), amount: a, paid: pd, paidDate: pd ? d(dd + 5) : "" })),
+    expenses: ex.map(([t, a]) => ({ desc: t, cat: "رواتب وأتعاب", date: d(-20), amount: a })), docs: [], log: [], notes: "", boq: id === "sp3" ? [{ c: "C-1-4", q: 12, pr: "", note: "" }, { c: "STL-12", q: 4, pr: "", note: "" }, { c: "BLK-20", q: 30, pr: "", note: "" }] : [], boqArea: id === "sp3" ? 650 : "", createdAt: Date.now() });
+  r.projects = [P("sp1", "فيلا السالم", "شركة راز الماسية العقارية", "تصميم معماري", 72000, [["دفعة مقدمة", 20, "done"], ["التصميم المبدئي", 40, "done"], ["التسليم النهائي", 40, "todo"]], [["دفعة مقدمة", 16560, 16560, -90], ["التصميم المبدئي", 33120, 0, -40]], [["أتعاب مصمم", 9000]]),
+    P("sp2", "عمارة قطب", "شركة راز الماسية العقارية", "إشراف هندسي", 120000, [["دفعة مقدمة", 25, "done"], ["الهيكل الخرساني", 35, "doing"], ["التشطيبات", 40, "todo"]], [["دفعة مقدمة", 34500, 34500, -100], ["الهيكل الخرساني", 48300, 20000, -12]], [["مهندس موقع", 18000]]),
+    P("sp3", "فندق إدج - روتانا", "سامي غنيم", "إشراف عام ITC", 250000, [["دفعة مقدمة", 10, "done"], ["أتعاب الإشراف الشهرية", 90, "doing"]], [["دفعة مقدمة", 28750, 28750, -60]], []),
+    P("sp4", "منتجع المخواة", "ماشي العمري", "تصميم معماري", 95000, [["دفعة مقدمة", 20, "todo"]], [], [], "quote")];
+  r.contacts = [{ id: "sc1", name: "شركة راز الماسية العقارية", cat: "dev", rel: "current", code: "C-001", people: [], createdAt: 1 }, { id: "sc2", name: "مؤسسة البناء الحديث للمقاولات", cat: "contractor", rel: "partner", code: "C-002", phone: "0500000000", people: [], createdAt: 2,
+    refs: [{ co: "شركة المدار العالمية", site: "مكة — الشوقية", proj: "عمارة سكنية", date: d(-40), st: "award", val: 1800000, pct: 2, coll: 12000, next: d(-2), note: "" }, { co: "مجموعة الأفق", site: "جدة", proj: "مجمع تجاري", date: d(-10), st: "nego", val: 4200000, pct: 1.5, coll: "", next: d(5), note: "" }] },
+    { id: "sc3", name: "شركة الإتقان للمقاولات", cat: "contractor", rel: "current", code: "C-003", people: [], createdAt: 3, refs: [{ co: "صالح جار الله", site: "الطائف", proj: "فيلا خاصة", date: d(-70), st: "done", val: 650000, pct: 3, coll: 19500, next: "", note: "" }] }];
+  return r; }
+
+
+// ---- دليل الاستخدام: شرح الإضافات الجديدة (يظهر لكل مستخدم حسب الصفحات المتاحة له) ----
+GUIDE_NEW.unshift(["v92", "القائمة الجانبية حسب دورك (الصفحات الأساسية أولاً والباقي في «المزيد») مع نجمة ☆ لتثبيت أي صفحة في الأعلى، وتوحيد شكل الجداول مع عنوان ثابت للجداول الطويلة، وزرا «طباعة» و«Excel» فوق كل جدول، و«جدول الكميات والتكلفة» داخل المشروع مربوطاً بأكواد أسعار المواد، وصفحة «الوساطة والعمولات»."],
+  ["v91", "عناوين الأعمدة الرقمية محاذية لبياناتها، وطباعة/Excel لنوافذ لوحة المؤشرات، والضغط على المشروع يفتحه على القسم المناسب."], ["v90", "المحتوى يملأ عرض الشاشة ويتلاءم مع أي جهاز."]);
+{ const gi = GUIDE.findIndex(x => x.k === "clients") + 1 || GUIDE.length;
+  GUIDE.splice(gi, 0, { k: "brk", ic: "🤝", t: "الوساطة والعمولات", tab: "brk", g: "الأعمال", w: "سجل لكل مقاول بالشركات التي عرّفته بها، ومرحلة كل تعريف حتى تحصيل النسبة، مع حساب العمولة المستحقة والمتبقي تلقائياً وتذكير المتابعة.",
+    s: ["من «تعريف جديد» اختر المقاول (أو أضف مقاولاً جديداً) واكتب الشركة والموقع والمشروع ونسبة العمولة ثم «إضافة».", "حدّث «المرحلة» من الجدول: تعريف ← تفاوض ← ترسية ← تحصيل النسبة ← تم التحصيل.", "اكتب «قيمة العقد» عند الترسية فتُحسب العمولة تلقائياً، واكتب «المحصّل» عند الاستلام.", "الصفوف الحمراء متابعتها مستحقة اليوم أو متأخرة، والرقم بجانب اسم الصفحة في القائمة يوضح عددها.", "اطبع التقرير أو نزّله Excel من الزرين أعلى الجدول."], tip: ["التصفية بالمقاول أو بالمرحلة تُطبع كما تراها على الشاشة."] },
+  { k: "boq", ic: "📦", t: "جدول الكميات والتكلفة", tab: "projects", g: "الأعمال", w: "داخل كل مشروع: تقدير سريع بسعر المتر، وجدول كميات بالأكواد يسحب اسم البند ووحدته وسعره من صفحة «أسعار مواد البناء».",
+    s: ["افتح المشروع ثم قسم «📦 جدول الكميات والتكلفة».", "اكتب مساحة البناء واختر مستوى التشطيب لتقدير سريع.", "اضغط «+ إضافة بند» واكتب الكود أو اختره من القائمة، ثم الكمية.", "سعر الوحدة يُسحب من النشرة تلقائياً؛ اكتب سعراً آخر لتعديله لهذا المشروع فقط.", "الإجمالي قبل الضريبة والضريبة والإجمالي الشامل تُحسب تلقائياً، ويُطبع الجدول من زر «طباعة»."], tip: ["تعديل سعر بند في صفحة أسعار المواد ينعكس على كل جداول الكميات التي لم يُكتب فيها سعر خاص."] },
+  { k: "print", ic: "🖨️", t: "الطباعة والتصدير", tab: "", g: "الأدوات", w: "فوق كل جدول في البرنامج زرّان: «طباعة» لتقرير A4 بالشعار والتاريخ الميلادي والهجري، و«Excel» لملف جاهز للحساب.",
+    s: ["اضغط «🖨️ طباعة» ثم اختر «حفظ PDF» من نافذة الطباعة إن أردت ملفاً.", "اضغط «📊 Excel» لتنزيل الجدول بالأرقام قابلة للحساب.", "في نوافذ لوحة المؤشرات الزرّان في أعلى النافذة، والضغط على أي مشروع يفتحه على القسم المناسب."], tip: ["القائمة الجانبية: مرّر على أي صفحة واضغط ☆ لتثبيتها في أعلى القائمة."] }); }
 // ===== v54: فحص التحديثات، لوحة الأوامر (Ctrl+K)، تلوين التقارير المطبوعة =====
 async function verCheck(){ try { const t = await (await fetch("./index.html?vc=" + Date.now(), { cache: "no-store" })).text(); const m = /const APP_VER = "([^"]+)"/.exec(t);
   if (m && m[1] !== APP_VER) { let b = $("#updBar"); if (!b) { b = document.createElement("div"); b.id = "updBar"; b.className = "updbar"; document.body.appendChild(b); } b.innerHTML = `🎉 نسخة جديدة <b>${esc(m[1])}</b> جاهزة <button type="button" data-upd>تحديث الآن</button>`; b.hidden = false; } } catch {} }
