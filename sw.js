@@ -1,5 +1,5 @@
 // يومي | Yawmi — service worker v2: أحدث نسخة دايماً، والنسخة المحفوظة لو النت بطيء أو مقطوع
-const V = 'yawmi-v3', FONTS = 'yawmi-fonts';
+const V = 'yawmi-v4', FONTS = 'yawmi-fonts';
 const SHELL = ['./', './manifest.json', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(V).then(c => c.addAll(SHELL.map(u => new Request(u, { cache: 'reload' })))).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== V && k !== FONTS).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
@@ -15,6 +15,10 @@ self.addEventListener('fetch', e => {
     return;
   }
   if (u.origin === location.origin && u.searchParams.has('vc')) { e.respondWith(fetch(r, { cache: 'no-store' })); return; } // فحص التحديثات: من النت دايماً
+  if (u.origin === location.origin && u.pathname.includes('/assets/')) { // ملفات البرنامج بإصدار في الرابط (?v=): من الذاكرة إن وُجدت بنفس الإصدار، وإلا من النت
+    e.respondWith(caches.open(V).then(async c => { const m = await c.match(r); if (m) return m; const res = await fetch(r); if (res.ok) c.put(r, res.clone()); return res; }));
+    return;
+  }
   if (u.origin === location.origin) {
     e.respondWith(caches.open(V).then(async c => { const m = await c.match(r, { ignoreSearch: true }); const n = fetch(r).then(res => { if (res.ok) c.put(r, res.clone()); return res; }); if (m) { e.waitUntil(n.catch(() => {})); return m; } return n; }));
     return;
