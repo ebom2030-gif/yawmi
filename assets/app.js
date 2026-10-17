@@ -1122,14 +1122,14 @@ function demoApi(fn, args){
   return true;
 }
 function startDemo(){ isDemo = true; TOKEN = "demo"; ME = null; viewUid = ""; $("#auth").hidden = true; load.done = false; load(); }
-const api = async (fn, ...args) => { if (isDemo) return demoApi(fn, args); if ((OBX_W || {})[fn] && !obxFlushing && (!navigator.onLine || obxQ().length)) return obxPut(fn, args); let r; try { r = await fetch(API, { method: "POST", body: JSON.stringify({ t: TOKEN, fn, args }), credentials: "omit" }); } catch (e) { if ((OBX_W || {})[fn] && !obxFlushing) return obxPut(fn, args); throw e; } if (!r.ok) throw new Error("خطأ في الاتصال (" + r.status + ")"); const j = await r.json(); if (!j.ok) { if (/سجّل الدخول|انتهت الجلسة|غير مفعّل/.test(j.error || "")) { setToken(""); showAuth("login", j.error); } throw new Error(j.error || "خطأ غير معروف"); } return j.data; };
+const api = async (fn, ...args) => { if (isDemo) return demoApi(fn, args); if ((OBX_W || {})[fn] && !obxFlushing && (!navigator.onLine || obxQ().length)) return obxPut(fn, args); let r; try { r = await apiPost(JSON.stringify({ t: TOKEN, fn, args })); } catch (e) { if ((OBX_W || {})[fn] && !obxFlushing) return obxPut(fn, args); throw e; } if (!r.ok) throw new Error("خطأ في الاتصال (" + r.status + ")"); const j = await r.json(); if (!j.ok) { if (/سجّل الدخول|انتهت الجلسة|غير مفعّل/.test(j.error || "")) { setToken(""); showAuth("login", j.error); } throw new Error(j.error || "خطأ غير معروف"); } return j.data; };
 let askedProfile = false;
 let store = {}, noteStore = {}, listeners = [], noteListeners = [], pending = 0;
 const snap = obj => ({ docs: Object.entries(obj).map(([id, v]) => ({ id, data: () => v })) });
 const emit = () => listeners.forEach(f => f(snap(store)));
 const emitN = () => noteListeners.forEach(f => f(snap(Object.fromEntries(Object.entries(noteStore).map(([k, v]) => [k, { text: v }])))));
 const rid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-const APP_VER = "v93", APP_DATE = "2026-10-17";
+const APP_VER = "v94", APP_DATE = "2026-10-17";
 const strip = o => { const r = { ...o }; delete r.id; return r; };
 const SKINS = [["night", "ليل مكة", "كحلي ليلي ونحاسي ذهبي", "#14213d", "#c29a3e", "#2f63b5"], ["roshan", "روشن حجازي", "أخضر بترولي وذهب رملي", "#0e3b43", "#d9b97a", "#c8553d"], ["earth", "طين ونخيل", "بني تمري وتيراكوتا", "#3a2a21", "#e0b66f", "#4f6b3a"]];
 const curSkin = () => document.documentElement.dataset.skin || "night";
@@ -4058,6 +4058,14 @@ GUIDE_NEW.unshift(["v92", "القائمة الجانبية حسب دورك (ال
     s: ["افتح المشروع ثم قسم «📦 جدول الكميات والتكلفة».", "اكتب مساحة البناء واختر مستوى التشطيب لتقدير سريع.", "اضغط «+ إضافة بند» واكتب الكود أو اختره من القائمة، ثم الكمية.", "سعر الوحدة يُسحب من النشرة تلقائياً؛ اكتب سعراً آخر لتعديله لهذا المشروع فقط.", "الإجمالي قبل الضريبة والضريبة والإجمالي الشامل تُحسب تلقائياً، ويُطبع الجدول من زر «طباعة»."], tip: ["تعديل سعر بند في صفحة أسعار المواد ينعكس على كل جداول الكميات التي لم يُكتب فيها سعر خاص."] },
   { k: "print", ic: "🖨️", t: "الطباعة والتصدير", tab: "", g: "الأدوات", w: "فوق كل جدول في البرنامج زرّان: «طباعة» لتقرير A4 بالشعار والتاريخ الميلادي والهجري، و«Excel» لملف جاهز للحساب.",
     s: ["اضغط «🖨️ طباعة» ثم اختر «حفظ PDF» من نافذة الطباعة إن أردت ملفاً.", "اضغط «📊 Excel» لتنزيل الجدول بالأرقام قابلة للحساب.", "في نوافذ لوحة المؤشرات الزرّان في أعلى النافذة، والضغط على أي مشروع يفتحه على القسم المناسب."], tip: ["القائمة الجانبية: مرّر على أي صفحة واضغط ☆ لتثبيتها في أعلى القائمة."] }); }
+
+// ===== v93: الاتصال عبر بوابة Cloudflare (/api) مع الرجوع التلقائي للاتصال المباشر بـ Google =====
+var API_GW = "/api", gwDown = 0;
+try { gwDown = Number(localStorage.getItem("yw_gwdown") || 0); } catch {}
+async function apiPost(body){
+  if (location.protocol === "https:" && Date.now() > gwDown) { try { const r = await fetch(API_GW, { method: "POST", body, credentials: "omit", headers: { "content-type": "text/plain;charset=utf-8" } }); if (r.headers.get("x-yw-gw")) return r; } catch {}
+    gwDown = Date.now() + 10 * 60000; try { localStorage.setItem("yw_gwdown", String(gwDown)); } catch {} }
+  return fetch(API, { method: "POST", body, credentials: "omit" }); }
 // ===== v54: فحص التحديثات، لوحة الأوامر (Ctrl+K)، تلوين التقارير المطبوعة =====
 async function verCheck(){ try { const t = await (await fetch("./index.html?vc=" + Date.now(), { cache: "no-store" })).text(); const m = /const APP_VER = "([^"]+)"/.exec(t);
   if (m && m[1] !== APP_VER) { let b = $("#updBar"); if (!b) { b = document.createElement("div"); b.id = "updBar"; b.className = "updbar"; document.body.appendChild(b); } b.innerHTML = `🎉 نسخة جديدة <b>${esc(m[1])}</b> جاهزة <button type="button" data-upd>تحديث الآن</button>`; b.hidden = false; } } catch {} }
