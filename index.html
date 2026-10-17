@@ -699,6 +699,22 @@ body.private .hero{background:radial-gradient(1200px 300px at 85% -40%,rgba(111,
 #printDay .pdbar{display:flex;height:16px;border-radius:8px;overflow:hidden;margin:-6px 0 14px;gap:2px}#printDay .pdbar i{display:block;position:relative;font-style:normal}#printDay .pdbar span{position:absolute;inset:0;color:#fff;font-size:8.5px;text-align:center;line-height:16px;white-space:nowrap;overflow:hidden;font-weight:700}
 #printDay .pdbar .g-done{background:#2c8a60}#printDay .pdbar .g-late{background:#c2453b}#printDay .pdbar .g-wait{background:#c9962b}#printDay .pdbar .g-open{background:#2f63b5}#printDay .pdbar .g-daily{background:#6b4fbb}#printDay .pdbar .g-fut{background:#8b94aa}
 @media print{.pray,.updbar,#cmdM,.pxbar{display:none!important}}
+/* v91: محاذاة عناوين الأعمدة الرقمية مع بياناتها + أدوات تقارير المؤشرات */
+.ptable th.thn,.etable th.thn,table th.thn{text-align:left}
+.ptable th.thc,.etable th.thc,table th.thc{text-align:center}
+.ddtools{display:flex;gap:6px;flex-wrap:wrap}
+.ptable.dd tr[data-ddp] td:first-child b::after{content:" ↗";color:var(--gold2);font-size:11px;opacity:0;transition:opacity .15s}
+.ptable.dd tr[data-ddp]:hover td:first-child b::after{opacity:1}
+@media print{body.printday #printDay.ddrep table{table-layout:auto}
+#printDay.ddrep th,#printDay.ddrep td{border:1px solid #d8dde8;padding:4px 6px;font-size:10.5px;text-align:start}
+#printDay.ddrep th{background:#eef1f7;color:#14213d;font-weight:800}
+#printDay.ddrep th.thn,#printDay.ddrep td.n{text-align:left;white-space:nowrap}
+#printDay.ddrep .ddc,#printDay.ddrep td small{display:block;color:#6b7387;font-size:9.5px}
+#printDay.ddrep tr.ddt td{background:#14213d;color:#fff;font-weight:800}
+#printDay.ddrep h4{margin:12px 0 4px;font-size:12px;color:#14213d}
+#printDay.ddrep .spill,#printDay.ddrep [class*=pill]{border:0;background:none;padding:0;color:#14213d}
+#printDay.ddrep footer{margin-top:10px;color:#8b94aa;font-size:9.5px;text-align:center}}
+
 /* v90: المحتوى يملأ عرض الشاشة بدل عمود ضيق في المنتصف */
 .wrap,.hero-in,.main .wrap,.main .hero-in{max-width:100%!important}
 .main{padding-inline:28px}.main .hero{margin-inline:-28px;padding-inline:28px}
@@ -5306,6 +5322,38 @@ projInput = (f => function(el){ const r = f.apply(this, arguments); const p = pr
 quoteView = (f => function(p, c){ const h = f.apply(this, arguments); const rp = revPanel(p).replace('id="sec-rev"', 'id="sec-revq"').replace("💼 الأتعاب والفرع المنفّذ", "💼 طريقة الأتعاب والفرع المنفّذ");
   if (!p || !QST.has(p.status) || p.status === "lost") return h; return /data-qadv>[^<]*<\/button><\/div><\/div>/.test(h) ? h.replace(/(data-qadv>[^<]*<\/button><\/div><\/div>)/, "$1" + rp) : rp + h; })(quoteView);
 document.addEventListener("change", e => { if (e.target.matches && e.target.matches('#sec-revq [data-pf]') && typeof projDraft !== "undefined" && projDraft) setTimeout(render, 0); });
+
+// ===== v91: محاذاة عناوين الأعمدة + طباعة/Excel لتفاصيل المؤشرات + فتح المشروع على القسم المناسب =====
+var thAlignT = 0;
+function thAlign(){ document.querySelectorAll("table").forEach(t => { const hr = t.rows[0]; if (!hr || !hr.querySelector("th")) return; const H = [...hr.cells]; if (H.some(c => c.colSpan > 1)) return;
+  const R = [...t.rows].slice(1).filter(r => r.cells.length === H.length && !r.classList.contains("ddt") && !r.querySelector("th")); if (!R.length) return;
+  H.forEach((th, i) => { let n = 0, c = 0; R.forEach(r => { const td = r.cells[i], st = td.classList.contains("n") || getComputedStyle(td).textAlign; if (st === true || st === "left") n++; else if (st === "center") c++; });
+    th.classList.toggle("thn", n > R.length / 2); th.classList.toggle("thc", !(n > R.length / 2) && c > R.length / 2); }); }); }
+new MutationObserver(() => { clearTimeout(thAlignT); thAlignT = setTimeout(thAlign, 60); }).observe(document.body, { childList: true, subtree: true });
+setTimeout(thAlign, 300);
+var DDSEC = k => /^(remaining|paid|late|m0|m1|mon:)/.test(k) ? "pay" : k === "expenses" || k === "profit" ? "fin" : k === "progress" ? "steps" : k === "quotes" ? "quote" : "status";
+function ddCur(){ return ddStack[ddStack.length - 1] || ""; }
+function ddPrint(){ const r = ddData(ddCur()); if (!r) return; { const o = document.getElementById("printDay"); if (o) o.remove(); }
+  const d = new Date(), dStr = d.toLocaleDateString("ar-SA-u-nu-latn-ca-gregory", { year: "numeric", month: "long", day: "numeric" }), who = (ME && ME.name) || "";
+  const box = document.createElement("div"); box.id = "printDay"; box.className = "ddrep";
+  box.innerHTML = `<header class="pdh"><div class="pdt"><div class="pdbrand">يومي <small>Yawmi</small></div><h1>${esc(r.t)}</h1><div class="pdd">${esc(r.s)}</div></div><table class="pdm"><tr><th>التاريخ</th><td>${esc(dStr)}</td></tr><tr><th>الموافق</th><td>${esc(hij(d))}</td></tr>${who ? `<tr><th>أعدّه</th><td>${esc(who)}</td></tr>` : ""}</table></header>${r.h}<footer>صدر هذا التقرير من نظام «يومي» — ${esc(d.toLocaleString("ar-SA-u-nu-latn-ca-gregory"))}</footer>`;
+  box.querySelectorAll(".empty").forEach(x => x.remove()); document.body.appendChild(box); thAlign(); document.body.classList.add("printday");
+  const done = () => { document.body.classList.remove("printday"); box.remove(); removeEventListener("afterprint", done); }; addEventListener("afterprint", done); setTimeout(() => window.print(), 80); }
+function ddExcel(){ const r = ddData(ddCur()); if (!r) return; const tmp = document.createElement("div"); tmp.innerHTML = r.h;
+  tmp.querySelectorAll("small.ddc").forEach(x => x.replaceWith(" — " + x.textContent)); tmp.querySelectorAll("h4").forEach(x => { const t = document.createElement("table"); t.innerHTML = `<tr><td style="font-weight:bold;font-size:13pt">${esc(x.textContent)}</td></tr>`; x.replaceWith(t); });
+  tmp.querySelectorAll("th").forEach(x => x.setAttribute("style", "background:#14213d;color:#ffffff;font-weight:bold;border:1px solid #999")); tmp.querySelectorAll("td").forEach(x => x.setAttribute("style", (x.classList.contains("n") ? "mso-number-format:'#,##0';" : "") + "border:1px solid #ccc" + (x.closest("tr.ddt") ? ";background:#E4C77F;font-weight:bold" : "")));
+  tmp.querySelectorAll("td.n").forEach(x => { const v = x.textContent.replace(/[,\s]/g, ""); if (/^-?\d+(\.\d+)?$/.test(v)) x.textContent = v; });
+  const html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="utf-8"><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>التقرير</x:Name><x:WorksheetOptions><x:DisplayRightToLeft/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body dir="rtl" style="font-family:Arial"><table><tr><td style="font-size:16pt;font-weight:bold">${esc(r.t)}</td></tr><tr><td>${esc(r.s)} — ${esc(iso(new Date()))}</td></tr></table>${tmp.innerHTML}</body></html>`;
+  bkSave(new Blob(["﻿" + html], { type: "application/vnd.ms-excel" }), `يومي-${r.t.replace(/[\\/:*?"<>|—]/g, "").trim()}-${iso(new Date())}.xls`); toast("تم تنزيل التقرير (Excel)"); }
+ddShow = (f => function(key, push){ f.apply(this, arguments); const hd = document.querySelector("#ddCard .ddhd"); if (!hd || hd.querySelector(".ddtools")) return;
+  hd.querySelector("[data-ddx]").insertAdjacentHTML("beforebegin", `<div class="ddtools"><button type="button" class="btn ghost xs" data-ddprint>🖨️ طباعة / PDF</button><button type="button" class="btn ghost xs" data-ddxls>📊 Excel</button></div>`);
+  const tip = [...document.querySelectorAll("#ddCard > .sub")].pop(); if (tip && /اضغط على أي صف/.test(tip.textContent)) tip.textContent = "💡 اضغط على أي مشروع لفتحه مباشرة على القسم المناسب للتعديل."; thAlign(); })(ddShow);
+document.getElementById("ddBox").addEventListener("click", e => { const t = e.target;
+  if (t.closest("[data-ddprint]")) { e.stopPropagation(); ddPrint(); return; }
+  if (t.closest("[data-ddxls]")) { e.stopPropagation(); ddExcel(); return; }
+  const r = t.closest("[data-ddp]"); if (r) { e.stopPropagation(); const sec = DDSEC(ddCur()); document.getElementById("ddBox").hidden = true;
+    const f = () => { claimCustom.clear(); projOpen = r.dataset.ddp; projDraft = null; projDirty = false; projSec = sec; render(); window.scrollTo({ top: 0 }); };
+    if (tab !== "projects") goTab("projects", f); else f(); } }, true);
 
 // ===== v54: فحص التحديثات، لوحة الأوامر (Ctrl+K)، تلوين التقارير المطبوعة =====
 async function verCheck(){ try { const t = await (await fetch("./index.html?vc=" + Date.now(), { cache: "no-store" })).text(); const m = /const APP_VER = "([^"]+)"/.exec(t);
