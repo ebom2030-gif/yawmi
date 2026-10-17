@@ -673,6 +673,25 @@ body.private .hero{background:radial-gradient(1200px 300px at 85% -40%,rgba(111,
 #printDay .pdbar{display:flex;height:16px;border-radius:8px;overflow:hidden;margin:-6px 0 14px;gap:2px}#printDay .pdbar i{display:block;position:relative;font-style:normal}#printDay .pdbar span{position:absolute;inset:0;color:#fff;font-size:8.5px;text-align:center;line-height:16px;white-space:nowrap;overflow:hidden;font-weight:700}
 #printDay .pdbar .g-done{background:#2c8a60}#printDay .pdbar .g-late{background:#c2453b}#printDay .pdbar .g-wait{background:#c9962b}#printDay .pdbar .g-open{background:#2f63b5}#printDay .pdbar .g-daily{background:#6b4fbb}#printDay .pdbar .g-fut{background:#8b94aa}
 @media print{.pray,.updbar,#cmdM,.pxbar{display:none!important}}
+/* ===== v103: بطاقات التعريف المضغوطة + الإجراءات + الملفات ===== */
+.brkp [data-dd],.brkk2 [data-dd],.bfr[data-dd]{cursor:pointer}.bfr[data-dd]:hover span{color:#a07412}.ck[data-dd]:hover{box-shadow:var(--shadow-h);transform:translateY(-1px)}
+.bref.mini{padding:10px 14px}.brefh[data-brktg]{cursor:pointer;flex-wrap:wrap}.btg{font-style:normal;color:#a07412;font-size:14px;width:14px}
+.brefh>div:first-of-type{min-width:180px}
+.bmeta{display:flex;flex-direction:column;align-items:flex-start;gap:3px;flex:0 1 auto!important;min-width:150px}
+.bacts{display:inline-flex;align-items:center;gap:3px}.bacts i{width:16px;height:6px;border-radius:9px;background:color-mix(in srgb,var(--mut) 22%,var(--surface2))}.bacts i.on{background:var(--done)}.bacts em{font-style:normal;font-size:11px;color:var(--mut);font-weight:800;margin-inline-start:4px}
+.blast{color:var(--mut);font-size:11.5px}
+.bnext{font-size:12px;font-weight:800;color:#2f63b5;background:color-mix(in srgb,#2f63b5 10%,transparent);border-radius:999px;padding:3px 9px;white-space:nowrap}.bnext.late{color:var(--late);background:color-mix(in srgb,var(--late) 10%,transparent)}
+.bref.mini:hover{background:var(--surface2)}
+.bsecs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}@media (max-width:900px){.bsecs{grid-template-columns:1fr}}
+.bsec{background:var(--surface2);border-radius:12px;padding:10px 12px}.bsec h5{margin:0 0 8px;font-size:13.5px}
+.bactl{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}.bactl label{display:flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 10px;font-size:12.5px;font-weight:700;cursor:pointer}.bactl label.on{border-color:var(--done);color:var(--done)}.bactl small{color:var(--mut);font-weight:600;font-size:10.5px}
+.blog{display:grid;gap:4px;max-height:170px;overflow:auto;margin-bottom:8px}.blr{display:flex;gap:10px;align-items:center;background:var(--surface);border-radius:8px;padding:5px 9px;font-size:12.5px}.blr b{font-size:11.5px;color:#a07412;white-space:nowrap}.blr span{flex:1}
+.blr .rm,.bfile .rm{border:0;background:none;color:var(--mut);cursor:pointer;font-size:15px}
+.badd{display:flex;gap:6px;flex-wrap:wrap}.badd input{flex:1;min-width:120px;border:1px solid var(--line);border-radius:10px;padding:6px 9px;font:inherit;font-size:12.5px;background:var(--surface);color:var(--ink)}.badd input[type=date]{flex:none;width:140px}
+.bfiles{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}.bfile{display:inline-flex;align-items:center;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px 10px;font-size:12.5px}.bfile a{color:#2f63b5;text-decoration:none;font-weight:700}
+.bexp{margin-inline-start:auto;float:left}
+.bnew summary{cursor:pointer;font-weight:800;color:#a07412;padding:4px 0}.bnew[open] summary{margin-bottom:8px}
+
 /* ===== v102: الوساطة — ملف المقاول ===== */
 .brkk2 .ck b{font-size:20px}
 .bfun{display:grid;gap:8px}.bfr{display:grid;grid-template-columns:110px 1fr 34px;align-items:center;gap:10px;font-size:13px;font-weight:700}.bfb{height:14px;background:var(--surface2);border-radius:999px;overflow:hidden}.bfb i{display:block;height:100%;border-radius:999px;background:var(--gold)}
