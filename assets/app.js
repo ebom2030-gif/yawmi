@@ -1129,7 +1129,7 @@ const snap = obj => ({ docs: Object.entries(obj).map(([id, v]) => ({ id, data: (
 const emit = () => listeners.forEach(f => f(snap(store)));
 const emitN = () => noteListeners.forEach(f => f(snap(Object.fromEntries(Object.entries(noteStore).map(([k, v]) => [k, { text: v }])))));
 const rid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-const APP_VER = "v94", APP_DATE = "2026-10-17";
+const APP_VER = "v95", APP_DATE = "2026-10-17";
 const strip = o => { const r = { ...o }; delete r.id; return r; };
 const SKINS = [["night", "ليل مكة", "كحلي ليلي ونحاسي ذهبي", "#14213d", "#c29a3e", "#2f63b5"], ["roshan", "روشن حجازي", "أخضر بترولي وذهب رملي", "#0e3b43", "#d9b97a", "#c8553d"], ["earth", "طين ونخيل", "بني تمري وتيراكوتا", "#3a2a21", "#e0b66f", "#4f6b3a"]];
 const curSkin = () => document.documentElement.dataset.skin || "night";
@@ -4066,6 +4066,26 @@ async function apiPost(body){
   if (location.protocol === "https:" && Date.now() > gwDown) { try { const r = await fetch(API_GW, { method: "POST", body, credentials: "omit", headers: { "content-type": "text/plain;charset=utf-8" } }); if (r.headers.get("x-yw-gw")) return r; } catch {}
     gwDown = Date.now() + 10 * 60000; try { localStorage.setItem("yw_gwdown", String(gwDown)); } catch {} }
   return fetch(API, { method: "POST", body, credentials: "omit" }); }
+// ===== v95: لوحة «خادم Cloudflare» في صحة النظام: الحالة وتفعيل الحفظ السريع (للمالك) =====
+var cfInfo = null;
+function cfLoad(){ if (isDemo || !TOKEN) return; fetch("/api?t=" + encodeURIComponent(TOKEN) + "&x=" + Date.now(), { cache: "no-store" }).then(r => r.json()).then(j => { cfInfo = j; if (tab === "health") render(); }).catch(() => {}); }
+function cfPanel(){ if (!ME || ME.role !== "owner") return ""; const c = cfInfo; if (!c) { cfLoad(); return `<div class="panel cfbox"><h3>☁️ خادم Cloudflare</h3><div class="sub">جارٍ التحميل…</div></div>`; }
+  const tm = c.lastSync ? new Date(c.lastSync).toLocaleString("ar-SA-u-nu-latn-ca-gregory") : "—";
+  return `<div class="panel cfbox"><h3>☁️ خادم Cloudflare ${c.native ? `<small class="cfon">● الحفظ السريع مفعّل</small>` : `<small class="cfoff">● نسخة مطابقة فقط</small>`}</h3>
+    <div class="sub">${c.native ? "التحميل والحفظ يتمّان على Cloudflare مباشرة، وتُرسل نسخة من كل تعديل إلى Google بالترتيب (للتقويم وTo Do والملخص الصباحي)." : "كل الطلبات تمر عبر Cloudflare إلى Google، مع نسخة مطابقة من بياناتك. فعّل «الحفظ السريع» ليتم التحميل والحفظ على Cloudflare مباشرة."}</div>
+    <div class="cfk"><div><span>المهام</span><b>${c.items ?? "—"}</b></div><div><span>المشاريع</span><b>${c.projects ?? "—"}</b></div><div><span>العملاء والجهات</span><b>${c.contacts ?? "—"}</b></div><div><span>بانتظار الإرسال لـ Google</span><b>${c.pending ?? 0}</b></div><div><span>أُرسلت بنجاح</span><b>${c.sentOk ?? 0}</b></div><div><span>آخر مزامنة</span><b style="font-size:13px">${esc(tm)}</b></div></div>
+    ${c.lastErr ? `<div class="sub" style="color:var(--late)">آخر ملاحظة: ${esc(c.lastErr)}</div>` : ""}
+    <div><button type="button" class="btn ${c.native ? "ghost" : ""}" data-cfnat="${c.native ? "0" : "1"}">${c.native ? "إيقاف الحفظ السريع والعودة لـ Google" : "⚡ تفعيل الحفظ السريع على Cloudflare"}</button> <button type="button" class="btn ghost" data-cfref>تحديث الحالة</button></div></div>`; }
+healthView = (f => function(){ const h = f.apply(this, arguments); return cfPanel() + h; })(healthView);
+document.addEventListener("click", async e => { const b = e.target.closest && e.target.closest("[data-cfnat],[data-cfref]"); if (!b) return; e.preventDefault();
+  if (b.hasAttribute("data-cfref")) { cfInfo = null; render(); return; }
+  if (isDemo) { toast("غير متاح في نسخة العرض"); return; } const on = b.dataset.cfnat === "1"; b.disabled = true;
+  try { await api("cfNative", on); toast(on ? "⚡ تم تفعيل الحفظ السريع على Cloudflare" : "تمت العودة إلى Google"); cfInfo = null; load.done = false; load(); } catch (x) { toast((x && x.message) || "تعذّر التنفيذ", true); b.disabled = false; } });
+
+// v95: نقش القائمة الجانبية يغطي كامل طولها عند التمرير
+function sideH(){ const sd = document.querySelector(".side"); if (sd) sd.style.setProperty("--sh", sd.scrollHeight + "px"); }
+render = (f => function(){ const r = f.apply(this, arguments); setTimeout(sideH, 30); return r; })(render);
+addEventListener("resize", sideH); try { new ResizeObserver(sideH).observe(document.querySelector(".side nav.tabs") || document.body); } catch {} document.addEventListener("click", e => { if (e.target.closest && e.target.closest("nav.tabs .ngl")) setTimeout(sideH, 60); });
 // ===== v54: فحص التحديثات، لوحة الأوامر (Ctrl+K)، تلوين التقارير المطبوعة =====
 async function verCheck(){ try { const t = await (await fetch("./index.html?vc=" + Date.now(), { cache: "no-store" })).text(); const m = /const APP_VER = "([^"]+)"/.exec(t);
   if (m && m[1] !== APP_VER) { let b = $("#updBar"); if (!b) { b = document.createElement("div"); b.id = "updBar"; b.className = "updbar"; document.body.appendChild(b); } b.innerHTML = `🎉 نسخة جديدة <b>${esc(m[1])}</b> جاهزة <button type="button" data-upd>تحديث الآن</button>`; b.hidden = false; } } catch {} }

@@ -673,6 +673,22 @@ body.private .hero{background:radial-gradient(1200px 300px at 85% -40%,rgba(111,
 #printDay .pdbar{display:flex;height:16px;border-radius:8px;overflow:hidden;margin:-6px 0 14px;gap:2px}#printDay .pdbar i{display:block;position:relative;font-style:normal}#printDay .pdbar span{position:absolute;inset:0;color:#fff;font-size:8.5px;text-align:center;line-height:16px;white-space:nowrap;overflow:hidden;font-weight:700}
 #printDay .pdbar .g-done{background:#2c8a60}#printDay .pdbar .g-late{background:#c2453b}#printDay .pdbar .g-wait{background:#c9962b}#printDay .pdbar .g-open{background:#2f63b5}#printDay .pdbar .g-daily{background:#6b4fbb}#printDay .pdbar .g-fut{background:#8b94aa}
 @media print{.pray,.updbar,#cmdM,.pxbar{display:none!important}}
+/* ===== v95: تطبيق الهوية البصرية كاملة ===== */
+:root{--ink2:#5a6785;--navy-dark:#0d1730}
+.side{background:linear-gradient(180deg,#0d1730 0%,#14213d 60%,#14213d 100%)!important}
+body.private .side{background:linear-gradient(180deg,#0a2a29,#0d3534 55%,#175452)!important}
+/* نقش الخلفية يغطي القائمة الجانبية بالكامل أثناء التمرير */
+.side:before{bottom:auto!important;height:var(--sh,100%)!important;z-index:0}
+.side>*{position:relative;z-index:1}
+/* العناوين: Tajawal ثقيل للرئيسية وعريض للفرعية */
+.hero h1,.pghead h2{font-weight:900}
+.panel h3,.hsec>h3,.pdetail h3{font-weight:700}
+/* الصفحات بعرض موحّد يملأ الشاشة */
+.aprpg,.pset{max-width:none!important}
+.cfbox{display:flex;flex-direction:column;gap:10px}.cfbox .cfk{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.cfbox .cfk>div{background:var(--surface2);border-radius:12px;padding:10px 12px}.cfbox .cfk span{display:block;font-size:12px;color:var(--mut);font-weight:700}.cfbox .cfk b{font-size:18px}
+.cfbox .cfon{color:var(--done)}.cfbox .cfoff{color:var(--wait)}
+
 /* ===== v92: توحيد الجداول + أدوات الطباعة + القائمة حسب الدور + جدول الكميات + الوساطة ===== */
 .ptable,.etable,.ftable{font-variant-numeric:tabular-nums}
 .ptable th,.etable th,.ftable th{background:var(--surface2);color:var(--mut);font-size:12px;font-weight:800;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:bottom}
