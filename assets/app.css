@@ -673,6 +673,17 @@ body.private .hero{background:radial-gradient(1200px 300px at 85% -40%,rgba(111,
 #printDay .pdbar{display:flex;height:16px;border-radius:8px;overflow:hidden;margin:-6px 0 14px;gap:2px}#printDay .pdbar i{display:block;position:relative;font-style:normal}#printDay .pdbar span{position:absolute;inset:0;color:#fff;font-size:8.5px;text-align:center;line-height:16px;white-space:nowrap;overflow:hidden;font-weight:700}
 #printDay .pdbar .g-done{background:#2c8a60}#printDay .pdbar .g-late{background:#c2453b}#printDay .pdbar .g-wait{background:#c9962b}#printDay .pdbar .g-open{background:#2f63b5}#printDay .pdbar .g-daily{background:#6b4fbb}#printDay .pdbar .g-fut{background:#8b94aa}
 @media print{.pray,.updbar,#cmdM,.pxbar{display:none!important}}
+/* ===== v101: مقارنة العروض + البحث الذكي + طباعة الأقسام ===== */
+.qcmpk{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:10px}.qcmpk>div{background:var(--surface2);border-radius:12px;padding:10px 12px}.qcmpk span{display:block;font-size:12px;color:var(--mut);font-weight:700}.qcmpk b{display:block;font-size:19px;font-weight:900}.qcmpk small{color:var(--mut);font-size:11px}.qcmpk .w b{color:var(--wait)}
+@media (max-width:800px){.qcmpk{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.qcmpt th:first-child{background:var(--surface2);width:150px}.qcmpt td{vertical-align:top;min-width:150px}.qcmpt td.up{color:var(--late)}.qcmpt td.dn{color:var(--done)}
+.qscope textarea{width:100%;min-width:170px;border:1px solid var(--line);border-radius:8px;padding:6px 8px;font:inherit;font-size:12.5px;background:var(--bg);color:var(--ink);resize:vertical}
+tr.qx-del td{background:color-mix(in srgb,var(--late) 8%,var(--surface));text-decoration:line-through}tr.qx-add td{background:color-mix(in srgb,var(--done) 8%,var(--surface))}tr.qx-chg td{background:color-mix(in srgb,var(--wait) 8%,var(--surface))}
+.smart-ans{border:2px solid color-mix(in srgb,var(--gold) 50%,var(--line))}.smart-ans .sans{font-size:16px;font-weight:800;margin:4px 0 10px}.smart-ans tr{cursor:pointer}.smart-ans td small{display:block;color:var(--mut);font-size:11px}
+.pnlp{margin-inline-start:auto;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:2px 7px;font-size:12px;cursor:pointer;opacity:.55;line-height:1.4}.pnlp:hover{opacity:1;border-color:var(--gold)}
+.panel>h3{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+@media print{.pnlp{display:none!important}}
+
 /* ===== v100: أقسام المشروع بلا ترقيم + الخدمات + الجهة المسؤولة ===== */
 .psnav .psn::before{content:none!important;display:none!important}
 .psnav{counter-reset:none}

@@ -1129,7 +1129,7 @@ const snap = obj => ({ docs: Object.entries(obj).map(([id, v]) => ({ id, data: (
 const emit = () => listeners.forEach(f => f(snap(store)));
 const emitN = () => noteListeners.forEach(f => f(snap(Object.fromEntries(Object.entries(noteStore).map(([k, v]) => [k, { text: v }])))));
 const rid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-const APP_VER = "v100", APP_DATE = "2026-10-17";
+const APP_VER = "v101", APP_DATE = "2026-10-17";
 const strip = o => { const r = { ...o }; delete r.id; return r; };
 const SKINS = [["night", "ليل مكة", "كحلي ليلي ونحاسي ذهبي", "#14213d", "#c29a3e", "#2f63b5"], ["roshan", "روشن حجازي", "أخضر بترولي وذهب رملي", "#0e3b43", "#d9b97a", "#c8553d"], ["earth", "طين ونخيل", "بني تمري وتيراكوتا", "#3a2a21", "#e0b66f", "#4f6b3a"]];
 const curSkin = () => document.documentElement.dataset.skin || "night";
@@ -4048,6 +4048,7 @@ function demoSample(){ const r = {}; if (!/[?&]sample/.test(location.search)) re
     P("sp4", "منتجع المخواة", "ماشي العمري", "تصميم معماري", 95000, [["دفعة مقدمة", 20, "todo"]], [], [], "quote"),
     P("sp5", "الكامل 2", "صرح الأفق الجديدة", "تصميم معماري", 60000, [["دفعة مقدمة", 30, "done"], ["التسليم النهائي", 70, "done"]], [["دفعة مقدمة", 20700, 20700, -150], ["التسليم النهائي", 48300, 0, -45]], [], "done"),
     P("sp6", "باسقات الخير", "شركة بيادر النمو", "إشراف هندسي", 180000, [["دفعة مقدمة", 20, "todo"]], [], [], "contract")];
+  Object.assign(r.projects[3], { price: 82000, agreed: 82000, qst: "nego", qRevs: [{ kind: "Rev.0 — العرض الأساسي", date: d(-30), val: 95000, st: "superseded", scope: "تصميم معماري كامل + واجهات ثلاثية الأبعاد + 3 بدائل للفكرة + مخططات تنفيذية" }, { kind: "Rev — عرض معدّل بعد التخفيض", date: d(-6), val: 82000, st: "sent", scope: "تصميم معماري كامل + واجهات ثلاثية الأبعاد + بديلان للفكرة (المخططات التنفيذية عرض منفصل)" }] });
   Object.assign(r.projects[1], { types: ["إشراف هندسي", "تصميم معماري"], svcs: [{ t: "تصميم معماري", v: 40000, st: "done" }, { t: "إشراف هندسي", v: 80000, st: "doing" }], srcBranch: "فرع مكة", pmUser: "م. أحمد" }); r.projects[1].phases.forEach((x, i) => x.svc = i ? "1" : "0");
   r.projects[1].expenses.push({ desc: "تحويل إلى مؤسسة الرفع المساحي — أعمال الرفع", cat: TRX, date: d(-8), amount: 4500, to: "مؤسسة الرفع المساحي", reason: "أعمال الرفع" });
   r.contacts = [{ id: "sc1", name: "شركة راز الماسية العقارية", cat: "dev", rel: "current", code: "C-001", people: [], createdAt: 1 }, { id: "sc2", name: "مؤسسة البناء الحديث للمقاولات", cat: "contractor", rel: "partner", code: "C-002", phone: "0500000000", people: [], createdAt: 2,
@@ -4368,6 +4369,80 @@ grpPanel = (f => function(){ let h = f.apply(this, arguments); const fin = can("
   const B = [...new Set(P.map(x => x.p.srcBranch).filter(Boolean))]; if (!B.length) return h;
   const R = B.map(b => { const L = P.filter(x => x.p.srcBranch === b), W = L.filter(x => !FINX.has(x.p.status)); return [b, L.filter(x => QST.has(x.p.status)).length, W.length, W.reduce((a, x) => a + x.c.T, 0), W.reduce((a, x) => a + x.c.paid, 0)]; });
   return h + `<div class="panel" id="dSrc"><h3>🧲 المشاريع حسب الجهة صاحبة العرض <small>من جلب المشروع</small></h3><div class="tblwrap"><table class="ptable compact"><tr><th>الجهة</th><th>عروض قائمة</th><th>عقود</th><th>قيمة العقود</th><th>المحصّل</th></tr>${R.map(r => `<tr><td><b>${esc(r[0])}</b></td><td class="n">${r[1]}</td><td class="n">${r[2]}</td><td class="n">${money(r[3])}</td><td class="n">${money(r[4])}</td></tr>`).join("")}</table></div></div>`; })(grpPanel);
+// ===== v101: مقارنة عروض الأسعار + البحث الذكي + طباعة أي قسم + دليل الاستخدام =====
+// ---- مقارنة العرض الأصلي بالمخفّض ونطاق كل عرض ----
+qMig = (f => function(p){ const r = f.apply(this, arguments); try { const R = p.qRevs || [], L = R[R.length - 1]; if (L && (p.qItems || []).length) L.items = JSON.parse(JSON.stringify(p.qItems)); } catch {} return r; })(qMig);
+function qCmpView(p){ qMig(p); const R = (p.qRevs || []).filter(r => num(r.val)); if (R.length < 2 && !(R[0] && R[0].scope)) return R.length ? `<div class="panel" id="sec-qcmp"><h3>⚖️ مقارنة العروض</h3><div class="sub">تظهر المقارنة بعد تسجيل عرض معدّل أو تخفيض في «سجل التعديلات». اكتب نطاق العمل لكل عرض ليظهر هنا.</div></div>` : "";
+  const ed = pEdit(), rate = prate(p), f0 = num(R[0].val), last = R[R.length - 1], cur = num(last.val), d = f0 - cur, dp = f0 ? d / f0 : 0;
+  const cols = R.map((r, i) => { const v = num(r.val), prev = i ? num(R[i - 1].val) : v; return { r, i, v, vat: v * rate, T: v * (1 + rate), ch: v - prev, disc: f0 ? (f0 - v) / f0 : 0 }; });
+  const ri = r => (p.qRevs || []).indexOf(r);
+  const row = (l, fn) => `<tr><th>${l}</th>${cols.map(fn).join("")}</tr>`;
+  const items = (() => { const A = R[0].items || [], B = last.items || []; if (!A.length && !B.length) return ""; const nm = x => x.n || x.name || x.t || x.title || "", vv = x => num(x.v ?? x.val ?? x.price ?? x.amount ?? x.total);
+    const keys = [...new Set(A.map(nm).concat(B.map(nm)).filter(Boolean))];
+    return `<h4 class="ddh">بنود العرض: الأصلي مقابل الحالي</h4><div class="tblwrap"><table class="ptable compact"><tr><th>البند</th><th>العرض الأصلي</th><th>العرض الحالي</th><th>الفرق</th></tr>${keys.map(k => { const a = A.find(x => nm(x) === k), b = B.find(x => nm(x) === k), av = a ? vv(a) : 0, bv = b ? vv(b) : 0; return `<tr class="${!b ? "qx-del" : !a ? "qx-add" : av !== bv ? "qx-chg" : ""}"><td>${esc(k)}${!b ? " <small>(حُذف من النطاق)</small>" : !a ? " <small>(أُضيف)</small>" : ""}</td><td class="n">${a ? money(av) : "—"}</td><td class="n">${b ? money(bv) : "—"}</td><td class="n">${money(bv - av)}</td></tr>`; }).join("")}</table></div>`; })();
+  return `<div class="panel" id="sec-qcmp"><h3>⚖️ مقارنة العروض <small>العرض الأساسي مقابل كل تعديل — لاتخاذ القرار</small></h3>
+    <div class="qcmpk"><div><span>العرض الأساسي</span><b>${money(f0)}</b><small>قبل الضريبة</small></div><div><span>العرض الحالي</span><b>${money(cur)}</b><small>${esc(last.kind || "")}</small></div><div class="${d > 0 ? "w" : ""}"><span>قيمة التخفيض</span><b>${money(d)}</b><small>${pct(dp)} من العرض الأساسي</small></div><div><span>الحالي شامل الضريبة</span><b>${money(cur * (1 + rate))}</b><small>ضريبة ${money(cur * rate)}</small></div></div>
+    ${dp > 0.15 ? `<div class="svcw">⚠️ التخفيض تجاوز 15% من العرض الأساسي — راجع النطاق (هل خُفّضت الأعمال بما يتناسب مع السعر؟)</div>` : ""}
+    <div class="tblwrap"><table class="ptable qcmpt"><tr><th></th>${cols.map(c => `<th>${esc((c.r.kind || "").split(" — ")[0] || "عرض " + (c.i + 1))}</th>`).join("")}</tr>
+      ${row("نوع العرض", c => `<td>${esc(c.r.kind || "—")}</td>`)}${row("التاريخ", c => `<td class="nw">${esc(c.r.date || "—")}</td>`)}
+      ${row("القيمة قبل الضريبة", c => `<td class="n"><b>${money(c.v)}</b></td>`)}${row("الضريبة", c => `<td class="n">${money(c.vat)}</td>`)}${row("الإجمالي شامل الضريبة", c => `<td class="n">${money(c.T)}</td>`)}
+      ${row("التغيّر عن السابق", c => `<td class="n ${c.ch < 0 ? "dn" : c.ch > 0 ? "up" : ""}">${c.i ? (c.ch > 0 ? "+" : "") + money(c.ch) : "—"}</td>`)}${row("التخفيض عن الأساسي", c => `<td class="n">${c.i ? pct(c.disc) : "—"}</td>`)}
+      ${row("الحالة", c => `<td>${esc((QRS.find(x => x[0] === c.r.st) || ["", c.r.st || "—"])[1])}</td>`)}
+      ${row("نطاق العمل", c => `<td class="qscope">${ed ? `<textarea data-row="qRevs" data-i="${ri(c.r)}" data-k="scope" rows="4" placeholder="ما يشمله هذا العرض: الخدمات، المخرجات، عدد الزيارات، المدة…">${esc(c.r.scope || "")}</textarea>` : esc(c.r.scope || "—")}</td>`)}
+    </table></div>${items}</div>`; }
+projectDetail = (f => function(p){ let h = f.apply(this, arguments); if ((projSec !== "quote" && projSec !== "all") || !p) return h; const v = qCmpView(p); if (!v) return h;
+  const i = h.indexOf('id="sec-revq"'); if (i > 0) { const j = h.lastIndexOf("<div", i); return h.slice(0, j) + v + h.slice(j); } return h.replace(/(<\/div>)\s*$/, v + "$1"); })(projectDetail);
+document.addEventListener("change", e => { const el = e.target; if (el.dataset && el.dataset.row === "qRevs" && el.dataset.k === "scope" && projDraft) { projInput(el); projTouch(); } });
+// مؤشر التخفيضات في لوحة المشاريع
+ddData = (f => function(key){ if (key !== "qdisc") return f.apply(this, arguments);
+  const L = PV().map(p => { qMig(p); const R = (p.qRevs || []).filter(r => num(r.val)); return R.length > 1 ? { p, f0: num(R[0].val), cur: num(R[R.length - 1].val) } : null; }).filter(x => x && x.f0 > x.cur);
+  const S = fn => L.reduce((a, x) => a + fn(x), 0);
+  return { t: "التخفيضات على عروض الأسعار", s: `${L.length} عرض · إجمالي التخفيض ${money(S(x => x.f0 - x.cur))} ر.س قبل الضريبة`, h: L.length ? `<div class="tblwrap"><table class="ptable compact dd"><tr><th>المشروع</th><th>الحالة</th><th>العرض الأساسي</th><th>العرض الحالي</th><th>التخفيض</th><th>النسبة</th></tr>${L.sort((a, b) => (b.f0 - b.cur) - (a.f0 - a.cur)).map(x => `<tr data-ddp="${x.p.id}"><td><b>${esc(x.p.name)}</b><small class="ddc">${esc(x.p.client || "")}</small></td><td>${spill((PSTL[x.p.status] || PSTL.quote).l, (PSTL[x.p.status] || PSTL.quote).c)}</td><td class="n">${money(x.f0)}</td><td class="n">${money(x.cur)}</td><td class="n"><b>${money(x.f0 - x.cur)}</b></td><td class="n">${pct((x.f0 - x.cur) / x.f0)}</td></tr>`).join("")}<tr class="ddt"><td colspan="2">الإجمالي</td><td class="n">${money(S(x => x.f0))}</td><td class="n">${money(S(x => x.cur))}</td><td class="n">${money(S(x => x.f0 - x.cur))}</td><td class="n">${pct(S(x => x.f0 - x.cur) / (S(x => x.f0) || 1))}</td></tr></table></div>` : `<div class="empty" style="padding:14px">لا توجد تخفيضات مسجّلة</div>` }; })(ddData);
+DDSEC = (f => k => k === "qdisc" ? "quote" : f(k))(DDSEC);
+projDash0 = (f => function(){ let h = f.apply(this, arguments); const n = PV().filter(p => { const R = (p.qRevs || []).filter(r => num(r.val)); return R.length > 1 && num(R[0].val) > num(R[R.length - 1].val); });
+  if (!n.length) return h; const v = n.reduce((a, p) => { const R = p.qRevs.filter(r => num(r.val)); return a + num(R[0].val) - num(R[R.length - 1].val); }, 0);
+  return h.replace('<div data-dd="pretax">', `<div data-dd="qdisc"><span>التخفيضات على العروض</span><b>${n.length}</b><small>${kmoney(v)} ر.س</small></div><div data-dd="pretax">`); })(projDash0);
+// ---- البحث الذكي: يفهم السؤال (عميل/مشروع + مطالبات/متأخرة/مشاريع/مهام/تحويلات/عروض) ----
+function smartAsk(q){ const n = normA(q); if (!n) return ""; const has = (...w) => w.some(x => n.includes(normA(x)));
+  const GEN = new Set(["شركه", "شركة", "مؤسسه", "مؤسسة", "مكتب", "مجموعه", "مجموعة", "للتطوير", "العقاريه", "العقارية", "للمقاولات", "الجديده", "الجديدة", "مشروع", "فيلا", "عماره", "عمارة"]);
+  const qt = new Set(n.split(/\s+/).map(w => w.replace(/^(ال|لل|ب|و)/, ""))), words = s0 => normA(s0).split(/\s+/).filter(w => w.length >= 3 && !GEN.has(w)).map(w => w.replace(/^(ال|لل)/, ""));
+  const cl = clientsAll().filter(e => e.name && words(e.name).some(w => qt.has(w))), pj = PV().filter(p => p.name && (n.includes(normA(p.name)) || (words(p.name).length && words(p.name).every(w => qt.has(w)))));
+  const scopeP = PV().filter(p => (!cl.length || cl.some(e => normN(e.name) === normN(p.client))) && (!pj.length || pj.includes(p)));
+  const late = has("متأخر", "متاخر", "تأخير"), S = (a, f) => a.reduce((s, x) => s + f(x), 0), who = [cl.map(e => e.name).join("، "), pj.map(p => p.name).join("، ")].filter(Boolean).join(" · ");
+  let t = "", body = "";
+  if (has("مطالب", "مستحق", "تحصيل", "فلوس", "باقي", "متبقي")) { const L = scopeP.filter(p => !FINX.has(p.status)).flatMap(p => pcalc(p).dueCl.filter(x => num(x.inc) - num(x.pd) > 0 && (!late || x.st === "late")).map(x => ({ p, x })));
+    t = `${late ? "المطالبات المتأخرة" : "المطالبات المستحقة"}${who ? " — " + who : ""}: ${L.length} بقيمة ${money(S(L, o => num(o.x.inc) - num(o.x.pd)))} ر.س`;
+    body = L.map(o => `<tr data-sproj="${o.p.id}"><td><b>${esc(o.p.name)}</b><small>${esc(o.p.client || "")}</small></td><td>${esc(o.x.inv || "")} ${esc(o.x.phase || "")}</td><td class="nw">${esc(o.x.date || "")} <small>${o.x.age} يوم</small></td><td class="n"><b>${money(num(o.x.inc) - num(o.x.pd))}</b></td></tr>`).join(""); }
+  else if (has("تحويل")) { const L = scopeP.flatMap(p => (p.expenses || []).filter(e => e.cat === TRX).map(e => ({ p, e }))); t = `التحويلات الخارجية${who ? " — " + who : ""}: ${L.length} بقيمة ${money(S(L, o => num(o.e.amount)))} ر.س`; body = L.map(o => `<tr data-sproj="${o.p.id}"><td><b>${esc(o.p.name)}</b></td><td>${esc(o.e.to || o.e.desc || "")}</td><td class="nw">${esc(o.e.date || "")}</td><td class="n"><b>${money(o.e.amount)}</b></td></tr>`).join(""); }
+  else if (has("مهام", "مهمة", "شغل")) { const names = new Set(scopeP.map(p => normN(p.name))); const L = allItems.filter(x => !x.done && x.space !== "p" && (names.has(normN(x.project)) || (!cl.length && !pj.length)) && (!late || (x.due && x.due < today()))).slice(0, 60);
+    t = `${late ? "المهام المتأخرة" : "المهام المفتوحة"}${who ? " — " + who : ""}: ${L.length}`; body = L.map(x => `<tr data-sitem="${x.id}"><td><b>${esc(x.title)}</b></td><td>${esc(x.project || "")}</td><td class="nw">${esc(x.due || "")}</td><td>${esc(uname(x.owner) || "")}</td></tr>`).join(""); }
+  else if (cl.length || pj.length || has("مشاريع", "مشروع", "عروض", "عرض سعر", "جاري", "منتهي", "متوقف")) {
+    let L = scopeP; if (has("عروض", "عرض سعر")) L = L.filter(p => QST.has(p.status)); else if (has("جاري")) L = L.filter(p => p.status === "active"); else if (has("منتهي")) L = L.filter(p => p.status === "done"); else if (has("متوقف")) L = L.filter(p => p.status === "hold");
+    if (late) L = L.filter(p => pcalc(p).late.length || (p.steps || []).some(s => !s.done && s.due && s.due < today()));
+    t = `المشاريع${who ? " — " + who : ""}: ${L.length}`; body = L.map(p => { const c = pcalc(p), st = PSTL[p.status] || PSTL.contract; return `<tr data-sproj="${p.id}"><td><b>${esc(p.name)}</b><small>${esc(p.client || "")}</small></td><td>${spill(st.l, st.c)}</td><td class="n">${money(c.T || c.P.T)}</td><td class="n">${money(c.out)}</td></tr>`; }).join(""); }
+  if (!t) return "";
+  return `<div class="panel smart-ans"><h3>🤖 إجابة ذكية <small>${esc(q)}</small></h3><div class="sans">${esc(t)}</div>${body ? `<div class="tblwrap"><table class="ptable compact">${body}</table></div>` : ""}</div>`; }
+searchView = (f => function(){ let h = f.apply(this, arguments); try { h = smartAsk(gq) + h; } catch (x) { console.warn(x); } return h; })(searchView);
+document.addEventListener("click", e => { const r = e.target.closest && e.target.closest("[data-sproj],[data-sitem]"); if (!r || !e.target.closest(".smart-ans")) return; if (r.dataset.sproj) openProj(r.dataset.sproj); else if (typeof goItem === "function") goItem(r.dataset.sitem); });
+// ---- زر طباعة لكل قسم (أقسام المشروع وملف العميل) ----
+function pnlPass(){ document.querySelectorAll("#view .pdetail .panel > h3, #cliBox .panel > h3, #view .hgrid .panel > h3, #view > .panel > h3").forEach(h => { if (h.querySelector(".pnlp") || h.closest("#printDay")) return; h.insertAdjacentHTML("beforeend", `<button type="button" class="pnlp" title="طباعة هذا القسم" data-pnlp>🖨️</button>`); }); }
+var pnlT = 0; new MutationObserver(() => { clearTimeout(pnlT); pnlT = setTimeout(pnlPass, 120); }).observe(document.body, { childList: true, subtree: true });
+document.addEventListener("click", e => { const b = e.target.closest && e.target.closest("[data-pnlp]"); if (!b) return; e.preventDefault(); e.stopPropagation();
+  const pn = b.closest(".panel"), c = pn.cloneNode(true), src = pn.querySelectorAll("input,select,textarea"), dst = c.querySelectorAll("input,select,textarea");
+  dst.forEach((el, i) => { const o = src[i]; let v = o.tagName === "SELECT" ? (o.selectedIndex >= 0 ? o.options[o.selectedIndex].text : "") : (o.type === "checkbox" ? (o.checked ? "✓" : "") : o.value || ""); if (v === "—") v = ""; const s = document.createElement("span"); s.textContent = v; el.replaceWith(s); });
+  c.querySelectorAll("button,.tbltools,.pnlp,datalist,.svcf").forEach(x => x.remove()); const t = (pn.querySelector("h3") || {}).textContent || "تقرير";
+  const sub = tab === "projects" && projDraft ? "مشروع " + (projDraft.name || "") + (projDraft.client ? " — " + projDraft.client : "") : (!$("#cliBox").hidden && cliEdit ? "العميل: " + (cliEdit.name || "") : TITLES[tab] || "");
+  repPrint(t.replace(/🖨️/g, "").replace(/\s+/g, " ").trim(), sub, c.innerHTML.replace(/<h3[\s\S]*?<\/h3>/, "")); });
+// ---- دليل الاستخدام: الإضافات الجديدة ----
+GUIDE_NEW.unshift(["v101", "مقارنة العرض الأساسي بكل تعديل ونطاق العمل لكل عرض، ومؤشر التخفيضات، والبحث الذكي (مثل: «مطالبات راز المتأخرة»)، وزر 🖨️ لطباعة أي قسم."],
+  ["v100", "الخدمات والأتعاب داخل المشروع (تصميم + IFC + إشراف…) بقيمة ودفعات وتحصيل لكل خدمة، والخطوات المتعارف عليها تلقائياً، والجهة المسؤولة عن المشروع، وأقسام مرتبة دون ترقيم."],
+  ["v99", "صفحة العملاء بأسلوب CRM (جدول/بطاقات/مراحل العلاقة) وملف العميل 360° بالجدول الزمني وكشف الحركات."], ["v98", "لوحة مؤشرات مرتبة وطباعتها مطابقة للشاشة، وتقرير الفروع، والتدفق النقدي، وكشف المطالبات مع تذكير واتساب."],
+  ["v97", "صفحة اليوم بقسم إداري واحد والاجتماعات تلقائياً، ومرحلة التعاقد خارج الحسابات حتى البدء، ولون للمشاريع المسلّمة وعليها مطالبات، والسجل الموحّد، والتحويلات الخارجية."]);
+{ const gi = GUIDE.findIndex(x => x.k === "projects") + 1 || GUIDE.length;
+  GUIDE.splice(gi, 0, { k: "svc", ic: "🧩", t: "الخدمات والأتعاب والتحويلات", tab: "projects", g: "الأعمال", w: "مشروع واحد يضم أكثر من خدمة بقيمة ودفعات وتحصيل مستقل لكل خدمة، والتحويلات الخارجية تُسجَّل في مصاريف المشروع وسجله.",
+    s: ["افتح المشروع ← «🧩 الخدمات والأتعاب» ← «+ إضافة خدمة» واكتب قيمة كل خدمة.", "اضغط «اعتماد المجموع كقيمة للعقد» إن اختلف المجموع عن قيمة العقد.", "في «الدفعات والمطالبات» اختر لكل دفعة خدمتها، واستخدم أزرار التصفية لعرض كل خدمة وحدها.", "للتحويل الخارجي: «+ جديد» ← «💸 تحويل خارجي»، أو اكتب مهمة مرتبطة بالمشروع: «تحويل 5000 إلى فلان — السبب».", "المشروع الجديد تُضاف له الخطوات المتعارف عليها لنوع خدمته تلقائياً."], tip: ["مرحلة التعاقد لا تدخل الحسابات المالية حتى تحويل الحالة إلى «جاري العمل»، وتظهر قيمتها في بطاقة «قيد التعاقد»."] },
+  { k: "c360", ic: "👤", t: "ملف العميل وكشف المطالبات", tab: "clients", g: "الأعمال", w: "ملف شامل لكل عميل: الموقف المالي لكل مشروع، المطالبات المستحقة مع تذكير واتساب، كشف الحركات بالرصيد، والجدول الزمني لمشاريعه.",
+    s: ["من «العملاء» اختر طريقة العرض: جدول، بطاقات، أو مراحل العلاقة.", "افتح العميل وتنقّل بين التبويبات: نظرة عامة، المشاريع، المالية والدفعات، الجدول الزمني، البيانات.", "من لوحة المؤشرات اضغط «📑 كشف المطالبات المستحقة» واختر التجميع حسب العميل أو المشروع أو المتأخرة.", "زر 🖨️ بجانب عنوان أي قسم يطبعه وحده بتقرير رسمي."], tip: ["البحث الذكي في الأعلى يفهم أسئلة مثل: «مشاريع راز الجارية» أو «مطالبات متأخرة»."] }); }
 // ===== v54: فحص التحديثات، لوحة الأوامر (Ctrl+K)، تلوين التقارير المطبوعة =====
 async function verCheck(){ try { const t = await (await fetch("./index.html?vc=" + Date.now(), { cache: "no-store" })).text(); const m = /const APP_VER = "([^"]+)"/.exec(t);
   if (m && m[1] !== APP_VER) { let b = $("#updBar"); if (!b) { b = document.createElement("div"); b.id = "updBar"; b.className = "updbar"; document.body.appendChild(b); } b.innerHTML = `🎉 نسخة جديدة <b>${esc(m[1])}</b> جاهزة <button type="button" data-upd>تحديث الآن</button>`; b.hidden = false; } } catch {} }
