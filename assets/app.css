@@ -673,6 +673,16 @@ body.private .hero{background:radial-gradient(1200px 300px at 85% -40%,rgba(111,
 #printDay .pdbar{display:flex;height:16px;border-radius:8px;overflow:hidden;margin:-6px 0 14px;gap:2px}#printDay .pdbar i{display:block;position:relative;font-style:normal}#printDay .pdbar span{position:absolute;inset:0;color:#fff;font-size:8.5px;text-align:center;line-height:16px;white-space:nowrap;overflow:hidden;font-weight:700}
 #printDay .pdbar .g-done{background:#2c8a60}#printDay .pdbar .g-late{background:#c2453b}#printDay .pdbar .g-wait{background:#c9962b}#printDay .pdbar .g-open{background:#2f63b5}#printDay .pdbar .g-daily{background:#6b4fbb}#printDay .pdbar .g-fut{background:#8b94aa}
 @media print{.pray,.updbar,#cmdM,.pxbar{display:none!important}}
+/* ===== v97: تلوين صف المشروع بالكامل حسب الحالة + المشروع المسلّم وعليه مطالبات ===== */
+.plist tr[data-popen] td{background:color-mix(in srgb,var(--sc,#8b94aa) 7%,var(--surface))}
+.plist tr[data-popen] td:first-child{box-shadow:inset -4px 0 0 var(--sc,#8b94aa)}
+.plist tr[data-popen]:hover td{background:color-mix(in srgb,var(--sc,#8b94aa) 14%,var(--surface))}
+.plist tr.prow-owed td{background:color-mix(in srgb,#d9822b 12%,var(--surface))!important}
+.plist tr.prow-owed td:first-child{box-shadow:inset -4px 0 0 #d9822b}
+.plist tr.prow-owed td.pn b::after{content:"  ⚠ مطالبات معلّقة";color:#b5651d;font-size:11px;font-weight:800}
+.trxf{display:grid;gap:8px}.trxf label{display:grid;gap:4px;font-size:13px;font-weight:700}.trxf input,.trxf select{border:1px solid var(--line);border-radius:10px;padding:8px 10px;font:inherit;background:var(--surface);color:var(--ink)}
+#trxBox[hidden]{display:none}
+
 /* ===== v95: تطبيق الهوية البصرية كاملة ===== */
 :root{--ink2:#5a6785;--navy-dark:#0d1730}
 .side{background:linear-gradient(180deg,#0d1730 0%,#14213d 60%,#14213d 100%)!important}
