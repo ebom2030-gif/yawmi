@@ -745,8 +745,8 @@ nav.tabs button .c+.nstar,nav.tabs button .nstar+.c{margin-inline-start:6px}
 .brkst button[aria-pressed=true]{background:var(--ink);color:var(--surface);border-color:transparent}
 
 /* v91: محاذاة عناوين الأعمدة الرقمية مع بياناتها + أدوات تقارير المؤشرات */
-.ptable th.thn,.etable th.thn,table th.thn{text-align:left}
-.ptable th.thc,.etable th.thc,table th.thc{text-align:center}
+.ptable th.thn,.etable th.thn,table th.thn{text-align:left!important}
+.ptable th.thc,.etable th.thc,table th.thc{text-align:center!important}
 .ddtools{display:flex;gap:6px;flex-wrap:wrap}
 .ptable.dd tr[data-ddp] td:first-child b::after{content:" ↗";color:var(--gold2);font-size:11px;opacity:0;transition:opacity .15s}
 .ptable.dd tr[data-ddp]:hover td:first-child b::after{opacity:1}
@@ -1440,3 +1440,5 @@ body[data-tab=all] .main .wrap,body[data-tab=all] .main .hero-in{max-width:1500p
 @media (min-width:1100px){.pdkxs{grid-template-columns:repeat(6,1fr)}}
 .pfwrap>*{min-width:0}@media (max-width:760px){.pfwrap{grid-template-columns:minmax(0,1fr)}#auth[data-mode=profile] .auth-card{padding:0 12px 30px}}
 
+
+.lmt th:nth-child(n+3){text-align:left!important}
