@@ -1129,7 +1129,7 @@ const snap = obj => ({ docs: Object.entries(obj).map(([id, v]) => ({ id, data: (
 const emit = () => listeners.forEach(f => f(snap(store)));
 const emitN = () => noteListeners.forEach(f => f(snap(Object.fromEntries(Object.entries(noteStore).map(([k, v]) => [k, { text: v }])))));
 const rid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-const APP_VER = "v95", APP_DATE = "2026-10-17";
+const APP_VER = "v96", APP_DATE = "2026-10-17";
 const strip = o => { const r = { ...o }; delete r.id; return r; };
 const SKINS = [["night", "ليل مكة", "كحلي ليلي ونحاسي ذهبي", "#14213d", "#c29a3e", "#2f63b5"], ["roshan", "روشن حجازي", "أخضر بترولي وذهب رملي", "#0e3b43", "#d9b97a", "#c8553d"], ["earth", "طين ونخيل", "بني تمري وتيراكوتا", "#3a2a21", "#e0b66f", "#4f6b3a"]];
 const curSkin = () => document.documentElement.dataset.skin || "night";
@@ -4063,12 +4063,14 @@ GUIDE_NEW.unshift(["v92", "القائمة الجانبية حسب دورك (ال
 var API_GW = "/api", gwDown = 0;
 try { gwDown = Number(localStorage.getItem("yw_gwdown") || 0); } catch {}
 async function apiPost(body){
+  const gwOnly = /"fn":"cfNative"/.test(body);
+  if (gwOnly) { const r = await fetch(API_GW, { method: "POST", body, credentials: "omit", headers: { "content-type": "text/plain;charset=utf-8" } }); if (r.headers.get("x-yw-gw")) { gwDown = 0; try { localStorage.removeItem("yw_gwdown"); } catch {} return r; } throw new Error("تعذّر الاتصال بخادم Cloudflare — حاول بعد قليل"); }
   if (location.protocol === "https:" && Date.now() > gwDown) { try { const r = await fetch(API_GW, { method: "POST", body, credentials: "omit", headers: { "content-type": "text/plain;charset=utf-8" } }); if (r.headers.get("x-yw-gw")) return r; } catch {}
-    gwDown = Date.now() + 10 * 60000; try { localStorage.setItem("yw_gwdown", String(gwDown)); } catch {} }
+    gwDown = Date.now() + 2 * 60000; try { localStorage.setItem("yw_gwdown", String(gwDown)); } catch {} }
   return fetch(API, { method: "POST", body, credentials: "omit" }); }
 // ===== v95: لوحة «خادم Cloudflare» في صحة النظام: الحالة وتفعيل الحفظ السريع (للمالك) =====
 var cfInfo = null;
-function cfLoad(){ if (isDemo || !TOKEN) return; fetch("/api?t=" + encodeURIComponent(TOKEN) + "&x=" + Date.now(), { cache: "no-store" }).then(r => r.json()).then(j => { cfInfo = j; if (tab === "health") render(); }).catch(() => {}); }
+function cfLoad(){ if (isDemo || !TOKEN) return; fetch("/api?t=" + encodeURIComponent(TOKEN) + "&x=" + Date.now(), { cache: "no-store", headers: { "x-yw-nocache": "1" } }).then(r => r.json()).then(j => { cfInfo = j; if (tab === "health") render(); }).catch(() => {}); }
 function cfPanel(){ if (!ME || ME.role !== "owner") return ""; const c = cfInfo; if (!c) { cfLoad(); return `<div class="panel cfbox"><h3>☁️ خادم Cloudflare</h3><div class="sub">جارٍ التحميل…</div></div>`; }
   const tm = c.lastSync ? new Date(c.lastSync).toLocaleString("ar-SA-u-nu-latn-ca-gregory") : "—";
   return `<div class="panel cfbox"><h3>☁️ خادم Cloudflare ${c.native ? `<small class="cfon">● الحفظ السريع مفعّل</small>` : `<small class="cfoff">● نسخة مطابقة فقط</small>`}</h3>
