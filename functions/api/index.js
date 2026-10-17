@@ -73,6 +73,8 @@ async function drain(env, budgetMs) {
   try {
     while (Date.now() - t0 < (budgetMs || 20000)) {
       const o = await db.prepare('SELECT * FROM outbox WHERE done = 0 ORDER BY seq LIMIT 1').first(); if (!o) break;
+      const newer = await db.prepare('SELECT seq FROM outbox WHERE done = 0 AND tn = ? AND kind = ? AND rid = ? AND seq > ? LIMIT 1').bind(o.tn || '', o.kind, o.rid, o.seq).first();
+      if (newer) { await db.prepare('UPDATE outbox SET done = 1, err = NULL WHERE seq = ?').bind(o.seq).run(); continue; } // نسخة أحدث من نفس العنصر ستُرسل
       const s = await db.prepare('SELECT t FROM ss WHERE uid = ? AND tn = ? ORDER BY seen DESC LIMIT 1').bind(o.uid, o.tn || '').first();
       if (!s) { await db.prepare('UPDATE outbox SET tries = tries + 1, err = ? WHERE seq = ?').bind('لا توجد جلسة Google — بانتظار الدخول', o.seq).run(); break; }
       let r; try { r = await gasCall(env, s.t, o.fn, JSON.parse(o.args)); }
@@ -231,8 +233,8 @@ export async function onRequestPost({ request, env, waitUntil }) {
         } catch (e) { if (e instanceof UErr) return fail(e.message); throw e; }
         if (handled) {
           waitUntil((async () => { try {
-            if (WRITES.has(req.fn)) await drain(env, 25000);
-            else if (Date.now() - (s.rec_at || 0) > RECONCILE_MIN * 60000) { await db.prepare('UPDATE ss SET rec_at = ? WHERE th = ?').bind(Date.now(), th).run(); await drain(env, 15000); await reconcile(env, s); }
+            await drain(env, WRITES.has(req.fn) ? 25000 : 20000);
+            if (Date.now() - (s.rec_at || 0) > RECONCILE_MIN * 60000) { await db.prepare('UPDATE ss SET rec_at = ? WHERE th = ?').bind(Date.now(), th).run(); await drain(env, 15000); await reconcile(env, s); }
             else if (Date.now() - (s.gas_at || 0) > KEEPALIVE_MIN * 60000) { await db.prepare('UPDATE ss SET gas_at = ? WHERE th = ?').bind(Date.now(), th).run(); await gasCall(env, req.t, 'getMat', []); await drain(env, 15000); }
           } catch (e) { try { await log(db, s.tn, s.uid, 'bg:' + req.fn, 0, 0, e.message || e); } catch (x) {} } })());
           return ok(data);
