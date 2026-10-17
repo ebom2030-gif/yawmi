@@ -673,6 +673,27 @@ body.private .hero{background:radial-gradient(1200px 300px at 85% -40%,rgba(111,
 #printDay .pdbar{display:flex;height:16px;border-radius:8px;overflow:hidden;margin:-6px 0 14px;gap:2px}#printDay .pdbar i{display:block;position:relative;font-style:normal}#printDay .pdbar span{position:absolute;inset:0;color:#fff;font-size:8.5px;text-align:center;line-height:16px;white-space:nowrap;overflow:hidden;font-weight:700}
 #printDay .pdbar .g-done{background:#2c8a60}#printDay .pdbar .g-late{background:#c2453b}#printDay .pdbar .g-wait{background:#c9962b}#printDay .pdbar .g-open{background:#2f63b5}#printDay .pdbar .g-daily{background:#6b4fbb}#printDay .pdbar .g-fut{background:#8b94aa}
 @media print{.pray,.updbar,#cmdM,.pxbar{display:none!important}}
+/* ===== v98: لوحة المؤشرات + الطباعة المطابقة للشاشة + كشف المطالبات ===== */
+.dsh2{margin:22px 0 10px;font-size:19px;font-weight:900;color:var(--ink);display:flex;align-items:center;gap:8px;border-bottom:2px solid color-mix(in srgb,var(--gold) 45%,var(--line));padding-bottom:6px}
+#dBranch,#dCash{margin-top:14px}
+.soonl{list-style:none;padding:0;margin:0;display:grid;gap:6px}.soonl li{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--surface2);border-radius:10px;padding:7px 10px}.soonl small{color:var(--mut)}
+.wabtn.sm{font-size:11px;padding:3px 9px;border-radius:999px;background:#25d366;color:#fff!important;text-decoration:none;font-weight:800;margin-inline-start:auto}
+.clst tr.grp td{background:color-mix(in srgb,var(--navy) 8%,var(--surface));font-weight:800;color:var(--ink);padding:9px 8px}.clst tr.grp small{color:var(--mut);font-weight:600;margin-inline-start:8px}
+.clst tr.cl-late td{background:color-mix(in srgb,var(--late) 6%,var(--surface))}
+@media print{
+ body.dprint #view{zoom:.74}
+ body.dprint .dk{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+ body.dprint .sk{grid-template-columns:repeat(5,minmax(0,1fr))!important}
+ body.dprint .mk{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+ body.dprint .pgrid,body.dprint .hgrid.two{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ body.dprint .pgrid.g3{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ body.dprint .hks,body.dprint .pdkxs{grid-template-columns:repeat(6,minmax(0,1fr))!important}
+ body.dprint .tbltools,body.dprint .missbox,body.dprint .lcb2 .lcx,body.dprint [data-claimsrep]{display:none!important}
+ body.dprint .dsh2{break-after:avoid;margin-top:10px}
+ body.dprint .panel{padding:10px 12px!important}
+ body.dprint .wabtn{display:none!important}
+}
+
 /* ===== v97: تلوين صف المشروع بالكامل حسب الحالة + المشروع المسلّم وعليه مطالبات ===== */
 .plist tr[data-popen] td{background:color-mix(in srgb,var(--sc,#8b94aa) 7%,var(--surface))}
 .plist tr[data-popen] td:first-child{box-shadow:inset -4px 0 0 var(--sc,#8b94aa)}

@@ -1129,7 +1129,7 @@ const snap = obj => ({ docs: Object.entries(obj).map(([id, v]) => ({ id, data: (
 const emit = () => listeners.forEach(f => f(snap(store)));
 const emitN = () => noteListeners.forEach(f => f(snap(Object.fromEntries(Object.entries(noteStore).map(([k, v]) => [k, { text: v }])))));
 const rid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-const APP_VER = "v97", APP_DATE = "2026-10-17";
+const APP_VER = "v98", APP_DATE = "2026-10-17";
 const strip = o => { const r = { ...o }; delete r.id; return r; };
 const SKINS = [["night", "ليل مكة", "كحلي ليلي ونحاسي ذهبي", "#14213d", "#c29a3e", "#2f63b5"], ["roshan", "روشن حجازي", "أخضر بترولي وذهب رملي", "#0e3b43", "#d9b97a", "#c8553d"], ["earth", "طين ونخيل", "بني تمري وتيراكوتا", "#3a2a21", "#e0b66f", "#4f6b3a"]];
 const curSkin = () => document.documentElement.dataset.skin || "night";
@@ -4143,6 +4143,61 @@ projectDetail = (f => function(p){ let h = f.apply(this, arguments); if (projSec
   const i = h.indexOf('id="sec-log"'); if (i < 0) return h; const j = h.lastIndexOf("<div", i); return h.slice(0, j) + t.replace('<div class="panel">', '<div class="panel" id="sec-ulog">') + h.slice(j); })(projectDetail);
 // زر التحويل الخارجي داخل قسم المصاريف
 projectDetail = (f => function(p){ return f.apply(this, arguments).replace('<button class="btn ghost addr" data-add="expenses">+ إضافة مصروف</button>', `<button class="btn ghost addr" data-add="expenses">+ إضافة مصروف</button> <button class="btn ghost addr" type="button" data-trxnew="${p.id}">💸 تحويل خارجي</button>`); })(projectDetail);
+// ===== v98: لوحة مؤشرات مرتبة + طباعة مطابقة للشاشة + تقرير الفروع + التدفق النقدي + كشف المطالبات + تذكير واتساب =====
+var cliOf = n => CONTACTS.find(c => normN(c.name) === normN(n || ""));
+var phoneOf = n => { const c = cliOf(n); const p = c && (c.phone || ((c.people || []).find(x => x.phone) || {}).phone); return String(p || "").replace(/[^0-9]/g, "").replace(/^0(5\d{8})$/, "966$1").replace(/^(5\d{8})$/, "966$1"); };
+var waTo = (n, msg) => { const ph = phoneOf(n); return `https://wa.me/${ph}?text=${encodeURIComponent(msg)}`; };
+var clMsg = (p, c) => `السادة / ${p.client || ""} المحترمين\nالسلام عليكم ورحمة الله وبركاته،\nنودّ تذكيركم بالمطالبة ${c.inv ? "رقم " + c.inv + " " : ""}${c.phase ? "(" + c.phase + ") " : ""}لمشروع «${p.name}» بمبلغ ${money(c.inc - c.pd)} ر.س${c.date ? "، الصادرة بتاريخ " + c.date : ""}.\nنأمل التكرم بالسداد، ولكم جزيل الشكر.`;
+// ---- التدفق النقدي المتوقع ودفعات الأيام الثلاثة القادمة ----
+function cashRows(){ const t = today(), now = new Date(), P = PV().filter(p => !FINX.has(p.status)).map(p => ({ p, c: pcalc(p) }));
+  const M = [0, 1, 2].map(i => { const d = new Date(now.getFullYear(), now.getMonth() + i, 1); return { k: `${d.getFullYear()}-${pad(d.getMonth() + 1)}`, l: new Intl.DateTimeFormat("ar-EG-u-nu-latn", { month: "long", year: "numeric" }).format(d), cl: 0, ph: 0, n: 0 }; });
+  const soon = [];
+  P.forEach(({ p, c }) => { c.dueCl.forEach(x => { const v = num(x.inc) - num(x.pd); if (v > 0) { M[0].cl += v; M[0].n++; } });
+    c.ph.forEach(x => { if (x.status === "done" || x.claimed || !x.due || !x.amt) return; const k = String(x.due).slice(0, 7), m = M.find(m => m.k === k) || (x.due < t ? M[0] : null); if (m) { m.ph += x.amt; m.n++; }
+      const dd = daysBetween(t, x.due); if (dd >= 0 && dd <= 3) soon.push({ p, x, dd }); }); });
+  return { M, soon }; }
+function cashPanel(){ const { M, soon } = cashRows(), S = M.reduce((s, m) => s + m.cl + m.ph, 0);
+  return `<div class="panel" id="dCash"><h3>💵 التدفق النقدي المتوقع — 3 أشهر <small>المطالبات المفتوحة + المراحل المستحقة غير المطالَب بها</small></h3>
+  <div class="tblwrap"><table class="ptable compact"><tr><th>الشهر</th><th>مطالبات مفتوحة</th><th>مراحل مستحقة</th><th>الإجمالي المتوقع</th></tr>${M.map(m => `<tr><td><b>${esc(m.l)}</b></td><td class="n">${money(m.cl)}</td><td class="n">${money(m.ph)}</td><td class="n"><b>${money(m.cl + m.ph)}</b></td></tr>`).join("")}<tr class="tot"><td>الإجمالي</td><td class="n">${money(M.reduce((s, m) => s + m.cl, 0))}</td><td class="n">${money(M.reduce((s, m) => s + m.ph, 0))}</td><td class="n">${money(S)}</td></tr></table></div>
+  ${soon.length ? `<h4 class="ddh">⏰ دفعات مستحقة خلال 3 أيام</h4><ul class="soonl">${soon.map(({ p, x, dd }) => `<li><b>${esc(p.name)}</b> — ${esc(x.name)} <small>${dd ? "بعد " + dd + " يوم" : "اليوم"} · ${money(x.amt)} ر.س</small>${phoneOf(p.client) ? `<a class="wabtn sm" target="_blank" rel="noopener" href="${waTo(p.client, `السادة / ${p.client} المحترمين\nنودّ إفادتكم بأن دفعة «${x.name}» لمشروع «${p.name}» بمبلغ ${money(x.amt)} ر.س يحين موعدها بتاريخ ${x.due}.\nولكم جزيل الشكر.`)}">واتساب</a>` : ""}</li>`).join("")}</ul>` : ""}</div>`; }
+// ---- تقرير الفروع ----
+grpPanel = (f => function(){ let h = f.apply(this, arguments); const fin = can("finance") || PRIV(); if (!fin) return h;
+  const P = PV().filter(p => !FINX.has(p.status)).map(p => ({ p, c: pcalc(p) })), brs = [...new Set(P.map(x => x.p.branch || "المكتب الرئيسي"))];
+  const R = brs.map(b => { const L = P.filter(x => (x.p.branch || "المكتب الرئيسي") === b), S = fn => L.reduce((s, x) => s + fn(x), 0), sh = x => shareOf(x.p) / 100;
+    return { b, n: L.length, T: S(x => x.c.T), paid: S(x => x.c.paid), out: S(x => x.c.out), my: S(x => x.c.A * sh(x)), brA: S(x => x.c.A * (1 - sh(x))), myPaid: S(x => x.c.paidNet * sh(x)), brPaid: S(x => x.c.paidNet * (1 - sh(x))) }; });
+  const tot = k => R.reduce((s, r) => s + r[k], 0);
+  const tb = `<div class="panel" id="dBranch"><h3>🏢 الفروع — العقود والأتعاب والتحصيل <small>حصة المكتب وحصة الفرع من الأتعاب (قبل الضريبة)</small></h3><div class="tblwrap"><table class="ptable compact"><tr><th>الفرع</th><th>العقود</th><th>قيمة العقود</th><th>المحصّل</th><th>المتبقي</th><th>أتعاب المكتب</th><th>دخل المكتب المحصّل</th><th>أتعاب الفرع</th><th>دخل الفرع المحصّل</th></tr>
+    ${R.map(r => `<tr><td><b>${esc(r.b)}</b></td><td class="n">${r.n}</td><td class="n">${money(r.T)}</td><td class="n">${money(r.paid)}</td><td class="n">${money(r.out)}</td><td class="n">${money(r.my)}</td><td class="n"><b>${money(r.myPaid)}</b></td><td class="n">${money(r.brA)}</td><td class="n"><b>${money(r.brPaid)}</b></td></tr>`).join("")}
+    <tr class="tot"><td>الإجمالي</td><td class="n">${tot("n")}</td><td class="n">${money(tot("T"))}</td><td class="n">${money(tot("paid"))}</td><td class="n">${money(tot("out"))}</td><td class="n">${money(tot("my"))}</td><td class="n">${money(tot("myPaid"))}</td><td class="n">${money(tot("brA"))}</td><td class="n">${money(tot("brPaid"))}</td></tr></table></div></div>`;
+  return h.replace(/<div class="panel"><h3>🏢 العقود حسب الفرع المنفّذ<\/h3>[\s\S]*?<\/table><\/div><\/div>/, "") .replace(/<\/div>\s*$/, "") + "</div>" + tb + cashPanel(); })(grpPanel);
+// ---- كشف المطالبات المستحقة (حسب العميل / المشروع / المتأخرة) ----
+ddData = (f => function(key){ if (!/^claims/.test(key)) return f.apply(this, arguments); const mode = key.split(":")[1] || "client";
+  const P = PV().filter(p => !FINX.has(p.status)).map(p => ({ p, c: pcalc(p) })); let L = P.flatMap(({ p, c }) => c.dueCl.filter(x => num(x.inc) - num(x.pd) > 0).map(x => ({ p, c, x })));
+  if (mode === "late") L = L.filter(o => o.x.st === "late");
+  const gk = o => mode === "project" ? o.p.name : (o.p.client || "بدون عميل"), G = [...new Set(L.map(gk))].sort((a, b) => a.localeCompare(b, "ar"));
+  const S = (a, fn) => a.reduce((s, o) => s + fn(o), 0), rem = o => num(o.x.inc) - num(o.x.pd);
+  const row = o => `<tr data-ddp="${o.p.id}" class="${o.x.st === "late" ? "cl-late" : ""}"><td><b>${esc(o.p.name)}</b><small class="ddc">${esc(o.p.client || "")}</small></td><td>${esc(o.p.code || "—")}</td><td>${esc(o.x.inv || "—")}</td><td>${esc(o.x.phase || "—")}</td><td class="nw">${o.x.date ? esc(o.x.date) + ` <small>(${o.x.age} يوم)</small>` : "—"}</td><td class="n">${money(o.x.inc)}</td><td class="n">${money(o.x.pd)}</td><td class="n"><b>${money(rem(o))}</b></td><td class="n">${money(o.c.out)}</td><td>${spill(...CLST[o.x.st])}${phoneOf(o.p.client) ? ` <a class="wabtn sm" target="_blank" rel="noopener" href="${waTo(o.p.client, clMsg(o.p, o.x))}" onclick="event.stopPropagation()">واتساب</a>` : ""}</td></tr>`;
+  const body = G.map(g => { const A = L.filter(o => gk(o) === g); return `<tr class="grp"><td colspan="10">${mode === "project" ? "🏗️" : "🏢"} ${esc(g)} <small>${A.length} مطالبة · المتبقي ${money(S(A, rem))} ر.س</small></td></tr>` + A.sort((a, b) => b.x.age - a.x.age).map(row).join(""); }).join("");
+  const tabs = `<div class="brkst ddmodes">${[["claims:client", "حسب العميل"], ["claims:project", "حسب المشروع"], ["claims:late", "المتأخرة فقط (+30 يوماً)"]].map(([k, l]) => `<button type="button" data-ddk="${k}" aria-pressed="${k === "claims:" + mode}">${l}</button>`).join("")}</div>`;
+  return { t: "كشف المطالبات المستحقة" + (mode === "late" ? " — المتأخرة" : ""), s: `${L.length} مطالبة · المستحق ${money(S(L, rem))} ر.س · ${G.length} ${mode === "project" ? "مشروع" : "عميل"}`,
+    h: tabs + (L.length ? `<div class="tblwrap"><table class="ptable compact dd clst"><tr><th>المشروع</th><th>رقم العقد</th><th>رقم المطالبة</th><th>المرحلة / الدفعة</th><th>تاريخ المطالبة</th><th>قيمة المطالبة</th><th>المحصّل منها</th><th>المتبقي منها</th><th>المتبقي من العقد</th><th>الحالة</th></tr>${body}<tr class="ddt"><td colspan="5">الإجمالي</td><td class="n">${money(S(L, o => num(o.x.inc)))}</td><td class="n">${money(S(L, o => num(o.x.pd)))}</td><td class="n">${money(S(L, rem))}</td><td></td><td></td></tr></table></div>` : `<div class="empty" style="padding:14px">لا توجد مطالبات مستحقة 👌</div>`) }; })(ddData);
+DDSEC = (f => k => /^claims/.test(k) ? "pay" : f(k))(DDSEC);
+// ddShow مع الأوضاع داخل نفس النافذة (بدلاً من التكديس)
+document.getElementById("ddBox").addEventListener("click", e => { const m = e.target.closest && e.target.closest(".ddmodes [data-ddk]"); if (!m) return; e.stopPropagation(); ddShow(m.dataset.ddk); }, true);
+// زر «كشف المطالبات» في أدوات اللوحة
+homeView = (f => function(){ let h = f.apply(this, arguments); if (tab !== "dash") return h; return h.replace('<div class="dptool">', '<div class="dptool"><button class="btn" type="button" data-claimsrep>📑 كشف المطالبات المستحقة</button>'); })(homeView);
+document.addEventListener("click", e => { if (e.target.closest && e.target.closest("[data-claimsrep]")) { e.preventDefault(); ddShow("claims:client"); } });
+// ---- ترتيب لوحة المؤشرات: المالية ← المشاريع ← المهام والفريق، وحذف المكرر ----
+function dashTidy(){ if (tab !== "dash") return; const v = document.getElementById("view"); if (!v || v.dataset.tidy === "1") return; v.dataset.tidy = "1";
+  const q = s => v.querySelector(":scope > " + s), byH = (sel, re) => [...v.querySelectorAll(":scope > " + sel)].find(x => re.test((x.querySelector("h3") || x).textContent));
+  const hd = t => { const h = document.createElement("h2"); h.className = "dsh dsh2"; h.textContent = t; return h; };
+  [q(".hgreet"), q(".hinst"), byH(".hsec", /^المشاريع والمالية/), ...v.querySelectorAll(":scope > h2.dsh")].forEach(x => x && x.remove());
+  const order = [q(".dptool"), hd("💰 المالية والتحصيل"), q(".dk"), q(".sk"), q(".mk"), byH(".pgrid:not(.g3)", /الدخل الشهري/), byH(".hgrid.two", /حسب الفئة/), q("#dBranch"), q("#dCash"), q(".pgrid.g3"),
+    hd("🏗️ المشاريع"), q(".lcpanel"), q(".pdkxs"), byH(".panel", /المشاريع الجارية/), q("#pjNew") && q("#pjNew").parentElement, q(".missbox"), byH(".panel", /تنبيهات المواعيد/),
+    hd("✅ المهام والفريق"), q(".hsec.flw"), byH(".hsec", /^مهامي/), byH(".hsec", /^الفريق/)].filter(Boolean);
+  const pd = q(".pdtool"); if (pd) pd.remove();
+  const rest = [...v.children].filter(x => !order.includes(x)); order.concat(rest).forEach(x => v.appendChild(x)); }
+render = (f => function(){ const r = f.apply(this, arguments); try { const v = document.getElementById("view"); if (v) delete v.dataset.tidy; dashTidy(); } catch (x) { console.warn(x); } return r; })(render);
 // ===== v54: فحص التحديثات، لوحة الأوامر (Ctrl+K)، تلوين التقارير المطبوعة =====
 async function verCheck(){ try { const t = await (await fetch("./index.html?vc=" + Date.now(), { cache: "no-store" })).text(); const m = /const APP_VER = "([^"]+)"/.exec(t);
   if (m && m[1] !== APP_VER) { let b = $("#updBar"); if (!b) { b = document.createElement("div"); b.id = "updBar"; b.className = "updbar"; document.body.appendChild(b); } b.innerHTML = `🎉 نسخة جديدة <b>${esc(m[1])}</b> جاهزة <button type="button" data-upd>تحديث الآن</button>`; b.hidden = false; } } catch {} }
