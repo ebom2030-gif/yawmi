@@ -673,6 +673,19 @@ body.private .hero{background:radial-gradient(1200px 300px at 85% -40%,rgba(111,
 #printDay .pdbar{display:flex;height:16px;border-radius:8px;overflow:hidden;margin:-6px 0 14px;gap:2px}#printDay .pdbar i{display:block;position:relative;font-style:normal}#printDay .pdbar span{position:absolute;inset:0;color:#fff;font-size:8.5px;text-align:center;line-height:16px;white-space:nowrap;overflow:hidden;font-weight:700}
 #printDay .pdbar .g-done{background:#2c8a60}#printDay .pdbar .g-late{background:#c2453b}#printDay .pdbar .g-wait{background:#c9962b}#printDay .pdbar .g-open{background:#2f63b5}#printDay .pdbar .g-daily{background:#6b4fbb}#printDay .pdbar .g-fut{background:#8b94aa}
 @media print{.pray,.updbar,#cmdM,.pxbar{display:none!important}}
+/* ===== v104 ===== */
+.ddsw{display:flex;gap:6px;margin:0 0 10px;flex-wrap:wrap}.ddsw button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font:inherit;font-size:12.5px;font-weight:800;cursor:pointer;color:var(--ink2)}.ddsw button.on{background:var(--navy);color:#fff;border-color:transparent}
+@media (max-width:640px){
+  #cmdBtn{display:none!important}
+  .htr{flex-wrap:nowrap!important;gap:8px}.htr .gsearch{flex:1;min-width:0}
+  .hero h1{font-size:22px}.hero .date{font-size:12px}
+  .prh{flex-direction:column}.prh .prn,.prh .prt{width:100%;flex:none}
+  .prt{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px}.prt b{font-size:14px}.prt span{font-size:11.5px}
+  .bmeta{min-width:0}.brefh .bnext{order:5}
+  .ckp,.c3k{grid-template-columns:1fr 1fr!important}.ck b{font-size:18px}
+  .lstrip{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important;margin:-46px 6px 0!important}.lst{padding:8px 8px!important;border-radius:12px!important;align-items:center!important;text-align:center!important}.lst b{font-size:20px!important}.lst span,.lst small{font-size:11px!important;line-height:1.35;white-space:normal!important}.lst{min-height:0!important}
+}
+
 /* ===== v103: بطاقات التعريف المضغوطة + الإجراءات + الملفات ===== */
 .brkp [data-dd],.brkk2 [data-dd],.bfr[data-dd]{cursor:pointer}.bfr[data-dd]:hover span{color:#a07412}.ck[data-dd]:hover{box-shadow:var(--shadow-h);transform:translateY(-1px)}
 .bref.mini{padding:10px 14px}.brefh[data-brktg]{cursor:pointer;flex-wrap:wrap}.btg{font-style:normal;color:#a07412;font-size:14px;width:14px}
