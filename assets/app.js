@@ -1129,7 +1129,7 @@ const snap = obj => ({ docs: Object.entries(obj).map(([id, v]) => ({ id, data: (
 const emit = () => listeners.forEach(f => f(snap(store)));
 const emitN = () => noteListeners.forEach(f => f(snap(Object.fromEntries(Object.entries(noteStore).map(([k, v]) => [k, { text: v }])))));
 const rid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-const APP_VER = "v104", APP_DATE = "2026-10-17";
+const APP_VER = "v105", APP_DATE = "2026-10-17";
 const strip = o => { const r = { ...o }; delete r.id; return r; };
 const SKINS = [["night", "ليل مكة", "كحلي ليلي ونحاسي ذهبي", "#14213d", "#c29a3e", "#2f63b5"], ["roshan", "روشن حجازي", "أخضر بترولي وذهب رملي", "#0e3b43", "#d9b97a", "#c8553d"], ["earth", "طين ونخيل", "بني تمري وتيراكوتا", "#3a2a21", "#e0b66f", "#4f6b3a"]];
 const curSkin = () => document.documentElement.dataset.skin || "night";
@@ -4577,6 +4577,41 @@ ddData = (f => function(key){
     if (R.length) r.h += `<h4 class="ddh">⚠️ مراحل منجزة لم تُرفع مطالبتها (${R.length})</h4><div class="tblwrap"><table class="ptable compact dd"><tr><th>المشروع</th><th>المرحلة</th><th>النسبة</th><th>القيمة</th></tr>${R.map(o => `<tr data-ddp="${o.p.id}"><td>${esc(o.p.name)}</td><td>${esc(o.x.name || "—")}</td><td class="n">${num(o.x.pct)}%</td><td class="n"><b>${money(o.x.amt)}</b></td></tr>`).join("")}<tr class="ddt"><td colspan="3">الإجمالي</td><td class="n">${money(R.reduce((s, o) => s + o.x.amt, 0))}</td></tr></table></div>`; }
   return r; })(ddData);
 GUIDE_NEW.unshift(["v104", "كشف التحويلات الخارجية مترابط مع مصاريف المشاريع (عرض التحويلات فقط أو كل المصاريف)، والاجتماعات تظهر في سجل مستجدات المشروع، وتنبيه بالمراحل المنجزة التي لم تُرفع مطالبتها، وشعار التطبيق الجديد على الجوال وتنسيق أفضل للجوال، وربط مهام التأهيلات المطلوبة من منصة التأهيلات."]);
+// ===== v105: المساعد الذكي — اقتراحات حسب ما تكتب ومن بياناتك (بدون تكلفة) =====
+function aiOpenProj(pid, sec, then){ projTab = "list"; const go = () => { claimCustom.clear(); projOpen = pid; projDraft = null; projDirty = false; projSec = sec || "status"; render(); window.scrollTo({ top: 0 }); if (then) setTimeout(then, 120); }; if (tab === "projects") go(); else goTab("projects", go); }
+function aiTask(txt, meet){ quickNew(); setTimeout(() => { const i = document.querySelector('form.addrow[data-kind="task"] input[name="title"]'); if (i) { i.value = (meet ? "اجتماع " : "") + (txt || ""); i.focus(); } }, 450); }
+var AI_ACT = {};
+function aiSuggest(qRaw){ const q = normA(qRaw || ""), has = (...w) => w.some(x => q.includes(normA(x))), out = [], A = (ic, l, t, fn, k) => { const id = "ai" + out.length; AI_ACT[id] = fn; out.push([id, ic, l, t, k || 0]); };
+  AI_ACT = {}; const P = PV().filter(p => !FINX.has(p.status)), t = today();
+  const rest = String(qRaw || "").replace(/^\s*(مهمة|مهمه|تذكير|ذكرني|اجتماع|ميتنج)\s*/, "").trim();
+  const pHit = P.filter(p => p.name && q.length >= 2 && normA(qRaw).split(/\s+/).some(w => w.length >= 3 && normA(p.name).includes(w))), PP = pHit.length ? pHit : P;
+  const ready = PP.flatMap(p => { const c = pcalc(p); return c.ph.filter(x => x.status === "done" && !x.claimed && x.amt > 0).map(x => ({ p, x })); });
+  const lateC = PP.flatMap(p => pcalc(p).late.map(c => ({ p, c }))).sort((a, b) => (b.c.age || 0) - (a.c.age || 0));
+  const claimNew = (p, ph) => aiOpenProj(p.id, "pay", () => { const b = document.querySelector('[data-add="claims"]'); if (!b) return; b.click(); setTimeout(() => { if (!projDraft || !projDraft.claims.length) return; const r = projDraft.claims[projDraft.claims.length - 1]; if (ph) { r.phase = ph.name; r.amount = Math.round(ph.amt * 100) / 100; } r.date = today(); projTouch(); render(); toast("🧾 جهّزت المطالبة — راجع رقم الفاتورة واحفظ"); }, 150); });
+  const wantClaim = has("مطالب", "فاتور", "claim"), wantPay = has("تحصيل", "دفعه", "دفعة", "استلام", "حول لنا", "دفع"), wantTrx = has("تحويل", "حوالة", "حواله"), wantExp = has("مصروف", "مصاريف", "صرف"), wantMeet = has("اجتماع", "ميتنج", "لقاء"), wantTask = has("مهمه", "مهمة", "تذكير", "ذكرني");
+  if (wantClaim || !q) { ready.slice(0, 6).forEach(({ p, x }) => A("🧾", `ارفع مطالبة: ${p.name} — ${x.name}`, `مرحلة منجزة لم يُطالب بها · ${money(x.amt)} ر.س`, () => claimNew(p, x), 9));
+    if (wantClaim) { PP.slice(0, pHit.length ? 5 : 3).forEach(p => A("➕", `مطالبة جديدة لمشروع ${p.name}`, "تفتح قسم الدفعات وتضيف سطر مطالبة بتاريخ اليوم", () => claimNew(p, null), 5));
+      A("📋", "كشف المطالبات المستحقة والمتأخرة", "لوحة المؤشرات ← المتبقي للتحصيل", () => goTab("dash", () => setTimeout(() => ddShow("remaining"), 200)), 4); } }
+  if (wantClaim || wantPay || !q) lateC.slice(0, wantPay || wantClaim ? 6 : 3).forEach(({ p, c }) => A("⏰", `تابع تحصيل: ${p.name} — ${c.phase || c.inv || "مطالبة"}`, `متأخرة ${c.age} يوماً · ${money(c.inc - c.pd)} ر.س — سجّل التحصيل أو أرسل تذكيراً`, () => aiOpenProj(p.id, "pay"), 8));
+  if (wantTrx) { A("💸", "تحويل خارجي جديد", "يُسجَّل في مصاريف المشروع وسجله تلقائياً", () => trxOpen(pHit[0] ? pHit[0].id : ""), 9); A("📑", "كشف التحويلات الخارجية", "", () => goTab("dash", () => setTimeout(() => ddShow("transfers"), 200)), 4); }
+  if (wantExp) { PP.slice(0, 4).forEach(p => A("🧮", `إضافة مصروف لمشروع ${p.name}`, "تفتح المصاريف وتضيف سطراً جديداً", () => aiOpenProj(p.id, "fin", () => { const b = document.querySelector('[data-add="expenses"]'); if (b) b.click(); }), 7)); A("📑", "كشف كل مصاريف المشاريع", "", () => goTab("dash", () => setTimeout(() => ddShow("transfers:all"), 200)), 3); }
+  if (wantMeet) A("👥", `اجتماع جديد${rest ? ": " + rest : ""}`, "يُضاف لصفحة اليوم ويظهر في سجل المشروع", () => aiTask(rest, 1), 9);
+  if (wantTask || (q && !out.length && q.length > 3)) A("✅", `مهمة جديدة: ${rest || qRaw}`, "تُضاف لمهامك — اكتب اسم المشروع فيها لتظهر في سجله", () => aiTask(rest || qRaw), wantTask ? 9 : 1);
+  if (has("عرض سعر", "عرض", "تسعير")) A("💼", "عرض سعر جديد", "صفحة المشاريع ← عروض الأسعار", () => goTab("projects", () => { const b = document.querySelector("[data-pnew]"); if (b) b.click(); }), 6);
+  if (has("مقاول", "وساط", "عمول", "تعريف")) A("🤝", "الوساطة والعمولات", "ملفات المقاولين والتعريفات والمتابعات", () => goTab("brk"), 6);
+  if (!q) { const lt = allItems.filter(x => !x.done && x.kind !== "meeting" && x.due && x.due < t && x.owner === (ME && ME.id)).length; if (lt) A("🔴", `${lt} مهمة متأخرة عليك`, "افتح المرحّل وأعد جدولتها", () => goTab("backlog"), 7);
+    const mt = allItems.filter(x => !x.done && x.kind === "meeting" && x.due === t).length; if (mt) A("👥", `${mt} اجتماع اليوم`, "", () => { day = t; goTab("day"); }, 6);
+    try { const bd = brkRefs().filter(x => brkDue(x.r)).length; if (bd) A("🤝", `${bd} متابعة وساطة مستحقة`, "", () => goTab("brk"), 5); } catch (e) {} }
+  if (pHit.length === 1 && q) { const p = pHit[0]; A("🏗️", `افتح مشروع ${p.name}`, "", () => aiOpenProj(p.id), 3); A("🧾", `دفعات ومطالبات ${p.name}`, "", () => aiOpenProj(p.id, "pay"), 3); A("📒", `سجل ${p.name}`, "", () => aiOpenProj(p.id, "timeline"), 2); }
+  return out.sort((a, b) => b[4] - a[4]).slice(0, 9); }
+cmdDraw = (f => function(){ f(); const v = ($("#cmdQ") || {}).value || "", S = aiSuggest(v), L = $("#cmdL"); if (!L || !S.length) return;
+  L.querySelectorAll(".cmdi.on").forEach(x => x.classList.remove("on"));
+  L.insertAdjacentHTML("afterbegin", `<div class="aisg"><div class="aih">✨ ${v.trim() ? "اقتراحات المساعد" : "مقترح لك الآن"}</div>${S.map(([k, i, l, t], n) => `<button type="button" class="cmdi ai${n === 0 ? " on" : ""}" data-cmd="ai:${k}"><i>${i}</i><span>${esc(l)}</span><small>${esc(t)}</small></button>`).join("")}</div>`); const e = L.querySelector(".empty"); if (e) e.remove(); })(cmdDraw);
+cmdGo = (f => function(k){ if (String(k).startsWith("ai:")) { $("#cmdM").hidden = true; const fn = AI_ACT[k.slice(3)]; if (fn) fn(); return; } return f(k); })(cmdGo);
+cmdOpen = (f => function(){ f(); const q = $("#cmdQ"); if (q) q.placeholder = "✨ اكتب ما تريد: مطالبة، تحويل 5000 لمشروع…، اجتماع، مصروف، اسم مشروع…"; const h = document.querySelector("#cmdM .cmdf"); if (h) h.textContent = "المساعد يقترح عليك الخطوة التالية من بياناتك · ↑↓ للتنقل · Enter للتنفيذ · Ctrl+K من أي مكان"; })(cmdOpen);
+// زر المساعد على الجوال والكمبيوتر
+(() => { const b = $("#cmdBtn"); if (b) b.innerHTML = `✨ المساعد <kbd>Ctrl K</kbd>`; if (!$("#aiFab")) { const f = document.createElement("button"); f.type = "button"; f.id = "aiFab"; f.className = "aifab"; f.title = "المساعد الذكي"; f.textContent = "✨"; f.addEventListener("click", () => ME && cmdOpen()); document.body.appendChild(f); } })();
+GUIDE_NEW.unshift(["v105", "المساعد الذكي (✨ أو Ctrl+K): يقترح عليك الخطوة التالية من بياناتك — مطالبات جاهزة للرفع بقيمتها، متابعة المتأخر، تحويل أو مصروف لمشروع، اجتماع أو مهمة — بمجرد أن تكتب كلمة."]);
 // ===== v54: فحص التحديثات، لوحة الأوامر (Ctrl+K)، تلوين التقارير المطبوعة =====
 async function verCheck(){ try { const t = await (await fetch("./index.html?vc=" + Date.now(), { cache: "no-store" })).text(); const m = /const APP_VER = "([^"]+)"/.exec(t);
   if (m && m[1] !== APP_VER) { let b = $("#updBar"); if (!b) { b = document.createElement("div"); b.id = "updBar"; b.className = "updbar"; document.body.appendChild(b); } b.innerHTML = `🎉 نسخة جديدة <b>${esc(m[1])}</b> جاهزة <button type="button" data-upd>تحديث الآن</button>`; b.hidden = false; } } catch {} }

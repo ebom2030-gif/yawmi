@@ -673,6 +673,13 @@ body.private .hero{background:radial-gradient(1200px 300px at 85% -40%,rgba(111,
 #printDay .pdbar{display:flex;height:16px;border-radius:8px;overflow:hidden;margin:-6px 0 14px;gap:2px}#printDay .pdbar i{display:block;position:relative;font-style:normal}#printDay .pdbar span{position:absolute;inset:0;color:#fff;font-size:8.5px;text-align:center;line-height:16px;white-space:nowrap;overflow:hidden;font-weight:700}
 #printDay .pdbar .g-done{background:#2c8a60}#printDay .pdbar .g-late{background:#c2453b}#printDay .pdbar .g-wait{background:#c9962b}#printDay .pdbar .g-open{background:#2f63b5}#printDay .pdbar .g-daily{background:#6b4fbb}#printDay .pdbar .g-fut{background:#8b94aa}
 @media print{.pray,.updbar,#cmdM,.pxbar{display:none!important}}
+/* ===== v105: المساعد الذكي ===== */
+.aisg{border-bottom:1px dashed var(--line);margin-bottom:6px;padding-bottom:6px}.aih{font-size:12px;font-weight:900;color:#a07412;padding:4px 10px}
+.cmdi.ai i{background:var(--gold-soft);border-radius:8px;width:30px;height:30px;display:inline-grid;place-items:center;font-style:normal;flex:none}.cmdi.ai span{font-weight:800}
+.aifab{position:fixed;inset-inline-end:24px;bottom:calc(92px + env(safe-area-inset-bottom,0px));z-index:40;width:46px;height:46px;border-radius:50%;border:0;background:var(--navy);color:#fff;font-size:20px;box-shadow:0 10px 24px rgba(0,0,0,.28);cursor:pointer}
+@media (max-width:900px){.aifab{bottom:calc(150px + env(safe-area-inset-bottom,0px));inset-inline-end:22px}}
+@media print{.aifab{display:none!important}}
+
 /* ===== v104 ===== */
 .ddsw{display:flex;gap:6px;margin:0 0 10px;flex-wrap:wrap}.ddsw button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font:inherit;font-size:12.5px;font-weight:800;cursor:pointer;color:var(--ink2)}.ddsw button.on{background:var(--navy);color:#fff;border-color:transparent}
 @media (max-width:640px){
