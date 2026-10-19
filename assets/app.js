@@ -236,7 +236,7 @@ function shellSync(){ document.body.dataset.tab = tab; const t = $("#pgTitle"); 
   document.querySelectorAll("#bnav [data-bt]").forEach(b => { const sb = document.querySelector(`nav.tabs [data-tab="${b.dataset.bt}"]`); b.hidden = !sb || sb.hidden; b.classList.toggle("on", b.dataset.bt === tab); }); }
 const sideOpen = v => document.body.classList.toggle("sideopen", v);
 $("#menuBtn").onclick = () => sideOpen(true); $("#sideClose").onclick = () => sideOpen(false); $("#sideBack").onclick = () => sideOpen(false);
-$("nav.tabs").addEventListener("click", e => { if (e.target.closest("[data-tab]")) { sideOpen(false); window.scrollTo({ top: 0 }); } });
+$("nav.tabs").addEventListener("click", e => { if (e.target.closest("button[data-tab],a[data-tab]")) { sideOpen(false); window.scrollTo({ top: 0 }); } });
 $("#bnav").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; if (b.hasAttribute("data-more")) { sideOpen(true); return; } const sb = document.querySelector(`nav.tabs [data-tab="${b.dataset.bt}"]`); if (sb) sb.click(); });
 const NAV = { i: 0, restoring: false, key: "" };
 function navKey(){ return tab + "|" + (tab === "projects" ? (projOpen || "") + "|" + (projOpen ? projSec : projTab) : ""); }
@@ -977,12 +977,12 @@ $("#ddBox").addEventListener("click", e => { const t = e.target;
   qi.addEventListener("keydown", e => { if (e.key === "Escape") { qi.value = ""; qi.dispatchEvent(new Event("input")); qi.blur(); } });
   document.addEventListener("keydown", e => { const a = document.activeElement; const typing = a && (/INPUT|TEXTAREA|SELECT/.test(a.tagName) || a.isContentEditable);
     if (!e.key) return; if ((e.key.toLowerCase() === "k" && (e.ctrlKey || e.metaKey)) || (e.key === "/" && !typing)) { e.preventDefault(); qi.focus(); qi.select(); } });
-  $("nav.tabs").addEventListener("click", e => { if (e.target.closest("[data-tab]") && tab !== "search") clearSearch(); });
+  $("nav.tabs").addEventListener("click", e => { if (e.target.closest("button[data-tab],a[data-tab]") && tab !== "search") clearSearch(); });
   document.querySelector(".stats").addEventListener("click", e => { const s = e.target.closest("[data-go]"); if (s) goTab(s.dataset.go); });
   document.querySelector(".stats").addEventListener("keydown", e => { const s = e.target.closest("[data-go]"); if (s && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); goTab(s.dataset.go); } }); }
 
 // ---------- interactions ----------
-$("nav.tabs").addEventListener("click", e => { const b = e.target.closest("[data-tab]"); if (!b) return; tab = b.dataset.tab; open = confirmDel = null;
+$("nav.tabs").addEventListener("click", e => { const b = e.target.closest("button[data-tab],a[data-tab]"); if (!b) return; tab = b.dataset.tab; open = confirmDel = null;
 document.querySelectorAll("nav.tabs button").forEach(x => x.setAttribute("aria-selected", x === b)); render(); });
 document.querySelector(".pages").addEventListener("click", e => { const b = e.target.closest("[data-page]"); if (!b) return; page = b.dataset.page; open = confirmDel = null;
 document.querySelectorAll(".pages button").forEach(x => x.setAttribute("aria-selected", x === b)); render(); });
@@ -1132,7 +1132,7 @@ const snap = obj => ({ docs: Object.entries(obj).map(([id, v]) => ({ id, data: (
 const emit = () => listeners.forEach(f => f(snap(store)));
 const emitN = () => noteListeners.forEach(f => f(snap(Object.fromEntries(Object.entries(noteStore).map(([k, v]) => [k, { text: v }])))));
 const rid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-const APP_VER = "v111", APP_DATE = "2026-10-19";
+const APP_VER = "v112", APP_DATE = "2026-10-20";
 const strip = o => { const r = { ...o }; delete r.id; return r; };
 const SKINS = [["night", "ليل مكة", "كحلي ليلي ونحاسي ذهبي", "#14213d", "#c29a3e", "#2f63b5"], ["roshan", "روشن حجازي", "أخضر بترولي وذهب رملي", "#0e3b43", "#d9b97a", "#c8553d"], ["earth", "طين ونخيل", "بني تمري وتيراكوتا", "#3a2a21", "#e0b66f", "#4f6b3a"]];
 const curSkin = () => document.documentElement.dataset.skin || "night";
@@ -4643,7 +4643,7 @@ async function syncPoll(force){ if (isDemo || !TOKEN || !ME || location.protocol
   try { const r = await fetch("/api?v=1&t=" + encodeURIComponent(TOKEN) + "&x=" + Date.now(), { cache: "no-store", headers: { "x-yw-nocache": "1" } }); if (!r.ok) return; const j = await r.json(); if (!j || j.ver == null) return;
     const v = Number(j.ver); const changed = SYNCV.v != null && v !== SYNCV.v; if (SYNCV.v == null) SYNCV.v = v;
     if (changed || force || SYNCV.p) { if (isTyping() || (typeof projDirty !== "undefined" && projDirty)) { SYNCV.p = true; return; } SYNCV.p = false; SYNCV.v = v; load.done = false; load(); syncDot(); } } catch (e) {} }
-setInterval(syncPoll, 10000); document.addEventListener("focusout", () => setTimeout(() => { if (SYNCV.p) syncPoll(); }, 1500));
+var SYNCA = Date.now(); ["pointerdown", "keydown", "touchstart"].forEach(k => addEventListener(k, () => { SYNCA = Date.now(); }, { passive: true, capture: true })); var SYNCL = 0; setInterval(() => { const idle = Date.now() - SYNCA > 180000, gap = idle ? 30000 : 5000; if (Date.now() - SYNCL >= gap - 200) { SYNCL = Date.now(); syncPoll(); } }, 5000); document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") setTimeout(syncPoll, 300); }); addEventListener("focus", () => setTimeout(syncPoll, 300)); addEventListener("pageshow", () => setTimeout(syncPoll, 300)); document.addEventListener("focusout", () => setTimeout(() => { if (SYNCV.p) syncPoll(); }, 1500));
 addEventListener("online", () => setTimeout(() => syncPoll(true), 800));
 function syncDot(){ const b = document.getElementById("sverN"); if (b) { b.classList.add("synced"); setTimeout(() => b.classList.remove("synced"), 1200); } }
 // (3) سلة المحذوفات: كل ما يُحذف (مهمة، مشروع، عميل، مقاول، تعريف وساطة) يُحفظ 30 يوماً ويمكن استرجاعه
@@ -4971,22 +4971,24 @@ async function achDel(k){ ACH.list = (ACH.list || []).filter(x => x.k !== k); tr
 function achAll(){ const [a, b] = achRange(), C = achCands(), M = (ACH.list || []).filter(x => x.sec === "man" && x.d >= a && x.d <= b).map(x => ({ ...x, man: 1 })); return C.concat(M).map(x => ({ ...x, rec: achRec(x.k) })); }
 function achView(){ if (!ME) return ""; if (!ACH.list) { achLoad(); return `<div class="panel"><div class="sub">جارٍ التحميل…</div></div>`; }
   const [a, b] = achRange(), A = achAll(), mk = A.filter(x => x.rec && x.rec.on), canU = can("team") && !PRIV() && xcan("achTeam"), fin = PRIV() || can("finance"), tot = mk.reduce((s, x) => s + num(x.rec.rw), 0);
-  const show = A.filter(x => (!ACH.only || (x.rec && x.rec.on)) && (!ACH.sec || x.sec === ACH.sec));
+  if (!ACH.v) ACH.v = mk.length ? "sheet" : "rev"; const isX = x => !!(x.rec && x.rec.x && !x.rec.on), revN = A.filter(x => !(x.rec && x.rec.on) && !isX(x)).length, xN = A.filter(isX).length; if (ACH.v === "x" && !xN) ACH.v = "rev";
+  const show = A.filter(x => (ACH.v === "sheet" ? x.rec && x.rec.on : ACH.v === "x" ? isX(x) : !(x.rec && x.rec.on) && !isX(x)) && (!ACH.sec || x.sec === ACH.sec));
   const row = x => { const r = x.rec || {}, on = !!r.on; return `<div class="achr${on ? " on" : ""}"><button type="button" class="achst" data-achon="${esc(x.k)}" aria-pressed="${on}" title="${on ? "إلغاء التمييز" : "تمييز كإنجاز مستحق"}">${on ? "★" : "☆"}</button>
     <div class="acht"><b>${esc(x.t)}</b><small>${esc(nice(x.d))}${x.client ? " · 👤 " + esc(x.client) : ""}${x.status ? " · " + esc(x.status) : ""}${x.sub ? " · " + esc(x.sub) : ""}</small>
       ${x.start || x.end || (fin && (x.val || x.exp)) ? `<div class="achd">${x.type ? `<span>${esc(x.type)}</span>` : ""}${fin && x.val ? `<span>القيمة <b>${money(x.val)}</b></span>` : ""}${fin && x.exp ? `<span>المصاريف <b>${money(x.exp)}</b></span>` : ""}${x.start ? `<span>البداية ${esc(x.start)}</span>` : ""}${x.end ? `<span>النهاية ${esc(x.end)}</span>` : ""}</div>` : (fin && x.val ? `<div class="achd"><span>القيمة <b>${money(x.val)}</b></span></div>` : "")}
       ${on ? `<div class="achf"><input data-achnote="${esc(x.k)}" value="${esc(r.note || "")}" placeholder="وصف مختصر لدورك في الإنجاز (يظهر في الكشف)"><label>المكافأة<input type="number" min="0" step="1" data-achrw="${esc(x.k)}" value="${esc(r.rw ?? "")}" placeholder="يحددها المدير"></label></div>` : ""}</div>
-    ${x.man ? `<button type="button" class="rm" data-achrm="${esc(x.k)}" title="حذف">×</button>` : ""}</div>`; };
+    ${x.man ? `<button type="button" class="rm" data-achrm="${esc(x.k)}" title="حذف">×</button>` : ACH.v === "rev" ? `<button type="button" class="achx" data-achx="${esc(x.k)}" title="استبعاد — لا يظهر في المراجعة مرة أخرى">✕ استبعاد</button>` : ACH.v === "x" ? `<button type="button" class="achx" data-achux="${esc(x.k)}" title="إرجاع للمراجعة">↩ إرجاع</button>` : ""}</div>`; };
   const secs = ACHS.map(([k, i, l]) => { const L = show.filter(x => x.sec === k); if (!L.length) return ""; const n = L.filter(x => x.rec && x.rec.on).length; return `<section class="panel achsec"><h3>${i} ${esc(l)} <small>${L.length}${n ? " · ★ " + n + " مستحق" : ""}</small></h3>${L.map(row).join("")}</section>`; }).join("");
   return `<div class="achhead"><div><h2>🏆 إنجازاتي</h2><div class="sub">كل ما أنجزته تلقائياً من المهام والمشاريع والعقود والتحصيل والعملاء — اضغط ☆ على الإنجاز المستحق ليدخل في «كشف الإنجازات» ثم اطبعه وقدّمه.</div></div>
       <div class="bkha"><button type="button" class="btn ghost" data-achman>+ إنجاز يدوي</button><button type="button" class="btn gold" data-achprint ${mk.length ? "" : "disabled"}>🖨️ طباعة كشف الإنجازات (${mk.length})</button></div></div>
     <div class="pjtools"><div class="pjtr1"><select data-achper>${[["month", "هذا الشهر"], ["last", "الشهر الماضي"], ["q", "هذا الربع"], ["year", "هذه السنة"], ["custom", "فترة مخصصة"]].map(([k, l]) => `<option value="${k}" ${ACH.per === k ? "selected" : ""}>${l}</option>`).join("")}</select>
       ${ACH.per === "custom" ? `<label class="achdt">من <input type="date" data-achfrom value="${esc(a)}"></label><label class="achdt">إلى <input type="date" data-achto value="${esc(b)}"></label>` : `<span class="achrg">${esc(gFmtY.format(parse(a)))} — ${esc(gFmtY.format(parse(b)))}</span>`}
       ${canU ? `<select data-achuid><option value="">إنجازاتي أنا</option>${scopeUsers().filter(u => u.active && u.id !== ME.id).map(u => `<option value="${u.id}" ${ACH.uid === u.id ? "selected" : ""}>${esc(u.name)}</option>`).join("")}</select>` : ""}
-      <label class="achonly"><input type="checkbox" data-achonly ${ACH.only ? "checked" : ""}> المستحق فقط ★</label></div>
-     <div class="pjchips"><button type="button" class="chip${!ACH.sec ? " on" : ""}" data-achsec="">الكل <b>${A.length}</b></button>${ACHS.map(([k, i, l]) => { const n = A.filter(x => x.sec === k).length; return n ? `<button type="button" class="chip${ACH.sec === k ? " on" : ""}" data-achsec="${k}">${i} ${esc(l.split(" — ")[0])} <b>${n}</b></button>` : ""; }).join("")}</div></div>
+</div>
+     <div class="achseg" role="tablist"><button type="button" role="tab" data-achv="sheet" class="${ACH.v === "sheet" ? "on" : ""}">★ كشف المستحق <b>${mk.length}</b></button><button type="button" role="tab" data-achv="rev" class="${ACH.v === "rev" ? "on" : ""}">📥 للمراجعة <b>${revN}</b></button>${xN ? `<button type="button" role="tab" data-achv="x" class="${ACH.v === "x" ? "on" : ""}">المستبعد <b>${xN}</b></button>` : ""}</div>
+     <div class="pjchips"><button type="button" class="chip${!ACH.sec ? " on" : ""}" data-achsec="">كل الأقسام</button>${ACHS.map(([k, i, l]) => { const n = A.filter(x => x.sec === k && (ACH.v === "sheet" ? x.rec && x.rec.on : ACH.v === "x" ? isX(x) : !(x.rec && x.rec.on) && !isX(x))).length; return n ? `<button type="button" class="chip${ACH.sec === k ? " on" : ""}" data-achsec="${k}">${i} ${esc(l.split(" — ")[0])} <b>${n}</b></button>` : ""; }).join("")}</div></div>
     <div class="achsum"><div><span>إنجازات الفترة</span><b>${A.length}</b></div><div class="on"><span>مستحقة ★</span><b>${mk.length}</b></div>${fin ? `<div><span>قيمة المرتبط بها</span><b>${kmoney(mk.reduce((s, x) => s + num(x.val), 0))}</b></div>` : ""}<div><span>إجمالي المكافأة المقترحة</span><b>${tot ? money(tot) + " ر.س" : "يحددها المدير"}</b></div></div>
-    ${secs || `<div class="panel empty"><b>لا توجد إنجازات مسجّلة في هذه الفترة</b>المهام المنجزة والمشاريع والعقود والتحصيل تظهر هنا تلقائياً، ويمكنك إضافة إنجاز يدوي.</div>`}`; }
+    ${secs || (ACH.v === "sheet" ? `<div class="panel empty"><b>لم تميّز أي إنجاز مستحق بعد في هذه الفترة</b>افتح «📥 للمراجعة» واضغط ☆ على ما تستحق عليه مكافأة، أو أضف إنجازاً يدوياً.${revN ? `<div class="eact"><button type="button" class="btn gold" data-achv="rev">📥 مراجعة ${revN} اقتراح</button></div>` : ""}</div>` : ACH.v === "rev" ? `<div class="panel empty"><b>✓ لا توجد اقتراحات جديدة للمراجعة</b>كل ما أنجزته في هذه الفترة إما في الكشف ★ أو مستبعد.</div>` : `<div class="panel empty"><b>لا يوجد مستبعد</b></div>`)}`; }
 function achPrint(){ const [a, b] = achRange(), A = achAll().filter(x => x.rec && x.rec.on), fin = PRIV() || can("finance"), who = uname(achWho()) || (ME && ME.name) || ""; let n = 0;
   const secs = ACHS.map(([k, i, l]) => { const L = A.filter(x => x.sec === k); if (!L.length) return ""; const rw = L.reduce((s, x) => s + num(x.rec.rw), 0);
     return `<section class="pds"><div class="pdb"><span></span>${i} ${esc(l)}<em>${L.length} إنجاز</em></div><table><colgroup><col style="width:5%"><col style="width:${fin ? 41 : 55}%"><col style="width:12%">${fin ? `<col style="width:14%">` : ""}<col style="width:14%"><col style="width:14%"></colgroup>
@@ -5000,6 +5002,9 @@ function achPrint(){ const [a, b] = achRange(), A = achAll().filter(x => x.rec &
 document.addEventListener("click", async e => { const t = e.target; if (!t.closest || tab !== "ach") return; let b;
   if ((b = t.closest("[data-achon]"))) { const k = b.dataset.achon, x = achAll().find(y => y.k === k); if (!x) return; const r = achRec(k); if (r && r.on) { if (x.man) { r.on = 0; await achPut(r); } else await achDel(k); } else await achPut(Object.assign({}, r || {}, { k, on: 1, t: x.t, sec: x.sec, d: x.d, val: x.val || 0 })); render(); return; }
   if ((b = t.closest("[data-achsec]"))) { ACH.sec = b.dataset.achsec; render(); return; }
+  if ((b = t.closest("[data-achv]"))) { ACH.v = b.dataset.achv; ACH.sec = ""; render(); return; }
+  if ((b = t.closest("[data-achx]"))) { const k = b.dataset.achx, x = achAll().find(y => y.k === k); if (!x) return; await achPut({ k, on: 0, x: 1, t: x.t, sec: x.sec, d: x.d, val: 0 }); render(); toast("استُبعد — تجده في «المستبعد» إن احتجته"); return; }
+  if ((b = t.closest("[data-achux]"))) { await achDel(b.dataset.achux); render(); return; }
   if ((b = t.closest("[data-achrm]"))) { if (!await ywConfirm("حذف هذا الإنجاز اليدوي؟", "حذف")) return; await achDel(b.dataset.achrm); render(); return; }
   if (t.closest("[data-achprint]")) { achPrint(); return; }
   if (t.closest("[data-achman]")) { const ti = await bkAsk("اكتب الإنجاز (مثلاً: إنهاء رخصة بناء مشروع … خلال 5 أيام)", "وصف الإنجاز"); if (!ti) return; await achPut({ k: "man:" + rid(), sec: "man", t: ti, d: today(), on: 1, val: 0, man: 1 }); render(); toast("✓ أُضيف الإنجاز وتم تمييزه ★"); } });
@@ -5173,6 +5178,7 @@ function cfPanel(){ if (!ME || ME.role !== "owner") return ""; const c = cfInfo;
     ${c.lastErr ? `<div class="sub" style="color:var(--late)">آخر ملاحظة في النسخ الاحتياطي: ${esc(c.lastErr)}</div>` : ""}
     <div><button type="button" class="btn ghost" data-cfref>تحديث الحالة</button> <button type="button" class="btn ghost xs" data-cfnat="${c.native !== false ? "0" : "1"}" title="للطوارئ فقط">${c.native !== false ? "وضع الطوارئ (تمرير إلى Google)" : "↩ العودة للخادم الأساسي Cloudflare"}</button></div></div>`; }
 GUIDE_NEW.unshift(["v111", "انتقال البرنامج بالكامل إلى خادم Cloudflare: الدخول وكلمات المرور والجلسات والصلاحيات (الأساسية والإضافية) وسير العمل وكل البيانات على Cloudflare لكل المستخدمين — أسرع ومتزامن على كل الأجهزة. Google أصبح نسخة احتياطية تلقائية (Sheets + Drive) ولخدماته فقط (التقويم، الملفات، To Do، البريد)."]);
+GUIDE_NEW.unshift(["v112", "صفحة المشاريع: عرض جديد «👥 حسب العميل» يجمع مشاريع كل عميل مع قيمة العقود والمحصّل والمستحق، واسم العميل في كل بطاقة يفتح ملفه مباشرة. صفحة الإنجازات: ثلاثة أقسام واضحة — «★ كشف المستحق» و«📥 للمراجعة» (الاقتراحات الجديدة فقط مع زر استبعاد) و«المستبعد». مزامنة أسرع بين الأجهزة (كل 5 ثوانٍ أثناء الاستخدام، وفوراً عند فتح التطبيق أو الرجوع إليه). القائمة الجانبية: الضغط على اسم المجموعة يفتحها أو يطويها فقط دون إغلاق القائمة على الجوال، وبلا تمرير أفقي."]);
 // ===== v54: فحص التحديثات، لوحة الأوامر (Ctrl+K)، تلوين التقارير المطبوعة =====
 async function verCheck(){ try { const t = await (await fetch("./index.html?vc=" + Date.now(), { cache: "no-store" })).text(); const m = /const APP_VER = "([^"]+)"/.exec(t);
   if (m && m[1] !== APP_VER) { let b = $("#updBar"); if (!b) { b = document.createElement("div"); b.id = "updBar"; b.className = "updbar"; document.body.appendChild(b); } b.innerHTML = `🎉 نسخة جديدة <b>${esc(m[1])}</b> جاهزة <button type="button" data-upd>تحديث الآن</button>`; b.hidden = false; } } catch {} }
@@ -5549,4 +5555,23 @@ fn();
 FD.forEach(o => { const f = document.querySelector(`form.addrow[data-kind="${o.kind}"]`); if (!f) return; o.vals.forEach(([n, v]) => { const el = f.elements[n]; if (!el || el.length > 1 && !el.tagName) return; if (el.type === "checkbox") el.checked = v; else if (el.value !== v) el.value = v; }); });
 if (sel) { const f = document.querySelector(`form.addrow[data-kind="${sel.kind}"] [name="${sel.name}"]`); if (f) { f.focus(); try { if (sel.pos != null) f.setSelectionRange(sel.pos, sel.pos); } catch {} } }
 }
+// ===== v112: المشاريع حسب العميل + اسم العميل رابط لملفه =====
+function pjCliKey(n){ const e = (typeof clientsAll === "function" ? clientsAll() : []).find(x => x.name === n); return e ? (e.saved ? e.id : "n:" + n) : "n:" + n; }
+function pjByClient(R){ const fin = PRIV() || can("finance"), G = new Map();
+  R.forEach(x => { const k = (x.p.client || "").trim() || "—"; if (!G.has(k)) G.set(k, []); G.get(k).push(x); });
+  const L = [...G.entries()].map(([n, A]) => ({ n, A, T: A.reduce((s, x) => s + x.c.T, 0), pd: A.reduce((s, x) => s + x.c.paid, 0), due: A.reduce((s, x) => s + x.due, 0), act: A.filter(x => x.p.status === "active").length, late: A.filter(x => x.late || x.lateCl).length }))
+    .sort((a, b) => (a.n === "—") - (b.n === "—") || b.T - a.T || b.A.length - a.A.length);
+  if (!L.length) return `<div class="panel empty"><b>لا توجد مشاريع مطابقة</b></div>`;
+  return `<div class="pjcg">${L.map((g, gi) => { const col = g.T ? Math.round(g.pd / g.T * 100) : 0, nm = g.n === "—" ? "بدون عميل محدد" : g.n;
+    return `<details class="panel pjcgr"${gi < 6 || PJX.q ? " open" : ""}><summary><span class="pjcgh">${avt(nm, g.n === "—" ? "#7f8bab" : "#c29a3e", 1)}<span class="pjcgn"><b>${esc(nm)}</b><small>${g.A.length} ${g.A.length === 1 ? "مشروع" : g.A.length === 2 ? "مشروعان" : g.A.length <= 10 ? "مشاريع" : "مشروعاً"}${g.act ? ` · ${g.act} جاري` : ""}${g.late ? ` · <em class="late">${g.late} عليها تأخير</em>` : ""}</small></span></span>
+      ${fin ? `<span class="pjcgk"><span><small>قيمة العقود</small><b>${kmoney(g.T)}</b></span><span><small>المحصّل</small><b class="ok">${kmoney(g.pd)}</b></span><span><small>مستحق</small><b class="${g.due ? "gold" : ""}">${g.due ? kmoney(g.due) : "—"}</b></span><span class="pjcgb" title="نسبة التحصيل ${col}%"><i style="width:${Math.min(100, col)}%"></i></span></span>` : ""}
+      ${g.n !== "—" ? `<button type="button" class="btn ghost xs" data-pjcli="${esc(g.n)}">ملف العميل ←</button>` : ""}</summary>
+      <div class="tblwrap"><table class="pjct"><thead><tr><th>المشروع</th><th>الحالة</th><th>الإنجاز</th>${fin ? "<th>القيمة</th><th>المحصّل</th><th>المستحق</th>" : ""}<th>التسليم</th></tr></thead><tbody>
+      ${g.A.map(x => { const p = x.p, S = PSTL[p.status] || PSTL.contract, pr = Math.round(x.c.prog || 0); return `<tr data-popen="${esc(p.id)}" class="${x.late || x.lateCl ? "late" : ""}"><td><b>${esc(p.name)}</b>${p.lite ? `<small class="pjlite">خدمة سريعة</small>` : ""}<div class="sub">${p.code ? `<span class="pjcode">${esc(p.code)}</span> ` : ""}${esc(ptLabel(p))}${p.loc ? " · 📍 " + esc(p.loc) : ""}</div></td><td>${spill(S.l, S.c)}</td><td><span class="pjctp"><i style="width:${pr}%"></i></span> ${pr}%</td>${fin ? `<td class="n">${money(x.c.T)}</td><td class="n">${money(x.c.paid)}</td><td class="n ${x.due ? "gold" : ""}">${x.due ? money(x.due) : "—"}</td>` : ""}<td>${p.end ? esc(nice(p.end)) : "—"}</td></tr>`; }).join("")}
+      </tbody></table></div></details>`; }).join("")}</div>`; }
+pjTools = (f => function(R){ return f.apply(this, arguments).replace(/(<div class="pjmode"[^>]*>)/, `$1<button type="button" data-pjxm="client" class="${PJX.mode === "client" ? "on" : ""}" title="حسب العميل"><i>👥</i><span>حسب العميل</span></button>`); })(pjTools);
+pjView = (f => function(){ if (PJX.mode !== "client") return f.apply(this, arguments); const R = pjSort(pjFilter(pjRows())); return pjKpis(pjRows()) + pjTools(R) + pjByClient(R); })(pjView);
+pjCard = (f => function(x){ const h = f.apply(this, arguments), n = x.p.client; return n ? h.replace(`<span>👤 ${esc(n)}</span>`, `<button type="button" class="pjclil" data-pjcli="${esc(n)}" title="فتح ملف العميل">👤 ${esc(n)}</button>`) : h; })(pjCard);
+document.addEventListener("click", e => { const b = e.target.closest && e.target.closest("[data-pjcli]"); if (!b) return; e.preventDefault(); e.stopPropagation(); const k = pjCliKey(b.dataset.pjcli);
+  goTab("clients", () => { try { openCli(k); render(); window.scrollTo({ top: 0 }); } catch (x) {} }); }, true);
 })();

@@ -1772,3 +1772,28 @@ body[data-tab=all] .main .wrap,body[data-tab=all] .main .hero-in{max-width:1500p
 
 
 .lmt th:nth-child(n+3){text-align:left!important}
+/* v112: القائمة الجانبية بلا تمرير أفقي، وعناوين المجموعات تفتح وتطوي فقط */
+.side{overflow-x:hidden}.side nav.tabs{max-width:100%}.side nav.tabs button[role=tab]{min-width:0}
+/* v112: المشاريع حسب العميل */
+.pjcg{display:flex;flex-direction:column;gap:12px}
+.pjcgr{padding:0;overflow:hidden}
+.pjcgr>summary{list-style:none;display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:14px 16px;cursor:pointer;background:linear-gradient(180deg,rgba(228,199,127,.10),transparent)}
+.pjcgr>summary::-webkit-details-marker{display:none}
+.pjcgr>summary::after{content:"▾";color:#a07412;font-size:12px;transition:transform .15s}.pjcgr:not([open])>summary::after{transform:rotate(90deg)}
+.pjcgh{display:flex;align-items:center;gap:10px;flex:1 1 220px;min-width:0}.pjcgn{display:flex;flex-direction:column;min-width:0}.pjcgn b{font-size:16px}.pjcgn small{color:var(--mut,#7f8bab);font-size:12px}.pjcgn em.late{color:var(--late,#c0392b);font-style:normal}
+.pjcgk{display:flex;align-items:center;gap:16px;flex-wrap:wrap}.pjcgk>span{display:flex;flex-direction:column;align-items:flex-start}.pjcgk small{font-size:11px;color:var(--mut,#7f8bab)}.pjcgk b{font-size:14px}.pjcgk b.ok{color:#1e8e5a}.pjcgk b.gold{color:#a07412}
+.pjcgb{width:90px;height:6px;border-radius:4px;background:rgba(127,139,171,.2);overflow:hidden;display:block!important}.pjcgb i{display:block;height:100%;background:#1e8e5a}
+.pjct{width:100%;border-collapse:collapse;font-size:13px}.pjct th{text-align:start;font-size:12px;color:var(--mut,#7f8bab);font-weight:700;padding:8px 12px;border-top:1px solid rgba(127,139,171,.18);background:rgba(127,139,171,.06)}
+.pjct td{padding:9px 12px;border-top:1px solid rgba(127,139,171,.14);vertical-align:middle}.pjct td.n{font-variant-numeric:tabular-nums;white-space:nowrap}.pjct td.gold{color:#a07412;font-weight:700}
+.pjct tr[data-popen]{cursor:pointer}.pjct tr[data-popen]:hover{background:rgba(228,199,127,.10)}.pjct tr.late td:first-child{box-shadow:inset -3px 0 0 var(--late,#c0392b)}
+.pjct .sub{font-size:11.5px;color:var(--mut,#7f8bab);margin-top:2px}.pjct small.pjcode,.pjct small.pjlite{margin-inline-start:6px;font-size:10.5px}
+.pjctp{display:inline-block;width:52px;height:5px;border-radius:3px;background:rgba(127,139,171,.2);vertical-align:middle;overflow:hidden}.pjctp i{display:block;height:100%;background:#2b5ea8}
+.pjclil{background:none;border:0;padding:0;font:inherit;color:#2b5ea8;cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px}.pjclil:hover{color:#a07412}
+@media (max-width:700px){.pjct th:nth-child(n+3):not(:nth-last-child(2)),.pjct td:nth-child(n+3):not(:nth-last-child(2)){display:none}.pjct td,.pjct th{padding:8px}.pjcgk{gap:10px;width:100%}.pjcgb{display:none!important}}
+@media print{.pjcgr>summary::after,.pjcgr [data-pjcli]{display:none}.pjcgr{break-inside:auto}}
+/* v112: الإنجازات — كشف المستحق / للمراجعة / المستبعد */
+.achseg{display:flex;gap:4px;padding:4px;margin-top:10px;background:rgba(127,139,171,.10);border-radius:12px;width:max-content;max-width:100%;flex-wrap:wrap}
+.achseg button{border:0;background:none;font:inherit;font-weight:800;font-size:13.5px;color:var(--ink2,#4a5572);padding:8px 14px;border-radius:9px;cursor:pointer;display:flex;gap:6px;align-items:center}
+.achseg button b{font-size:12px;background:rgba(127,139,171,.18);border-radius:20px;padding:1px 8px}
+.achseg button.on{background:var(--card,#fff);color:#14213d;box-shadow:0 1px 4px rgba(20,33,61,.12)}.achseg button.on b{background:#e4c77f;color:#14213d}
+.achx{border:1px solid var(--line,#dde2ec);background:none;border-radius:8px;font:inherit;font-size:12px;color:var(--mut,#7f8bab);padding:4px 10px;cursor:pointer;align-self:center;white-space:nowrap}.achx:hover{color:var(--late,#c0392b);border-color:currentColor}
