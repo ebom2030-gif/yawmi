@@ -1797,3 +1797,34 @@ body[data-tab=all] .main .wrap,body[data-tab=all] .main .hero-in{max-width:1500p
 .achseg button b{font-size:12px;background:rgba(127,139,171,.18);border-radius:20px;padding:1px 8px}
 .achseg button.on{background:var(--card,#fff);color:#14213d;box-shadow:0 1px 4px rgba(20,33,61,.12)}.achseg button.on b{background:#e4c77f;color:#14213d}
 .achx{border:1px solid var(--line,#dde2ec);background:none;border-radius:8px;font:inherit;font-size:12px;color:var(--mut,#7f8bab);padding:4px 10px;cursor:pointer;align-self:center;white-space:nowrap}.achx:hover{color:var(--late,#c0392b);border-color:currentColor}
+/* v112: شارة العمل بدون إنترنت */
+.netdot{position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:9998;background:#14213d;color:#fff;font-size:12.5px;font-weight:700;padding:7px 14px;border-radius:30px;box-shadow:0 4px 14px rgba(0,0,0,.25);display:flex;gap:8px;align-items:center}
+.netdot i{width:8px;height:8px;border-radius:50%;background:#e8a33d;box-shadow:0 0 0 3px rgba(232,163,61,.25)}
+@media print{.netdot{display:none!important}}
+
+/* v112: إصلاح التباين في الوضع الليلي (نصوص كحلية على خلفية داكنة) */
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .gdstart{background:linear-gradient(135deg,var(--gold-soft),var(--surface));color:var(--ink)}:root:not([data-theme="light"]) .gdstart b,:root:not([data-theme="light"]) .gdstart li{color:var(--ink)}:root:not([data-theme="light"]) .linkbtn{color:var(--gold2)}:root:not([data-theme="light"]) .wsec{color:var(--ink)}:root:not([data-theme="light"]) .mkc.cur b{color:var(--gold2)}:root:not([data-theme="light"]) .ltile b{background:#d9534f}}
+:root[data-theme="dark"] .gdstart{background:linear-gradient(135deg,var(--gold-soft),var(--surface));color:var(--ink)}:root[data-theme="dark"] .gdstart b,:root[data-theme="dark"] .gdstart li{color:var(--ink)}:root[data-theme="dark"] .linkbtn{color:var(--gold2)}:root[data-theme="dark"] .wsec{color:var(--ink)}:root[data-theme="dark"] .mkc.cur b{color:var(--gold2)}:root[data-theme="dark"] .ltile b{background:#d9534f}
+
+/* ===== v113: قائمة جانبية ملوّنة وتفاعلية ===== */
+nav.tabs [data-tab="home"],.bnav [data-bt="home"]{--nc:#60a5fa}nav.tabs [data-tab="day"],.bnav [data-bt="day"]{--nc:#38bdf8}nav.tabs [data-tab="all"],.bnav [data-bt="all"]{--nc:#818cf8}nav.tabs [data-tab="approvals"],.bnav [data-bt="approvals"]{--nc:#f59e0b}nav.tabs [data-tab="projects"],.bnav [data-bt="projects"]{--nc:#e4c77f}nav.tabs [data-tab="clients"],.bnav [data-bt="clients"]{--nc:#34d399}nav.tabs [data-tab="brk"],.bnav [data-bt="brk"]{--nc:#fb923c}nav.tabs [data-tab="ach"],.bnav [data-bt="ach"]{--nc:#facc15}nav.tabs [data-tab="dash"],.bnav [data-bt="dash"]{--nc:#2dd4bf}nav.tabs [data-tab="upcoming"],.bnav [data-bt="upcoming"]{--nc:#a78bfa}nav.tabs [data-tab="backlog"],.bnav [data-bt="backlog"]{--nc:#94a3b8}nav.tabs [data-tab="done"],.bnav [data-bt="done"]{--nc:#4ade80}nav.tabs [data-tab="report"],.bnav [data-bt="report"]{--nc:#22d3ee}nav.tabs [data-tab="devs"],.bnav [data-bt="devs"]{--nc:#f472b6}nav.tabs [data-tab="todo"],.bnav [data-bt="todo"]{--nc:#3b82f6}nav.tabs [data-tab="notes"],.bnav [data-bt="notes"]{--nc:#fbbf24}nav.tabs [data-tab="mat"],.bnav [data-bt="mat"]{--nc:#f97316}nav.tabs [data-tab="ai"],.bnav [data-bt="ai"]{--nc:#c084fc}nav.tabs [data-tab="plan"],.bnav [data-bt="plan"]{--nc:#67e8f9}nav.tabs [data-tab="guide"],.bnav [data-bt="guide"]{--nc:#93c5fd}nav.tabs [data-tab="appearance"],.bnav [data-bt="appearance"]{--nc:#f9a8d4}nav.tabs [data-tab="team"],.bnav [data-bt="team"]{--nc:#a3e635}nav.tabs [data-tab="users"],.bnav [data-bt="users"]{--nc:#c4b5fd}nav.tabs [data-tab="audit"],.bnav [data-bt="audit"]{--nc:#cbd5e1}nav.tabs [data-tab="tenants"],.bnav [data-bt="tenants"]{--nc:#fda4af}nav.tabs [data-tab="health"],.bnav [data-bt="health"]{--nc:#f87171}nav.tabs [data-tab="trash"],.bnav [data-bt="trash"]{--nc:#9ca3af}nav.tabs [data-tab="search"],.bnav [data-bt="search"]{--nc:#93c5fd}
+html .side nav.tabs button[data-tab]{--nc0:var(--nc,#e4c77f);position:relative;transition:background .18s,color .18s,transform .18s cubic-bezier(.2,.8,.2,1);padding:6px 10px}
+html .side nav.tabs button[data-tab] i{width:30px;height:30px;border-radius:9px;background:color-mix(in srgb,var(--nc0) 15%,transparent);color:var(--nc0);transition:background .18s,transform .25s cubic-bezier(.3,1.6,.5,1),box-shadow .18s,color .18s}
+html .side nav.tabs button[data-tab] i svg{width:17px;height:17px}
+html .side nav.tabs button[data-tab]:hover{background:color-mix(in srgb,var(--nc0) 9%,transparent);color:#fff;transform:translateX(-3px)}
+html .side nav.tabs button[data-tab]:hover i{background:color-mix(in srgb,var(--nc0) 28%,transparent);transform:scale(1.08) rotate(-4deg)}
+html .side nav.tabs button[data-tab]:active{transform:scale(.98)}
+html .side nav.tabs button[data-tab][aria-selected="true"]{background:linear-gradient(270deg,color-mix(in srgb,var(--nc0) 22%,transparent),color-mix(in srgb,var(--nc0) 4%,transparent));color:#fff;box-shadow:inset -3px 0 0 var(--nc0)}
+html .side nav.tabs button[data-tab][aria-selected="true"] i{background:var(--nc0);color:#101a33;box-shadow:0 4px 14px color-mix(in srgb,var(--nc0) 45%,transparent)}
+html .side nav.tabs button[data-tab]:focus-visible{outline:2px solid var(--nc0);outline-offset:1px}
+/* العدادات: لون حسب المعنى ونبضة عند التغيّر */
+html .side nav.tabs button[data-tab] .c{background:color-mix(in srgb,var(--nc0) 85%,#000);color:#101a33;font-weight:800;border-radius:99px;min-width:22px;padding:1px 7px;text-align:center;font-size:11.5px;transition:transform .2s}
+html .side nav.tabs button[data-tab] .c.z{background:rgba(255,255,255,.08);color:#7f8bab}
+html .side nav.tabs button[data-tab] .c.bump{animation:ncbump .6s cubic-bezier(.3,1.6,.5,1)}
+@keyframes ncbump{0%{transform:scale(1)}40%{transform:scale(1.35)}100%{transform:scale(1)}}
+/* عناوين المجموعات */
+html .side .ngrp.colp>.ngl::after{transition:transform .22s cubic-bezier(.2,.8,.2,1)}
+/* الشريط السفلي في الجوال */
+.bnav button[data-bt] i{transition:transform .2s cubic-bezier(.3,1.6,.5,1),color .2s}
+.bnav button[data-bt].on i{color:color-mix(in srgb,var(--nc,#e4c77f) 80%,#000);transform:translateY(-2px) scale(1.1)}.bnav button[data-bt].on:before{background:var(--nc,#e4c77f);width:32px}
+@media (prefers-reduced-motion:reduce){html .side nav.tabs button[data-tab],html .side nav.tabs button[data-tab] i,.bnav button[data-bt] i{transition:none!important;transform:none!important}html .side nav.tabs button[data-tab] .c.bump{animation:none}}

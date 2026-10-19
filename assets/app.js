@@ -1132,7 +1132,7 @@ const snap = obj => ({ docs: Object.entries(obj).map(([id, v]) => ({ id, data: (
 const emit = () => listeners.forEach(f => f(snap(store)));
 const emitN = () => noteListeners.forEach(f => f(snap(Object.fromEntries(Object.entries(noteStore).map(([k, v]) => [k, { text: v }])))));
 const rid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-const APP_VER = "v112", APP_DATE = "2026-10-20";
+const APP_VER = "v113", APP_DATE = "2026-10-20";
 const strip = o => { const r = { ...o }; delete r.id; return r; };
 const SKINS = [["night", "ليل مكة", "كحلي ليلي ونحاسي ذهبي", "#14213d", "#c29a3e", "#2f63b5"], ["roshan", "روشن حجازي", "أخضر بترولي وذهب رملي", "#0e3b43", "#d9b97a", "#c8553d"], ["earth", "طين ونخيل", "بني تمري وتيراكوتا", "#3a2a21", "#e0b66f", "#4f6b3a"]];
 const curSkin = () => document.documentElement.dataset.skin || "night";
@@ -3834,7 +3834,10 @@ obxFlush = async function(){ if (obxFlushing || isDemo || !TOKEN) return; let q 
       q = obxQ(); if (q.length && q[0].k === x.k) q.shift(); obxSet(q); done++; } }
   finally { obxFlushing = false; }
   if (stuck) { clearTimeout(obxFlush.t); obxFlush.t = setTimeout(obxFlush, 4000); }
-  if (done && !obxQ().length) { obxBar(); load.done = false; load(); } };
+  if (done && !obxQ().length) { obxBar(); load.done = false; load(); if (obxFlush.off) { obxFlush.off = 0; toast(done === 1 ? "✓ تمت مزامنة التعديل الذي حُفظ أثناء انقطاع الإنترنت" : `✓ تمت مزامنة ${done} تعديلات حُفظت أثناء انقطاع الإنترنت`); } } };
+addEventListener("offline", () => { obxFlush.off = 1; netDot(); }); addEventListener("online", netDot);
+function netDot(){ let d = document.getElementById("netDot"); if (!d) { d = document.createElement("div"); d.id = "netDot"; d.className = "netdot"; d.setAttribute("role", "status"); document.body.appendChild(d); } const off = !navigator.onLine; d.hidden = !off; if (off) d.innerHTML = `<i></i>بدون إنترنت — تعمل من النسخة المحفوظة على جهازك`; }
+setTimeout(() => { netDot(); if (!navigator.onLine || obxQ().length) obxFlush.off = 1; }, 1500);
 obxPut = (f => function(){ const r = f.apply(this, arguments); if (navigator.onLine) { clearTimeout(obxFlush.t); obxFlush.t = setTimeout(obxFlush, 1200); } return r; })(obxPut);
 // الشريط يظهر فقط عند انقطاع الاتصال أو تأخر الإرسال أكثر من 25 ثانية
 obxBar = (f => function(){ const q = obxQ(), off = !navigator.onLine, old = q.length && Date.now() - Math.min(...q.map(x => x.at || Date.now())) > 25000;
@@ -5179,6 +5182,7 @@ function cfPanel(){ if (!ME || ME.role !== "owner") return ""; const c = cfInfo;
     <div><button type="button" class="btn ghost" data-cfref>تحديث الحالة</button> <button type="button" class="btn ghost xs" data-cfnat="${c.native !== false ? "0" : "1"}" title="للطوارئ فقط">${c.native !== false ? "وضع الطوارئ (تمرير إلى Google)" : "↩ العودة للخادم الأساسي Cloudflare"}</button></div></div>`; }
 GUIDE_NEW.unshift(["v111", "انتقال البرنامج بالكامل إلى خادم Cloudflare: الدخول وكلمات المرور والجلسات والصلاحيات (الأساسية والإضافية) وسير العمل وكل البيانات على Cloudflare لكل المستخدمين — أسرع ومتزامن على كل الأجهزة. Google أصبح نسخة احتياطية تلقائية (Sheets + Drive) ولخدماته فقط (التقويم، الملفات، To Do، البريد)."]);
 GUIDE_NEW.unshift(["v112", "صفحة المشاريع: عرض جديد «👥 حسب العميل» يجمع مشاريع كل عميل مع قيمة العقود والمحصّل والمستحق، واسم العميل في كل بطاقة يفتح ملفه مباشرة. صفحة الإنجازات: ثلاثة أقسام واضحة — «★ كشف المستحق» و«📥 للمراجعة» (الاقتراحات الجديدة فقط مع زر استبعاد) و«المستبعد». مزامنة أسرع بين الأجهزة (كل 5 ثوانٍ أثناء الاستخدام، وفوراً عند فتح التطبيق أو الرجوع إليه). القائمة الجانبية: الضغط على اسم المجموعة يفتحها أو يطويها فقط دون إغلاق القائمة على الجوال، وبلا تمرير أفقي."]);
+GUIDE_NEW.unshift(["v113", "العمل بدون إنترنت: البرنامج يفتح ويعمل حتى لو انقطع النت (حتى من أول فتح بعد التحديث)، وتظهر شارة «بدون إنترنت» أعلى الشاشة، وكل ما تضيفه أو تعدّله يُحفظ على جهازك ويظهر حتى لو أعدت فتح الصفحة، ثم يُرسل تلقائياً عند عودة الاتصال مع رسالة «تمت المزامنة». وتحسين الوضع الليلي: إصلاح النصوص الباهتة في الدليل ولوحة المؤشرات والتقارير والروابط. وقائمة جانبية ملوّنة وتفاعلية: لون مميز لكل قسم، حركة ناعمة عند المرور، الصفحة المفتوحة مضيئة بلونها، والعدادات تنبض عند وصول جديد وتصبح رمادية عند الصفر."]);
 // ===== v54: فحص التحديثات، لوحة الأوامر (Ctrl+K)، تلوين التقارير المطبوعة =====
 async function verCheck(){ try { const t = await (await fetch("./index.html?vc=" + Date.now(), { cache: "no-store" })).text(); const m = /const APP_VER = "([^"]+)"/.exec(t);
   if (m && m[1] !== APP_VER) { let b = $("#updBar"); if (!b) { b = document.createElement("div"); b.id = "updBar"; b.className = "updbar"; document.body.appendChild(b); } b.innerHTML = `🎉 نسخة جديدة <b>${esc(m[1])}</b> جاهزة <button type="button" data-upd>تحديث الآن</button>`; b.hidden = false; } } catch {} }
@@ -5574,4 +5578,12 @@ pjView = (f => function(){ if (PJX.mode !== "client") return f.apply(this, argum
 pjCard = (f => function(x){ const h = f.apply(this, arguments), n = x.p.client; return n ? h.replace(`<span>👤 ${esc(n)}</span>`, `<button type="button" class="pjclil" data-pjcli="${esc(n)}" title="فتح ملف العميل">👤 ${esc(n)}</button>`) : h; })(pjCard);
 document.addEventListener("click", e => { const b = e.target.closest && e.target.closest("[data-pjcli]"); if (!b) return; e.preventDefault(); e.stopPropagation(); const k = pjCliKey(b.dataset.pjcli);
   goTab("clients", () => { try { openCli(k); render(); window.scrollTo({ top: 0 }); } catch (x) {} }); }, true);
+
+// ===== v113: عدادات القائمة الملوّنة — رمادي عند الصفر ونبضة عند الزيادة =====
+function navCounts(){ document.querySelectorAll("nav.tabs button[data-tab] .c").forEach(c => { const v = c.textContent.trim(), n = parseInt(v, 10) || 0; c.classList.toggle("z", !n); const o = +(c.dataset.pv || 0); if (n > o && c.dataset.pv !== undefined) { c.classList.remove("bump"); void c.offsetWidth; c.classList.add("bump"); } c.dataset.pv = n; }); }
+render = (f => function(){ const r = f.apply(this, arguments); try { navCounts(); } catch (x) {} return r; })(render);
+setTimeout(navCounts, 800);
+
+// v113: بطاقة «المهام الذكية» تظهر فقط بعد إجراء منك (لا تظهر فجأة أثناء المزامنة في الخلفية)
+smCard = (f => function(){ if (typeof SYNCA !== "undefined" && Date.now() - SYNCA > 8000) return; return f.apply(this, arguments); })(smCard);
 })();
