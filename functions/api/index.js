@@ -228,8 +228,13 @@ async function nSaveItem(env, C, obj) { const db = env.DB, u = C.u, tn = C.tn; i
     if (obj.owner !== ow0) { obj.wf = obj.wf || {}; obj.wf.hist = (obj.wf.hist || []).concat([{ t: 'transfer', by: u.id, from: ow0, to: obj.owner, at: Date.now() }]); obj.wf.acc = 'pending'; ev = ['تحويل مهمة', obj.title, 'من ' + ((byId(C, ow0) || {}).name || '') + ' إلى ' + ((byId(C, obj.owner) || {}).name || '')]; } }
   obj.calId = old ? (old.calId || '') : ''; if (obj.todo === 'new' && old && old.todo && old.todo !== 'new') obj.todo = old.todo;
   ['done', 'star', 'pv'].forEach(k => obj[k] = !!obj[k]); if (!obj.due) obj.due = null;
+  // v116: تعديل تم بدون إنترنت وتعارض مع تعديل أحدث من مستخدم آخر — تُحفظ النسخة الأخرى في سلة المحذوفات ولا تضيع
+  const offAt = Number(obj._off || 0); delete obj._off; let conf = null;
+  if (old && offAt && Number(old._at || 0) > offAt && old._by && old._by !== u.id) { conf = (byId(C, old._by) || {}).name || 'مستخدم آخر';
+    await db.prepare('INSERT INTO trash (id, tn, kind, rid, title, data, uid, uname, priv, at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)').bind(crypto.randomUUID(), tn, 'item', String(old.id), ('نسخة قبل التعارض — ' + (old.title || '')).slice(0, 200), J(old), u.id, u.name || '', old.space === 'p' ? 1 : 0, Date.now()).run(); }
+  obj._at = Date.now(); obj._by = u.id;
   await upItem(db, tn, obj, Date.now()).run(); await enqueue(db, C, 'item', obj.id, 'saveItem', [obj]); if (ev) await audit(db, C, ev[0], ev[1], ev[2]);
-  return { calId: obj.calId || '', todo: obj.todo || '' }; }
+  return { calId: obj.calId || '', todo: obj.todo || '', conflict: conf }; }
 async function goneMark(db, tn, kind, id) { await db.prepare('INSERT INTO gone (tn, kind, id, at) VALUES (?, ?, ?, ?) ON CONFLICT DO UPDATE SET at = excluded.at').bind(tn, kind, String(id), Date.now()).run(); }
 async function nDeleteItem(env, C, id) { const db = env.DB, u = C.u, tn = C.tn; const row = await db.prepare('SELECT data FROM items WHERE tn = ? AND id = ?').bind(tn, String(id)).first(); if (!row) return true; const o = JSON.parse(row.data);
   if (o.space === 'p' && o.owner !== u.id) throw new UErr('غير مسموح'); if (o.space === 'p' && !C.po) throw new UErr('أعمالك الخاصة مقفلة — افتحها بالرقم السري أولاً');
@@ -290,7 +295,7 @@ async function nAudit(env, C, n) { const db = env.DB; need(C.u, 'audit'); const 
   return (C.u.role === 'owner' || C.u.role === 'ceo') ? all : all.filter(r => r.by === C.u.id || seeScope(C.u, byId(C, r.by))); }
 
 // ---------- سلة المحذوفات والإنجازات والصلاحيات الإضافية والإجازات ----------
-const TRASH = new Set(['trashPut', 'trashList', 'trashDel', 'achList', 'achPut', 'achDel', 'xpGet', 'xpSet', 'holSet']);
+const TRASH = new Set(['trashPut', 'trashList', 'trashDel', 'achList', 'achPut', 'achDel', 'xpGet', 'xpSet', 'holSet', 'orgSet', 'diagLog']);
 async function trashOp(db, C, fn, a) { const u = C.u, tn = C.tn, big = ['owner', 'ceo', 'branch'].includes(u.role), now = Date.now();
   if (fn === 'trashPut') { const [kind, o] = a; if (!o || !o.id || !['item', 'project', 'contact', 'ref'].includes(kind)) throw new UErr('بيانات غير صالحة'); const d = J(o); if (d.length > 120000) throw new UErr('العنصر كبير جداً');
     await db.batch([db.prepare('INSERT INTO trash (id, tn, kind, rid, title, data, uid, uname, priv, at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)').bind(crypto.randomUUID(), tn, kind, String(o.id), String(o.title || o.name || o.co || '').slice(0, 200), d, u.id, u.name || '', o.space === 'p' || o.pv ? 1 : 0, now), db.prepare('DELETE FROM trash WHERE tn = ? AND at < ?').bind(tn, now - 30 * 864e5)]); return true; }
@@ -302,7 +307,9 @@ async function trashOp(db, C, fn, a) { const u = C.u, tn = C.tn, big = ['owner',
     if (fn === 'achList') return (await db.prepare('SELECT data FROM ach WHERE tn = ? AND uid = ?').bind(tn, uid).all()).results.map(x => JSON.parse(x.data || 'null')).filter(Boolean);
     if (fn === 'achPut') { const o = a[0] || {}; if (!o.k) throw new UErr('بيانات غير صالحة'); const d = J(o); if (d.length > 8000) throw new UErr('البيانات كبيرة جداً'); await db.prepare('INSERT INTO ach (tn, uid, k, data, at) VALUES (?, ?, ?, ?, ?) ON CONFLICT(tn, uid, k) DO UPDATE SET data = excluded.data, at = excluded.at').bind(tn, uid, String(o.k), d, now).run(); return true; }
     await db.prepare('DELETE FROM ach WHERE tn = ? AND uid = ? AND k = ?').bind(tn, uid, String(a[1] || '')).run(); return true; }
-  if (fn === 'xpGet') return { xp: C.X, hol: JSON.parse((await cfgGet(db, 'hol:' + tn)) || '[]') };
+  if (fn === 'xpGet') return { xp: C.X, hol: JSON.parse((await cfgGet(db, 'hol:' + tn)) || '[]'), org: JSON.parse((await cfgGet(db, 'org:' + tn)) || '{}') };
+  if (fn === 'orgSet') { if (!big) throw new UErr('إعدادات الشركة للمالك والإدارة العليا فقط'); const o = a[0] && typeof a[0] === 'object' ? a[0] : {}; const d = J(o); if (d.length > 20000) throw new UErr('الإعدادات كبيرة جداً'); await cfgSet(db, 'org:' + tn, d); return true; }
+  if (fn === 'diagLog') { const o = a[0] && typeof a[0] === 'object' ? a[0] : {}; await cfgSet(db, 'diag:' + tn, J(Object.assign({}, o, { at: now, by: u.id }))); return true; }
   if (fn === 'xpSet') { if (!(u.role === 'owner' || u.role === 'ceo')) throw new UErr('توزيع الصلاحيات للمالك والرئيس التنفيذي فقط'); const t = byId(C, String(a[0] || '')); if (!t || t.role === 'owner') throw new UErr('غير مسموح'); const m = Object.assign({}, C.X), o = {}; Object.entries(a[1] || {}).slice(0, 30).forEach(([k, v]) => o[String(k).slice(0, 20)] = !!v); m[t.id] = o; await cfgSet(db, 'xp:' + tn, J(m)); await audit(db, C, 'صلاحيات الصفحات', t.name, Object.keys(o).filter(k => o[k]).join('، ')); return true; }
   if (fn === 'holSet') { if (!big) throw new UErr('غير مسموح'); const L = (Array.isArray(a[0]) ? a[0] : []).filter(d => /^\d{4}-\d\d-\d\d$/.test(d)).slice(0, 200); await cfgSet(db, 'hol:' + tn, J(L)); return true; }
   throw new UErr('عملية غير معروفة'); }
