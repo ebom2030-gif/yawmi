@@ -37,7 +37,9 @@ const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS ltry (k TEXT PRIMARY KEY, n INTEGER, until INTEGER)`,
 ];
 let ready = false;
-async function init(db) { if (ready) return; await db.batch(SCHEMA.map(q => db.prepare(q))); try { await db.prepare('ALTER TABLE sess2 ADD COLUMN rem INTEGER DEFAULT 0').run(); } catch (e) {} ready = true; }
+const SCHEMA_V = '122'; // v122: غيّر الرقم عند أي تعديل على SCHEMA
+async function init(db) { if (ready) return; try { const r = await db.prepare("SELECT v FROM cfg WHERE k = 'schema'").first(); if (r && r.v === SCHEMA_V) { ready = true; return; } } catch (e) {}
+  await db.batch(SCHEMA.map(q => db.prepare(q))); try { await db.prepare('ALTER TABLE sess2 ADD COLUMN rem INTEGER DEFAULT 0').run(); } catch (e) {} await cfgSet(db, 'schema', SCHEMA_V); ready = true; }
 const hex = b => [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join('');
 async function sha(s) { return hex(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s))); }
 const rnd = n => hex(crypto.getRandomValues(new Uint8Array(n || 16)));
@@ -102,11 +104,13 @@ function tenState(t) { if (!t) return 'active'; if (t.state === 'suspended') ret
 async function ctxOf(db, th) { if (!th) return null; const s = await db.prepare('SELECT * FROM sess2 WHERE th = ?').bind(th).first(); if (!s) return null;
   const now = Date.now(); if (s.exp < now) { await db.prepare('DELETE FROM sess2 WHERE th = ?').bind(th).run(); throw new UErr('انتهت الجلسة — سجّل الدخول مرة أخرى'); }
   if (!s.rem && s.last && now - s.last > IDLE) { await db.prepare('DELETE FROM sess2 WHERE th = ?').bind(th).run(); throw new UErr('انتهت الجلسة — أُغلقت بعد 30 دقيقة دون نشاط'); }
-  if (!s.last || now - s.last > 60000) await db.prepare('UPDATE sess2 SET last = ? WHERE th = ?').bind(now, th).run();
-  const tn = s.tn || '', US = await usersOf(db, tn), u = US.find(x => x.id === s.uid); if (!u || u.active === false) throw new UErr('الحساب غير مفعّل');
-  const ten = await tenOf(db, tn), st = tn ? tenState(ten) : 'active'; if (st === 'suspended') throw new UErr('حساب الشركة غير مفعّل حالياً — تواصل مع إدارة يومي');
-  const pin = await db.prepare('SELECT 1 x FROM pins WHERE tn = ? AND uid = ?').bind(tn, u.id).first();
-  return { s, th, tn, u, US, ten, ro: st === 'expired', po: !pin || (s.pv && s.pv > now), pin: !!pin, X: JSON.parse((await cfgGet(db, 'xp:' + tn)) || '{}') }; }
+  if (!s.last || now - s.last > 300000) await db.prepare('UPDATE sess2 SET last = ? WHERE th = ?').bind(now, th).run();
+  // v122: كل بيانات السياق في رحلة واحدة إلى قاعدة البيانات بدل خمس رحلات متتالية
+  const tn = s.tn || '', [rU, rT, rP, rX, rN] = await db.batch([db.prepare('SELECT data FROM users WHERE tn = ?').bind(tn), db.prepare('SELECT data FROM tenants WHERE id = ?').bind(tn), db.prepare('SELECT 1 x FROM pins WHERE tn = ? AND uid = ?').bind(tn, s.uid), db.prepare('SELECT v FROM cfg WHERE k = ?').bind('xp:' + tn), db.prepare('SELECT v FROM cfg WHERE k = ?').bind('native:' + tn)]);
+  const rs = r => (r && r.results) || [], US = rs(rU).map(x => JSON.parse(x.data)).map(u => Object.assign(u, { active: u.active !== false })), u = US.find(x => x.id === s.uid); if (!u || u.active === false) throw new UErr('الحساب غير مفعّل');
+  const ten = tn && rs(rT)[0] ? JSON.parse(rs(rT)[0].data || 'null') : null, st = tn ? tenState(ten) : 'active'; if (st === 'suspended') throw new UErr('حساب الشركة غير مفعّل حالياً — تواصل مع إدارة يومي');
+  const pin = rs(rP)[0], xv = rs(rX)[0], nv = rs(rN)[0];
+  return { s, th, tn, u, US, ten, ro: st === 'expired', po: !pin || (s.pv && s.pv > now), pin: !!pin, X: JSON.parse((xv && xv.v) || '{}'), native: !nv || nv.v !== '0' }; }
 const byId = (C, id) => C.US.find(x => x.id === id);
 async function audit(db, C, action, target, details) { try { await db.prepare('INSERT INTO audit (tn, at, by, byName, action, target, details) VALUES (?, ?, ?, ?, ?, ?, ?)').bind(C.tn, Date.now(), C.u.id, C.u.name || '', String(action), String(target || '').slice(0, 200), String(details || '').slice(0, 500)).run(); } catch (e) {} }
 const nativeOn = async (db, tn) => (await cfgGet(db, 'native:' + (tn || ''))) !== '0';
@@ -197,17 +201,24 @@ async function login(env, ident, pw, waitUntil) { const db = env.DB, k = 'lf:' +
   await db.prepare('DELETE FROM ltry WHERE k = ?').bind(k).run(); return adoptGoogle(env, g.data, pw); }
 
 // ---------- العمليات الأصلية ----------
-async function nGetAll(env, C) { const db = env.DB, u = C.u, tn = C.tn, po = C.po, B = Object.fromEntries(C.US.map(x => [x.id, x]));
+async function nGetAll(env, C, since) { const db = env.DB, u = C.u, tn = C.tn, po = C.po, B = Object.fromEntries(C.US.map(x => [x.id, x])), now = Date.now(), RAW = {};
+  const RW = async t => { const L = since ? (await db.prepare(`SELECT data FROM ${t} WHERE tn = ? AND updated_at > ?`).bind(tn, since).all()).results.map(x => JSON.parse(x.data)) : await rowsOf(db, t, tn); RAW[t] = L; return L; };
   const mineRel = x => x.owner === u.id || x.assignedBy === u.id || (wfReq(x) && wfReq(x).ap === u.id);
-  let items = (await rowsOf(db, 'items', tn)).filter(x => (x.space !== 'p' || (x.owner === u.id && po)) && (!x.pv || x.owner === u.id));
+  let items = (await RW('items')).filter(x => (x.space !== 'p' || (x.owner === u.id && po)) && (!x.pv || x.owner === u.id));
   items = can(u, 'team') ? items.filter(x => mineRel(x) || seeScope(u, B[x.owner])) : items.filter(mineRel);
-  const notes = {}; (await db.prepare('SELECT date, text FROM notes WHERE tn = ? AND owner = ?').bind(tn, u.id).all()).results.forEach(r => notes[r.date] = r.text || '');
+  const notes = {}; (await (since ? db.prepare('SELECT date, text FROM notes WHERE tn = ? AND owner = ? AND updated_at > ?').bind(tn, u.id, since) : db.prepare('SELECT date, text FROM notes WHERE tn = ? AND owner = ?').bind(tn, u.id)).all()).results.forEach(r => notes[r.date] = r.text || '');
   const fin = can(u, 'finance');
-  const projects = (await rowsOf(db, 'projects', tn)).filter(p => p.space === 'p' ? (p.createdBy === u.id && po) : (can(u, 'projects') || (Array.isArray(p.team) && p.team.includes(u.id)))).map(p => p.space === 'p' || fin ? p : stripFin(p));
+  const projects = (await RW('projects')).filter(p => p.space === 'p' ? (p.createdBy === u.id && po) : (can(u, 'projects') || (Array.isArray(p.team) && p.team.includes(u.id)))).map(p => p.space === 'p' || fin ? p : stripFin(p));
   const cOK = can(u, 'projects') && xcan(C.X, u, 'clients'), bOK = xcan(C.X, u, 'brk');
-  const contacts = (await rowsOf(db, 'contacts', tn)).filter(c => c.space === 'p' ? (c.createdBy === u.id && po) : (cOK || (bOK && can(u, 'projects') && c.cat === 'contractor'))).map(c => c.space === 'p' || bOK ? c : Object.assign({}, c, { refs: [] }));
+  const contacts = (await RW('contacts')).filter(c => c.space === 'p' ? (c.createdBy === u.id && po) : (cOK || (bOK && can(u, 'projects') && c.cat === 'contractor'))).map(c => c.space === 'p' || bOK ? c : Object.assign({}, c, { refs: [] }));
   const plat = !tn && u.role === 'owner';
-  return { me: pub(u), users: usersFor(u, C.US), items, notes, projects, contacts, priv: { pin: C.pin, open: po }, ten: C.ten ? Object.assign({}, C.ten, { ro: C.ro }) : null, plat, cf: 1, v3: 1 }; }
+  const out = { me: pub(u), users: usersFor(u, C.US), items, notes, projects, contacts, priv: { pin: C.pin, open: po }, ten: C.ten ? Object.assign({}, C.ten, { ro: C.ro }) : null, plat, cf: 1, v3: 1, now };
+  if (since) { // v122: مزامنة جزئية — ما تغيّر فقط + ما حُذف أو لم يعد مرئياً لهذا المستخدم
+    const vis = (L, V) => { const k = new Set(V.map(x => x.id)); return L.filter(x => !k.has(x.id)).map(x => x.id); };
+    const drop = { item: vis(RAW.items || [], items), project: vis(RAW.projects || [], projects), contact: vis(RAW.contacts || [], contacts) };
+    (await db.prepare('SELECT kind, id FROM gone WHERE tn = ? AND at > ?').bind(tn, since).all()).results.forEach(g => { if (drop[g.kind]) drop[g.kind].push(g.id); });
+    out.delta = 1; out.drop = drop; }
+  return out; }
 async function nSaveItem(env, C, obj) { const db = env.DB, u = C.u, tn = C.tn; if (!obj || !obj.id) throw new UErr('بيانات غير صالحة'); let ev = null;
   const row = await db.prepare('SELECT data FROM items WHERE tn = ? AND id = ?').bind(tn, String(obj.id)).first(), old = row ? JSON.parse(row.data) : null;
   if (old && old.space === 'p' && old.owner !== u.id) throw new UErr('غير مسموح'); const ow0 = old ? old.owner : '';
@@ -322,7 +333,7 @@ async function trashOp(db, C, fn, a) { const u = C.u, tn = C.tn, big = ['owner',
 // ---------- نقطة الدخول ----------
 const OPEN = new Set(['setupStatus', 'setup', 'forgotPw', 'resetPw', 'signup', 'logErr', 'ext', 'extVerify']);
 const WRITES = new Set(['saveItem', 'deleteItem', 'saveProject', 'deleteProject', 'saveContact', 'deleteContact', 'saveNote', 'saveMat', 'addUser', 'updateUser', 'deleteUser', 'restoreTenant', 'setPrivPin', 'trashDel', 'xpSet']);
-const TREAD = new Set(['getMat', 'getAll', 'listUsers', 'listAudit', 'listIdeas', 'lockPriv', 'unlockPriv', 'logout', 'trashList', 'achList', 'xpGet', 'todoStatus', 'health']);
+const TREAD = new Set(['getMat', 'getAll', 'getSince', 'listUsers', 'listAudit', 'listIdeas', 'lockPriv', 'unlockPriv', 'logout', 'trashList', 'achList', 'xpGet', 'todoStatus', 'health']);
 export async function onRequestPost({ request, env, waitUntil }) {
   const body = await request.text(); const t0 = Date.now(); const db = env.DB; let req = {}; try { req = JSON.parse(body); } catch (e) {}
   const fn = String(req.fn || ''), a = Array.isArray(req.args) ? req.args : [];
@@ -344,11 +355,12 @@ export async function onRequestPost({ request, env, waitUntil }) {
     if (fn === 'logout') { await db.prepare('DELETE FROM sess2 WHERE th = ?').bind(th).run(); if (C.s.gt) waitUntil(gasCall(env, C.s.gt, 'logout', []).catch(() => {})); return ok(true); }
     if (C.ro && !TREAD.has(fn)) return fail('انتهت الفترة التجريبية — الحساب الآن للعرض فقط. بياناتك محفوظة كما هي، وتواصل معنا لتفعيل الاشتراك');
     if (fn === 'cfNative') { if (C.u.role !== 'owner') return fail('هذه العملية للمالك فقط'); await cfgSet(db, 'native:' + C.tn, a[0] ? '1' : '0'); await log(db, C.tn, C.u.id, 'cfNative:' + (a[0] ? 'on' : 'off'), 1, 0, null); return ok({ native: !!a[0] }); }
-    const native = await nativeOn(db, C.tn); let data, done = true;
+    const native = C.native !== undefined ? C.native : await nativeOn(db, C.tn); let data, done = true;
     try {
       if (TRASH.has(fn)) data = await trashOp(db, C, fn, a);
       else if (!native) done = false;
       else if (fn === 'getAll') data = await nGetAll(env, C);
+      else if (fn === 'getSince') { const sn = Number(a[0]) || 0; data = sn && Date.now() - sn < 7 * 864e5 ? await nGetAll(env, C, sn) : await nGetAll(env, C); }
       else if (fn === 'saveItem') data = await nSaveItem(env, C, a[0]);
       else if (fn === 'deleteItem') data = await nDeleteItem(env, C, a[0]);
       else if (fn === 'saveProject') data = await nSaveProject(env, C, a[0], a[1], a[2]);
@@ -379,8 +391,10 @@ export async function onRequestPost({ request, env, waitUntil }) {
 export async function onRequestGet({ request, env }) { // حالة الخادم؛ ورقم إصدار البيانات (?v=1&t=رمز) لمزامنة الأجهزة
   const o = { ok: true, gateway: true, d1: !!env.DB, v3: 1 }; const url = new URL(request.url), t = url.searchParams.get('t');
   if (!env.DB) return new Response(J(o), { headers: H });
-  try { const db = env.DB; await init(db); const th = t ? await sha('yw|' + t) : ''; const s = th ? (await db.prepare('SELECT tn, uid FROM sess2 WHERE th = ?').bind(th).first() || await db.prepare('SELECT tn, uid FROM ss WHERE th = ?').bind(th).first()) : null;
-    if (url.searchParams.get('v')) return new Response(J({ ok: true, ver: s ? Number(await cfgGet(db, 'ver:' + (s.tn || '')) || 0) : null }), { headers: H });
+  try { const db = env.DB; await init(db); const th = t ? await sha('yw|' + t) : '';
+    if (url.searchParams.get('v')) { const q = th ? await db.prepare("SELECT s.tn tn, (SELECT v FROM cfg WHERE k = 'ver:' || s.tn) v FROM sess2 s WHERE s.th = ?").bind(th).first() : null; if (q) return new Response(J({ ok: true, ver: Number(q.v || 0) }), { headers: H });
+      const o2 = th ? await db.prepare('SELECT tn FROM ss WHERE th = ?').bind(th).first() : null; return new Response(J({ ok: true, ver: o2 ? Number(await cfgGet(db, 'ver:' + (o2.tn || '')) || 0) : null }), { headers: H }); }
+    const s = th ? (await db.prepare('SELECT tn, uid FROM sess2 WHERE th = ?').bind(th).first() || await db.prepare('SELECT tn, uid FROM ss WHERE th = ?').bind(th).first()) : null;
     o.lastSync = (await db.prepare('SELECT MAX(at) n FROM sync_log WHERE ok = 1').first()).n;
     if (s) { const tn = s.tn || '', c = async q => (await db.prepare(q).bind(tn).first()).n;
       Object.assign(o, { native: await nativeOn(db, tn), cut: Number(await cfgGet(db, 'cut:' + tn) || 0), items: await c('SELECT COUNT(*) n FROM items WHERE tn = ?'), projects: await c('SELECT COUNT(*) n FROM projects WHERE tn = ?'), contacts: await c('SELECT COUNT(*) n FROM contacts WHERE tn = ?'), users: await c('SELECT COUNT(*) n FROM users WHERE tn = ?'),
