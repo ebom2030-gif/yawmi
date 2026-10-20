@@ -1132,7 +1132,7 @@ const snap = obj => ({ docs: Object.entries(obj).map(([id, v]) => ({ id, data: (
 const emit = () => listeners.forEach(f => f(snap(store)));
 const emitN = () => noteListeners.forEach(f => f(snap(Object.fromEntries(Object.entries(noteStore).map(([k, v]) => [k, { text: v }])))));
 const rid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-const APP_VER = "v113", APP_DATE = "2026-10-20";
+const APP_VER = "v114", APP_DATE = "2026-10-20";
 const strip = o => { const r = { ...o }; delete r.id; return r; };
 const SKINS = [["night", "ليل مكة", "كحلي ليلي ونحاسي ذهبي", "#14213d", "#c29a3e", "#2f63b5"], ["roshan", "روشن حجازي", "أخضر بترولي وذهب رملي", "#0e3b43", "#d9b97a", "#c8553d"], ["earth", "طين ونخيل", "بني تمري وتيراكوتا", "#3a2a21", "#e0b66f", "#4f6b3a"]];
 const curSkin = () => document.documentElement.dataset.skin || "night";
@@ -5183,6 +5183,7 @@ function cfPanel(){ if (!ME || ME.role !== "owner") return ""; const c = cfInfo;
 GUIDE_NEW.unshift(["v111", "انتقال البرنامج بالكامل إلى خادم Cloudflare: الدخول وكلمات المرور والجلسات والصلاحيات (الأساسية والإضافية) وسير العمل وكل البيانات على Cloudflare لكل المستخدمين — أسرع ومتزامن على كل الأجهزة. Google أصبح نسخة احتياطية تلقائية (Sheets + Drive) ولخدماته فقط (التقويم، الملفات، To Do، البريد)."]);
 GUIDE_NEW.unshift(["v112", "صفحة المشاريع: عرض جديد «👥 حسب العميل» يجمع مشاريع كل عميل مع قيمة العقود والمحصّل والمستحق، واسم العميل في كل بطاقة يفتح ملفه مباشرة. صفحة الإنجازات: ثلاثة أقسام واضحة — «★ كشف المستحق» و«📥 للمراجعة» (الاقتراحات الجديدة فقط مع زر استبعاد) و«المستبعد». مزامنة أسرع بين الأجهزة (كل 5 ثوانٍ أثناء الاستخدام، وفوراً عند فتح التطبيق أو الرجوع إليه). القائمة الجانبية: الضغط على اسم المجموعة يفتحها أو يطويها فقط دون إغلاق القائمة على الجوال، وبلا تمرير أفقي."]);
 GUIDE_NEW.unshift(["v113", "العمل بدون إنترنت: البرنامج يفتح ويعمل حتى لو انقطع النت (حتى من أول فتح بعد التحديث)، وتظهر شارة «بدون إنترنت» أعلى الشاشة، وكل ما تضيفه أو تعدّله يُحفظ على جهازك ويظهر حتى لو أعدت فتح الصفحة، ثم يُرسل تلقائياً عند عودة الاتصال مع رسالة «تمت المزامنة». وتحسين الوضع الليلي: إصلاح النصوص الباهتة في الدليل ولوحة المؤشرات والتقارير والروابط. وقائمة جانبية ملوّنة وتفاعلية: لون مميز لكل قسم، حركة ناعمة عند المرور، الصفحة المفتوحة مضيئة بلونها، والعدادات تنبض عند وصول جديد وتصبح رمادية عند الصفر."]);
+GUIDE_NEW.unshift(["v114", "مؤشر مخاطر لكل مشروع (سليم / راقب / يحتاج انتباه) يحسب تجاوز موعد التسليم والخطوات المتأخرة والمطالبات المتأخرة وفجوة التحصيل وتجاوز المصاريف، مع لوحة «مشاريع تحتاج انتباهك» في الرئيسية وفلتر في صفحة المشاريع. «التدفق النقدي المتوقع» لستة أشهر في لوحة المؤشرات: الدفعات القادمة شهراً بشهر مقابل متوسط المصاريف والرصيد التراكمي. بحث ذكي (Ctrl+K) يفهم «مشاريع سامي المتأخرة» و«دفعات نوفمبر» و«المشاريع المتأخرة». قوالب مشاريع جاهزة (فيلا، عمارة، فندق، إشراف، تصميم داخلي، رخصة بناء) تضيف الدفعات والخطوات وحصر المخططات بضغطة."]);
 // ===== v54: فحص التحديثات، لوحة الأوامر (Ctrl+K)، تلوين التقارير المطبوعة =====
 async function verCheck(){ try { const t = await (await fetch("./index.html?vc=" + Date.now(), { cache: "no-store" })).text(); const m = /const APP_VER = "([^"]+)"/.exec(t);
   if (m && m[1] !== APP_VER) { let b = $("#updBar"); if (!b) { b = document.createElement("div"); b.id = "updBar"; b.className = "updbar"; document.body.appendChild(b); } b.innerHTML = `🎉 نسخة جديدة <b>${esc(m[1])}</b> جاهزة <button type="button" data-upd>تحديث الآن</button>`; b.hidden = false; } } catch {} }
@@ -5586,4 +5587,118 @@ setTimeout(navCounts, 800);
 
 // v113: بطاقة «المهام الذكية» تظهر فقط بعد إجراء منك (لا تظهر فجأة أثناء المزامنة في الخلفية)
 smCard = (f => function(){ if (typeof SYNCA !== "undefined" && Date.now() - SYNCA > 8000) return; return f.apply(this, arguments); })(smCard);
+
+// ===== v114: مؤشر مخاطر المشاريع + التدفق النقدي المتوقع + بحث ذكي + قوالب مشاريع جاهزة =====
+// ---------- (1) مؤشر المخاطر لكل مشروع ----------
+var RISKL = { red: ["يحتاج انتباه", "late"], yellow: ["راقب", "wait"], green: ["سليم", "done"] };
+function pjRisk(x){ const p = x.p, c = x.c, t = today(), fin = PRIV() || can("finance"), R = []; let s = 0;
+  if (p.status === "done" || QST.has(p.status)) return { lv: "green", s: 0, R };
+  const prog = Math.round(c.prog || 0), col = Math.round((c.col || 0) * 100);
+  if (p.end && p.end < t) { const d = daysBetween(p.end, t); s += 3; R.push(`تجاوز موعد التسليم بـ ${d} يوم`); }
+  else if (p.end && p.status === "active") { const d = daysBetween(t, p.end); if (d <= 14 && prog < 70) { s += 2; R.push(`التسليم خلال ${d} يوم والإنجاز ${prog}%`); } }
+  const ls = (p.steps || []).filter(z => z.name && !z.done && z.due && z.due < t).length; if (ls) { s += Math.min(ls, 2); R.push(`${ls} ${ls === 1 ? "خطوة متأخرة" : "خطوات متأخرة"}`); }
+  if (c.late && c.late.length) { const a = c.late.reduce((q, z) => q + (num(z.inc) - num(z.pd)), 0); s += 2; R.push(`مطالبات متأخرة أكثر من 30 يوماً${fin && a ? " (" + kmoney(a) + " ر.س)" : ""}`); }
+  if (c.T > 0 && prog - col >= 30) { s += 2; R.push(`منجز ${prog}% والمحصّل ${col}% فقط`); }
+  if (c.A > 0 && c.exp > c.A * 0.85) { s += 2; R.push(`المصاريف ${Math.round(c.exp / c.A * 100)}% من قيمة العقد`); }
+  if (p.status === "hold") { s += 1; R.push("المشروع متوقف"); }
+  const up = p.updatedAt || p.createdAt || 0; if (p.status === "active" && up && Date.now() - up > 30 * 864e5) { s += 1; R.push(`لا تحديث منذ ${Math.floor((Date.now() - up) / 864e5)} يوماً`); }
+  return { lv: s >= 4 ? "red" : s >= 2 ? "yellow" : "green", s, R }; }
+function riskPill(r, big){ if (r.lv === "green" && !big) return `<span class="pjrk g" title="لا توجد مؤشرات خطر">●</span>`; const [l] = RISKL[r.lv];
+  return `<span class="pjrk ${r.lv[0]}" title="${esc(r.R.join(" · ") || l)}">● ${esc(l)}</span>`; }
+pjCard = (f => function(x){ const h = f.apply(this, arguments), r = pjRisk(x); return h.replace('<div class="pjc1">', `<div class="pjc1">${riskPill(r)}`).replace("</article>", r.R.length && r.lv !== "green" ? `<div class="pjrkr ${r.lv[0]}">⚠️ ${esc(r.R.slice(0, 2).join(" · "))}</div></article>` : "</article>"); })(pjCard);
+pjFilter = (f => function(R){ if (PJX.st !== "risk") return f.apply(this, arguments); const s = PJX.st; PJX.st = ""; try { return f.apply(this, arguments).filter(x => pjRisk(x).s >= 2).sort((a, b) => pjRisk(b).s - pjRisk(a).s); } finally { PJX.st = s; } })(pjFilter);
+pjTools = (f => function(R){ const h = f.apply(this, arguments), n = pjRows().filter(x => pjRisk(x).s >= 2).length;
+  return h.replace('<div class="pjchips">', `<div class="pjchips"><button type="button" class="chip rk${PJX.st === "risk" ? " on" : ""}" data-pjxst="risk" aria-pressed="${PJX.st === "risk"}">⚠️ تحتاج انتباه <b>${n}</b></button>`); })(pjTools);
+pjByClient = (f => function(R){ let h = f.apply(this, arguments); R.forEach(x => { const r = pjRisk(x); if (r.lv === "green") return; const a = h.indexOf(`<tr data-popen="${esc(x.p.id)}"`); if (a < 0) return; const b = h.indexOf("<td><b>", a); if (b < 0) return; h = h.slice(0, b + 7) + `<span class="pjrk ${r.lv[0]} dot" title="${esc(r.R.join(" · "))}">●</span> ` + h.slice(b + 7); }); return h; })(pjByClient);
+// لوحة «مشاريع تحتاج انتباهك» في الرئيسية
+function riskPanel(){ if (!ME || (!PRIV() && !can("projects"))) return ""; const L = pjRows().map(x => ({ x, r: pjRisk(x) })).filter(o => o.r.s >= 2).sort((a, b) => b.r.s - a.r.s);
+  if (!L.length) return `<div class="panel rkp ok"><h3>✅ كل المشاريع سليمة <small>لا توجد مؤشرات تأخير أو تحصيل أو مصاريف</small></h3></div>`;
+  return `<div class="panel rkp"><h3>⚠️ ${L.length} ${L.length === 1 ? "مشروع يحتاج" : L.length === 2 ? "مشروعان يحتاجان" : "مشاريع تحتاج"} انتباهك <button type="button" class="btn ghost xs" data-rkall>عرض الكل ←</button></h3>
+    ${L.slice(0, 5).map(({ x, r }) => `<div class="rkr ${r.lv[0]}" data-rkopen="${esc(x.p.id)}" tabindex="0"><span class="rkd"></span><div><b>${esc(x.p.name)}</b>${x.p.client ? `<small> · ${esc(x.p.client)}</small>` : ""}<div class="rkw">${r.R.map(z => `<span>${esc(z)}</span>`).join("")}</div></div>${riskPill(r, 1)}</div>`).join("")}</div>`; }
+launchView = (f => function(){ let h = f.apply(this, arguments); if (!ME) return h; try { const pnl = riskPanel(); if (!pnl) return h; const i = h.indexOf('<div class="panel rqt">'); return i >= 0 ? h.slice(0, i) + pnl + h.slice(i) : h + pnl; } catch (x) { return h; } })(launchView);
+document.addEventListener("click", e => { const t = e.target; if (!t.closest) return; let b;
+  if ((b = t.closest("[data-rkopen]"))) { const id = b.dataset.rkopen; goTab("projects", () => { projTab = "list"; claimCustom.clear(); projOpen = id; projDraft = null; projDirty = false; projSec = "status"; render(); window.scrollTo({ top: 0 }); }); return; }
+  if (t.closest("[data-rkall]")) { PJX.st = "risk"; if (PJX.mode === "table") PJX.mode = "cards"; goTab("projects", () => { projTab = "list"; projOpen = null; render(); }); } });
+
+// ---------- (2) التدفق النقدي المتوقع ----------
+var AR_M = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
+function cfMonths(n){ const d = new Date(), L = []; for (let i = 0; i < n; i++) { const x = new Date(d.getFullYear(), d.getMonth() + i, 1); L.push({ k: x.getFullYear() + "-" + String(x.getMonth() + 1).padStart(2, "0"), l: AR_M[x.getMonth()] + (x.getFullYear() !== d.getFullYear() ? " " + x.getFullYear() : ""), m: x.getMonth(), inn: 0, out: 0, items: [] }); } return L; }
+function cashFlow(n){ const M = cfMonths(n || 6), cur = M[0].k, P = PROJECTS.filter(p => (p.space === "p") === PRIV() && !QST.has(p.status)), now = { inn: 0, items: [] }, nod = { inn: 0, items: [] }, od = { inn: 0, items: [] };
+  P.forEach(p => { const c = pcalc(p);
+    c.cl.forEach(z => { if (!z.inc || z.st === "paid" || z.st === "draft") return; const a = z.inc - z.pd; now.inn += a; now.items.push({ p, t: (typeof clLabel === "function" ? clLabel(p, z) : z.phase || "مطالبة"), a, late: z.st === "late" }); });
+    if (p.status === "done") return;
+    c.ph.forEach(z => { if (z.claimed || z.status === "done" || !z.amt) return; const k = (z.due || "").slice(0, 7), it = { p, t: z.name + (z.pct ? ` (${num(z.pct)}%)` : ""), a: z.amt };
+      if (!k) { nod.inn += z.amt; nod.items.push(it); } else { if (k < cur) { od.inn += z.amt; od.items.push(it); return; } const m = M.find(q => q.k === k); if (m) { m.inn += z.amt; m.items.push(it); } } }); });
+  // المصاريف المتوقعة: متوسط آخر 3 أشهر كاملة
+  const d = new Date(), ks = [1, 2, 3].map(i => { const x = new Date(d.getFullYear(), d.getMonth() - i, 1); return x.getFullYear() + "-" + String(x.getMonth() + 1).padStart(2, "0"); });
+  let e3 = 0; P.forEach(p => (p.expenses || []).forEach(x => { if (x.date && ks.includes(String(x.date).slice(0, 7))) e3 += num(x.amount); })); const avgOut = Math.round(e3 / 3);
+  let cum = now.inn; M.forEach((m, i) => { m.out = avgOut; m.net = m.inn - m.out; cum += m.net; m.cum = cum; });
+  return { M, now, nod, od, avgOut }; }
+function cfPanel(){ if (!ME || !(PRIV() || can("finance"))) return ""; const F = cashFlow(6), mx = Math.max(1, ...F.M.map(m => Math.max(m.inn, m.out)));
+  const tip = L => esc(L.slice(0, 8).map(z => `${z.p.name}: ${z.t} — ${money(z.a)}`).join("\n") + (L.length > 8 ? `\n… و${L.length - 8} أخرى` : ""));
+  return `<div class="panel cfp" id="cfPanel"><h3>📈 التدفق النقدي المتوقع — 6 أشهر <small>الدفعات القادمة من مراحل المشاريع مقابل متوسط المصاريف</small></h3>
+    <div class="cfk"><div class="${F.now.inn ? "gold" : ""}" title="${tip(F.now.items)}"><span>مستحق الآن (مطالبات لم تُحصّل)</span><b>${kmoney(F.now.inn)}</b><small>${F.now.items.length} مطالبة${F.now.items.some(z => z.late) ? ` · ${F.now.items.filter(z => z.late).length} متأخرة` : ""}</small></div>
+      <div><span>متوقع خلال 6 أشهر</span><b class="ok">${kmoney(F.M.reduce((s, m) => s + m.inn, 0))}</b><small>من الدفعات المجدولة</small></div>
+      <div><span>متوسط المصاريف الشهرية</span><b class="bad">${kmoney(F.avgOut)}</b><small>حسب آخر 3 أشهر</small></div>
+      <div class="${F.od.inn ? "warn" : ""}" title="${tip(F.od.items)}"><span>مراحل تجاوزت موعدها ولم يُطالب بها</span><b>${kmoney(F.od.inn)}</b><small>${F.od.items.length ? F.od.items.length + " مرحلة — أصدر مطالباتها" : "—"}</small></div>
+      <div title="${tip(F.nod.items)}"><span>دفعات بلا تاريخ استحقاق</span><b>${kmoney(F.nod.inn)}</b><small>${F.nod.items.length ? "حدّد تواريخها لدقة التوقع" : "—"}</small></div></div>
+    <div class="cfch">${F.M.map(m => `<div class="cfm" title="${tip(m.items)}"><div class="cfb"><i class="in" style="height:${Math.round(m.inn / mx * 100)}%"></i><i class="out" style="height:${Math.round(m.out / mx * 100)}%"></i></div><b>${esc(m.l)}</b><small class="${m.net < 0 ? "bad" : "ok"}">${m.net < 0 ? "−" : "+"}${kmoney(Math.abs(m.net))}</small></div>`).join("")}</div>
+    <div class="cflg"><span><i class="in"></i>دخل متوقع</span><span><i class="out"></i>مصاريف متوقعة</span></div>
+    <div class="tblwrap"><table class="ptable cft"><thead><tr><th>الشهر</th><th>الدخل المتوقع</th><th>المصاريف المتوقعة</th><th>الصافي</th><th>الرصيد التراكمي*</th><th>الدفعات</th></tr></thead><tbody>
+      ${F.M.map(m => `<tr><td><b>${esc(m.l)}</b></td><td class="n">${money(m.inn)}</td><td class="n">${money(m.out)}</td><td class="n ${m.net < 0 ? "bad" : "ok"}">${money(m.net)}</td><td class="n">${money(m.cum)}</td><td class="cfit">${m.items.slice(0, 3).map(z => `<span>${esc(z.p.name)} — ${esc(z.t)}</span>`).join("")}${m.items.length > 3 ? `<span class="mut">+${m.items.length - 3}</span>` : ""}</td></tr>`).join("")}
+    </tbody></table></div><div class="sub" style="font-size:11.5px">* يبدأ الرصيد التراكمي بالمستحق الآن من المطالبات. المراحل التي تجاوزت موعدها ولم يُطالب بها تظهر منفصلة أعلاه حتى تُصدر مطالباتها.</div></div>`; }
+homeView = (f => function(){ let h = f.apply(this, arguments); if (tab !== "dash" || !ME) return h; try { const pnl = cfPanel(); if (!pnl) return h; h = h.replace('<div class="dptool">', '<div class="dptool"><button class="btn ghost" type="button" data-cfgo>📈 التدفق النقدي</button>'); const i = h.indexOf('<div class="panel'); return i >= 0 ? h.slice(0, i) + pnl + h.slice(i) : h + pnl; } catch (x) { console.warn(x); return h; } })(homeView);
+document.addEventListener("click", e => { if (!e.target.closest || !e.target.closest("[data-cfgo]")) return; const go = () => { const el = document.getElementById("cfPanel"); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); }; if (tab === "dash") go(); else goTab("dash", () => setTimeout(go, 120)); });
+
+// ---------- (3) بحث ذكي في لوحة الأوامر (Ctrl+K) ----------
+function smartHits(q0){ const q = normN(q0 || "").toLowerCase().trim(); if (q.length < 2) return []; const H = [], has = re => re.test(q), fin = PRIV() || can("finance");
+  const names = [...new Set(PROJECTS.map(p => p.client).filter(Boolean))], words = q.split(/\s+/).filter(w => w.length >= 2 && !/^(مشاريع|مشروع|العميل|عميل|المتأخرة|متأخرة|متأخر|دفعات|ملف|كل|في|من)$/.test(w));
+  const cli = words.length ? names.find(n => words.every(w => normN(n).toLowerCase().includes(w))) : null;
+  const rows = pjRows(), risky = rows.filter(x => pjRisk(x).s >= 2);
+  if (cli) { const R = rows.filter(x => x.p.client === cli), lt = R.filter(x => pjRisk(x).s >= 2);
+    if (has(/متأخر|تأخير|انتباه|خطر/)) H.push(["sm:cli-risk:" + cli, "⚠️", `مشاريع ${cli} التي تحتاج انتباه`, `${lt.length} من ${R.length}`]);
+    H.push(["sm:cli:" + cli, "📂", `مشاريع ${cli}`, `${R.length} مشروع${fin ? " · " + kmoney(R.reduce((s, x) => s + x.c.T, 0)) : ""}`], ["sm:cliopen:" + cli, "👤", `ملف العميل ${cli}`, "عميل"]); }
+  else if (has(/متأخر|تأخير|انتباه|خطر|مخاطر/)) H.push(["sm:risk", "⚠️", "المشاريع التي تحتاج انتباه", `${risky.length} مشروع`]);
+  if (fin && has(/دفع|مطالب|تحصيل|مستحق|تدفق|سيول|كاش|دخل/)) { const F = cashFlow(6), mi = AR_M.findIndex(m => q.includes(normN(m).toLowerCase())), m = mi >= 0 ? F.M.find(x => x.m === mi) : null;
+    if (m) H.push(["sm:cf", "💰", `دفعات ${m.l} المتوقعة`, `${kmoney(m.inn)} ر.س · ${m.items.length} دفعة`]);
+    H.push(["sm:cf", "🧾", "المطالبات المستحقة الآن", `${kmoney(F.now.inn)} ر.س · ${F.now.items.length}`], ["sm:cf", "📈", "التدفق النقدي المتوقع (6 أشهر)", "لوحة المؤشرات"]); }
+  if (has(/قالب|جديد/) && pEdit()) H.push(["sm:tpl", "🧩", "مشروع جديد من قالب جاهز", "فيلا · عمارة · فندق · إشراف…"]);
+  return H; }
+cmdDraw = (f => function(){ f.apply(this, arguments); try { const H = smartHits($("#cmdQ").value), L = $("#cmdL"); if (!H.length || !L) return; L.querySelectorAll(".cmdi.on").forEach(x => x.classList.remove("on"));
+  L.insertAdjacentHTML("afterbegin", `<div class="cmdsm">إجابة ذكية</div>` + H.map(([k, i, l, t], n) => `<button type="button" class="cmdi smart${n === 0 ? " on" : ""}" data-cmd="${esc(k)}"><i>${i}</i><span>${esc(l)}</span><small>${esc(t)}</small></button>`).join("") + `<div class="cmdsm">نتائج أخرى</div>`); } catch (x) { console.warn(x); } })(cmdDraw);
+cmdGo = (f => function(k){ if (!String(k).startsWith("sm:")) return f(k); const m = $("#cmdM"); if (m) m.hidden = true; const [, a, ...r] = String(k).split(":"), v = r.join(":");
+  const toP = () => goTab("projects", () => { projTab = "list"; projOpen = null; render(); window.scrollTo({ top: 0 }); });
+  if (a === "risk") { PJX.st = "risk"; PJX.q = ""; if (PJX.mode === "table") PJX.mode = "cards"; toP(); }
+  else if (a === "cli" || a === "cli-risk") { PJX.mode = "client"; PJX.q = v; PJX.st = a === "cli-risk" ? "risk" : ""; toP(); }
+  else if (a === "cliopen") { const key = pjCliKey(v); goTab("clients", () => { try { openCli(key); render(); } catch (x) {} }); }
+  else if (a === "cf") { const go = () => { const el = document.getElementById("cfPanel"); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); }; goTab("dash", () => setTimeout(go, 150)); }
+  else if (a === "tpl") goTab("projects", () => { openPModal(); }); })(cmdGo);
+
+// ---------- (4) قوالب مشاريع جاهزة ----------
+var PTPL = [
+  ["villa", "🏡", "فيلا سكنية", ["تصميم معماري", "مخططات تنفيذية", "إصدار رخص بناء"], [["دفعة مقدمة", 25], ["التصميم المبدئي واعتماده", 25], ["المخططات التنفيذية", 30], ["إصدار الرخصة والتسليم", 20]],
+    ["استلام الصك والكروكي والرفع المساحي", "الفكرة التصميمية والمساقط المبدئية", "اعتماد العميل للتصميم المبدئي", "الواجهات والمنظور ثلاثي الأبعاد", "المخططات التنفيذية لجميع التخصصات", "تقديم طلب الرخصة", "استلام الرخصة وتسليم المخططات"], ["arch", "str", "elec", "mech", "plmb"]],
+  ["bld", "🏢", "عمارة سكنية / تجارية", ["تصميم معماري", "مخططات تنفيذية", "إصدار رخص بناء", "السلامة والدفاع المدني"], [["دفعة مقدمة", 20], ["التصميم المبدئي", 25], ["المخططات التنفيذية", 30], ["اعتماد الدفاع المدني والرخصة", 15], ["التسليم النهائي", 10]],
+    ["استلام المستندات والرفع المساحي", "دراسة الاشتراطات والنظام", "التصميم المبدئي واعتماد العميل", "الواجهات و3D", "المخططات التنفيذية لجميع التخصصات", "مخططات السلامة والدفاع المدني", "تقديم الرخصة", "استلام الرخصة والتسليم"], ["arch", "str", "elec", "mech", "plmb", "fire"]],
+  ["hotel", "🏨", "فندق / ضيافة", ["تصميم معماري", "تصميم داخلي", "تصميم مخططات تنفيذية IFC"], [["دفعة مقدمة", 20], ["المفهوم التصميمي", 15], ["التصميم التفصيلي", 25], ["المخططات التنفيذية IFC", 25], ["اعتماد الجهات والتسليم", 15]],
+    ["اجتماع المتطلبات وبرنامج الغرف", "دراسة اشتراطات وزارة السياحة", "المفهوم التصميمي والمودبورد", "اعتماد المفهوم", "التصميم التفصيلي والداخلي", "المخططات التنفيذية IFC", "جداول التشطيبات والمواصفات", "اعتماد الجهات والتسليم"], ["arch", "str", "elec", "mech", "plmb", "fire", "int"]],
+  ["sup", "🦺", "إشراف على التنفيذ", ["إشراف هندسي"], [["دفعة مقدمة", 20], ["نهاية الهيكل الخرساني", 30], ["نهاية التشطيبات", 30], ["الاستلام النهائي", 20]],
+    ["اجتماع بدء الأعمال واستلام الموقع", "الإشراف على أعمال الحفر والأساسات", "الإشراف على الهيكل الخرساني", "الإشراف على أعمال التمديدات", "الإشراف على التشطيبات", "الاستلام الابتدائي", "الاستلام النهائي وتسليم التقارير"], []],
+  ["int", "🛋️", "تصميم داخلي", ["تصميم داخلي"], [["دفعة مقدمة", 30], ["المفهوم والمودبورد", 30], ["التصميم النهائي والجداول", 40]],
+    ["زيارة الموقع والرفع", "المودبورد والمفهوم", "اعتماد المفهوم", "المساقط والمناظير", "جداول المواد والإنارة والأثاث", "التسليم"], ["int"]],
+  ["permit", "📜", "إصدار رخصة بناء", ["إصدار رخص بناء"], [["دفعة مقدمة", 50], ["إصدار الرخصة", 50]],
+    ["استلام المستندات", "تجهيز المخططات المطلوبة", "رفع الطلب في بلدي", "متابعة الملاحظات", "إصدار الرخصة"], []]];
+function tplApply(p, k){ const T = PTPL.find(x => x[0] === k); if (!T) return; const [, , l, ty, ph, st, dw] = T;
+  p.tpl = k; p.types = ty.filter(x => PTYPES.includes(x)); p.type = p.types.join(" + ") || l;
+  p.phases = ph.map(([n, pct]) => ({ name: n, pct, due: "", status: "todo" }));
+  p.steps = st.map(n => ({ name: n, done: false, doneAt: "", due: "", claim: false, ph: "" }));
+  p.dwg = []; dw.forEach(d => { const pre = { arch: "A", str: "S", elec: "E", mech: "M", plmb: "P", fire: "F", land: "L", int: "I" }[d]; (DWGT[d] || []).forEach((n, j) => p.dwg.push({ disc: d, code: pre + "-" + (101 + j), title: n, eng: "", ext: false, cost: "", due: "", st: "todo" })); }); }
+function tplBar(p){ const T = PTPL.find(x => x[0] === p.tpl);
+  return `<div class="tplbar"><div class="lbl">ابدأ من قالب جاهز <small>(اختياري — يضيف المراحل والدفعات والخطوات وحصر المخططات)</small></div><div class="tplc">${PTPL.map(([k, i, l]) => `<button type="button" class="tpl${p.tpl === k ? " on" : ""}" data-tpl="${k}"><i>${i}</i>${esc(l)}</button>`).join("")}${p.tpl ? `<button type="button" class="tpl x" data-tpl="">✕ بدون قالب</button>` : ""}</div>
+    ${T ? `<div class="tplsum">✓ سيُضاف: ${p.phases.length} دفعات (${p.phases.map(x => x.pct + "%").join(" · ")}) · ${p.steps.length} خطوات عمل${p.dwg.length ? ` · ${p.dwg.length} لوحة في حصر المخططات` : ""}</div>` : ""}</div>`; }
+drawPModal = (f => function(){ f.apply(this, arguments); try { const fm = $("#pmForm"); if (!fm || !projModal) return; const pp = fm.querySelector("p"); if (pp) pp.insertAdjacentHTML("afterend", tplBar(projModal)); } catch (x) { console.warn(x); } })(drawPModal);
+document.addEventListener("click", e => { const b = e.target.closest && e.target.closest("#pmodal [data-tpl]"); if (!b || !projModal) return; e.preventDefault(); e.stopPropagation();
+  const fm = $("#pmForm"); if (fm) fm.dispatchEvent(new Event("input", { bubbles: true })); const k = b.dataset.tpl;
+  if (k) tplApply(projModal, k); else { const d = newProject(); projModal.tpl = ""; projModal.phases = d.phases; projModal.steps = []; projModal.dwg = []; }
+  const nm = projModal.name, cl = projModal.client; drawPModal(); const f2 = $("#pmForm"); if (f2) { if (f2.elements.name) f2.elements.name.value = nm; if (f2.elements.client) f2.elements.client.value = cl; } }, true);
 })();
