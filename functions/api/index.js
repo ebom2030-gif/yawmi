@@ -37,7 +37,7 @@ const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS ltry (k TEXT PRIMARY KEY, n INTEGER, until INTEGER)`,
 ];
 let ready = false;
-async function init(db) { if (ready) return; await db.batch(SCHEMA.map(q => db.prepare(q))); ready = true; }
+async function init(db) { if (ready) return; await db.batch(SCHEMA.map(q => db.prepare(q))); try { await db.prepare('ALTER TABLE sess2 ADD COLUMN rem INTEGER DEFAULT 0').run(); } catch (e) {} ready = true; }
 const hex = b => [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join('');
 async function sha(s) { return hex(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s))); }
 const rnd = n => hex(crypto.getRandomValues(new Uint8Array(n || 16)));
@@ -101,7 +101,7 @@ async function tenOf(db, tn) { if (!tn) return null; const r = await db.prepare(
 function tenState(t) { if (!t) return 'active'; if (t.state === 'suspended') return 'suspended'; if (t.state === 'active' && !t.paidUntil) return 'active'; const end = t.state === 'active' ? t.paidUntil : t.trialEnd; return end && end < today() ? 'expired' : 'ok'; }
 async function ctxOf(db, th) { if (!th) return null; const s = await db.prepare('SELECT * FROM sess2 WHERE th = ?').bind(th).first(); if (!s) return null;
   const now = Date.now(); if (s.exp < now) { await db.prepare('DELETE FROM sess2 WHERE th = ?').bind(th).run(); throw new UErr('انتهت الجلسة — سجّل الدخول مرة أخرى'); }
-  if (s.last && now - s.last > IDLE) { await db.prepare('DELETE FROM sess2 WHERE th = ?').bind(th).run(); throw new UErr('انتهت الجلسة — أُغلقت بعد 30 دقيقة دون نشاط'); }
+  if (!s.rem && s.last && now - s.last > IDLE) { await db.prepare('DELETE FROM sess2 WHERE th = ?').bind(th).run(); throw new UErr('انتهت الجلسة — أُغلقت بعد 30 دقيقة دون نشاط'); }
   if (!s.last || now - s.last > 60000) await db.prepare('UPDATE sess2 SET last = ? WHERE th = ?').bind(now, th).run();
   const tn = s.tn || '', US = await usersOf(db, tn), u = US.find(x => x.id === s.uid); if (!u || u.active === false) throw new UErr('الحساب غير مفعّل');
   const ten = await tenOf(db, tn), st = tn ? tenState(ten) : 'active'; if (st === 'suspended') throw new UErr('حساب الشركة غير مفعّل حالياً — تواصل مع إدارة يومي');
@@ -248,10 +248,14 @@ async function nDeleteItem(env, C, id) { const db = env.DB, u = C.u, tn = C.tn; 
 function projGuard(C, meta) { if (meta.space === 'p') { if (meta.createdBy !== C.u.id) throw new UErr('غير مسموح'); if (!C.po) throw new UErr('أعمالك الخاصة مقفلة — افتحها بالرقم السري أولاً'); } else need(C.u, 'projectsEdit'); }
 async function nSaveProject(env, C, p, base, force) { const db = env.DB, tn = C.tn; if (!p || !p.id || !String(p.name || '').trim()) throw new UErr('اكتب اسم المشروع'); if (J(p).length > 90000) throw new UErr('بيانات المشروع كبيرة جداً — احذف بعض الملفات أو الجداول');
   const row = await db.prepare('SELECT data, updated_at FROM projects WHERE tn = ? AND id = ?').bind(tn, String(p.id)).first(), old = row ? JSON.parse(row.data) : null;
-  if (old && base && !force && Number(old.updatedAt || 0) > Number(base) + 1000) throw new UErr('CONFLICT:' + ((byId(C, old.updatedBy) || {}).name || '') + '|' + old.updatedAt);
+  let merged = false; const chg = Array.isArray(p._chg) ? p._chg.filter(k => typeof k === 'string' && !/^(id|createdBy|space|updatedAt|updatedBy)$/.test(k)) : null; delete p._chg;
+  if (old && base && !force && Number(old.updatedAt || 0) > Number(base) + 1000) {
+    // v122: دمج تلقائي حقلاً حقلاً — تعديلك يُطبَّق على أحدث نسخة دون إلغاء تعديلات الآخرين
+    if (chg && chg.length) { const m = JSON.parse(J(old)); chg.forEach(k => { if (k in p) m[k] = p[k]; else delete m[k]; }); p = m; merged = true; }
+    else throw new UErr('CONFLICT:' + ((byId(C, old.updatedBy) || {}).name || '') + '|' + old.updatedAt); }
   if (old) { projGuard(C, { space: old.space || '', createdBy: old.createdBy || '' }); p.createdBy = old.createdBy || C.u.id; p.space = old.space || ''; if (p.space !== 'p' && !can(C.u, 'finance')) keepFin(p, old); }
   else { p.createdBy = C.u.id; p.space = p.space === 'p' ? 'p' : ''; projGuard(C, p); } delete p._nofin;
-  const now = Date.now(); p.updatedAt = now; p.updatedBy = C.u.id; await upProj(db, tn, p, now).run(); await enqueue(db, C, 'project', p.id, 'saveProject', [p, 0, true]); return { updatedAt: now }; }
+  const now = Date.now(); p.updatedAt = now; p.updatedBy = C.u.id; await upProj(db, tn, p, now).run(); await enqueue(db, C, 'project', p.id, 'saveProject', [p, 0, true]); return merged ? { updatedAt: now, merged: true, p } : { updatedAt: now }; }
 async function nSaveContact(env, C, c) { const db = env.DB, tn = C.tn; if (!c || !c.id || !String(c.name || '').trim()) throw new UErr('اكتب اسم العميل'); if (J(c).length > 90000) throw new UErr('بيانات العميل كبيرة جداً');
   const row = await db.prepare('SELECT data FROM contacts WHERE tn = ? AND id = ?').bind(tn, String(c.id)).first(), old = row ? JSON.parse(row.data) : null;
   if (old) { projGuard(C, { space: old.space || '', createdBy: old.createdBy || '' }); c.createdBy = old.createdBy || C.u.id; c.space = old.space || ''; if (old.cat === 'contractor' && !xcan(C.X, C.u, 'brk') && c.space !== 'p') c.refs = old.refs || []; }
@@ -325,7 +329,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
   if (!db) return fail('قاعدة البيانات غير مربوطة');
   try {
     await init(db);
-    if (fn === 'login') return ok(await login(env, a[0], a[1], waitUntil));
+    if (fn === 'login') { const r = await login(env, a[0], a[1], waitUntil); if (a[2] && r && r.token) { try { await env.DB.prepare('UPDATE sess2 SET rem = 1 WHERE th = ?').bind(await sha('yw|' + r.token)).run(); } catch (e) {} } return ok(r); }
     if (OPEN.has(fn)) { // تمرير إلى Google ثم تبنّي الجلسة إن عادت بجلسة
       const r = await gasOpen(env, fn, a); if (!r.ok) return fail(r.error || 'تعذّر التنفيذ');
       if ((fn === 'setup' || fn === 'resetPw' || fn === 'signup') && r.data && r.data.token) return ok(await adoptGoogle(env, r.data, fn === 'resetPw' ? a[2] : fn === 'setup' ? a[2] : (a[0] || {}).password));
