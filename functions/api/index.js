@@ -163,9 +163,10 @@ async function reconcile(env, C) { const db = env.DB; if (C.u.role !== 'owner' &
   (d.items || []).forEach(o => { if (!o || !o.id || pend.has('item:' + o.id) || gone.has(o.id)) return; const cur = have.get(String(o.id));
     if (!cur) { B.push(upItem(db, tn, o, now)); return; } const x = JSON.parse(cur); let ch = false;
     if (o.done && !x.done && (x.todo || o.todo)) { x.done = true; x.doneAt = o.doneAt || now; ch = true; } ['calId', 'todo'].forEach(k => { if (o[k] && o[k] !== x[k]) { x[k] = o[k]; ch = true; } }); if (ch) B.push(upItem(db, tn, x, now)); });
-  (d.users || []).filter(u => u && u.id && u.username !== undefined).forEach(u => B.push(upUser(db, tn, u, now)));
-  if (d.ten && d.ten.id) B.push(db.prepare('INSERT INTO tenants (id, data, updated_at) VALUES (?, ?, ?) ON CONFLICT(id) DO UPDATE SET data = excluded.data, updated_at = excluded.updated_at').bind(d.ten.id, J(d.ten), now));
-  if (await batchAll(db, B)) await bump(db, tn); await log(db, tn, C.u.id, 'reconcile', 1, 0, null); }
+  // v117: لا نعلن «تغيير» للأجهزة إلا إذا تغيّرت مهمة فعلاً (المستخدمون والمشترك يُحدَّثون بصمت)
+  const B2 = []; (d.users || []).filter(u => u && u.id && u.username !== undefined).forEach(u => B2.push(upUser(db, tn, u, now)));
+  if (d.ten && d.ten.id) B2.push(db.prepare('INSERT INTO tenants (id, data, updated_at) VALUES (?, ?, ?) ON CONFLICT(id) DO UPDATE SET data = excluded.data, updated_at = excluded.updated_at').bind(d.ten.id, J(d.ten), now));
+  const chI = await batchAll(db, B); if (B2.length) await batchAll(db, B2); if (chI) await bump(db, tn); await log(db, tn, C.u.id, 'reconcile', 1, 0, null); }
 
 // ---------- الدخول ----------
 async function throttle(db, k) { const r = await db.prepare('SELECT n, until FROM ltry WHERE k = ?').bind(k).first(); if (r && r.until > Date.now() && r.n >= MAXTRY) throw new UErr('الحساب مقفل مؤقتاً لمدة 15 دقيقة بسبب محاولات دخول خاطئة كثيرة — استخدم «نسيت كلمة المرور» عند الحاجة'); return r && r.until > Date.now() ? r.n : 0; }
