@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data:; connect-src 'self'">
+<title>حالة المشروع · يومي</title>
+<link rel="icon" href="icon-192.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap">
+<style>
+:root{--bg:#f3f5f9;--card:#fff;--ink:#14213d;--ink2:#4a5672;--mut:#8590a6;--line:#e3e8f0;--navy:#14213d;--gold:#c29a3e;--gold-soft:#f8f0dc;--done:#2e8b57;--done-soft:#e3f3ea;--late:#c2453b;--late-soft:#fbe6e3;--doing:#2f63b5;--doing-soft:#e3ecfa}
+@media (prefers-color-scheme:dark){:root{--bg:#0d1424;--card:#151e33;--ink:#e8edf7;--ink2:#b3bdd3;--mut:#7f8aa3;--line:#25304a;--gold-soft:#2c2614;--done-soft:#14301f;--late-soft:#3a1d1a;--doing-soft:#16243d}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Tajawal,system-ui,sans-serif;line-height:1.6}
+.top{background:linear-gradient(135deg,#14213d,#1f3360);color:#fff;padding:22px 16px 56px}.top .w{max-width:860px;margin:auto}.org{color:var(--gold);font-weight:700;font-size:13px;letter-spacing:.3px}
+h1{margin:6px 0 2px;font-size:24px}.sub{opacity:.85;font-size:14px}.w{max-width:860px;margin:auto;padding:0 16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin:0 0 14px;box-shadow:0 6px 20px rgba(20,33,61,.06)}.lift{margin-top:-40px}
+.row{display:flex;gap:16px;align-items:center;flex-wrap:wrap}.ring{--p:0;width:96px;height:96px;border-radius:50%;background:conic-gradient(var(--gold) calc(var(--p)*1%),var(--line) 0);display:grid;place-items:center;flex:none}
+.ring b{width:76px;height:76px;border-radius:50%;background:var(--card);display:grid;place-items:center;font-size:22px}.kv{flex:1;min-width:220px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.kv div{background:var(--bg);border-radius:10px;padding:8px 10px}.kv span{display:block;font-size:12px;color:var(--mut)}.kv b{font-size:14.5px}
+.pill{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12.5px;font-weight:700;background:var(--doing-soft);color:var(--doing)}.pill.done{background:var(--done-soft);color:var(--done)}.pill.late{background:var(--late-soft);color:var(--late)}.pill.wait,.pill.mut{background:var(--gold-soft);color:#9a7426}
+h2{font-size:16px;margin:0 0 10px}h2 small{color:var(--mut);font-weight:500;font-size:12.5px}
+.li{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--line)}.li:last-child{border:0}.dot{width:22px;height:22px;border-radius:50%;border:2px solid var(--line);flex:none;display:grid;place-items:center;font-size:12px;color:#fff}
+.li.d .dot{background:var(--done);border-color:var(--done)}.li .t{flex:1}.li small{color:var(--mut);font-size:12px}.li.d .t{color:var(--ink2)}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:8px;border-bottom:1px solid var(--line);text-align:start}th{color:var(--mut);font-weight:500;font-size:12.5px}td.n{font-variant-numeric:tabular-nums;font-weight:700}
+.foot{text-align:center;color:var(--mut);font-size:12px;padding:10px 0 30px}.err{text-align:center;padding:60px 20px}.err b{display:block;font-size:20px;margin-bottom:6px}
+@media print{.top{background:#14213d!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.card{box-shadow:none;break-inside:avoid}}
+</style>
+</head>
+<body>
+<div id="app"><div class="err"><b>جارٍ تحميل حالة المشروع…</b></div></div>
+<script>
+(function(){
+  var E = function(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){ return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
+  var M = function(v){ return Number(v || 0).toLocaleString("en-US", { maximumFractionDigits: 2 }); };
+  var D = function(s){ if (!s) return "—"; try { return new Date(s + "T00:00:00").toLocaleDateString("ar-SA-u-ca-gregory-nu-latn", { day: "numeric", month: "long", year: "numeric" }); } catch (e) { return s; } };
+  var app = document.getElementById("app"), t = new URLSearchParams(location.search).get("t") || "";
+  function fail(m){ app.innerHTML = '<div class="err"><b>تعذّر عرض حالة المشروع</b>' + E(m || "الرابط غير صالح أو أُوقف. تواصل مع المكتب للحصول على رابط جديد.") + "</div>"; }
+  if (!/^[a-f0-9]{24,64}$/.test(t)) return fail();
+  fetch("/api?share=" + t, { cache: "no-store" }).then(function(r){ return r.json(); }).then(function(j){
+    if (!j || !j.ok || !j.data) return fail(j && j.error);
+    var d = j.data; document.title = d.n + " · حالة المشروع";
+    var cls = { done: "done", late: "late", wait: "wait", doing: "", mut: "mut" }[d.sc] || "";
+    var steps = (d.steps || []), ph = (d.ph || []), cur = steps.filter(function(x){ return !x.d; })[0];
+    var h = '<div class="top"><div class="w"><div class="org">' + E(d.org || "متابعة حالة المشروع") + '</div><h1>' + E(d.n) + '</h1><div class="sub">' + E([d.cl, d.ty, d.code].filter(Boolean).join(" · ")) + '</div></div></div><div class="w">';
+    h += '<div class="card lift"><div class="row"><div class="ring" style="--p:' + (d.prog || 0) + '"><b>' + (d.prog || 0) + '%</b></div><div class="kv">'
+      + '<div><span>حالة المشروع</span><b><span class="pill ' + cls + '">' + E(d.st) + '</span></b></div>'
+      + '<div><span>المرحلة الحالية</span><b>' + E(cur ? cur.n : (d.prog >= 100 ? "اكتمل المشروع" : "—")) + '</b></div>'
+      + '<div><span>تاريخ البدء</span><b>' + D(d.start) + '</b></div><div><span>التسليم المتوقع</span><b>' + D(d.end) + '</b></div></div></div></div>';
+    if (steps.length) h += '<div class="card"><h2>مراحل العمل <small>' + steps.filter(function(x){ return x.d; }).length + ' من ' + steps.length + ' مكتملة</small></h2>' + steps.map(function(x){ return '<div class="li' + (x.d ? " d" : "") + '"><span class="dot">' + (x.d ? "✓" : "") + '</span><span class="t">' + E(x.n) + '</span><small>' + (x.d ? "مكتملة" : x.due ? "الموعد: " + D(x.due) : "") + '</small></div>'; }).join("") + '</div>';
+    if (ph.length) h += '<div class="card"><h2>دفعات العقد <small>حسب مراحل الإنجاز</small></h2><table><tr><th>المرحلة</th><th>النسبة</th><th>الحالة</th></tr>' + ph.map(function(x){ return '<tr><td>' + E(x.n) + '</td><td class="n">' + M(x.pct) + '%</td><td><span class="pill ' + (x.s === "done" ? "done" : "mut") + '">' + (x.s === "done" ? "منجزة" : "قادمة") + '</span></td></tr>'; }).join("") + '</table></div>';
+    if (d.due && d.due.length) { var tot = d.due.reduce(function(s, x){ return s + x.v; }, 0); h += '<div class="card"><h2>المبالغ المستحقة <small>شاملة ضريبة القيمة المضافة</small></h2><table><tr><th>البند</th><th>تاريخ المطالبة</th><th>المبلغ (ر.س)</th></tr>' + d.due.map(function(x){ return '<tr><td>' + E(x.n) + '</td><td>' + D(x.d) + '</td><td class="n">' + M(x.v) + '</td></tr>'; }).join("") + '<tr><th colspan="2">الإجمالي</th><td class="n">' + M(tot) + '</td></tr></table></div>'; }
+    h += '<div class="foot">آخر تحديث: ' + D(d.at) + ' · صفحة للعرض فقط تُحدَّث تلقائياً من المكتب<br>يومي · Yawmi</div></div>';
+    app.innerHTML = h;
+  }).catch(function(){ fail("تعذّر الاتصال — تحقق من الإنترنت ثم أعد المحاولة."); });
+})();
+</script>
+</body>
+</html>

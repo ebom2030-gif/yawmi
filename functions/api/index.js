@@ -392,6 +392,11 @@ export async function onRequestGet({ request, env }) { // حالة الخادم�
   const o = { ok: true, gateway: true, d1: !!env.DB, v3: 1 }; const url = new URL(request.url), t = url.searchParams.get('t');
   if (!env.DB) return new Response(J(o), { headers: H });
   try { const db = env.DB; await init(db); const th = t ? await sha('yw|' + t) : '';
+    const shr = url.searchParams.get('share'); if (shr != null) { // v129: صفحة حالة المشروع للعميل (للعرض فقط)
+      if (!/^[a-f0-9]{24,64}$/.test(shr)) return new Response(J({ ok: false, error: 'الرابط غير صالح' }), { headers: H });
+      const r = await db.prepare("SELECT data FROM projects WHERE json_extract(data, '$.share.tok') = ?").bind(shr).first(); const p = r ? JSON.parse(r.data) : null;
+      if (!p || !p.share || p.share.off || !p.share.data) return new Response(J({ ok: false, error: 'الرابط غير صالح أو أُوقف' }), { headers: H });
+      return new Response(J({ ok: true, data: p.share.data }), { headers: H }); }
     if (url.searchParams.get('v')) { const q = th ? await db.prepare("SELECT s.tn tn, (SELECT v FROM cfg WHERE k = 'ver:' || s.tn) v FROM sess2 s WHERE s.th = ?").bind(th).first() : null; if (q) return new Response(J({ ok: true, ver: Number(q.v || 0) }), { headers: H });
       const o2 = th ? await db.prepare('SELECT tn FROM ss WHERE th = ?').bind(th).first() : null; return new Response(J({ ok: true, ver: o2 ? Number(await cfgGet(db, 'ver:' + (o2.tn || '')) || 0) : null }), { headers: H }); }
     const s = th ? (await db.prepare('SELECT tn, uid FROM sess2 WHERE th = ?').bind(th).first() || await db.prepare('SELECT tn, uid FROM ss WHERE th = ?').bind(th).first()) : null;

@@ -1,5 +1,5 @@
 // يومي | Yawmi — service worker v2: أحدث نسخة دايماً، والنسخة المحفوظة لو النت بطيء أو مقطوع
-const V = 'yawmi-v7', FONTS = 'yawmi-fonts';
+const V = 'yawmi-v8', FONTS = 'yawmi-fonts';
 const SHELL = ['./', './manifest.json', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(V).then(async c => { await c.addAll(SHELL.map(u => new Request(u, { cache: 'reload' })));
   // v112: تخزين ملفات البرنامج مسبقاً ليعمل بدون إنترنت من أول مرة
@@ -8,7 +8,7 @@ self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Pr
 self.addEventListener('fetch', e => {
   const r = e.request; if (r.method !== 'GET') return; // طلبات البيانات (POST) لا تُخزَّن أبداً
   const u = new URL(r.url);
-  if (u.origin === location.origin && r.mode === 'navigate') {
+  if (u.origin === location.origin && r.mode === 'navigate' && (u.pathname === '/' || u.pathname.endsWith('/index.html'))) {
     const net = fetch(r.url.split('?')[0], { cache: 'no-store' });
     e.waitUntil(net.then(res => { if (res.ok) { const cp = res.clone(); return caches.open(V).then(c => c.put('./', cp)); } }).catch(() => {}));
     const slow = new Promise((_, rej) => setTimeout(() => rej(new Error('slow')), 1800));
