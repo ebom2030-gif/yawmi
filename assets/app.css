@@ -5,3 +5,9 @@
 
 /* v132: القائمة الجانبية تستخدم ألوان الثيم الفعلية حتى تتناسق مع الواجهة في جميع الأوضاع. */
 .side{background:linear-gradient(180deg,var(--navy2),var(--navy))!important}body.private .side{background:linear-gradient(180deg,var(--navy2),var(--navy))!important}
+
+
+/* v133 — task action preferences and project health guidance */
+.yw133-open{margin-inline-start:10px;vertical-align:middle}.acts [hidden]{display:none!important}
+.yw133-modal{position:fixed;inset:0;z-index:10080;background:#071426a8;display:grid;place-items:center;padding:16px}.yw133-dialog{position:relative;width:min(560px,100%);max-height:90dvh;overflow:auto;background:var(--panel,#fff);color:var(--ink,#14213d);border:1px solid var(--line,#dbe4ef);border-radius:18px;padding:22px;box-shadow:0 22px 70px #07142655}.yw133-dialog h2{margin:0 0 8px}.yw133-dialog p{color:var(--muted,#64748b);line-height:1.7;margin:0 0 16px}.yw133-close{position:absolute;inset-inline-end:14px;top:12px;border:0;background:transparent;color:inherit;font-size:26px;cursor:pointer}.yw133-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.yw133-grid label{display:flex;align-items:center;gap:9px;padding:10px;border:1px solid var(--line,#dbe4ef);border-radius:10px;cursor:pointer}.yw133-grid input{accent-color:var(--gold,#c29a3e);width:18px;height:18px}.yw133-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.yw133-health{margin-top:10px;padding:9px 11px;border-radius:10px;font-size:.9em;line-height:1.6}.yw133-health.green{background:#eef8f1;color:#247447}.yw133-health.yellow{background:#fff7e6;color:#946200}.yw133-health.red{background:#fff0ef;color:#b33d32}
+@media(max-width:600px){.yw133-grid{grid-template-columns:1fr}.yw133-dialog{padding:20px 16px}.yw133-open{margin:8px 0}}
