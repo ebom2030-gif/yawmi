@@ -126,6 +126,11 @@ async function drain(env, budgetMs) {
   const lk = await db.prepare(`INSERT INTO cfg (k, v) VALUES ('drain', ?) ON CONFLICT(k) DO UPDATE SET v = excluded.v WHERE CAST(cfg.v AS INTEGER) < ?`).bind(String(now + 60000), now).run();
   if (!lk.meta || !lk.meta.changes) return;
   try {
+    const cleanedAt = Number(await cfgGet(db, 'cleanup:last') || 0);
+    if (cleanedAt < now - 864e5) { await db.batch([
+      db.prepare('DELETE FROM outbox WHERE done = 1 AND at < ?').bind(now - 30 * 864e5),
+      db.prepare('DELETE FROM sync_log WHERE at < ?').bind(now - 90 * 864e5)
+    ]); await cfgSet(db, 'cleanup:last', now); }
     let minSeq = 0; const skip = new Set();
     while (Date.now() - t0 < (budgetMs || 20000)) {
       const o = await db.prepare('SELECT * FROM outbox WHERE done = 0 AND seq > ? ORDER BY seq LIMIT 1').bind(minSeq).first(); if (!o) break;
@@ -173,9 +178,9 @@ async function reconcile(env, C) { const db = env.DB; if (C.u.role !== 'owner' &
   const chI = await batchAll(db, B); if (B2.length) await batchAll(db, B2); if (chI) await bump(db, tn); await log(db, tn, C.u.id, 'reconcile', 1, 0, null); }
 
 // ---------- الدخول ----------
-async function throttle(db, k) { const r = await db.prepare('SELECT n, until FROM ltry WHERE k = ?').bind(k).first(); if (r && r.until > Date.now() && r.n >= MAXTRY) throw new UErr('الحساب مقفل مؤقتاً لمدة 15 دقيقة بسبب محاولات دخول خاطئة كثيرة — استخدم «نسيت كلمة المرور» عند الحاجة'); return r && r.until > Date.now() ? r.n : 0; }
-async function failTry(db, k, n) { await db.prepare('INSERT INTO ltry (k, n, until) VALUES (?, ?, ?) ON CONFLICT(k) DO UPDATE SET n = excluded.n, until = excluded.until').bind(k, n + 1, Date.now() + 15 * 60000).run(); const left = MAXTRY - n - 1;
-  return 'بيانات الدخول أو كلمة المرور غير صحيحة' + (left <= 0 ? ' — أُقفل الحساب لمدة 15 دقيقة' : left <= 2 ? ' — باقي ' + left + ' محاولات' : ''); }
+async function throttle(db, k, limit = MAXTRY) { const r = await db.prepare('SELECT n, until FROM ltry WHERE k = ?').bind(k).first(); if (r && r.until > Date.now() && r.n >= limit) throw new UErr('تم إيقاف المحاولات مؤقتاً بسبب محاولات خاطئة كثيرة — حاول بعد 15 دقيقة'); return r && r.until > Date.now() ? r.n : 0; }
+async function failTry(db, k, n, limit = MAXTRY) { await db.prepare('INSERT INTO ltry (k, n, until) VALUES (?, ?, ?) ON CONFLICT(k) DO UPDATE SET n = excluded.n, until = excluded.until').bind(k, n + 1, Date.now() + 15 * 60000).run(); const left = limit - n - 1;
+  return 'بيانات الدخول أو كلمة المرور غير صحيحة' + (left <= 0 ? ' — أُوقفت المحاولات لمدة 15 دقيقة' : left <= 2 ? ' — باقي ' + left + ' محاولات' : ''); }
 function normPhone(p) { let d = String(p || '').replace(/[^0-9+]/g, ''); if (!d) return ''; if (d[0] === '+') d = d.slice(1); else if (d.startsWith('00')) d = d.slice(2); else if (/^05\d{8}$/.test(d)) d = '966' + d.slice(1); else if (/^5\d{8}$/.test(d)) d = '966' + d; else if (/^01\d{9}$/.test(d)) d = '20' + d.slice(1); return d.replace(/\D/g, ''); }
 async function findUser(db, ident) { const lo = String(ident || '').trim().toLowerCase(); if (!lo) return null; const all = (await db.prepare('SELECT tn, data FROM users').all()).results.map(r => Object.assign(JSON.parse(r.data), { _tn: r.tn || '' }));
   let m = all.filter(x => String(x.username || '').toLowerCase() === lo); if (m.length === 1) return m[0];
@@ -189,16 +194,17 @@ async function setAuth(db, tn, uid, pw) { const salt = rnd(16); await db.prepare
 async function adoptGoogle(env, res, pw) { const db = env.DB, gt = res.token; const g = await gasCall(env, gt, 'getAll', []); if (!g.ok) throw new UErr(g.error || 'تعذّر تحميل البيانات');
   const d = g.data, tn = (d.ten && d.ten.id) || '', uid = d.me.id; const cut = (await cfgGet(db, 'cut:' + tn)) || (await cfgGet(db, 'native:' + tn)) === '1'; await importFrom(db, tn, d, uid, !cut); if (!cut) await cfgSet(db, 'cut:' + tn, Date.now());
   if (pw) await setAuth(db, tn, uid, pw); if (d.plat) await cfgSet(db, 'plat:' + uid, '1'); const t = await newSess(db, tn, uid, gt); return { token: t, user: pub(d.me) }; }
-async function login(env, ident, pw, waitUntil) { const db = env.DB, k = 'lf:' + String(ident || '').trim().toLowerCase(), n = await throttle(db, k);
+async function login(env, ident, pw, waitUntil, ip) { const db = env.DB, ipHash = await sha(String(ip || 'unknown').slice(0, 80)), idHash = await sha(String(ident || '').trim().toLowerCase()), k = 'lf:' + idHash + ':' + ipHash, ik = 'li:' + ipHash, n = await throttle(db, k), ni = await throttle(db, ik, 40);
+  const badTry = async () => { const msg = await failTry(db, k, n); await failTry(db, ik, ni, 40); return msg; };
   const u = await findUser(db, ident); const a = u ? await db.prepare('SELECT salt, hash FROM auth WHERE tn = ? AND uid = ?').bind(u._tn, u.id).first() : null;
-  if (u && a) { if ((await pbk(a.salt, pw)) !== a.hash) throw new UErr(await failTry(db, k, n)); if (u.active === false) throw new UErr('الحساب غير مفعّل — تواصل مع المدير');
+  if (u && a) { if ((await pbk(a.salt, pw)) !== a.hash) throw new UErr(await badTry()); if (u.active === false) throw new UErr('الحساب غير مفعّل — تواصل مع المدير');
     const ten = await tenOf(db, u._tn); if (u._tn && tenState(ten) === 'suspended') throw new UErr('حساب الشركة موقوف حالياً — تواصل مع إدارة يومي');
-    await db.prepare('DELETE FROM ltry WHERE k = ?').bind(k).run(); const t = await newSess(db, u._tn, u.id, null), th = await sha('yw|' + t);
+    await db.batch([db.prepare('DELETE FROM ltry WHERE k = ?').bind(k), db.prepare('DELETE FROM ltry WHERE k = ?').bind(ik)]); const t = await newSess(db, u._tn, u.id, null), th = await sha('yw|' + t);
     // جلسة Google في الخلفية: تُستخدم فقط لإرسال النسخة الاحتياطية وخدمات Google (التقويم، Drive…)
     waitUntil((async () => { try { const g = await gasOpen(env, 'login', [ident, pw]); if (g.ok && g.data && g.data.token) await db.prepare('UPDATE sess2 SET gt = ?, gt_at = ? WHERE th = ?').bind(g.data.token, Date.now(), th).run(); await drain(env, 20000); } catch (e) {} })());
     return { token: t, user: pub(u) }; }
-  const g = await gasOpen(env, 'login', [ident, pw]); if (!g.ok) { if (/غير صحيحة/.test(g.error || '')) throw new UErr(await failTry(db, k, n)); throw new UErr(g.error || 'تعذّر الدخول'); }
-  await db.prepare('DELETE FROM ltry WHERE k = ?').bind(k).run(); return adoptGoogle(env, g.data, pw); }
+  const g = await gasOpen(env, 'login', [ident, pw]); if (!g.ok) { if (/غير صحيحة/.test(g.error || '')) throw new UErr(await badTry()); throw new UErr(g.error || 'تعذّر الدخول'); }
+  await db.batch([db.prepare('DELETE FROM ltry WHERE k = ?').bind(k), db.prepare('DELETE FROM ltry WHERE k = ?').bind(ik)]); return adoptGoogle(env, g.data, pw); }
 
 // ---------- العمليات الأصلية ----------
 async function nGetAll(env, C, since) { const db = env.DB, u = C.u, tn = C.tn, po = C.po, B = Object.fromEntries(C.US.map(x => [x.id, x])), now = Date.now(), RAW = {};
@@ -257,6 +263,8 @@ async function nDeleteItem(env, C, id) { const db = env.DB, u = C.u, tn = C.tn; 
   if (o.owner !== u.id || o.assignedBy) await audit(db, C, 'حذف مهمة', o.title, 'صاحبها: ' + ((byId(C, o.owner) || {}).name || ''));
   await db.prepare('DELETE FROM items WHERE tn = ? AND id = ?').bind(tn, String(id)).run(); await goneMark(db, tn, 'item', id); await enqueue(db, C, 'item', id, 'deleteItem', [id]); return true; }
 function projGuard(C, meta) { if (meta.space === 'p') { if (meta.createdBy !== C.u.id) throw new UErr('غير مسموح'); if (!C.po) throw new UErr('أعمالك الخاصة مقفلة — افتحها بالرقم السري أولاً'); } else need(C.u, 'projectsEdit'); }
+function contactGuard(C, c) { if (c.space === 'p') { if (c.createdBy !== C.u.id) throw new UErr('غير مسموح'); if (!C.po) throw new UErr('أعمالك الخاصة مقفلة — افتحها بالرقم السري أولاً'); return; }
+  need(C.u, 'projects'); if (!xcan(C.X, C.u, 'clients') && !(c.cat === 'contractor' && xcan(C.X, C.u, 'brk'))) throw new UErr('ليس لديك صلاحية تعديل بيانات العملاء'); }
 async function nSaveProject(env, C, p, base, force) { const db = env.DB, tn = C.tn; if (!p || !p.id || !String(p.name || '').trim()) throw new UErr('اكتب اسم المشروع'); if (J(p).length > 90000) throw new UErr('بيانات المشروع كبيرة جداً — احذف بعض الملفات أو الجداول');
   const row = await db.prepare('SELECT data, updated_at FROM projects WHERE tn = ? AND id = ?').bind(tn, String(p.id)).first(), old = row ? JSON.parse(row.data) : null;
   let merged = false; const chg = Array.isArray(p._chg) ? p._chg.filter(k => typeof k === 'string' && !/^(id|createdBy|space|updatedAt|updatedBy)$/.test(k)) : null; delete p._chg;
@@ -269,11 +277,11 @@ async function nSaveProject(env, C, p, base, force) { const db = env.DB, tn = C.
   const now = Date.now(); p.updatedAt = now; p.updatedBy = C.u.id; await upProj(db, tn, p, now).run(); await enqueue(db, C, 'project', p.id, 'saveProject', [p, 0, true]); return merged ? { updatedAt: now, merged: true, p } : { updatedAt: now }; }
 async function nSaveContact(env, C, c) { const db = env.DB, tn = C.tn; if (!c || !c.id || !String(c.name || '').trim()) throw new UErr('اكتب اسم العميل'); if (J(c).length > 90000) throw new UErr('بيانات العميل كبيرة جداً');
   const row = await db.prepare('SELECT data FROM contacts WHERE tn = ? AND id = ?').bind(tn, String(c.id)).first(), old = row ? JSON.parse(row.data) : null;
-  if (old) { projGuard(C, { space: old.space || '', createdBy: old.createdBy || '' }); c.createdBy = old.createdBy || C.u.id; c.space = old.space || ''; if (old.cat === 'contractor' && !xcan(C.X, C.u, 'brk') && c.space !== 'p') c.refs = old.refs || []; }
-  else { c.createdBy = C.u.id; c.space = c.space === 'p' ? 'p' : ''; projGuard(C, c); }
+  if (old) { contactGuard(C, { space: old.space || '', createdBy: old.createdBy || '', cat: old.cat || c.cat || '' }); c.createdBy = old.createdBy || C.u.id; c.space = old.space || ''; if (old.cat === 'contractor' && !xcan(C.X, C.u, 'brk') && c.space !== 'p') c.refs = old.refs || []; }
+  else { c.createdBy = C.u.id; c.space = c.space === 'p' ? 'p' : ''; contactGuard(C, c); }
   c.updatedAt = Date.now(); await upCont(db, tn, c, c.updatedAt).run(); await enqueue(db, C, 'contact', c.id, 'saveContact', [c]); return true; }
 async function nDelete(env, C, kind, id) { const db = env.DB, tn = C.tn, table = DEL[kind]; const row = await db.prepare(`SELECT data FROM ${table} WHERE tn = ? AND id = ?`).bind(tn, String(id)).first(); if (!row) return true; const o = JSON.parse(row.data);
-  projGuard(C, { space: o.space || '', createdBy: o.createdBy || '' }); if (!xcan(C.X, C.u, 'del')) throw new UErr('ليس لديك صلاحية الحذف');
+  if (kind === 'contact') contactGuard(C, o); else projGuard(C, { space: o.space || '', createdBy: o.createdBy || '' }); if (!xcan(C.X, C.u, 'del')) throw new UErr('ليس لديك صلاحية الحذف');
   await db.prepare(`DELETE FROM ${table} WHERE tn = ? AND id = ?`).bind(tn, String(id)).run(); await goneMark(db, tn, kind, id); if (kind === 'project' && o.space !== 'p') await audit(db, C, 'حذف مشروع', o.name, '');
   await enqueue(db, C, kind, id, { project: 'deleteProject', contact: 'deleteContact' }[kind], [id]); return true; }
 async function nUsersOp(env, C, fn, a) { // عمليات المستخدمين: تُطبَّق في Google مباشرة (حتى تبقى الإشعارات والبريد متوافقة) ثم تُحدَّث هنا فوراً
@@ -340,7 +348,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
   if (!db) return fail('قاعدة البيانات غير مربوطة');
   try {
     await init(db);
-    if (fn === 'login') { const r = await login(env, a[0], a[1], waitUntil); if (a[2] && r && r.token) { try { await env.DB.prepare('UPDATE sess2 SET rem = 1 WHERE th = ?').bind(await sha('yw|' + r.token)).run(); } catch (e) {} } return ok(r); }
+    if (fn === 'login') { const r = await login(env, a[0], a[1], waitUntil, request.headers.get('CF-Connecting-IP')); if (a[2] && r && r.token) { try { await env.DB.prepare('UPDATE sess2 SET rem = 1 WHERE th = ?').bind(await sha('yw|' + r.token)).run(); } catch (e) {} } return ok(r); }
     if (OPEN.has(fn)) { // تمرير إلى Google ثم تبنّي الجلسة إن عادت بجلسة
       const r = await gasOpen(env, fn, a); if (!r.ok) return fail(r.error || 'تعذّر التنفيذ');
       if ((fn === 'setup' || fn === 'resetPw' || fn === 'signup') && r.data && r.data.token) return ok(await adoptGoogle(env, r.data, fn === 'resetPw' ? a[2] : fn === 'setup' ? a[2] : (a[0] || {}).password));
@@ -388,8 +396,8 @@ export async function onRequestPost({ request, env, waitUntil }) {
     return new Response(J(r), { headers: H });
   } catch (e) { if (e instanceof UErr) return fail(e.message); try { await log(db, '', '', 'err:' + fn, 0, Date.now() - t0, e.message || e); } catch (x) {} return fail('خطأ في الخادم — حاول مرة أخرى'); }
 }
-export async function onRequestGet({ request, env }) { // حالة الخادم؛ ورقم إصدار البيانات (?v=1&t=رمز) لمزامنة الأجهزة
-  const o = { ok: true, gateway: true, d1: !!env.DB, v3: 1 }; const url = new URL(request.url), t = url.searchParams.get('t');
+export async function onRequestGet({ request, env }) { // حالة الخادم؛ ورقم إصدار البيانات (?v=1) لمزامنة الأجهزة عبر Authorization
+  const o = { ok: true, gateway: true, d1: !!env.DB, v3: 1 }; const url = new URL(request.url), auth = request.headers.get('Authorization') || '', m = /^Bearer\s+([^\s]+)$/i.exec(auth), t = m ? m[1] : '';
   if (!env.DB) return new Response(J(o), { headers: H });
   try { const db = env.DB; await init(db); const th = t ? await sha('yw|' + t) : '';
     const shr = url.searchParams.get('share'); if (shr != null) { // v129: صفحة حالة المشروع للعميل (للعرض فقط)
