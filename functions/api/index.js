@@ -356,10 +356,10 @@ async function backofficeOp(db, C, fn, a) {
     const id = String(o.id || '').slice(0, 80), to = String(o.to || '').trim().slice(0, 160), amount = Number(o.amount);
     const date = String(o.date || '').slice(0, 10);
     if (!id || !to || !Number.isFinite(amount) || amount <= 0 || o.projectId || o.project) throw new UErr('بيانات التحويل العام غير مكتملة');
-    if (!['pending', 'paid', 'postponed', 'cancelled'].includes(o.status || 'pending')) throw new UErr('حالة التحويل غير صحيحة');
+    if (!['pending', 'paid', 'postponed', 'rejected', 'cancelled'].includes(o.status || 'pending')) throw new UErr('حالة التحويل غير صحيحة');
     if (date && !/^\d{4}-\d\d-\d\d$/.test(date)) throw new UErr('تاريخ التحويل غير صحيح');
     const status = o.status || 'pending', statusReason = String(o.statusReason || '').trim().slice(0, 500), postponedTo = String(o.postponedTo || '').slice(0, 10);
-    if ((status === 'postponed' && (!statusReason || !postponedTo)) || (status === 'cancelled' && !statusReason)) throw new UErr('اكتب سبب التأجيل أو الإلغاء والتاريخ المتوقع عند التأجيل');
+    if ((status === 'postponed' && (!statusReason || !postponedTo)) || (['rejected', 'cancelled'].includes(status) && !statusReason)) throw new UErr('اكتب سبب التأجيل أو الرفض والتاريخ المتوقع عند التأجيل');
     if (postponedTo && (!/^\d{4}-\d\d-\d\d$/.test(postponedTo) || new Date(postponedTo + 'T00:00:00.000Z').toISOString().slice(0, 10) !== postponedTo)) throw new UErr('تاريخ التأجيل غير صحيح');
     if (status === 'postponed' && postponedTo <= new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Riyadh' }).format(new Date())) throw new UErr('موعد التأجيل يجب أن يكون في المستقبل');
     const oldRow = await db.prepare('SELECT data FROM bo_transfers WHERE tn = ? AND id = ?').bind(tn, id).first();
@@ -371,7 +371,7 @@ async function backofficeOp(db, C, fn, a) {
     saved.push(item);
   }
   await db.batch(stmts);
-  const action = saved.some(x => x.status === 'cancelled') ? 'إلغاء تحويل باك أوفيس عام' : saved.some(x => x.status === 'postponed') ? 'تأجيل تحويل باك أوفيس عام' : 'تحديث تحويل باك أوفيس عام'; await audit(db, C, action, saved.length + ' سجل', saved.map(x => x.to + ' · ' + x.amount + ' · ' + (x.statusReason || x.status)).join('، ').slice(0, 500));
+  const action = saved.some(x => x.status === 'rejected') ? 'رفض تحويل خارجي' : saved.some(x => x.status === 'cancelled') ? 'إلغاء تحويل خارجي' : saved.some(x => x.status === 'postponed') ? 'تأجيل تحويل خارجي' : 'تحديث تحويل خارجي'; await audit(db, C, action, saved.length + ' سجل', saved.map(x => x.to + ' · ' + x.amount + ' · ' + (x.statusReason || x.status)).join('، ').slice(0, 500));
   return saved;
 }
 const WRITES = new Set(['saveItem', 'deleteItem', 'saveProject', 'deleteProject', 'saveContact', 'deleteContact', 'saveNote', 'saveMat', 'addUser', 'updateUser', 'deleteUser', 'restoreTenant', 'setPrivPin', 'trashDel', 'xpSet', 'boSave']);
