@@ -12,6 +12,8 @@ const J = v => JSON.stringify(v ?? null);
 const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS items (tn TEXT NOT NULL DEFAULT '', id TEXT NOT NULL, owner TEXT, space TEXT, due TEXT, done INTEGER DEFAULT 0, title TEXT, data TEXT NOT NULL, updated_at INTEGER, PRIMARY KEY (tn, id))`,
   `CREATE TABLE IF NOT EXISTS projects (tn TEXT NOT NULL DEFAULT '', id TEXT NOT NULL, name TEXT, status TEXT, space TEXT, data TEXT NOT NULL, updated_at INTEGER, PRIMARY KEY (tn, id))`,
+  `CREATE TABLE IF NOT EXISTS bo_transfers (tn TEXT NOT NULL DEFAULT '', id TEXT NOT NULL, data TEXT NOT NULL, updated_at INTEGER, PRIMARY KEY (tn, id))`,
+  `CREATE INDEX IF NOT EXISTS bo_transfers_tn_date ON bo_transfers (tn, updated_at)`,
   `CREATE TABLE IF NOT EXISTS contacts (tn TEXT NOT NULL DEFAULT '', id TEXT NOT NULL, name TEXT, cat TEXT, space TEXT, data TEXT NOT NULL, updated_at INTEGER, PRIMARY KEY (tn, id))`,
   `CREATE TABLE IF NOT EXISTS users (tn TEXT NOT NULL DEFAULT '', id TEXT NOT NULL, username TEXT, name TEXT, role TEXT, active INTEGER, data TEXT NOT NULL, updated_at INTEGER, PRIMARY KEY (tn, id))`,
   `CREATE TABLE IF NOT EXISTS notes (tn TEXT NOT NULL DEFAULT '', owner TEXT NOT NULL, date TEXT NOT NULL, text TEXT, updated_at INTEGER, PRIMARY KEY (tn, owner, date))`,
@@ -37,7 +39,7 @@ const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS ltry (k TEXT PRIMARY KEY, n INTEGER, until INTEGER)`,
 ];
 let ready = false;
-const SCHEMA_V = '122'; // v122: غيّر الرقم عند أي تعديل على SCHEMA
+const SCHEMA_V = '123'; // v123: سجل تحويلات الباك أوفيس العامة
 async function init(db) { if (ready) return; try { const r = await db.prepare("SELECT v FROM cfg WHERE k = 'schema'").first(); if (r && r.v === SCHEMA_V) { ready = true; return; } } catch (e) {}
   await db.batch(SCHEMA.map(q => db.prepare(q))); try { await db.prepare('ALTER TABLE sess2 ADD COLUMN rem INTEGER DEFAULT 0').run(); } catch (e) {} await cfgSet(db, 'schema', SCHEMA_V); ready = true; }
 const hex = b => [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join('');
@@ -340,8 +342,36 @@ async function trashOp(db, C, fn, a) { const u = C.u, tn = C.tn, big = ['owner',
 
 // ---------- نقطة الدخول ----------
 const OPEN = new Set(['setupStatus', 'setup', 'forgotPw', 'resetPw', 'signup', 'logErr', 'ext', 'extVerify']);
-const WRITES = new Set(['saveItem', 'deleteItem', 'saveProject', 'deleteProject', 'saveContact', 'deleteContact', 'saveNote', 'saveMat', 'addUser', 'updateUser', 'deleteUser', 'restoreTenant', 'setPrivPin', 'trashDel', 'xpSet']);
-const TREAD = new Set(['getMat', 'getAll', 'getSince', 'listUsers', 'listAudit', 'listIdeas', 'lockPriv', 'unlockPriv', 'logout', 'trashList', 'achList', 'xpGet', 'todoStatus', 'health']);
+async function backofficeOp(db, C, fn, a) {
+  const u = C.u, tn = C.tn;
+  if (!(u.role === 'owner' || can(u, 'finance'))) throw new UErr('تحتاج صلاحية الأرقام المالية');
+  if (fn === 'boList') {
+    const rows = (await db.prepare('SELECT data FROM bo_transfers WHERE tn = ? ORDER BY updated_at DESC LIMIT 5000').bind(tn).all()).results;
+    return rows.map(x => { try { return JSON.parse(x.data); } catch { return null; } }).filter(Boolean);
+  }
+  const input = Array.isArray(a[0]) ? a[0] : [a[0]], now = Date.now(), saved = [], stmts = [];
+  if (!input.length || input.length > 100) throw new UErr('عدد السجلات غير صالح');
+  for (const raw of input) {
+    const o = raw && typeof raw === 'object' ? raw : {};
+    const id = String(o.id || '').slice(0, 80), to = String(o.to || '').trim().slice(0, 160), amount = Number(o.amount);
+    const date = String(o.date || '').slice(0, 10);
+    if (!id || !to || !Number.isFinite(amount) || amount <= 0 || o.projectId || o.project) throw new UErr('بيانات التحويل العام غير مكتملة');
+    if (!['pending', 'paid'].includes(o.status || 'pending')) throw new UErr('حالة التحويل غير صحيحة');
+    if (date && !/^\d{4}-\d\d-\d\d$/.test(date)) throw new UErr('تاريخ التحويل غير صحيح');
+    const oldRow = await db.prepare('SELECT data FROM bo_transfers WHERE tn = ? AND id = ?').bind(tn, id).first();
+    const old = oldRow ? JSON.parse(oldRow.data || '{}') : {};
+    const item = Object.assign({}, o, { id, to, amount, status: o.status || 'pending', date, note: String(o.note || '').slice(0, 1000), projectId: '', createdBy: old.createdBy || u.id, createdAt: old.createdAt || now, updatedBy: u.id, updatedAt: now });
+    const data = J(item);
+    if (data.length > 8000) throw new UErr('بيانات التحويل كبيرة جداً');
+    stmts.push(db.prepare('INSERT INTO bo_transfers (tn, id, data, updated_at) VALUES (?, ?, ?, ?) ON CONFLICT(tn, id) DO UPDATE SET data = excluded.data, updated_at = excluded.updated_at').bind(tn, id, data, now));
+    saved.push(item);
+  }
+  await db.batch(stmts);
+  await audit(db, C, 'حفظ تحويل باك أوفيس عام', saved.length + ' سجل', saved.map(x => x.to + ' · ' + x.amount).join('، ').slice(0, 500));
+  return saved;
+}
+const WRITES = new Set(['saveItem', 'deleteItem', 'saveProject', 'deleteProject', 'saveContact', 'deleteContact', 'saveNote', 'saveMat', 'addUser', 'updateUser', 'deleteUser', 'restoreTenant', 'setPrivPin', 'trashDel', 'xpSet', 'boSave']);
+const TREAD = new Set(['getMat', 'getAll', 'getSince', 'listUsers', 'listAudit', 'listIdeas', 'lockPriv', 'unlockPriv', 'logout', 'trashList', 'achList', 'xpGet', 'todoStatus', 'health', 'boList']);
 export async function onRequestPost({ request, env, waitUntil }) {
   const body = await request.text(); const t0 = Date.now(); const db = env.DB; let req = {}; try { req = JSON.parse(body); } catch (e) {}
   const fn = String(req.fn || ''), a = Array.isArray(req.args) ? req.args : [];
@@ -366,6 +396,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
     const native = C.native !== undefined ? C.native : await nativeOn(db, C.tn); let data, done = true;
     try {
       if (TRASH.has(fn)) data = await trashOp(db, C, fn, a);
+      else if (fn === 'boList' || fn === 'boSave') data = await backofficeOp(db, C, fn, a);
       else if (!native) done = false;
       else if (fn === 'getAll') data = await nGetAll(env, C);
       else if (fn === 'getSince') { const sn = Number(a[0]) || 0; data = sn && Date.now() - sn < 7 * 864e5 ? await nGetAll(env, C, sn) : await nGetAll(env, C); }
