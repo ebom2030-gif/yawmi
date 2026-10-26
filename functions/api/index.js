@@ -323,10 +323,19 @@ async function nSaveProject(env, C, p, base, force) { const db = env.DB, tn = C.
     if ((p.steps || []).some(s => String(s.name || '').trim() && !previousSteps.has(String(s.name).trim()))) need(C.u, 'stepsEdit');
   }
   const now = Date.now(); p.updatedAt = now; p.updatedBy = C.u.id; await upProj(db, tn, p, now).run(); await enqueue(db, C, 'project', p.id, 'saveProject', [p, 0, true]); return merged ? { updatedAt: now, merged: true, p } : { updatedAt: now }; }
+function validateBrokerValues(contact, old) {
+  (contact.refs || []).forEach((entry, i) => {
+    const previous = entry.id ? (old?.refs || []).find(r => r.id === entry.id) : old?.refs?.[i];
+    if (previous && ['val', 'pct', 'coll'].every(k => Number(entry[k] || 0) === Number(previous[k] || 0))) return;
+    const value = Number(entry.val || 0), percentage = Number(entry.pct || 0), collected = Number(entry.coll || 0);
+    if (![value, percentage, collected].every(Number.isFinite) || value < 0 || percentage < 0 || percentage > 100 || collected < 0 || collected > value * percentage / 100 + .005) throw new UErr('راجع قيمة العقد ونسبة العمولة والمحصّل');
+  });
+}
 async function nSaveContact(env, C, c) { const db = env.DB, tn = C.tn; if (!c || !c.id || !String(c.name || '').trim()) throw new UErr('اكتب اسم العميل'); if (J(c).length > 90000) throw new UErr('بيانات العميل كبيرة جداً');
   const row = await db.prepare('SELECT data FROM contacts WHERE tn = ? AND id = ?').bind(tn, String(c.id)).first(), old = row ? JSON.parse(row.data) : null;
   if (old) { contactGuard(C, { space: old.space || '', createdBy: old.createdBy || '', cat: old.cat || c.cat || '' }); c.createdBy = old.createdBy || C.u.id; c.space = old.space || ''; if (old.cat === 'contractor' && !xcan(C.X, C.u, 'brk') && c.space !== 'p') c.refs = old.refs || []; }
   else { c.createdBy = C.u.id; c.space = c.space === 'p' ? 'p' : ''; contactGuard(C, c); }
+  validateBrokerValues(c, old);
   c.updatedAt = Date.now(); await upCont(db, tn, c, c.updatedAt).run(); await enqueue(db, C, 'contact', c.id, 'saveContact', [c]); return true; }
 async function nDelete(env, C, kind, id) { const db = env.DB, tn = C.tn, table = DEL[kind]; const row = await db.prepare(`SELECT data FROM ${table} WHERE tn = ? AND id = ?`).bind(tn, String(id)).first(); if (!row) return true; const o = JSON.parse(row.data);
   if (kind === 'contact') contactGuard(C, o); else projGuard(C, { space: o.space || '', createdBy: o.createdBy || '' }); if (!xcan(C.X, C.u, 'del')) throw new UErr('ليس لديك صلاحية الحذف');
@@ -410,6 +419,8 @@ async function backofficeOp(db, C, fn, a) {
     if (status === 'postponed' && postponedTo <= new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Riyadh' }).format(new Date())) throw new UErr('موعد التأجيل يجب أن يكون في المستقبل');
     const oldRow = await db.prepare('SELECT data FROM bo_transfers WHERE tn = ? AND id = ?').bind(tn, id).first();
     const old = oldRow ? JSON.parse(oldRow.data || '{}') : {};
+    const paidDate = String(o.paidDate || '').slice(0, 10), day = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Riyadh' }).format(new Date());
+    if (status === 'paid' && (old.status !== 'paid' || paidDate !== String(old.paidDate || '') || Number(old.amount) !== amount) && (!/^\d{4}-\d{2}-\d{2}$/.test(paidDate) || isNaN(Date.parse(paidDate)) || new Date(paidDate + 'T12:00:00Z').toISOString().slice(0, 10) !== paidDate || paidDate > day)) throw new UErr('راجع تاريخ الدفع الفعلي');
     const item = Object.assign({}, o, { id, to, amount, status, statusReason, postponedTo, date, paidDate: String(o.paidDate || '').slice(0, 10), method: String(o.method || '').slice(0, 40), reference: String(o.reference || '').slice(0, 100), note: String(o.note || '').slice(0, 1000), projectId: '', createdBy: old.createdBy || u.id, createdAt: old.createdAt || now, updatedBy: u.id, updatedAt: now });
     const data = J(item);
     if (data.length > 8000) throw new UErr('بيانات التحويل كبيرة جداً');
