@@ -267,6 +267,27 @@ async function nDeleteItem(env, C, id) { const db = env.DB, u = C.u, tn = C.tn; 
 function projGuard(C, meta) { if (meta.space === 'p') { if (meta.createdBy !== C.u.id) throw new UErr('غير مسموح'); if (!C.po) throw new UErr('أعمالك الخاصة مقفلة — افتحها بالرقم السري أولاً'); } else need(C.u, 'projectsEdit'); }
 function contactGuard(C, c) { if (c.space === 'p') { if (c.createdBy !== C.u.id) throw new UErr('غير مسموح'); if (!C.po) throw new UErr('أعمالك الخاصة مقفلة — افتحها بالرقم السري أولاً'); return; }
   need(C.u, 'projects'); if (!xcan(C.X, C.u, 'clients') && !(c.cat === 'contractor' && xcan(C.X, C.u, 'brk'))) throw new UErr('ليس لديك صلاحية تعديل بيانات العملاء'); }
+function validateClaimPayments(p, old) {
+  (p.claims || []).forEach((r, index) => {
+    if (!Array.isArray(r.paymentLog)) return;
+    const ids = new Set(); let sum = 0;
+    r.paymentLog.forEach(entry => {
+      if (!entry || !entry.id || ids.has(entry.id)) throw new UErr('سجل التحصيل يحتوي على دفعات مكررة أو غير معرّفة');
+      ids.add(entry.id);
+      const value = Number(entry.value);
+      if (!Number.isFinite(value) || value <= 0) throw new UErr('مبلغ التحصيل غير صحيح');
+      if (!entry.legacy) {
+        const date = String(entry.date || '');
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || isNaN(Date.parse(date)) || new Date(date + 'T12:00:00Z').toISOString().slice(0, 10) !== date || date > today()) throw new UErr('تاريخ التحصيل غير صحيح');
+      }
+      if (!entry.voided) sum += value;
+    });
+    const paid = Number(r.paid || 0);
+    if (!Number.isFinite(paid) || Math.abs(Math.round(sum * 100) / 100 - paid) > .005) throw new UErr('إجمالي التحصيل لا يطابق سجل الدفعات');
+    const previous = old && (r.id ? (old.claims || []).find(x => x.id === r.id) : (old.claims || [])[index]);
+    if (paid > Number(r.amount || 0) + .005 && !(previous && Number(previous.paid) === paid && Number(previous.amount) === Number(r.amount))) throw new UErr('التحصيل يتجاوز قيمة المطالبة');
+  });
+}
 async function nSaveProject(env, C, p, base, force) { const db = env.DB, tn = C.tn; if (!p || !p.id || !String(p.name || '').trim()) throw new UErr('اكتب اسم المشروع'); if (J(p).length > 90000) throw new UErr('بيانات المشروع كبيرة جداً — احذف بعض الملفات أو الجداول');
   const row = await db.prepare('SELECT data, updated_at FROM projects WHERE tn = ? AND id = ?').bind(tn, String(p.id)).first(), old = row ? JSON.parse(row.data) : null;
   let merged = false; const chg = Array.isArray(p._chg) ? p._chg.filter(k => typeof k === 'string' && !/^(id|createdBy|space|updatedAt|updatedBy)$/.test(k)) : null; delete p._chg;
@@ -276,6 +297,7 @@ async function nSaveProject(env, C, p, base, force) { const db = env.DB, tn = C.
     else throw new UErr('CONFLICT:' + ((byId(C, old.updatedBy) || {}).name || '') + '|' + old.updatedAt); }
   if (old) { projGuard(C, { space: old.space || '', createdBy: old.createdBy || '' }); p.createdBy = old.createdBy || C.u.id; p.space = old.space || ''; if (p.space !== 'p' && !can(C.u, 'finance')) keepFin(p, old); }
   else { p.createdBy = C.u.id; p.space = p.space === 'p' ? 'p' : ''; projGuard(C, p); } delete p._nofin;
+  validateClaimPayments(p, old);
   const now = Date.now(); p.updatedAt = now; p.updatedBy = C.u.id; await upProj(db, tn, p, now).run(); await enqueue(db, C, 'project', p.id, 'saveProject', [p, 0, true]); return merged ? { updatedAt: now, merged: true, p } : { updatedAt: now }; }
 async function nSaveContact(env, C, c) { const db = env.DB, tn = C.tn; if (!c || !c.id || !String(c.name || '').trim()) throw new UErr('اكتب اسم العميل'); if (J(c).length > 90000) throw new UErr('بيانات العميل كبيرة جداً');
   const row = await db.prepare('SELECT data FROM contacts WHERE tn = ? AND id = ?').bind(tn, String(c.id)).first(), old = row ? JSON.parse(row.data) : null;
