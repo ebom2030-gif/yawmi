@@ -307,6 +307,23 @@ function validateProjectWorkflow(p, old) {
   } else if (brief.source !== 'contract') throw new UErr('مصدر نطاق التنفيذ غير صحيح');
   else if (Number.isInteger(p.acceptedQuoteRevision) && (p.qRevs || [])[p.acceptedQuoteRevision]?.issuedQuote) throw new UErr('استخدم نطاق نسخة العرض المعتمدة في تسليم التنفيذ');
 }
+function validateProjectTransition149(p, old) {
+  if (!old || p.status === old.status) return;
+  if (old.status === 'quote' && ['contract', 'active', 'hold', 'done'].includes(p.status)) {
+    if (p.status !== 'contract') throw new UErr('اعتمد العرض وانتقل إلى مرحلة التعاقد أولًا');
+    const n = p.acceptedQuoteRevision, r = Number.isInteger(n) && (p.qRevs || [])[n], q = r && r.issuedQuote;
+    const valid = d => /^\d{4}-\d{2}-\d{2}$/.test(String(d || '')) && !isNaN(Date.parse(d)) && new Date(d + 'T12:00:00Z').toISOString().slice(0, 10) === d;
+    const now = new Intl.DateTimeFormat('en-CA', {timeZone:'Asia/Riyadh',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+    if (!q || n !== p.qRevs.length - 1 || !String(r.approvedBy || '').trim() || !String(r.approvalRef || '').trim() || !valid(r.approvedDate) || !valid(q.date) || r.approvedDate < q.date || r.approvedDate > now || !String(q.scope || '').trim() || !(Number(q.amount) > 0)) throw new UErr('أكمل اعتماد أحدث نسخة محفوظة من العرض قبل التعاقد');
+    const expiry = new Date(q.date + 'T12:00:00Z'); expiry.setUTCDate(expiry.getUTCDate() + Number(q.validDays || 0));
+    if (!(Number(q.validDays) > 0) || r.approvedDate > expiry.toISOString().slice(0,10)) throw new UErr('موافقة العرض خارج مدة الصلاحية');
+    if (Math.abs(Number(p.agreed || 0) - Number(q.amount)) > .005 || p.taxMode !== q.taxMode || Number(p.vat) !== Number(q.vat)) throw new UErr('قيمة التعاقد لا تطابق نسخة العرض المعتمدة');
+  }
+  if (old.status === 'contract' && p.status === 'active') {
+    const b=p.executionBrief || {};
+    if (!b.reviewedAt || !String(p.pmUser || p.deliveryOwner || '').trim() || !p.start || !p.end || !String(b.scope || '').trim() || !String(p.contractRef || (b.source === 'contract' ? b.approval : '') || '').trim()) throw new UErr('راجع النطاق والمسؤول والتواريخ ومرجع العقد أو أمر التعميد قبل التنفيذ');
+  }
+}
 async function nSaveProject(env, C, p, base, force) { const db = env.DB, tn = C.tn; if (!p || !p.id || !String(p.name || '').trim()) throw new UErr('اكتب اسم المشروع'); if (J(p).length > 90000) throw new UErr('بيانات المشروع كبيرة جداً — احذف بعض الملفات أو الجداول');
   const row = await db.prepare('SELECT data, updated_at FROM projects WHERE tn = ? AND id = ?').bind(tn, String(p.id)).first(), old = row ? JSON.parse(row.data) : null;
   let merged = false; const chg = Array.isArray(p._chg) ? p._chg.filter(k => typeof k === 'string' && !/^(id|createdBy|space|updatedAt|updatedBy)$/.test(k)) : null; delete p._chg;
@@ -317,6 +334,7 @@ async function nSaveProject(env, C, p, base, force) { const db = env.DB, tn = C.
   if (old) { projGuard(C, { space: old.space || '', createdBy: old.createdBy || '' }); p.createdBy = old.createdBy || C.u.id; p.space = old.space || ''; if (p.space !== 'p' && !can(C.u, 'finance')) keepFin(p, old); }
   else { p.createdBy = C.u.id; p.space = p.space === 'p' ? 'p' : ''; projGuard(C, p); } delete p._nofin;
   validateClaimPayments(p, old);
+  validateProjectTransition149(p, old);
   validateProjectWorkflow(p, old);
   if (old && p.executionBrief?.reviewedAt && J(p.executionBrief) !== J(old.executionBrief)) {
     const previousSteps = new Set((old.steps || []).map(s => String(s.name || '').trim()));
