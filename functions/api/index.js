@@ -288,6 +288,25 @@ function validateClaimPayments(p, old) {
     if (paid > Number(r.amount || 0) + .005 && !(previous && Number(previous.paid) === paid && Number(previous.amount) === Number(r.amount))) throw new UErr('التحصيل يتجاوز قيمة المطالبة');
   });
 }
+function validateProjectWorkflow(p, old) {
+  const valid = d => /^\d{4}-\d{2}-\d{2}$/.test(String(d || '')) && !isNaN(Date.parse(d)) && new Date(d + 'T12:00:00Z').toISOString().slice(0, 10) === d;
+  const changedDates = !old || p.start !== old.start || p.end !== old.end;
+  if (changedDates && ((p.start && !valid(p.start)) || (p.end && !valid(p.end)) || (p.start && p.end && p.end < p.start))) throw new UErr('راجع تاريخ بداية المشروع وتسليمه');
+  if ((!old || p.clientWaitingDue !== old.clientWaitingDue) && p.clientWaitingDue && !valid(p.clientWaitingDue)) throw new UErr('راجع موعد رد العميل');
+  const brief = p.executionBrief;
+  if (!brief || (old && JSON.stringify(brief) === JSON.stringify(old.executionBrief))) return;
+  if (brief.reviewedAt) {
+    if (!valid(brief.reviewedAt) || !String(p.pmUser || p.deliveryOwner || '').trim() || !String(p.client || '').trim() || !String(brief.scope || '').trim() || !valid(p.start) || !valid(p.end) || p.end < p.start) throw new UErr('بيانات تسليم المشروع غير مكتملة');
+    if (p.clientWaitingDue && !valid(p.clientWaitingDue)) throw new UErr('راجع موعد رد العميل');
+    if (!String(brief.approval || '').trim()) throw new UErr('سجل مرجع اعتماد نطاق العمل');
+  }
+  if (brief.source === 'issuedQuote') {
+    const revision = Number.isInteger(p.acceptedQuoteRevision) ? p.acceptedQuoteRevision : -1;
+    const accepted = (p.qRevs || [])[revision], quote = accepted && accepted.issuedQuote;
+    if (!quote || brief.revision !== revision || brief.scope !== (quote.scope || '') || brief.exclusions !== (quote.exclusions || '') || brief.duration !== (quote.duration || '') || brief.approval !== (accepted.approvalRef || '')) throw new UErr('نطاق التنفيذ لا يطابق نسخة العرض المعتمدة');
+  } else if (brief.source !== 'contract') throw new UErr('مصدر نطاق التنفيذ غير صحيح');
+  else if (Number.isInteger(p.acceptedQuoteRevision) && (p.qRevs || [])[p.acceptedQuoteRevision]?.issuedQuote) throw new UErr('استخدم نطاق نسخة العرض المعتمدة في تسليم التنفيذ');
+}
 async function nSaveProject(env, C, p, base, force) { const db = env.DB, tn = C.tn; if (!p || !p.id || !String(p.name || '').trim()) throw new UErr('اكتب اسم المشروع'); if (J(p).length > 90000) throw new UErr('بيانات المشروع كبيرة جداً — احذف بعض الملفات أو الجداول');
   const row = await db.prepare('SELECT data, updated_at FROM projects WHERE tn = ? AND id = ?').bind(tn, String(p.id)).first(), old = row ? JSON.parse(row.data) : null;
   let merged = false; const chg = Array.isArray(p._chg) ? p._chg.filter(k => typeof k === 'string' && !/^(id|createdBy|space|updatedAt|updatedBy)$/.test(k)) : null; delete p._chg;
@@ -298,6 +317,11 @@ async function nSaveProject(env, C, p, base, force) { const db = env.DB, tn = C.
   if (old) { projGuard(C, { space: old.space || '', createdBy: old.createdBy || '' }); p.createdBy = old.createdBy || C.u.id; p.space = old.space || ''; if (p.space !== 'p' && !can(C.u, 'finance')) keepFin(p, old); }
   else { p.createdBy = C.u.id; p.space = p.space === 'p' ? 'p' : ''; projGuard(C, p); } delete p._nofin;
   validateClaimPayments(p, old);
+  validateProjectWorkflow(p, old);
+  if (old && p.executionBrief?.reviewedAt && J(p.executionBrief) !== J(old.executionBrief)) {
+    const previousSteps = new Set((old.steps || []).map(s => String(s.name || '').trim()));
+    if ((p.steps || []).some(s => String(s.name || '').trim() && !previousSteps.has(String(s.name).trim()))) need(C.u, 'stepsEdit');
+  }
   const now = Date.now(); p.updatedAt = now; p.updatedBy = C.u.id; await upProj(db, tn, p, now).run(); await enqueue(db, C, 'project', p.id, 'saveProject', [p, 0, true]); return merged ? { updatedAt: now, merged: true, p } : { updatedAt: now }; }
 async function nSaveContact(env, C, c) { const db = env.DB, tn = C.tn; if (!c || !c.id || !String(c.name || '').trim()) throw new UErr('اكتب اسم العميل'); if (J(c).length > 90000) throw new UErr('بيانات العميل كبيرة جداً');
   const row = await db.prepare('SELECT data FROM contacts WHERE tn = ? AND id = ?').bind(tn, String(c.id)).first(), old = row ? JSON.parse(row.data) : null;
