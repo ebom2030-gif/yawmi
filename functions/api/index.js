@@ -307,6 +307,21 @@ function validateProjectWorkflow(p, old) {
   } else if (brief.source !== 'contract') throw new UErr('مصدر نطاق التنفيذ غير صحيح');
   else if (Number.isInteger(p.acceptedQuoteRevision) && (p.qRevs || [])[p.acceptedQuoteRevision]?.issuedQuote) throw new UErr('استخدم نطاق نسخة العرض المعتمدة في تسليم التنفيذ');
 }
+function validateProjectTransition152(p, old) {
+  const valid=d=>/^\d{4}-\d{2}-\d{2}$/.test(String(d||''))&&!isNaN(Date.parse(d))&&new Date(d+'T12:00:00Z').toISOString().slice(0,10)===d;
+  const now=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Riyadh',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+  if(old&&old.status==='study'&&p.status!==old.status&&!['quote','lost'].includes(p.status))throw new UErr('انتقل من الدراسة إلى إعداد عرض السعر أولًا');
+  if(p.handoffDraft&&JSON.stringify(p.handoffDraft)!==JSON.stringify(old?.handoffDraft)){const F=p.handoffDraft.fields||{};if((F.start&&!valid(F.start))||(F.end&&!valid(F.end))||(F.start&&F.end&&F.end<F.start))throw new UErr('راجع تواريخ مسودة التسليم');}
+  const L=p.pauses||[],before=old?.pauses||[],changed=JSON.stringify(L)!==JSON.stringify(before),statusChanged=old&&old.status!==p.status;
+  if(!changed&&!(statusChanged&&(p.status==='hold'||old.status==='hold')))return;
+  if(!Array.isArray(L)||L.length>500)throw new UErr('سجل فترات التوقف غير صحيح');
+  const ids=new Set;let end='';for(const x of [...L].sort((a,b)=>String(a.start).localeCompare(String(b.start)))){if(!x.id||ids.has(x.id)||!valid(x.start)||x.start>now||!String(x.reason||'').trim()||x.exclude!==true||(x.end&&(!valid(x.end)||x.end<x.start||x.end>now))||(end&&x.start<end))throw new UErr('راجع سبب وفترات التوقف؛ يجب ألا تتداخل');ids.add(x.id);end=x.end||'9999-12-31';}
+  for(const x of before){const n=L.find(y=>y.id===x.id);if(!n||n.start!==x.start||n.reason!==x.reason||n.exclude!==x.exclude||n.resumeStatus!==x.resumeStatus||(x.end&&JSON.stringify(n)!==JSON.stringify(x)))throw new UErr('فترات التوقف السابقة سجل معتمد ولا تحذف أو تعدل');}
+  const open=L.filter(x=>!x.end);if(open.length>1||open.length&&p.status!=='hold')throw new UErr('استئناف المشروع يتطلب إغلاق فترة التوقف');
+  if(statusChanged&&p.status==='hold'){const x=open[0];if(!x||before.some(y=>y.id===x.id)||x.resumeStatus!==old.status||!['active','contract'].includes(old.status))throw new UErr('سجل فترة التوقف وسببه قبل إيقاف المشروع');}
+  if(statusChanged&&old.status==='hold'){const x=before.find(x=>!x.end),n=x&&L.find(y=>y.id===x.id);if(x&&(!n?.end||!String(n.resumeNote||'').trim()||p.status!==x.resumeStatus))throw new UErr('سجل نتيجة المراجعة وأغلق التوقف عند الاستئناف');if(!x&&!(p.log||[]).some(x=>x.kind==='استئناف مشروع'&&x.date===now&&String(x.details||'').trim()))throw new UErr('وثق استئناف المشروع ذي التوقف السابق غير المؤرخ');}
+}
+
 function validateProjectTransition149(p, old) {
   if (!old || p.status === old.status) return;
   if (old.status === 'quote' && ['contract', 'active', 'hold', 'done'].includes(p.status)) {
@@ -324,6 +339,17 @@ function validateProjectTransition149(p, old) {
     if (!b.reviewedAt || !String(p.pmUser || p.deliveryOwner || '').trim() || !p.start || !p.end || !String(b.scope || '').trim() || !String(p.contractRef || (b.source === 'contract' ? b.approval : '') || '').trim()) throw new UErr('راجع النطاق والمسؤول والتواريخ ومرجع العقد أو أمر التعميد قبل التنفيذ');
   }
 }
+async function nRecordMeetingOutcome152(env,C,id){
+ const db=env.DB,u=C.u,tn=C.tn,row=await db.prepare('SELECT data FROM items WHERE tn = ? AND id = ?').bind(tn,String(id)).first();if(!row)throw new UErr('الاجتماع غير موجود');const x=JSON.parse(row.data);if(x.kind!=='meeting')throw new UErr('السجل ليس اجتماعًا');if(x.owner!==u.id&&x.assignedBy!==u.id){need(u,'team');if(!seeScope(u,byId(C,x.owner)))throw new UErr('الاجتماع خارج نطاقك')}if(x.space==='p'&&(x.owner!==u.id||!C.po))throw new UErr('افتح مساحة الأعمال الخاصة أولًا');
+ const r=x.meetingResult;if(!r||!String(r.text||'').trim()||String(r.text).length>5000||String(r.action||'').length>1500)throw new UErr('راجع نتيجة الاجتماع والخطوة التالية');
+ const finish=async(logged,projectId,event,updatedAt)=>{x.meetingResult={...r,projectLogged:logged};await upItem(db,tn,x,Date.now()).run();await enqueue(db,C,'item',x.id,'saveItem',[x]);return{logged,projectId,event,updatedAt}};
+ if(x.linkMode==='none'||!x.project&&!x.projectId)return finish(true,'',null,0);
+ if(x.pv&&x.space!=='p')return finish('private-task','',null,0);
+ need(u,'projects');let pId=x.projectId;if(!pId){const rows=await db.prepare('SELECT data FROM projects WHERE tn = ? AND name = ? AND space = ?').bind(tn,x.project||'',x.space||'').all();const list=(rows.results||[]).map(z=>JSON.parse(z.data)).filter(p=>!x.client||p.client===x.client);if(list.length!==1)throw new UErr('اختر ارتباط المشروع صراحةً قبل تسجيل النتيجة في سجله');pId=list[0].id}
+ for(let attempt=0;attempt<3;attempt++){const pr=await db.prepare('SELECT data, updated_at FROM projects WHERE tn = ? AND id = ?').bind(tn,String(pId)).first();if(!pr)throw new UErr('المشروع المرتبط غير موجود');const p=JSON.parse(pr.data);if((p.space||'')!==(x.space||'')||x.project&&p.name!==x.project||x.client&&p.client!==x.client||p.space==='p'&&(p.createdBy!==u.id||!C.po))throw new UErr('راجع ارتباط الاجتماع بالمشروع وصلاحيته');const existing=(p.log||[]).find(e=>e.meetingId===x.id&&e.kind==='نتيجة اجتماع');if(existing)return finish(true,p.id,existing,p.updatedAt||0);
+ const date=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Riyadh',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date()),event={id:r.id||crypto.randomUUID(),meetingId:x.id,date,at:Date.now(),by:u.id,kind:'نتيجة اجتماع',subject:x.title,details:'الاجتماع: '+x.due+' — '+String(r.text).trim()+(r.action?' — الخطوة التالية: '+r.action:'')};p.log=[...(p.log||[]),event];p.followEvents=[...(p.followEvents||[]),{...event,kind:'meeting',text:event.subject+' — '+event.details}];const now=Date.now();p.updatedAt=now;p.updatedBy=u.id;if(J(p).length>90000)throw new UErr('سجل المشروع ممتلئ؛ راجع مدير النظام لإكمال توثيق النتيجة');const update=await db.prepare('UPDATE projects SET data = ?, updated_at = ? WHERE tn = ? AND id = ? AND updated_at = ?').bind(J(p),now,tn,String(p.id),pr.updated_at).run();if(!update.meta?.changes)continue;await enqueue(db,C,'project',p.id,'saveProject',[p,0,true]);await audit(db,C,'توثيق نتيجة اجتماع',x.title,p.name);return finish(true,p.id,event,now)}throw new UErr('المشروع يُحدَّث الآن؛ أعد حفظ النتيجة دون تكرار التسجيل')
+}
+
 async function nSaveProject(env, C, p, base, force) { const db = env.DB, tn = C.tn; if (!p || !p.id || !String(p.name || '').trim()) throw new UErr('اكتب اسم المشروع'); if (J(p).length > 90000) throw new UErr('بيانات المشروع كبيرة جداً — احذف بعض الملفات أو الجداول');
   const row = await db.prepare('SELECT data, updated_at FROM projects WHERE tn = ? AND id = ?').bind(tn, String(p.id)).first(), old = row ? JSON.parse(row.data) : null;
   let merged = false; const chg = Array.isArray(p._chg) ? p._chg.filter(k => typeof k === 'string' && !/^(id|createdBy|space|updatedAt|updatedBy)$/.test(k)) : null; delete p._chg;
@@ -334,6 +360,7 @@ async function nSaveProject(env, C, p, base, force) { const db = env.DB, tn = C.
   if (old) { projGuard(C, { space: old.space || '', createdBy: old.createdBy || '' }); p.createdBy = old.createdBy || C.u.id; p.space = old.space || ''; if (p.space !== 'p' && !can(C.u, 'finance')) keepFin(p, old); }
   else { p.createdBy = C.u.id; p.space = p.space === 'p' ? 'p' : ''; projGuard(C, p); } delete p._nofin;
   validateClaimPayments(p, old);
+  validateProjectTransition152(p, old);
   validateProjectTransition149(p, old);
   validateProjectWorkflow(p, old);
   if (old && p.executionBrief?.reviewedAt && J(p.executionBrief) !== J(old.executionBrief)) {
@@ -449,7 +476,7 @@ async function backofficeOp(db, C, fn, a) {
   const action = saved.some(x => x.status === 'rejected') ? 'رفض تحويل خارجي' : saved.some(x => x.status === 'cancelled') ? 'إلغاء تحويل خارجي' : saved.some(x => x.status === 'postponed') ? 'تأجيل تحويل خارجي' : 'تحديث تحويل خارجي'; await audit(db, C, action, saved.length + ' سجل', saved.map(x => x.to + ' · ' + x.amount + ' · ' + (x.statusReason || x.status)).join('، ').slice(0, 500));
   return saved;
 }
-const WRITES = new Set(['saveItem', 'deleteItem', 'saveProject', 'deleteProject', 'saveContact', 'deleteContact', 'saveNote', 'saveMat', 'addUser', 'updateUser', 'deleteUser', 'restoreTenant', 'setPrivPin', 'trashDel', 'xpSet', 'boSave']);
+const WRITES = new Set(['recordMeetingOutcome','saveItem', 'deleteItem', 'saveProject', 'deleteProject', 'saveContact', 'deleteContact', 'saveNote', 'saveMat', 'addUser', 'updateUser', 'deleteUser', 'restoreTenant', 'setPrivPin', 'trashDel', 'xpSet', 'boSave']);
 const TREAD = new Set(['getMat', 'getAll', 'getSince', 'listUsers', 'listAudit', 'listIdeas', 'lockPriv', 'unlockPriv', 'logout', 'trashList', 'achList', 'xpGet', 'todoStatus', 'health', 'boList']);
 export async function onRequestPost({ request, env, waitUntil }) {
   const body = await request.text(); const t0 = Date.now(); const db = env.DB; let req = {}; try { req = JSON.parse(body); } catch (e) {}
@@ -457,6 +484,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
   if (!db) return fail('قاعدة البيانات غير مربوطة');
   try {
     await init(db);
+    if (fn === 'buildInfo') return ok({version:'v152'});
     if (fn === 'login') { const r = await login(env, a[0], a[1], waitUntil, request.headers.get('CF-Connecting-IP')); if (a[2] && r && r.token) { try { await env.DB.prepare('UPDATE sess2 SET rem = 1 WHERE th = ?').bind(await sha('yw|' + r.token)).run(); } catch (e) {} } return ok(r); }
     if (OPEN.has(fn)) { // تمرير إلى Google ثم تبنّي الجلسة إن عادت بجلسة
       const r = await gasOpen(env, fn, a); if (!r.ok) return fail(r.error || 'تعذّر التنفيذ');
@@ -479,6 +507,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
       else if (!native) done = false;
       else if (fn === 'getAll') data = await nGetAll(env, C);
       else if (fn === 'getSince') { const sn = Number(a[0]) || 0; data = sn && Date.now() - sn < 7 * 864e5 ? await nGetAll(env, C, sn) : await nGetAll(env, C); }
+      else if (fn === 'recordMeetingOutcome') data = await nRecordMeetingOutcome152(env,C,a[0]);
       else if (fn === 'saveItem') data = await nSaveItem(env, C, a[0]);
       else if (fn === 'deleteItem') data = await nDeleteItem(env, C, a[0]);
       else if (fn === 'saveProject') data = await nSaveProject(env, C, a[0], a[1], a[2]);
