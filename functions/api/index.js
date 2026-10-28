@@ -515,7 +515,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
   if (!db) return fail('قاعدة البيانات غير مربوطة');
   try {
     await init(db);
-    if (fn === 'buildInfo') return ok({version:'v157'});
+    if (fn === 'buildInfo') return ok({version:'v158'});
     if (fn === 'login') { const r = await login(env, a[0], a[1], waitUntil, request.headers.get('CF-Connecting-IP')); if (a[2] && r && r.token) { try { await env.DB.prepare('UPDATE sess2 SET rem = 1 WHERE th = ?').bind(await sha('yw|' + r.token)).run(); } catch (e) {} } return ok(r); }
     if (OPEN.has(fn)) { // تمرير إلى Google ثم تبنّي الجلسة إن عادت بجلسة
       const r = await gasOpen(env, fn, a); if (!r.ok) return fail(r.error || 'تعذّر التنفيذ');
