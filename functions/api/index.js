@@ -74,9 +74,9 @@ const rowsOf = async (db, table, tn) => (await db.prepare(`SELECT data FROM ${ta
 async function batchAll(db, B) { let ch = 0; for (let i = 0; i < B.length; i += 90) ch += sumCh(await db.batch(B.slice(i, i + 90))); return ch; }
 
 // ---------- الأدوار والصلاحيات (منقولة حرفياً من خادم Google) ----------
-const PERMS = ['team', 'assign', 'transfer', 'approve', 'projects', 'projectsEdit', 'finance', 'users', 'audit'];
-const PDEF = { ceo: { team: 1, assign: 1, transfer: 1, approve: 1, projects: 1, projectsEdit: 1, finance: 1, users: 1, audit: 1 }, branch: { team: 1, assign: 1, transfer: 1, approve: 1, projects: 1, projectsEdit: 1, finance: 1, users: 1, audit: 1 },
-  admin: { team: 1, assign: 1, transfer: 1, approve: 1, projects: 1, projectsEdit: 1, finance: 1, users: 0, audit: 0 }, member: { transfer: 1 } };
+const PERMS = ['team', 'assign', 'transfer', 'approve', 'projects', 'projectsEdit', 'stepsEdit', 'finance', 'users', 'audit'];
+const PDEF = { ceo: { team: 1, assign: 1, transfer: 1, approve: 1, projects: 1, projectsEdit: 1, stepsEdit: 1, finance: 1, users: 1, audit: 1 }, branch: { team: 1, assign: 1, transfer: 1, approve: 1, projects: 1, projectsEdit: 1, stepsEdit: 1, finance: 1, users: 1, audit: 1 },
+  admin: { team: 1, assign: 1, transfer: 1, approve: 1, projects: 1, projectsEdit: 1, stepsEdit: 1, finance: 1, users: 0, audit: 0 }, member: { transfer: 1 } };
 const ROLES = ['member', 'admin', 'branch', 'ceo', 'owner'];
 const rank = r => Math.max(0, ROLES.indexOf(r));
 const cleanRole = r => ROLES.includes(r) ? r : 'member';
@@ -138,13 +138,14 @@ async function drain(env, budgetMs) {
       const o = await db.prepare('SELECT * FROM outbox WHERE done = 0 AND seq > ? ORDER BY seq LIMIT 1').bind(minSeq).first(); if (!o) break;
       if (skip.has(o.tn + '|' + o.uid)) { minSeq = o.seq; continue; }
       const newer = await db.prepare('SELECT seq FROM outbox WHERE done = 0 AND tn = ? AND kind = ? AND rid = ? AND seq > ? LIMIT 1').bind(o.tn || '', o.kind, o.rid, o.seq).first();
-      if (newer) { await db.prepare('UPDATE outbox SET done = 1, err = NULL WHERE seq = ?').bind(o.seq).run(); continue; }
+      if (newer && ['item','project','contact','note','mat'].includes(o.kind)) { await db.prepare('UPDATE outbox SET done = 1, err = NULL WHERE seq = ?').bind(o.seq).run(); continue; }
       const gt = await gtFor(db, o.tn, o.uid);
-      if (!gt) { if (Date.now() - o.at > 3 * 864e5) { await db.prepare('UPDATE outbox SET done = 1, err = ? WHERE seq = ?').bind('أُسقط من النسخة الاحتياطية: لا توجد جلسة Google منذ 3 أيام', o.seq).run(); continue; }
-        await db.prepare('UPDATE outbox SET tries = tries + 1, err = ? WHERE seq = ?').bind('بانتظار دخول المستخدم لتحديث النسخة الاحتياطية في Google', o.seq).run(); skip.add(o.tn + '|' + o.uid); minSeq = o.seq; continue; }
+      if (!gt) { await db.prepare('UPDATE outbox SET tries = tries + 1, err = ? WHERE seq = ?').bind('بانتظار دخول المستخدم لتحديث النسخة الاحتياطية في Google', o.seq).run(); skip.add(o.tn + '|' + o.uid); minSeq = o.seq; continue; }
       let r; try { r = await gasCall(env, gt, o.fn, JSON.parse(o.args)); }
       catch (e) { await db.prepare('UPDATE outbox SET tries = tries + 1, err = ? WHERE seq = ?').bind(String(e.message || e).slice(0, 300), o.seq).run(); break; }
       if (!r.ok && /سجّل الدخول|انتهت الجلسة|غير مفعّل/.test(r.error || '')) { await db.prepare('UPDATE sess2 SET gt = NULL WHERE gt = ?').bind(gt).run(); await db.prepare('UPDATE outbox SET tries = tries + 1, err = ? WHERE seq = ?').bind(r.error, o.seq).run(); continue; }
+      // v155 preserve failed sync, continue other accounts without losing work.
+      if(!r.ok){ await db.prepare('UPDATE outbox SET tries = tries + 1, err = ? WHERE seq = ?').bind(String(r.error||'تعذر الإرسال').slice(0,300),o.seq).run();skip.add(o.tn+'|'+o.uid);minSeq=o.seq;continue; }
       const B = [db.prepare('UPDATE outbox SET done = 1, tries = tries + 1, args = CASE WHEN fn IN (\'addUser\', \'updateUser\', \'setPrivPin\') THEN \'[]\' ELSE args END, err = ? WHERE seq = ?').bind(r.ok ? null : String(r.error || '').slice(0, 300), o.seq), db.prepare('UPDATE sess2 SET gt_at = ? WHERE gt = ?').bind(Date.now(), gt)];
       if (r.ok && o.fn === 'saveItem' && r.data && (r.data.calId || r.data.todo)) { const row = await db.prepare('SELECT data FROM items WHERE tn = ? AND id = ?').bind(o.tn || '', o.rid).first();
         if (row) { const x = JSON.parse(row.data); if ((r.data.calId || '') !== (x.calId || '') || (r.data.todo || '') !== (x.todo || '')) { x.calId = r.data.calId || x.calId || ''; if (r.data.todo) x.todo = r.data.todo; B.push(upItem(db, o.tn || '', x, Date.now())); } } }
@@ -166,18 +167,19 @@ async function importFrom(db, tn, d, uid, full) { const now = Date.now(), pend =
   if (d.ten && d.ten.id) B.push(db.prepare('INSERT INTO tenants (id, data, updated_at) VALUES (?, ?, ?) ON CONFLICT(id) DO UPDATE SET data = excluded.data, updated_at = excluded.updated_at').bind(d.ten.id, J(d.ten), now));
   const ch = await batchAll(db, B); if (ch) await bump(db, tn); }
 // مطابقة دورية: تلتقط فقط ما يُنشأ في Google من الخدمات (البريد الوارد، To Do، منصة التأهيلات) ولا تحذف ولا تكتب فوق بيانات Cloudflare
-async function reconcile(env, C) { const db = env.DB; if (C.u.role !== 'owner' && !can(C.u, 'team')) return; const gt = await gtFor(db, C.tn, C.u.id); if (!gt) return;
+async function reconcile(env, C) { const db = env.DB; const gt = await gtFor(db, C.tn, C.u.id); if (!gt) return;
   await drain(env, 15000); let r; try { r = await gasCall(env, gt, 'getAll', []); } catch (e) { return; } if (!r.ok) return; const d = r.data, tn = C.tn, now = Date.now();
   const pend = new Set((await db.prepare('SELECT kind, rid FROM outbox WHERE done = 0 AND tn = ?').bind(tn).all()).results.map(x => x.kind + ':' + x.rid));
   const gone = new Set((await db.prepare("SELECT id FROM gone WHERE tn = ? AND kind = 'item'").bind(tn).all()).results.map(x => x.id));
   const have = new Map((await db.prepare('SELECT id, data FROM items WHERE tn = ?').bind(tn).all()).results.map(x => [x.id, x.data])); const B = [];
-  (d.items || []).forEach(o => { if (!o || !o.id || pend.has('item:' + o.id) || gone.has(o.id)) return; const cur = have.get(String(o.id));
+  (d.items || []).forEach(o => { if (!o || !o.id || (o.space==='p'&&o.owner!==C.u.id) || (o.owner!==C.u.id&&o.assignedBy!==C.u.id&&!(can(C.u,'team')&&seeScope(C.u,byId(C,o.owner)))) || pend.has('item:' + o.id) || gone.has(o.id)) return; const cur = have.get(String(o.id));
     if (!cur) { B.push(upItem(db, tn, o, now)); return; } const x = JSON.parse(cur); let ch = false;
+    if(o.todo&&Number(o.todoSyncedAt||0)>Number(x.todoSyncedAt||0)){['title','due','priority','todoSyncedAt'].forEach(k=>{x[k]=o[k]});ch=true;}
     if (o.done && !x.done && (x.todo || o.todo)) { x.done = true; x.doneAt = o.doneAt || now; ch = true; } ['calId', 'todo'].forEach(k => { if (o[k] && o[k] !== x[k]) { x[k] = o[k]; ch = true; } }); if (ch) B.push(upItem(db, tn, x, now)); });
   // v117: لا نعلن «تغيير» للأجهزة إلا إذا تغيّرت مهمة فعلاً (المستخدمون والمشترك يُحدَّثون بصمت)
   const B2 = []; (d.users || []).filter(u => u && u.id && u.username !== undefined).forEach(u => B2.push(upUser(db, tn, u, now)));
   if (d.ten && d.ten.id) B2.push(db.prepare('INSERT INTO tenants (id, data, updated_at) VALUES (?, ?, ?) ON CONFLICT(id) DO UPDATE SET data = excluded.data, updated_at = excluded.updated_at').bind(d.ten.id, J(d.ten), now));
-  const chI = await batchAll(db, B); if (B2.length) await batchAll(db, B2); if (chI) await bump(db, tn); await log(db, tn, C.u.id, 'reconcile', 1, 0, null); }
+  const chI = await batchAll(db, B), chUsers=B2.length?await batchAll(db,B2):0; if (chI||chUsers) await bump(db, tn); await log(db, tn, C.u.id, 'reconcile', 1, 0, null); }
 
 // ---------- الدخول ----------
 async function throttle(db, k, limit = MAXTRY) { const r = await db.prepare('SELECT n, until FROM ltry WHERE k = ?').bind(k).first(); if (r && r.until > Date.now() && r.n >= limit) throw new UErr('تم إيقاف المحاولات مؤقتاً بسبب محاولات خاطئة كثيرة — حاول بعد 15 دقيقة'); return r && r.until > Date.now() ? r.n : 0; }
@@ -438,7 +440,7 @@ async function trashOp(db, C, fn, a) { const u = C.u, tn = C.tn, big = ['owner',
   if (fn === 'orgSet') { if (!big) throw new UErr('إعدادات الشركة للمالك والإدارة العليا فقط'); const o = a[0] && typeof a[0] === 'object' ? a[0] : {}; const d = J(o); if (d.length > 20000) throw new UErr('الإعدادات كبيرة جداً'); await cfgSet(db, 'org:' + tn, d); return true; }
   if (fn === 'diagLog') { const o = a[0] && typeof a[0] === 'object' ? a[0] : {}; await cfgSet(db, 'diag:' + tn, J(Object.assign({}, o, { at: now, by: u.id }))); return true; }
   if (fn === 'xpSet') { if (!(u.role === 'owner' || u.role === 'ceo')) throw new UErr('توزيع الصلاحيات للمالك والرئيس التنفيذي فقط'); const t = byId(C, String(a[0] || '')); if (!t || t.role === 'owner') throw new UErr('غير مسموح'); const m = Object.assign({}, C.X), o = {}; Object.entries(a[1] || {}).slice(0, 30).forEach(([k, v]) => o[String(k).slice(0, 20)] = !!v); m[t.id] = o; await cfgSet(db, 'xp:' + tn, J(m)); await audit(db, C, 'صلاحيات الصفحات', t.name, Object.keys(o).filter(k => o[k]).join('، ')); return true; }
-  if (fn === 'holSet') { if (!big) throw new UErr('غير مسموح'); const L = (Array.isArray(a[0]) ? a[0] : []).filter(d => /^\d{4}-\d\d-\d\d$/.test(d)).slice(0, 200); await cfgSet(db, 'hol:' + tn, J(L)); return true; }
+  if (fn === 'holSet') { if (!big) throw new UErr('غير مسموح'); const L = (Array.isArray(a[0]) ? a[0] : []).filter(d => /^\d{4}-\d\d-\d\d$/.test(d)).slice(0, 200); await cfgSet(db, 'hol:' + tn, J(L)); await enqueue(db,C,'notificationConfig',tn,'notificationConfig155',[L]); return true; }
   throw new UErr('عملية غير معروفة'); }
 
 // ---------- نقطة الدخول ----------
@@ -477,15 +479,33 @@ async function backofficeOp(db, C, fn, a) {
   const action = saved.some(x => x.status === 'rejected') ? 'رفض تحويل خارجي' : saved.some(x => x.status === 'cancelled') ? 'إلغاء تحويل خارجي' : saved.some(x => x.status === 'postponed') ? 'تأجيل تحويل خارجي' : 'تحديث تحويل خارجي'; await audit(db, C, action, saved.length + ' سجل', saved.map(x => x.to + ' · ' + x.amount + ' · ' + (x.statusReason || x.status)).join('، ').slice(0, 500));
   return saved;
 }
+// v155: connection diagnostics and scoped recovery; never expose integration tokens.
+async function integrationStatus155(env,C){
+ const db=env.DB,gt=await gtFor(db,C.tn,C.u.id),manager=C.u.role==='owner';
+ const pending=await db.prepare('SELECT COUNT(*) n, MIN(at) oldest FROM outbox WHERE tn = ? AND uid = ? AND done = 0').bind(C.tn,C.u.id).first();
+ const failures=await db.prepare('SELECT at, fn, tries, substr(err,1,200) error FROM outbox WHERE tn = ? AND uid = ? AND done = 0 AND err IS NOT NULL ORDER BY seq DESC LIMIT 8').bind(C.tn,C.u.id).all();
+ let remote=null,error='';if(gt){try{const r=await gasCall(env,gt,'integrationStatus155',[]);if(r.ok)remote=r.data;else error=r.error||'تعذر فحص الخدمة';}catch{error='تعذر الاتصال بخدمة الربط';}}
+ return {googleSession:!!gt,pending:Number(pending?.n||0),oldest:pending?.oldest||null,failures:failures.results||[],remote,error,manager,needsLogin:!gt||/سجّل الدخول|انتهت الجلسة/.test(error)};
+}
+async function reconnect155(env,C,password){
+ if(typeof password!=='string'||!password||password.length>256)throw new UErr('أدخل كلمة مرور حساب يومي');
+ const db=env.DB,k='reconnect:'+C.tn+':'+C.u.id,n=await throttle(db,k,5);
+ const r=await gasOpen(env,'login',[C.u.username,password]);
+ if(!r.ok||!r.data?.token){await failTry(db,k,n);throw new UErr(r.error||'تعذر تجديد الاتصال');}
+ if(r.data.me?.id!==C.u.id||((r.data.ten&&r.data.ten.id)||'')!==C.tn)throw new UErr('حساب الخدمة لا يطابق حساب يومي');
+ await db.prepare('UPDATE sess2 SET gt = ?, gt_at = ? WHERE th = ? AND tn = ? AND uid = ?').bind(r.data.token,Date.now(),C.th,C.tn,C.u.id).run();
+ await db.prepare('DELETE FROM ltry WHERE k = ?').bind(k).run();return {connected:true};
+}
+
 const WRITES = new Set(['recordMeetingOutcome','saveItem', 'deleteItem', 'saveProject', 'deleteProject', 'saveContact', 'deleteContact', 'saveNote', 'saveMat', 'addUser', 'updateUser', 'deleteUser', 'restoreTenant', 'setPrivPin', 'trashDel', 'xpSet', 'boSave']);
-const TREAD = new Set(['getMat', 'getAll', 'getSince', 'listUsers', 'listAudit', 'listIdeas', 'lockPriv', 'unlockPriv', 'logout', 'trashList', 'achList', 'xpGet', 'todoStatus', 'health', 'boList']);
+const TREAD = new Set(['getMat', 'getAll', 'getSince', 'listUsers', 'listAudit', 'listIdeas', 'lockPriv', 'unlockPriv', 'logout', 'trashList', 'achList', 'xpGet', 'todoStatus', 'health', 'boList', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155']);
 export async function onRequestPost({ request, env, waitUntil }) {
   const body = await request.text(); const t0 = Date.now(); const db = env.DB; let req = {}; try { req = JSON.parse(body); } catch (e) {}
   const fn = String(req.fn || ''), a = Array.isArray(req.args) ? req.args : [];
   if (!db) return fail('قاعدة البيانات غير مربوطة');
   try {
     await init(db);
-    if (fn === 'buildInfo') return ok({version:'v154'});
+    if (fn === 'buildInfo') return ok({version:'v155'});
     if (fn === 'login') { const r = await login(env, a[0], a[1], waitUntil, request.headers.get('CF-Connecting-IP')); if (a[2] && r && r.token) { try { await env.DB.prepare('UPDATE sess2 SET rem = 1 WHERE th = ?').bind(await sha('yw|' + r.token)).run(); } catch (e) {} } return ok(r); }
     if (OPEN.has(fn)) { // تمرير إلى Google ثم تبنّي الجلسة إن عادت بجلسة
       const r = await gasOpen(env, fn, a); if (!r.ok) return fail(r.error || 'تعذّر التنفيذ');
@@ -500,6 +520,10 @@ export async function onRequestPost({ request, env, waitUntil }) {
     if (!C) return fail(fn === 'logout' ? 'ok' : 'انتهت الجلسة — سجّل الدخول مرة أخرى');
     if (fn === 'logout') { await db.prepare('DELETE FROM sess2 WHERE th = ?').bind(th).run(); if (C.s.gt) waitUntil(gasCall(env, C.s.gt, 'logout', []).catch(() => {})); return ok(true); }
     if (C.ro && !TREAD.has(fn)) return fail('انتهت الفترة التجريبية — الحساب الآن للعرض فقط. بياناتك محفوظة كما هي، وتواصل معنا لتفعيل الاشتراك');
+    if (fn === 'integrationStatus155') return ok(await integrationStatus155(env,C));
+    if (fn === 'reconnect155') return ok(await reconnect155(env,C,a[0]));
+    if (fn === 'retryIntegrations155') { await drain(env,15000); return ok(await integrationStatus155(env,C)); }
+    if (fn === 'repairNotifications155') { if(C.u.role!=='owner') return fail('هذه العملية للمالك فقط'); const gt=await gtFor(db,C.tn,C.u.id); if(!gt)return fail('جدّد اتصال حساب يومي أولاً'); await gasCall(env,gt,'notificationConfig155',[JSON.parse(await cfgGet(db,'hol:'+C.tn)||'[]')]); const r=await gasCall(env,gt,fn,[]);return r.ok?ok(r.data):fail(r.error); }
     if (fn === 'cfNative') { if (C.u.role !== 'owner') return fail('هذه العملية للمالك فقط'); await cfgSet(db, 'native:' + C.tn, a[0] ? '1' : '0'); await log(db, C.tn, C.u.id, 'cfNative:' + (a[0] ? 'on' : 'off'), 1, 0, null); return ok({ native: !!a[0] }); }
     const native = C.native !== undefined ? C.native : await nativeOn(db, C.tn); let data, done = true;
     try {
@@ -524,7 +548,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
       else done = false;
     } catch (e) { if (e instanceof UErr) return fail(e.message); throw e; }
     if (done) { const ver = WRITES.has(fn) ? await bump(db, C.tn) : 0;
-      waitUntil((async () => { try { await drain(env, 20000); const rk = 'rec:' + C.tn, last = Number(await cfgGet(db, rk) || 0); if (Date.now() - last > RECONCILE_MIN * 60000 && (C.u.role === 'owner' || can(C.u, 'team'))) { await cfgSet(db, rk, Date.now()); await reconcile(env, C); }
+      waitUntil((async () => { try { await drain(env, 20000); const rk = 'rec:' + C.tn + ':' + C.u.id, last = Number(await cfgGet(db, rk) || 0); if (Date.now() - last > RECONCILE_MIN * 60000) { await cfgSet(db, rk, Date.now()); await reconcile(env, C); }
           else if (C.s.gt && Date.now() - (C.s.gt_at || 0) > KEEPALIVE_MIN * 60000) { await db.prepare('UPDATE sess2 SET gt_at = ? WHERE th = ?').bind(Date.now(), th).run(); await gasCall(env, C.s.gt, 'todoStatus', []).catch(() => {}); } } catch (e) { try { await log(db, C.tn, C.u.id, 'bg:' + fn, 0, 0, e.message || e); } catch (x) {} } })());
       return ok(data, ver); }
     // خدمات Google فقط (Drive، Notability، To Do، البريد، الأفكار، المشتركون…) — بجلسة Google الخاصة بالمستخدم
@@ -532,6 +556,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
     if (!gt) return fail('خدمات Google (Drive، To Do، Notability…) تحتاج تسجيل الدخول مرة أخرى لتفعيلها');
     let r; try { r = await gasCall(env, gt, fn, a); } catch (e) { return fail('تعذّر الاتصال بخدمات Google — حاول مرة أخرى'); }
     if (!r.ok && /سجّل الدخول|انتهت الجلسة/.test(r.error || '')) { await db.prepare('UPDATE sess2 SET gt = NULL WHERE gt = ?').bind(gt).run(); return fail('انتهت جلسة خدمات Google — سجّل الخروج ثم الدخول لتجديدها'); }
+    if(r.ok && ['todoNow','todoPoll'].includes(fn)) await reconcile(env,C);
     if (r.ok && fn === 'restoreTenant') waitUntil((async () => { try { const g = await gasCall(env, gt, 'getAll', []); if (g.ok) await importFrom(db, C.tn, g.data, C.u.id, true); } catch (e) {} })());
     return new Response(J(r), { headers: H });
   } catch (e) { if (e instanceof UErr) return fail(e.message); try { await log(db, '', '', 'err:' + fn, 0, Date.now() - t0, e.message || e); } catch (x) {} return fail('خطأ في الخادم — حاول مرة أخرى'); }
