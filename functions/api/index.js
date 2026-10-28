@@ -492,13 +492,15 @@ async function reconnect155(env,C,password){
  const db=env.DB,k='reconnect:'+C.tn+':'+C.u.id,n=await throttle(db,k,5);
  const r=await gasOpen(env,'login',[C.u.username,password]);
  if(!r.ok||!r.data?.token){await failTry(db,k,n);throw new UErr(r.error||'تعذر تجديد الاتصال');}
- if(r.data.me?.id!==C.u.id||((r.data.ten&&r.data.ten.id)||'')!==C.tn)throw new UErr('حساب الخدمة لا يطابق حساب يومي');
+ const profile=await gasCall(env,r.data.token,'getAll',[]);
+ if(!profile.ok)throw new UErr(profile.error||'تعذر التحقق من حساب الخدمة');
+ if(profile.data?.me?.id!==C.u.id||((profile.data.ten&&profile.data.ten.id)||'')!==C.tn)throw new UErr('حساب الخدمة لا يطابق حساب يومي');
  await db.prepare('UPDATE sess2 SET gt = ?, gt_at = ? WHERE th = ? AND tn = ? AND uid = ?').bind(r.data.token,Date.now(),C.th,C.tn,C.u.id).run();
  await db.prepare('DELETE FROM ltry WHERE k = ?').bind(k).run();return {connected:true};
 }
 
 const WRITES = new Set(['recordMeetingOutcome','saveItem', 'deleteItem', 'saveProject', 'deleteProject', 'saveContact', 'deleteContact', 'saveNote', 'saveMat', 'addUser', 'updateUser', 'deleteUser', 'restoreTenant', 'setPrivPin', 'trashDel', 'xpSet', 'boSave']);
-const TREAD = new Set(['getMat', 'getAll', 'getSince', 'listUsers', 'listAudit', 'listIdeas', 'lockPriv', 'unlockPriv', 'logout', 'trashList', 'achList', 'xpGet', 'todoStatus', 'health', 'boList', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155']);
+const TREAD = new Set(['getMat', 'getAll', 'getSince', 'listUsers', 'listAudit', 'listIdeas', 'lockPriv', 'unlockPriv', 'logout', 'trashList', 'achList', 'xpGet', 'todoStatus', 'health', 'boList', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155']);
 export async function onRequestPost({ request, env, waitUntil }) {
   const body = await request.text(); const t0 = Date.now(); const db = env.DB; let req = {}; try { req = JSON.parse(body); } catch (e) {}
   const fn = String(req.fn || ''), a = Array.isArray(req.args) ? req.args : [];
