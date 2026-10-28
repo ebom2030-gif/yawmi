@@ -220,3 +220,10 @@ form.addrow:not([data-kind=task]):not([data-kind=meeting]){flex-wrap:wrap;min-wi
 .v156-permissions{position:relative;overflow-x:auto;scrollbar-width:thin}.v156-permissions th:first-child,.v156-permissions td:first-child{position:sticky;inset-inline-start:0;z-index:1;background:var(--surface);box-shadow:-2px 0 4px #14213d0a}.v156-permissions th:first-child{background:var(--surface2);z-index:2}.v156-tablehint{font-size:12px;margin:0 0 8px}.v156-permissions:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 @media(min-width:1100px){.v156-tablehint{display:none}}@media(prefers-reduced-motion:reduce){.task .h153-actions>.h153-control:hover{transform:none}}
 @media print{.v156-integration,.v156-tablehint{display:none!important}.v156-permissions th:first-child,.v156-permissions td:first-child{position:static;box-shadow:none}}
+
+/* v157: readable tour on narrow screens */
+#guide157{margin:8px 16px;max-width:calc(100% - 32px)}
+.tourm .tcard{max-width:calc(100vw - 24px);max-height:calc(100dvh - 24px);overflow:auto;box-sizing:border-box}
+.tourm .tstep{flex-wrap:wrap;gap:4px}.tourm .tbtns{flex-wrap:wrap}.tourm .tcard p{line-height:1.9}
+@media(max-width:600px){.tourm .tcard{position:fixed!important;left:12px!important;right:12px!important;bottom:12px!important;top:auto!important;width:auto!important;transform:none!important}}
+@media print{#guide157,.tourm{display:none!important}}

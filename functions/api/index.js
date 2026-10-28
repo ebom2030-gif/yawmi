@@ -96,7 +96,7 @@ const XPDEF = { ceo: { clients: 1, brk: 1, mat: 1, del: 1, trash: 1, achTeam: 1 
 const xcan = (X, u, k) => u.role === 'owner' || ((X[u.id] || {})[k] !== undefined ? !!(X[u.id] || {})[k] : !!(XPDEF[u.role] || XPDEF.member)[k]);
 const FINK = ['price', 'agreed', 'claims', 'expenses', 'adds', 'hourCost', 'visitFee', 'qRevs', 'hourTarget'];
 function stripFin(p) { const o = JSON.parse(J(p)); FINK.forEach(k => delete o[k]); if (Array.isArray(o.visits)) o.visits.forEach(v => { delete v.fee; delete v.paid; delete v.paidDate; }); if (Array.isArray(o.phases)) o.phases.forEach(x => { delete x.amount; }); o._nofin = true; return o; }
-function keepFin(p, old) { FINK.forEach(k => { if (old[k] !== undefined) p[k] = old[k]; else delete p[k]; }); if (Array.isArray(p.visits) && Array.isArray(old.visits)) p.visits.forEach((v, i) => { const o = old.visits[i] || {}; v.fee = o.fee; v.paid = o.paid; v.paidDate = o.paidDate; }); delete p._nofin; }
+function keepFin(p, old) { FINK.forEach(k=>{if(old[k]!==undefined)p[k]=old[k];else delete p[k]});for(const [key,fields] of [['visits',['fee','paid','paidDate']],['phases',['amount']]])if(Array.isArray(p[key]))p[key].forEach((v,i)=>{const o=v.id?(old[key]||[]).find(x=>x.id===v.id):(old[key]||[])[i];fields.forEach(k=>{if(o&&o[k]!==undefined)v[k]=o[k];else delete v[k]})});delete p._nofin;}
 const wfReq = o => (o && o.wf && o.wf.req) || null;
 
 // ---------- المستخدم الحالي والجلسة ----------
@@ -353,6 +353,13 @@ async function nRecordMeetingOutcome152(env,C,id){
  const date=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Riyadh',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date()),event={id:r.id||crypto.randomUUID(),meetingId:x.id,outcomeId:r.id,agreement:r.text,responsible:r.actionOwner||'',nextAction:r.action||'',nextDate:r.actionDue||'',date,at:Date.now(),by:u.id,kind:'نتيجة اجتماع',subject:x.title,details:'الاجتماع: '+x.due+' — '+String(r.text).trim()+(r.actionOwner?' — المسؤول: '+r.actionOwner:'')+(r.action?' — الخطوة التالية: '+r.action:'')+(r.actionDue?' — موعد الخطوة: '+r.actionDue:'')};if(r.outcomeType==='quote_change'){p.quoteChangeRequests=p.quoteChangeRequests||[];if(!p.quoteChangeRequests.some(q=>q.id===r.id))p.quoteChangeRequests.push({id:r.id,meetingId:x.id,date,text:r.text,action:r.action||'',owner:r.actionOwner||'',due:r.actionDue||'',state:'review'});}p.log=[...(p.log||[]),event];p.followEvents=[...(p.followEvents||[]),{...event,kind:'meeting',text:event.subject+' — '+event.details}];const now=Date.now();p.updatedAt=now;p.updatedBy=u.id;if(J(p).length>90000)throw new UErr('سجل المشروع ممتلئ؛ راجع مدير النظام لإكمال توثيق النتيجة');const update=await db.prepare('UPDATE projects SET data = ?, updated_at = ? WHERE tn = ? AND id = ? AND updated_at = ?').bind(J(p),now,tn,String(p.id),pr.updated_at).run();if(!update.meta?.changes)continue;await enqueue(db,C,'project',p.id,'saveProject',[p,0,true]);await audit(db,C,'توثيق نتيجة اجتماع',x.title,p.name);return finish(true,p.id,event,now)}throw new UErr('المشروع يُحدَّث الآن؛ أعد حفظ النتيجة دون تكرار التسجيل')
 }
 
+// v157: enforce project-step permission on every change, not only handoff.
+function guardProjectPermissions157(C,p,old){
+ if(p.space==='p')return;
+ if(old&&J(p.steps||[])!==J(old.steps||[]))need(C.u,'stepsEdit');
+ if(!old&&!can(C.u,'finance')){FINK.forEach(k=>delete p[k]);if(Array.isArray(p.visits))p.visits.forEach(v=>{delete v.fee;delete v.paid;delete v.paidDate});if(Array.isArray(p.phases))p.phases.forEach(v=>delete v.amount)}
+}
+
 async function nSaveProject(env, C, p, base, force) { const db = env.DB, tn = C.tn; if (!p || !p.id || !String(p.name || '').trim()) throw new UErr('اكتب اسم المشروع'); if (J(p).length > 90000) throw new UErr('بيانات المشروع كبيرة جداً — احذف بعض الملفات أو الجداول');
   const row = await db.prepare('SELECT data, updated_at FROM projects WHERE tn = ? AND id = ?').bind(tn, String(p.id)).first(), old = row ? JSON.parse(row.data) : null;
   let merged = false; const chg = Array.isArray(p._chg) ? p._chg.filter(k => typeof k === 'string' && !/^(id|createdBy|space|updatedAt|updatedBy)$/.test(k)) : null; delete p._chg;
@@ -362,6 +369,7 @@ async function nSaveProject(env, C, p, base, force) { const db = env.DB, tn = C.
     else throw new UErr('CONFLICT:' + ((byId(C, old.updatedBy) || {}).name || '') + '|' + old.updatedAt); }
   if (old) { projGuard(C, { space: old.space || '', createdBy: old.createdBy || '' }); p.createdBy = old.createdBy || C.u.id; p.space = old.space || ''; if (p.space !== 'p' && !can(C.u, 'finance')) keepFin(p, old); }
   else { p.createdBy = C.u.id; p.space = p.space === 'p' ? 'p' : ''; projGuard(C, p); } delete p._nofin;
+  guardProjectPermissions157(C,p,old);
   validateClaimPayments(p, old);
   validateProjectTransition152(p, old);
   validateProjectTransition149(p, old);
@@ -370,7 +378,7 @@ async function nSaveProject(env, C, p, base, force) { const db = env.DB, tn = C.
     const previousSteps = new Set((old.steps || []).map(s => String(s.name || '').trim()));
     if ((p.steps || []).some(s => String(s.name || '').trim() && !previousSteps.has(String(s.name).trim()))) need(C.u, 'stepsEdit');
   }
-  const now = Date.now(); p.updatedAt = now; p.updatedBy = C.u.id; await upProj(db, tn, p, now).run(); await enqueue(db, C, 'project', p.id, 'saveProject', [p, 0, true]); return merged ? { updatedAt: now, merged: true, p } : { updatedAt: now }; }
+  const now = Date.now(); p.updatedAt = now; p.updatedBy = C.u.id; await upProj(db, tn, p, now).run(); await enqueue(db, C, 'project', p.id, 'saveProject', [p, 0, true]); return merged ? { updatedAt: now, merged: true, p: p.space==='p'||can(C.u,'finance')?p:stripFin(p) } : { updatedAt: now }; }
 function validateBrokerValues(contact, old) {
   (contact.refs || []).forEach((entry, i) => {
     const previous = entry.id ? (old?.refs || []).find(r => r.id === entry.id) : old?.refs?.[i];
@@ -507,7 +515,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
   if (!db) return fail('قاعدة البيانات غير مربوطة');
   try {
     await init(db);
-    if (fn === 'buildInfo') return ok({version:'v156'});
+    if (fn === 'buildInfo') return ok({version:'v157'});
     if (fn === 'login') { const r = await login(env, a[0], a[1], waitUntil, request.headers.get('CF-Connecting-IP')); if (a[2] && r && r.token) { try { await env.DB.prepare('UPDATE sess2 SET rem = 1 WHERE th = ?').bind(await sha('yw|' + r.token)).run(); } catch (e) {} } return ok(r); }
     if (OPEN.has(fn)) { // تمرير إلى Google ثم تبنّي الجلسة إن عادت بجلسة
       const r = await gasOpen(env, fn, a); if (!r.ok) return fail(r.error || 'تعذّر التنفيذ');
