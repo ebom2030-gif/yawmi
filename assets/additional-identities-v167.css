@@ -1,0 +1,10 @@
+:root[data-t166=contracts]{--t-accent:#805919;--t-soft:#f8f0df}
+:root[data-t166=supervision]{--t-accent:#1a756e;--t-soft:#e5f3f0}
+:root[data-t166=makkah]{--t-bg:#f6f2e9;--t-panel:#fffdf8;--t-ink:#34362e;--t-muted:#736d5e;--t-line:#e4dac8;--t-accent:#856126;--t-soft:#f1e8d4}
+:root[data-t166=contracts][data-theme=dark]{--t-accent:#e3bd75;--t-soft:#42382b}
+:root[data-t166=supervision][data-theme=dark]{--t-accent:#8bd5c7;--t-soft:#233e3b}
+:root[data-t166=makkah][data-theme=dark]{--t-bg:#1e211d;--t-panel:#2a2e27;--t-ink:#f3efdf;--t-muted:#c8bea5;--t-line:#4d5144;--t-accent:#e5c489;--t-soft:#3e3a2e}
+:root[data-t166=makkah] .side{background:#252d25!important;background-image:none!important}
+.x167-contracts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-block-end:18px}.x167-number{display:block;font-size:40px;font-weight:700;color:var(--t-accent);line-height:1.5}.x167-contracts h2 small{font-size:14px;color:var(--t-muted)}
+.x167-site{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:18px}.x167-site .t166-panel{margin-block-end:18px}.x167-makkah-banner{display:flex;align-items:center;justify-content:space-between;background:var(--t-soft);border:1px solid var(--t-line);border-radius:5px;padding:26px;margin-block-end:20px}.x167-makkah-banner h2{font-size:26px;color:var(--t-ink)}.x167-pattern{font-size:100px;color:var(--t-accent);line-height:1;opacity:.25}
+@media(max-width:850px){.x167-contracts,.x167-site{grid-template-columns:1fr}.x167-makkah-banner{padding:18px}.x167-pattern{font-size:65px}}
