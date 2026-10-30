@@ -364,3 +364,56 @@
 :root[data-a170] :is(.pvhead,.pband,.pvstrip,.pvday,.hinst) :is(h2,h3,b,strong){color:#fff}
 :root[data-ui167=approved][data-theme=dark] :is(.p143-scope,.p143-next,.t145-guide,tr.tot){background:#16233B!important;color:#E6ECF7!important;border-color:#1F2C44!important}
 @media(max-width:700px){:root[data-a170] .hero #hBrief{display:none!important}}
+/* v171 */
+.a171-pwrap{position:relative;display:flex}.a171-pwrap>.a170-proj{flex:1}
+.a171-more{position:absolute;top:6px;inset-inline-end:6px;width:30px;height:30px;border-radius:8px;border:0;background:rgba(255,255,255,.92);display:grid;place-items:center;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.15);color:#0F1B33}
+.a171-more svg{width:16px;height:16px;fill:currentColor;stroke:none}
+.a171-pop{position:absolute;z-index:500;background:#fff;border:1px solid #E6EAF2;border-radius:12px;box-shadow:0 12px 30px rgba(15,27,51,.18);padding:6px;display:grid;min-width:200px;direction:rtl;font-family:"IBM Plex Sans Arabic",Tajawal,sans-serif}
+.a171-pop button{border:0;background:none;text-align:right;padding:9px 12px;border-radius:8px;font:inherit;font-size:14px;cursor:pointer;color:#0F1B33}.a171-pop button:hover{background:#EFF4FF;color:#2563EB}
+:root[data-theme=dark] .a171-pop{background:#111C30;border-color:#1F2C44}:root[data-theme=dark] .a171-pop button{color:#E6ECF7}
+.a171-pinbar{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.a171-pinbar select{flex:1;min-width:0;border:1px solid var(--a-line,#E6EAF2);border-radius:9px;padding:6px 8px;font:inherit;font-size:13px;background:var(--a-card,#fff);color:inherit}
+.a171-pinbar button,.a171-pinbar span{display:none}
+.a171-picking .a171-pinbar button{display:inline-block;border:1px solid #FCA5A5;background:#FEF2F2;color:#B91C1C;border-radius:8px;padding:5px 10px;font:inherit;font-size:12px}
+.a171-picking .a171-pinbar span{display:inline;font-size:12px;color:#2563EB;font-weight:600}
+.a171-picking .a170-map{outline:3px dashed #2563EB;outline-offset:2px;cursor:crosshair}
+/* v171 — تنسيق الجوال */
+@media(max-width:700px){
+ /* شريط علوي من سطرين فقط: [☰ العنوان ؟ … 🔔 ✨ +] ثم البحث */
+ :root[data-a170] .hero{padding:8px 12px!important}
+ :root[data-a170] .hero-in{flex-wrap:wrap!important;gap:8px!important}
+ :root[data-a170] .hero .htl{flex:1 1 auto;min-width:0;order:1}
+ :root[data-a170] .hero .htr{order:2;flex:0 0 auto!important;flex-basis:auto!important;flex-wrap:nowrap!important;gap:6px}
+ :root[data-a170] .hero #gqWrap{order:3!important;flex:1 1 100%!important}
+ :root[data-a170] .hero-in>#gqWrap{order:3}
+ :root[data-a170] .hero #yw161-open-top,:root[data-a170] .hero #ess168-open,:root[data-a170] .hero #thBtn,:root[data-a170] .hero #viewSel{display:none!important}
+ :root[data-a170] .hero #pgTitle{font-size:18px!important;max-width:40vw}
+ :root[data-a170] .hero #todayLbl{display:none}
+ :root[data-a170] .hero :is(#cmdBtn,#i155Bell,#a170New){height:38px;min-width:38px;padding:0 10px!important}
+ /* الأزرار العائمة: الإضافة والمساعد موجودان في الشريط العلوي */
+ :root[data-a170] .fab,:root[data-a170] #fabAdd,:root[data-a170] .aifab{display:none!important}
+ /* بطاقة المشروع الرئيسي والطقس */
+ #view .a170 .a170-feature{flex-direction:column!important;gap:8px}
+ #view .a170 .a170-feature-card{width:100%!important;min-width:0!important}
+ #view .a170 .a170-feature-card img{width:96px!important;height:72px!important;flex:none}
+ #view .a170 .a170-weather{flex-direction:row;display:flex;align-items:center;justify-content:space-between;min-width:0}
+ /* البانر أخف */
+ #view .a170 .a170-hero-side{gap:8px;margin:8px 0}
+ #view .a170 .a170-quote{font-size:13px;padding:8px 12px}
+ #view .a170 .a170-prayer{font-size:12px;white-space:normal}
+ /* البطاقات */
+ #view .a170 .a170-card{padding:14px}
+ #view .a170 .a170-bars{height:120px}
+ #view .a170 .a170-bars small{font-size:8px}
+ #view .a170 .a170-proj-grid{gap:8px}
+ #view .a170 .a170-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #view .a170 .a170-foot{padding-bottom:70px}
+}
+@media(max-width:700px){
+ :root[data-a170] .hero .htr{display:contents!important}
+ :root[data-a170] .hero .htr>*{order:2}
+ :root[data-a170] .hero .htl{order:1;flex:1 1 0!important}
+ :root[data-a170] .hero #gqWrap{order:5!important;flex:1 1 100%!important;width:100%!important}
+ :root[data-a170] .hero #a170New{order:4!important;margin:0!important}
+}
+@media(max-width:700px){:root[data-a170] .hero .htl,:root[data-a170] .hero .htl>div{flex-wrap:nowrap!important;min-width:0}:root[data-a170] .hero #helpBtn{flex:none}}
