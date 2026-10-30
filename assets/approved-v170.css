@@ -30,7 +30,7 @@
 .a170 svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
 .a170 button{font:inherit;cursor:pointer}
 .a170-hero{position:relative;border-radius:18px;overflow:hidden;min-height:330px;display:grid;grid-template-columns:1fr auto;grid-template-rows:auto 1fr auto;padding:26px 28px 0;color:#fff;isolation:isolate}
-.a170-hero-bg{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(9,20,42,.55) 0%,rgba(9,20,42,.25) 45%,rgba(9,20,42,.75) 100%),url(hybrid/hero.png) center 62%/cover}
+.a170-hero-bg{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(9,20,42,.55) 0%,rgba(9,20,42,.25) 45%,rgba(9,20,42,.75) 100%),url(hybrid/hero.jpg) center 62%/cover}
 .a170-hero-main h1{display:flex;align-items:center;gap:10px;margin:0;font-size:30px;font-weight:700;color:#fff}
 .a170-hero-main h1 svg{width:34px;height:34px;color:#FBBF24;stroke-width:2.2}
 .a170-hero-main p{margin:6px 0 10px;font-size:16px;color:#E2E8F0}
