@@ -1,4 +1,11 @@
 /* Shared components inherit the selected identity on every application route. */
+:root[data-ui167] .hero :is(.hbg,.hbc){background:var(--ui167-soft)!important;border-color:var(--ui167-line)!important;color:var(--ui167-ink)!important}
+:root[data-ui167] .hero :is(.hbg b,.hbc b,.hbc .lt,#ringTxt,#ringPct){color:var(--ui167-ink)!important}
+:root[data-ui167] .hero :is(.hbg span,.hbc em,.ringlbl,#ringSub){color:var(--ui167-muted)!important}
+:root[data-ui167] .hero .hbc small{color:var(--ui167-accent)!important;font-size:12px}
+:root[data-ui167] .hero .hbg em{color:var(--ui167-danger)!important}
+:root[data-ui167] .hero #ringPct{background:var(--ui167-panel)!important}
+:root[data-ui167] .hero .ring{background:conic-gradient(var(--ui167-accent) calc(var(--p)*1%),var(--ui167-line) 0)!important}
 :root[data-ui167]{--ui167-bg:var(--h162-bg,#f3f6fc);--ui167-panel:var(--h162-card,#fff);--ui167-ink:var(--h162-text,#142d52);--ui167-muted:var(--h162-muted,#637397);--ui167-line:var(--h162-line,#dce6fa);--ui167-accent:#1757da;--ui167-soft:#eaf1ff;--ui167-radius:12px;--ui167-space:16px;--ui167-control:42px;--ui167-body:16px;--ui167-success:#147552;--ui167-danger:#ba354a;--ui167-shadow:0 3px 18px #15386608;--bg:var(--ui167-bg);--card:var(--ui167-panel);--ink:var(--ui167-ink);--mut:var(--ui167-muted);--line:var(--ui167-line);--blue:var(--ui167-accent);--accent:var(--ui167-accent);--radius:var(--ui167-radius)}
 :root[data-ui167][data-theme=dark]{--ui167-accent:#98bdff;--ui167-soft:#263d60;--ui167-success:#80d6b3;--ui167-danger:#ff9fac;--ui167-shadow:0 3px 18px #0002;color-scheme:dark}
 :root[data-ui167]:not([data-theme=dark]){color-scheme:light}
@@ -106,3 +113,37 @@
 :root[data-ui167][data-ico="3d"] .btn .ui167-icon{color:var(--ui167-ink)!important}
 :root[data-ui167=readable] :is(.auth-card,.auth .card,#cliForm) :is(small,.mut,.sub){font-size:16px!important;line-height:1.9}
 @media screen and (max-width:650px){:root[data-ui167],:root[data-ui167] body{overflow-x:clip!important}}
+/* Text roles must remain readable on both native and identity surfaces. */
+:root[data-ui167]{--ui167-caption:color-mix(in srgb,var(--ui167-muted) 80%,#000)}
+:root[data-ui167][data-theme=dark]{--ui167-caption:var(--ui167-muted)}
+:root[data-ui167] .hero :is(.hbg span,.hbc em,.hbc small,.ringlbl,#ringSub){color:var(--ui167-caption)!important}
+:root[data-ui167] .hero #backBtn span{color:inherit!important}
+:root[data-ui167][data-ui167-native] #view :is(.mut,.muted,.sub,.hint,small,.task .num){color:var(--ui167-caption)!important}
+:root[data-ui167][data-ui167-native] #view :is(.chip,.tgh){background:var(--ui167-soft)!important;color:var(--ui167-ink)!important;border-color:var(--ui167-line)!important}
+:root[data-ui167][data-ui167-native] #view .chip:is(.on,.active,[aria-pressed=true]){border-color:var(--ui167-accent)!important;box-shadow:inset 0 -2px var(--ui167-accent)}
+:root[data-ui167][data-ui167-native] #view :is(.chip,.tgh) :is(span,small,b,em,i){color:inherit!important}
+:root[data-ui167][data-ui167-native] #view .pill{font-size:12px;line-height:1.6;background:var(--ui167-soft)!important;color:var(--ui167-ink)!important;border:1px solid var(--ui167-line)}
+:root[data-ui167][data-ui167-native] #view .pill:is(.fin,.tech){color:var(--ui167-success)!important}
+:root[data-ui167][data-ui167-native] #view .pill.late{color:var(--ui167-danger)!important}
+:root[data-ui167]:not([data-theme=dark])[data-ui167-native] #view .pill.wait{color:#725016!important}
+:root[data-ui167][data-theme=dark][data-ui167-native] #view .pill.wait{color:#f1d49a!important}
+:root[data-ui167] .hero :is(#backBtn,#backBtn span){color:var(--ui167-ink)!important}
+/* Native components used fixed light-theme text colors even in dark mode. */
+:root{--txt:var(--ink)}
+.h152-identity button,.h152-event-reports>summary{color:var(--ink)!important}
+:root[data-theme=dark] .t145-info :is(.t145-late,.t145-late b){color:#ffaaa2!important}
+.tfilter label{color:var(--ui167-caption,var(--ink2))!important}
+.tfilter label:has(input:checked){color:#17243a!important}
+.tfilter label :is(small,span){color:inherit!important}
+.hero kbd{color:var(--ink)!important;background:var(--surface2)!important}
+:root:not([data-ui167]) #view .tgh{color:var(--ink)!important}
+:root:not([data-ui167]) #view .tgh :is(span,b,em){color:inherit!important}
+:root[data-ui167][data-ui167-native] #view .qfp h3>small,:root:not([data-ui167]) #view .qfp h3>small{background:var(--ui167-soft,var(--surface2))!important;color:var(--ink)!important}
+:root[data-ui167][data-ui167-native] #view :is(.remtg,.cap){color:var(--ui167-caption)!important}
+:root:not([data-ui167]):not([data-theme=dark]) #view .task :is(.num,i){color:#725016!important}
+:root:not([data-ui167]) #view .pill{font-size:12px;line-height:1.6}
+:root:not([data-ui167]):not([data-theme=dark]) #view .pill.fin{color:#147552!important}
+:root:not([data-ui167]):not([data-theme=dark]) #view .pill.tech{color:#166b6b!important}
+:root:not([data-ui167]):not([data-theme=dark]) #view .pill.late{color:#a6322b!important}
+:root:not([data-ui167]):not([data-theme=dark]) #view .pill.wait{color:#725016!important}
+:root:not([data-ui167]):not([data-theme=dark]) #view .sec h3 small i{color:#725016!important}
