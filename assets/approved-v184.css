@@ -1,0 +1,44 @@
+/* v184 */
+.a184-hub{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}.a184-dot{background:#DC2626;color:#fff;border-radius:999px;padding:0 6px;font-size:11px}
+.a184-dg{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.a184-dc{border:1px solid #E2E8F0;border-radius:12px;padding:10px 12px;background:#F8FAFC}.a184-dc.on{background:#fff;border-inline-start:4px solid #DC2626}
+.a184-dc h3{margin:0 0 6px;font-size:15px;display:flex;justify-content:space-between}.a184-dc ul{margin:0 0 8px;padding-inline-start:18px;font-size:13px}
+html[data-theme=dark] .a184-dc{background:#162033;border-color:#24324a}
+.a184-bar{position:relative;min-width:140px}.a184-bar i{display:block;height:10px;border-radius:6px;margin-bottom:2px}.a184-bar i.lo{background:#16A34A}.a184-bar i.md{background:#F59E0B}.a184-bar i.hi{background:#DC2626}
+.a184-tt td small,.a184-root td small{display:block;color:#526075;font-size:12px}
+.a184-hs{display:inline-block;padding:2px 10px;border-radius:999px;font-weight:700;font-size:13px}.a184-hs.ok{background:#DCFCE7;color:#166534}.a184-hs.mid{background:#FEF3C7;color:#92400E}.a184-hs.bad{background:#FEE2E2;color:#B91C1C}
+.a184-lt td{background:#FEF2F2}.a184-note{font-size:12.5px;color:#526075;margin:6px 0 0}
+.a184-cks{display:grid;grid-template-columns:1fr 1fr;gap:6px}.a184-ck{flex-direction:row!important;align-items:center;gap:6px!important;font-weight:500!important}
+.a181-hint{font-size:12px;color:#1D4ED8;font-weight:500}
+@media (max-width:700px){.a184-cks{grid-template-columns:1fr}.a184-hub .btn{flex:1 1 45%}}
+#printDay .a184-cr h3{margin:10px 0 4px}#printDay .a184-cr table{width:100%}
+.a184-new{position:relative;animation:a184p 1.6s ease-in-out 3}.a184-new::after{content:"";position:absolute;top:-3px;inset-inline-start:-3px;width:10px;height:10px;border-radius:50%;background:#DC2626;box-shadow:0 0 0 2px #fff}
+@keyframes a184p{50%{box-shadow:0 0 0 6px rgba(212,175,55,.35)}}
+@media (prefers-reduced-motion:reduce){.a184-new{animation:none}}
+/* v184 — تمييز واضح: الخاص أسود عند التفعيل، To Do أزرق Microsoft، والأزرار المفعّلة ممتلئة */
+html:root:root:root[data-a170] #view .task .acts .h153-control.a176-on[data-a=pv],html:root:root:root[data-a170] #view .task .acts .h153-pv.a176-on{background:#111827!important;border-color:#111827!important;color:#fff!important}
+html:root:root:root[data-a170] #view .task .acts .h153-pv.a176-on *,html:root:root:root[data-a170] #view .task .acts [data-a=pv].a176-on *{color:#fff!important;stroke:#fff!important}
+html:root:root:root[data-a170] #view .task .acts .h153-star.a176-on,html:root:root:root[data-a170] #view .task .acts [data-a=star].a176-on{background:#F59E0B!important;border-color:#D97706!important;color:#422006!important}
+html:root:root:root[data-a170] #view .task .acts .h153-star.a176-on *{color:#422006!important;fill:#422006!important;stroke:#422006!important}
+html:root:root:root[data-a170] #view .task .acts .h153-waitreply.a176-on,html:root:root:root[data-a170] #view .task .acts [data-a=waitreply].a176-on{background:#EA580C!important;border-color:#C2410C!important;color:#fff!important}
+html:root:root:root[data-a170] #view .task .acts .h153-waitreply.a176-on *{color:#fff!important}
+html:root:root:root[data-a170] #view .task.a176-pvt{border-inline-start-color:#111827!important;background:linear-gradient(90deg,rgba(17,24,39,0) 70%,rgba(17,24,39,.06))!important}
+html:root:root .pill.a176-pvpill{background:#111827!important;color:#fff!important;border-color:#111827!important}
+html[data-theme=dark] .pill.a176-pvpill{background:#F9FAFB!important;color:#111827!important}
+html[data-theme=dark]:root:root:root[data-a170] #view .task .acts .h153-pv.a176-on{background:#F9FAFB!important;color:#111827!important}html[data-theme=dark]:root:root:root[data-a170] #view .task .acts .h153-pv.a176-on *{color:#111827!important;stroke:#111827!important}
+html:root:root #view .a176-src{background:#2564CF!important;border-color:#2564CF!important;color:#fff!important}
+html:root:root #view .a176-src *,html:root:root #view .a176-src span{color:#fff!important}html:root:root #view .a176-src span::before{color:#BFD6F6!important}html:root:root #view .a176-src svg *{stroke:#fff!important;fill:none}
+html:root:root:root[data-a170] #view .task.a176-src-todo{box-shadow:inset 0 3px 0 #2564CF,0 1px 3px rgba(15,27,51,.06)!important}
+html:root:root:root #view .task .pill.a176-pvpill{background:#111827!important;color:#fff!important;border-color:#111827!important}
+html[data-theme=dark]:root:root #view .task .pill.a176-pvpill{background:#F9FAFB!important;color:#111827!important}
+/* v184 — خانة الحالة ملوّنة حسب الحالة مثل زر «تحديث سريع» */
+html:root:root:root[data-a170] #view .task .acts label.stsel{--st:#475569;--st2:#334155;background:linear-gradient(135deg,var(--st),var(--st2))!important;border:0!important;border-radius:14px!important;box-shadow:0 6px 14px color-mix(in srgb,var(--st) 35%,transparent)!important;display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:stretch!important;gap:0!important;padding:4px 12px!important;position:relative;color:#fff!important}
+html:root:root:root[data-a170] #view .task .acts label.stsel>span{order:-1;font-size:11px!important;font-weight:600!important;color:rgba(255,255,255,.85)!important;line-height:1.2;text-align:start;width:auto!important}
+html:root:root:root[data-a170] #view .task .acts label.stsel select{appearance:none;-webkit-appearance:none;background:transparent!important;border:0!important;color:#fff!important;font-weight:800!important;font-size:15px!important;padding:0 0 0 18px!important;height:auto!important;width:100%!important;cursor:pointer;box-shadow:none!important;text-align:start}
+html:root:root:root[data-a170] #view .task .acts label.stsel select option{color:#0F1B33;background:#fff}
+html:root:root:root[data-a170] #view .task .acts label.stsel::after{content:"▾";position:absolute;inset-inline-end:12px;top:50%;transform:translateY(-50%);font-size:13px;color:#fff;pointer-events:none}
+html:root:root:root[data-a170] #view .task .acts label.stsel:has(option[value=doing]:checked){--st:#2563EB;--st2:#1D4ED8}
+html:root:root:root[data-a170] #view .task .acts label.stsel:has(option[value=waiting]:checked){--st:#EA580C;--st2:#C2410C}
+html:root:root:root[data-a170] #view .task .acts label.stsel:has(option[value=postponed]:checked){--st:#64748B;--st2:#475569}
+html:root:root:root[data-a170] #view .task .acts label.stsel:has(option[value=done]:checked){--st:#16A34A;--st2:#15803D}
+html:root:root:root[data-a170] #view .task .acts label.stsel:focus-within{outline:3px solid color-mix(in srgb,var(--st) 40%,#fff);outline-offset:2px}
