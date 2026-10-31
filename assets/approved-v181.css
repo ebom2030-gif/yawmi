@@ -8,3 +8,7 @@ html[data-theme=dark] .a181-strip{background:#13233d;border-color:#1e3a8a;color:
 .a181-del{color:#B91C1C!important;margin-inline-start:auto}
 .a181-pbtn{margin-inline-start:8px}
 @media (max-width:700px){.a181-g{grid-template-columns:1fr}}
+.a181-phl{color:#1D4ED8!important}
+.a181-phx td,div.a181-phx{padding:4px 8px 8px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;border:0}
+.a181-phx td{display:table-cell}.a181-phx td>*{margin-inline-end:6px}
+.a181-phx-t{font-size:12px;color:#334155;font-weight:700}.a181-phx .spill{border:0;cursor:pointer;font:inherit;font-size:12px}
