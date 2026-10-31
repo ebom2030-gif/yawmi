@@ -176,10 +176,10 @@ async function reconcile(env, C) { const db = env.DB; const gt = await gtFor(db,
   (d.items || []).forEach(o => { if (!o || !o.id || (o.space==='p'&&o.owner!==C.u.id) || (o.owner!==C.u.id&&o.assignedBy!==C.u.id&&!(can(C.u,'team')&&seeScope(C.u,byId(C,o.owner)))) || pend.has('item:' + o.id) || gone.has(o.id)) return; const cur = have.get(String(o.id));
     if (!cur) { B.push(upItem(db, tn, o, now)); return; } const x = JSON.parse(cur); let ch = false;
     if(o.todo&&Number(o.todoSyncedAt||0)>Number(x.todoSyncedAt||0)){['title','due','priority','todoSyncedAt'].forEach(k=>{x[k]=o[k]});ch=true;}
+    if (o.todo && !o.done && x.done && Number(o.todoSyncedAt || 0) > Number(x.doneAt || 0)) { x.done = false; x.doneAt = null; x.note = o.note || x.note; ch = true; } // v177: أُعيد فتحها في To Do
+    if (o.todo && o.done && !x.done && /حُذفت من Microsoft To Do/.test(String(o.note || ''))) { x.note = o.note; } // v177: ملاحظة الحذف من To Do
     if (o.done && !x.done && (x.todo || o.todo)) { x.done = true; x.doneAt = o.doneAt || now; ch = true; }
-    // v177: أُعيد فتحها في To Do، أو حُذفت منه (تُغلق ولا تُحذف)
-    if (Number(o.todoReopenAt || 0) > Number(x.todoReopenAt || 0)) { if (x.done && Number(o.todoReopenAt) > Number(x.doneAt || 0)) { x.done = false; x.doneAt = null; } x.todoReopenAt = Number(o.todoReopenAt); if (o.note) x.note = o.note; ch = true; }
-    if (Number(o.todoGoneAt || 0) > Number(x.todoGoneAt || 0)) { x.todoGoneAt = Number(o.todoGoneAt); x.todo = ''; if (!x.done) { x.done = true; x.doneAt = Number(o.todoGoneAt); } if (o.note) x.note = o.note; ch = true; } ['calId', 'todo'].forEach(k => { if (o[k] && o[k] !== x[k]) { x[k] = o[k]; ch = true; } }); if (ch) B.push(upItem(db, tn, x, now)); });
+    ['calId', 'todo'].forEach(k => { if (o[k] && o[k] !== x[k]) { x[k] = o[k]; ch = true; } }); if (ch) B.push(upItem(db, tn, x, now)); });
   // v117: لا نعلن «تغيير» للأجهزة إلا إذا تغيّرت مهمة فعلاً (المستخدمون والمشترك يُحدَّثون بصمت)
   const B2 = []; (d.users || []).filter(u => u && u.id && u.username !== undefined).forEach(u => B2.push(upUser(db, tn, u, now)));
   if (d.ten && d.ten.id) B2.push(db.prepare('INSERT INTO tenants (id, data, updated_at) VALUES (?, ?, ?) ON CONFLICT(id) DO UPDATE SET data = excluded.data, updated_at = excluded.updated_at').bind(d.ten.id, J(d.ten), now));

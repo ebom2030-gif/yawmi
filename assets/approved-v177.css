@@ -1,0 +1,111 @@
+/* v177 */
+.a177-bnbtn{position:absolute;z-index:3;bottom:12px;left:12px;display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.35);background:rgba(10,23,48,.45);color:#fff;border-radius:10px;padding:5px 10px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;backdrop-filter:blur(4px);opacity:.75;transition:opacity .15s}
+.a177-bnbtn:hover{opacity:1}
+@media(max-width:700px){.a177-bnbtn span{display:none}}
+.a177-dlg{position:fixed;inset:0;z-index:1300;background:rgba(10,18,32,.6);display:grid;place-items:center;padding:16px;direction:rtl}
+.a177-box{width:min(760px,100%);max-height:90vh;overflow:auto;background:var(--surface,#fff);color:var(--ink,#0F1B33);border-radius:16px;box-shadow:0 30px 80px rgba(0,0,0,.35);padding:16px;font-family:"IBM Plex Sans Arabic",Tajawal,sans-serif}
+.a177-box header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}.a177-box header b{font-size:17px}
+.a177-box header button{border:0;background:var(--surface2,#F4F6FB);border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:14px;color:inherit}
+.a177-box p{margin:0 0 12px;color:var(--mut,#64748B);font-size:13px}
+.a177-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;min-height:80px}
+.a177-grid em{color:var(--mut,#64748B);font-style:normal}
+.a177-grid figure{position:relative;margin:0;border-radius:10px;overflow:hidden;aspect-ratio:16/7;background:#E8EDF7}
+.a177-grid img{width:100%;height:100%;object-fit:cover;display:block}
+.a177-grid figure button{position:absolute;top:6px;left:6px;width:28px;height:28px;border-radius:50%;border:0;background:rgba(220,38,38,.9);color:#fff;cursor:pointer;font-size:13px}
+.a177-grid figure button.up{left:auto;right:6px;background:rgba(15,27,51,.75)}
+.a177-box footer{display:flex;align-items:center;gap:10px;margin-top:14px}
+.a177-box footer span{flex:1;color:var(--mut,#64748B);font-size:12.5px}
+.a177-add{border:1px dashed #93C5FD;color:#1D4ED8;background:#EFF6FF;border-radius:10px;padding:8px 14px;font-weight:700;font-size:13px;cursor:pointer}
+.a177-box .pri{border:0;background:#2563EB;color:#fff;border-radius:10px;padding:9px 18px;font:inherit;font-weight:700;cursor:pointer}.a177-box .pri:disabled{opacity:.6}
+.a177-int{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 12px;padding:10px 14px;border-radius:12px;background:#FFF7ED;border:1px solid #FDBA74;color:#9A3412;font-size:13.5px;font-weight:600}
+.a177-int button{border:0;background:#EA580C;color:#fff;border-radius:9px;padding:7px 14px;font:inherit;font-weight:700;cursor:pointer}
+:root[data-theme=dark] .a177-int{background:#2A1607;border-color:#9A3412;color:#FDBA74}
+/* ===== طباعة لوحة المؤشرات: بلا عناصر الشاشة، وعمودان يملآن الصفحة العرضية ===== */
+@media print{
+ body.printday #printDay.ddrep :is(.hgreet,.hinst,.p143-scope,button,.btn,summary,.a176-fbar,.a177-bnbtn,.a177-int,input,select,.tabs,.chips){display:none!important}
+ body.printday #printDay.ddrep .prview{column-count:2;column-gap:10px;column-fill:balance}
+ body.printday #printDay.ddrep .prview :is(.panel,.hsec,.hgrid,.tblwrap,figure){break-inside:avoid;page-break-inside:avoid;display:block;width:100%;margin:0 0 8px!important;box-shadow:none!important}
+ body.printday #printDay.ddrep .prview details{display:contents}
+ body.printday #printDay.ddrep .prview :is(.p143-finmetrics,.hgrid.two){display:grid!important;grid-template-columns:1fr 1fr!important;gap:6px!important}
+ body.printday #printDay.ddrep .prview table{font-size:9.5px}
+ body.printday #printDay.ddrep .prview .panel{border:1px solid #dfe4ee!important;border-radius:8px!important;padding:8px 10px!important}
+}
+#printDay .a177-none{text-align:center;color:#64748b;font-weight:600;padding:10px!important;background:#f8fafc}
+#printDay .a177-none-big{margin:28px auto;padding:22px!important;border:1px dashed #cbd5e1;border-radius:10px;font-size:13px;max-width:70%}
+/* طباعة «الصفحة كما هي» (لوحات المؤشرات وغيرها): الجداول بعرض الصفحة، والصناديق الصغيرة تلتف */
+@media print{
+ body.printday #printDay.prscr *{max-width:100%!important;box-shadow:none!important}
+ body.printday #printDay.prscr :is(section,article,aside,.panel,[class*=card],[class*=box],[class*=col]):has(table){grid-column:1/-1!important;width:100%!important;flex:1 1 100%!important;max-width:100%!important}
+ body.printday #printDay.prscr :is(div,section):has(> * table,> table){flex-wrap:wrap!important}
+ body.printday #printDay.prscr table{width:100%!important;table-layout:auto!important;font-size:9.5px!important}
+ body.printday #printDay.prscr :is(th,td){padding:4px 6px!important;white-space:normal!important;min-width:0!important}
+ body.printday #printDay.prscr :is(section,article,.panel,[class*=card]):not(:has(table)){break-inside:avoid}
+ body.printday #printDay.prscr :is(h2,h3,h4){break-after:avoid}
+}
+@media print{
+ body.printday #printDay.prscr *{column-count:1!important;columns:auto!important}
+ body.printday #printDay.prscr :is(.panel,section,article){width:100%!important;max-width:100%!important;break-inside:auto}
+ body.printday #printDay.prscr :is(.panel,section,article):not(:has(table)):not(:has(.panel)){break-inside:avoid}
+}
+/* ===================== v177 — الخطوط والتباين (WCAG AA) ===================== */
+/* النص الثانوي في الوضع الفاتح: من #64748B إلى #526075 (تباين ≥ 5.5 على الخلفيات الفاتحة) */
+:root:not([data-theme=dark]){--mut:#526075;--ui167-muted:#526075;--ui167-caption:#526075}
+:root:not([data-theme=dark]) #view :is(th,.p143-caption,.o148-note,.lcv,.cap,.remtg,.sub){color:#475569!important}
+:root:not([data-theme=dark]) #view th{color:#334155!important}
+/* شارات الحالة: لون نص أغمق على نفس الخلفية */
+#view .spill.s-wait{color:#92400E!important}#view .spill.s-late{color:#B91C1C!important}#view .spill.s-done{color:#166534!important}
+#view .pill.tech,#view .pill.fin{color:#1E40AF!important}#view .pjneed.late{color:#B91C1C!important}
+#view em:is(.late,[class*=late]),#view .t145-late,#view .pill.late{color:#B91C1C!important}
+:root:not([data-theme=dark]) #view :is(.cav,.ccat){color:#7A5A12!important}
+:root:not([data-theme=dark]) #view .crel2{color:#166534!important}:root:not([data-theme=dark]) #view .cdue{color:#B45309!important}
+/* بطاقات المؤشرات: تدرجات أعمق ليبقى النص الأبيض مقروءاً */
+:root[data-a170] #view .a170-kpi:nth-child(2){background:linear-gradient(135deg,#0F5F5A,#0F766E)!important}
+:root[data-a170] #view .a170-kpi:nth-child(3){background:linear-gradient(135deg,#7A4E0E,#A16207)!important}
+:root[data-a170] #view .a170-kpi :is(.a170-kpi-l,b,strong,span){color:#fff!important}
+/* زر مساحة العمل المفعّل: نص أبيض */
+#spc button.on,#spc .on{color:#fff!important}
+/* الداكن */
+:root[data-theme=dark] .cmdb{color:#93C5FD!important}
+:root[data-theme=dark] #view .a172-cover.a173-noimg .a172-pct{color:#BFDBFE!important}
+:root[data-theme=dark] #view li.hi{background:rgba(220,38,38,.16)!important;color:#FECACA!important}
+:root[data-theme=dark] #view :is(.pill.tech,.pill.fin){color:#BFDBFE!important}
+#view .c.new.z{color:#fff!important}
+/* «خروج» في أسفل القائمة: يتبع لون القائمة (فاتحة/داكنة) */
+.a176-out{color:#FCA5A5!important}
+.a176-sf.a176-light .a176-out{color:#B91C1C!important;background:rgba(220,38,38,.07)!important}
+/* الخط: كل النصوص بخط الهوية، والأرقام والأكواد بأرقام متساوية العرض */
+#view :is(.pjcode,code,kbd,.code,[class*=code]),#side kbd,.hero kbd{font-family:"IBM Plex Sans Arabic",Tajawal,system-ui,sans-serif!important;font-variant-numeric:tabular-nums;letter-spacing:.2px}
+#view :is(td,.n,.num,b,strong){font-variant-numeric:tabular-nums}
+/* الحد الأدنى للحجم: 11px */
+#view :is(.vl,.vv,.st) ,#view svg text{font-size:11px!important}
+#view i:not(:has(svg)):not([class*=ic]){font-size:max(11px,1em)}
+/* v177 — تكملة التباين (أولوية أعلى) */
+html:root:root #spc :is(button,label,span)[class*=on],html:root:root #spc :is(.on,[aria-pressed=true],[aria-selected=true]){color:#fff!important}
+html:root:root[data-theme=dark] #cmdBtn,html:root:root[data-theme=dark] .cmdb{color:#93C5FD!important}
+html:root:root #view :is(.pill.tech,.pill.fin){color:#1E40AF!important}
+html:root:root #view .c.new.z{color:#fff!important}
+html:root:root #view :is(.neg,.p143-closure){color:#15803D!important}
+html:root:root #view .autob{color:#0F766E!important}
+html:root:root:not([data-theme=dark]) #view :is(li,.tfilter,.bkempty,.lce2,.lcv){color:#475569}
+html:root:root[data-theme=dark] #view .p143-caption{color:#A8B4C8!important}
+html:root:root[data-theme=dark] #view .cav{color:#BFDBFE!important}
+html:root:root #view .btn.gold:is([data-pjsec],[data-ndopen]){background:#B45309!important;border-color:#B45309!important;color:#fff!important}
+html:root:root #view h2:has(+ *),html:root:root #view .todo-hero h2{color:inherit}
+html:root:root #view em:not([class]){color:inherit}
+html:root:root:not([data-theme=dark]) #view :is(.tgh,.tgrp) em{color:#B91C1C!important}
+html:root:root #view .pvhead :is(h1,h2,h3,p,small,span,b){color:#fff!important}
+html:root:root #spc [aria-pressed=true]{background:#1D4ED8!important;color:#fff!important}
+html:root:root #view .a172-cover em,html:root:root #view .a170-proj-img em,html:root:root #view .a170-feature-card em{color:#fff!important;background:rgba(10,23,48,.6)!important}
+html:root:root:root #view span.pill.tech{color:#1E40AF!important}
+html:root:root .c.new.z{color:#fff!important}
+html:root:root[data-theme=dark] #view :is(.pill.wait,.spill.s-wait){color:#92400E!important}
+html:root:root[data-theme=dark] #view button.on{color:#fff!important}
+html:root:root[data-theme=dark] #view .crel2{color:#86EFAC!important}
+html:root:root[data-theme=dark] #view .ccat{color:#BFDBFE!important}
+/* v177 — القائمة الجانبية تتبع لون الهوية المختارة (للقوالب التي كانت تشترك في كحلي واحد) */
+html:root:root:is([data-ui167=daily],[data-ui167=weekly],[data-ui167=calendar],[data-ui167=dense],[data-ui167=grouped],[data-ui167=clients],[data-ui167=quotes],[data-ui167=finance],[data-ui167=meetings],[data-ui167=reports],[data-ui167=team],[data-ui167=branches],[data-ui167=approval],[data-ui167=files],[data-ui167=metrics],[data-ui167=manager],[data-ui167=engineer],[data-ui167=readable],[data-ui167=contracts],[data-ui167=supervision]) #side.side{background:linear-gradient(180deg,color-mix(in srgb,var(--ui167-accent) 52%,#08101c) 0%,color-mix(in srgb,var(--ui167-accent) 38%,#08101c) 60%,color-mix(in srgb,var(--ui167-accent) 28%,#060c16) 100%)!important;border-color:color-mix(in srgb,var(--ui167-accent) 40%,transparent)!important}
+/* الشعار على القوائم الفاتحة: النص داكن */
+html:root:root:is([data-ui167=kanban],[data-ui167=focus]) #side .a170-logo-wrap svg :is(text,tspan)[fill="#fff"],html:root:root:is([data-ui167=kanban],[data-ui167=focus]) #side .a170-logo-wrap svg :is(text,tspan)[fill="#FFFFFF"],html:root:root:is([data-ui167=kanban],[data-ui167=focus]) #side .a170-logo-wrap svg :is(text,tspan)[fill="white"]{fill:#0F1B33!important}
+html:root:root:is([data-ui167=kanban],[data-ui167=focus]) #side .a170-logo-wrap svg text{fill:#0F1B33!important}
+/* زر «العمل» المفعّل بلون الهوية */
+html:root:root[data-ui167] #spc [aria-pressed=true]{background:var(--ui167-accent,#1D4ED8)!important;border-color:var(--ui167-accent,#1D4ED8)!important}
