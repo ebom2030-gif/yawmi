@@ -1,4 +1,4 @@
-/* yawmi-ui.css — طبقات الواجهة المدمجة (16 ملفاً بالترتيب): appearance-v161.css، hybrid-v162.css، executive-v163.css، engineering-v164.css، workspaces-v165.css، templates-v166.css، additional-identities-v167.css، full-identity-v167.css، essentials-v168.css، approved-v170.css، approved-v172.css، approved-v173.css، approved-v176.css، approved-v177.css، approved-v178.css، approved-v179.css */
+/* yawmi-ui.css — طبقات الواجهة المدمجة (17 ملفاً بالترتيب): appearance-v161.css، hybrid-v162.css، executive-v163.css، engineering-v164.css، workspaces-v165.css، templates-v166.css، additional-identities-v167.css، full-identity-v167.css، essentials-v168.css، approved-v170.css، approved-v172.css، approved-v173.css، approved-v176.css، approved-v177.css، approved-v178.css، approved-v179.css، approved-v180.css */
 /* ===== appearance-v161.css ===== */
 /* Typography scale and theme roles; original Hijazi surface is exempt. */
 @import url("./fonts/fonts.css");
@@ -1189,3 +1189,43 @@ html:root:root .a170-proj-img em,html:root:root .a171-pwrap em,html:root:root .m
 /* v179 — آخر نصوص صغيرة ≥ 11px: أكواد المشاريع في بطاقة المهمة، ومراحل المشاريع في لوحة المؤشرات */
 html:root:root #view .l149-meta span{font-size:11px!important}
 html:root:root #view button>span{font-size:max(11px,1em)}
+
+/* ===== approved-v180.css ===== */
+/* v180 — لوحة التحصيل */
+.a180-strip{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;background:#FFFBEB;border:1px solid #FCD34D;border-radius:14px;padding:10px 14px;margin:0 0 12px;color:#422006;font-size:14px}
+.a180-strip .r{color:#B91C1C}.a180-strip .o{color:#C2410C}
+html[data-theme=dark] .a180-strip{background:#2a2110;border-color:#7c5a12;color:#fde68a}
+body.a180-lock{overflow:hidden}
+.a180{position:fixed;inset:0;z-index:9000;background:rgba(8,16,28,.55);display:flex;justify-content:center;align-items:flex-start;padding:24px 12px;overflow:auto}
+.a180-in{background:var(--card,#fff);color:var(--ink,#0F1B33);width:min(1100px,100%);border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.3);padding:18px;display:flex;flex-direction:column;gap:14px}
+html[data-theme=dark] .a180-in{background:#111a2b;color:#e5ecf6}
+.a180-h{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}.a180-h h2{margin:0;font-size:22px}.a180-h small{color:#526075;font-size:13px}
+.a180-hb{display:flex;gap:6px}
+.a180-aging{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.a180-ag{border-radius:12px;padding:10px;background:#F1F5F9;display:flex;flex-direction:column;gap:2px}.a180-ag small{font-size:12px;color:#334155}.a180-ag b{font-size:18px}.a180-ag i{font-style:normal;font-size:12px;color:#526075}
+.a180-cur{background:#ECFDF5}.a180-b1{background:#FEF9C3}.a180-b2{background:#FFEDD5}.a180-b3{background:#FEE2E2}.a180-b4{background:#7F1D1D;color:#fff}.a180-b4 small,.a180-b4 i{color:#FECACA!important}
+html[data-theme=dark] .a180-ag:not(.a180-b4){background:#1b2638}html[data-theme=dark] .a180-ag small,html[data-theme=dark] .a180-ag i{color:#cbd5e1}
+.a180-tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.a180-tools input{flex:1 1 240px;min-width:0;height:40px;border-radius:10px;border:1px solid #CBD5E1;padding:0 12px;font:inherit}
+.a180-tools select{height:40px;border-radius:10px;border:1px solid #CBD5E1;padding:0 8px;font:inherit}
+.a180-chips{display:flex;gap:6px;flex-wrap:wrap}.a180-chips button{height:36px;border-radius:999px;border:1px solid #CBD5E1;background:#fff;padding:0 12px;font:inherit;font-size:13px;cursor:pointer;color:#0F1B33}
+.a180-chips button[aria-pressed=true]{background:var(--ui167-accent,#2563EB);border-color:transparent;color:#fff}
+.a180-list{display:flex;flex-direction:column;gap:8px}
+.a180-row{display:grid;grid-template-columns:1.4fr 1fr 1.4fr auto;gap:10px;align-items:center;border:1px solid #E2E8F0;border-inline-start:4px solid #2563EB;border-radius:12px;padding:10px 12px;background:#fff}
+html[data-theme=dark] .a180-row{background:#162033;border-color:#24324a}
+.a180-row.late{border-inline-start-color:#DC2626}.a180-row.prom{border-inline-start-color:#EA580C;background:#FFF7ED}
+.a180-m,.a180-n,.a180-f{display:flex;flex-direction:column;gap:2px;min-width:0}.a180-m b{font-size:15px}.a180-m span,.a180-m small,.a180-n span,.a180-f small{font-size:12.5px;color:#526075}
+.a180-n b{font-size:17px}.a180-late{color:#B91C1C!important;font-weight:700}.a180-pm{color:#C2410C!important;font-weight:700}.a180-pm2{color:#92400E!important}
+.a180-f label{font-size:12px;color:#334155;display:flex;gap:6px;align-items:center}.a180-f select{height:32px;border-radius:8px;border:1px solid #CBD5E1;font:inherit;font-size:12.5px;max-width:160px}
+.a180-none{color:#94A3B8!important}
+.a180-a{display:flex;flex-direction:column;gap:6px}.a180-a .btn{white-space:nowrap}
+.a180-cl h3{margin:6px 0}
+.a180-dlg{position:fixed;inset:0;z-index:9100;background:rgba(8,16,28,.5);display:grid;place-items:center;padding:12px}
+.a180-dlgin{background:#fff;color:#0F1B33;border-radius:16px;padding:18px;width:min(460px,100%);display:flex;flex-direction:column;gap:10px}
+.a180-dlgin h3{margin:0}.a180-dlgin p{margin:0;color:#526075;font-size:13px}.a180-dlgin label{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:600}
+.a180-dlgin textarea{min-height:90px;border-radius:10px;border:1px solid #CBD5E1;padding:8px;font:inherit}.a180-dlgin input{height:40px;border-radius:10px;border:1px solid #CBD5E1;padding:0 8px;font:inherit}
+.a180-dlgb{display:flex;gap:8px}
+@media (max-width:700px){.a180{padding:0}.a180-in{border-radius:0;min-height:100%;padding:14px}.a180-aging{grid-template-columns:repeat(3,minmax(0,1fr))}.a180-row{grid-template-columns:1fr;gap:6px}.a180-a{flex-direction:row;flex-wrap:wrap}.a180-ag b{font-size:15px}}
+/* الطباعة */
+#printDay .a180-letter{font-size:13pt;line-height:1.9}#printDay .a180-letter table{width:100%;margin:10px 0}
+#printDay .a180-kp{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}#printDay .a180-kp div{border:1px solid #CBD5E1;border-radius:8px;padding:8px}#printDay .a180-kp small{display:block;color:#475569}
+#printDay .a180-rep table{width:100%;margin-bottom:10px}
