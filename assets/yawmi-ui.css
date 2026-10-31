@@ -1,4 +1,4 @@
-/* yawmi-ui.css — طبقات الواجهة المدمجة (15 ملفاً بالترتيب): appearance-v161.css، hybrid-v162.css، executive-v163.css، engineering-v164.css، workspaces-v165.css، templates-v166.css، additional-identities-v167.css، full-identity-v167.css، essentials-v168.css، approved-v170.css، approved-v172.css، approved-v173.css، approved-v176.css، approved-v177.css، approved-v178.css */
+/* yawmi-ui.css — طبقات الواجهة المدمجة (16 ملفاً بالترتيب): appearance-v161.css، hybrid-v162.css، executive-v163.css، engineering-v164.css، workspaces-v165.css، templates-v166.css، additional-identities-v167.css، full-identity-v167.css، essentials-v168.css، approved-v170.css، approved-v172.css، approved-v173.css، approved-v176.css، approved-v177.css، approved-v178.css، approved-v179.css */
 /* ===== appearance-v161.css ===== */
 /* Typography scale and theme roles; original Hijazi surface is exempt. */
 @import url("./fonts/fonts.css");
@@ -1184,3 +1184,8 @@ html:root:root[data-ui167] #spc [aria-pressed=true]{background:var(--ui167-accen
 }
 html:root:root em,html:root:root .autob{font-size:max(11px,1em)}
 html:root:root .a170-proj-img em,html:root:root .a171-pwrap em,html:root:root .matpg em,html:root:root .autob{font-size:11px!important}
+
+/* ===== approved-v179.css ===== */
+/* v179 — آخر نصوص صغيرة ≥ 11px: أكواد المشاريع في بطاقة المهمة، ومراحل المشاريع في لوحة المؤشرات */
+html:root:root #view .l149-meta span{font-size:11px!important}
+html:root:root #view button>span{font-size:max(11px,1em)}
