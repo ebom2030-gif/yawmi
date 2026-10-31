@@ -1229,6 +1229,9 @@ html[data-theme=dark] .a180-row{background:#162033;border-color:#24324a}
 #printDay .a180-letter{font-size:13pt;line-height:1.9}#printDay .a180-letter table{width:100%;margin:10px 0}
 #printDay .a180-kp{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}#printDay .a180-kp div{border:1px solid #CBD5E1;border-radius:8px;padding:8px}#printDay .a180-kp small{display:block;color:#475569}
 #printDay .a180-rep table{width:100%;margin-bottom:10px}
+.a180-aging .a180-ag{border:0;cursor:pointer;text-align:start;font:inherit;color:inherit}.a180-aging .a180-ag[aria-pressed=true]{outline:3px solid var(--ui167-accent,#2563EB);outline-offset:2px}
+.a180-lnk{color:inherit;text-decoration:none}.a180-lnk:hover b,.a180-lnk:hover{text-decoration:underline}.a180-cli{color:#1D4ED8!important;font-size:12.5px}
+html[data-theme=dark] .a180-cli{color:#93C5FD!important}
 
 /* ===== approved-v181.css ===== */
 /* v181 — التصاريح */
