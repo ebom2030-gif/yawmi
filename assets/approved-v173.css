@@ -13,3 +13,52 @@
 .a173-pop small{color:var(--mut,#64748B);font-size:11.5px;line-height:1.5}
 :root[data-theme=dark] .a173-cam{box-shadow:0 0 0 2px #111C30}
 @media(max-width:700px){.a173-cam{width:18px;height:18px}}
+.a173-pop .a173-nm{display:flex;flex-direction:column;gap:4px;margin-top:4px;font-size:12px;color:var(--mut,#64748B)}
+.a173-pop .a173-nm input{border:1px solid var(--line,#E6EAF2);border-radius:10px;padding:8px 10px;font:inherit;font-size:14px;color:var(--ink,#0F1B33);background:var(--surface,#fff);min-width:0}
+.a173-pop .a173-nm input:focus{outline:2px solid #BFDBFE;border-color:#2563EB}
+.a173-pop button.sec{background:#EFF4FF;color:#1D4ED8}
+/* الشريط الملخّص: يُطوى عند النزول */
+#hBrief{transition:max-height .25s ease,opacity .2s ease,margin .25s ease,padding .25s ease;max-height:420px}
+:root[data-a173-scrolled] #hBrief{max-height:0!important;opacity:0;margin-top:0!important;margin-bottom:0!important;padding-top:0!important;padding-bottom:0!important;overflow:hidden!important;border-width:0!important;pointer-events:none}
+/* بطاقات المشاريع: اسم العميل ونوع المشروع أوضح */
+:root[data-a170] #view .p143-card .pjcl{display:flex;flex-wrap:wrap;gap:8px!important;margin-block:6px 10px!important}
+:root[data-a170] #view .p143-card .pjcl .pjclil{font-size:14.5px!important;font-weight:700!important;color:#1D4ED8!important;background:#EFF4FF!important;border:1px solid #DBEAFE!important;border-radius:10px!important;padding:5px 12px!important;line-height:1.5;display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+:root[data-a170] #view .p143-card .pjcl .pjclil::before{content:"";width:14px;height:14px;flex:none;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V5a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v16M16 9h3a2 2 0 0 1 2 2v10M9 7h3M9 11h3M9 15h3'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M5 21V5a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v16M16 9h3a2 2 0 0 1 2 2v10M9 7h3M9 11h3M9 15h3'/%3E%3C/svg%3E") center/contain no-repeat}
+:root[data-a170] #view .p143-card .pjcl .pjclil:hover{background:#DBEAFE!important}
+:root[data-a170] #view .p143-card .pjcl>span{font-size:13.5px!important;font-weight:600!important;color:#334155!important;background:#F1F5F9!important;border-radius:10px!important;padding:5px 12px!important;line-height:1.5}
+:root[data-a170][data-theme=dark] #view .p143-card .pjcl .pjclil{background:#172554!important;color:#93C5FD!important;border-color:#1E3A8A!important}
+:root[data-a170][data-theme=dark] #view .p143-card .pjcl>span{background:#16233B!important;color:#CBD5E1!important}
+:root[data-a170] #view .p143-card .p143-title{font-size:19px!important}
+:root[data-a170] #view .p143-card .a172-cover{cursor:pointer}
+:root[data-a170] #view .p143-card .a172-cover img{transition:transform .35s ease}
+:root[data-a170] #view .p143-card .a172-cover:hover img,:root[data-a170] #view .p143-card .a172-cover:focus-visible img{transform:scale(1.04)}
+:root[data-a170] #view .p143-card .a172-cover:focus-visible{outline:3px solid #93C5FD;outline-offset:-3px}
+/* ===== المشروع المنتهي ===== */
+.a173-mark{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#fff;text-align:center;pointer-events:none;padding:8px}
+.a173-mark i{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.25),0 0 0 4px rgba(255,255,255,.35)}
+.a173-mark b{font-size:14px;font-weight:800;text-shadow:0 1px 3px rgba(0,0,0,.45)}
+.a173-mark small{font-size:17px;font-weight:800;color:#fff;background:#B45309;border-radius:8px;padding:2px 12px;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+/* مكتمل فنياً ومالياً: البطاقة كلها أخضر غامق */
+:root[data-a170] #view .p143-card[data-a173-done=full]{background:linear-gradient(170deg,#065F46,#064E3B 60%,#053D2E)!important;border-color:#065F46!important;box-shadow:0 10px 26px rgba(6,78,59,.35)!important}
+:root[data-a170] #view .p143-card[data-a173-done=full] .a172-cover::after{background:linear-gradient(180deg,rgba(6,95,70,.55),rgba(5,61,46,.85))}
+:root[data-a170] #view .p143-card[data-a173-done=full] .a173-mark i{background:#10B981}
+:root[data-a170] #view .p143-card[data-a173-done=full] .a172-pct,:root[data-a170] #view .p143-card[data-a173-done=full] .a172-cover em{display:none}
+:root[data-a170] #view .p143-card[data-a173-done=full]>*:not(.a172-cover):not(.pjc1),:root[data-a170] #view .p143-card[data-a173-done=full]>*:not(.a172-cover):not(.pjc1) *{color:#ECFDF5!important}
+:root[data-a170] #view .p143-card[data-a173-done=full]>*:not(.a172-cover):not(.pjc1) :is(div,span,button,small,label,p){background-color:transparent;border-color:rgba(255,255,255,.22)!important}
+:root[data-a170] #view .p143-card[data-a173-done=full] .pjcl :is(.pjclil,span),:root[data-a170] #view .p143-card[data-a173-done=full] .p143-next,:root[data-a170] #view .p143-card[data-a173-done=full] [class*=box],:root[data-a170] #view .p143-card[data-a173-done=full] [class*=note]{background:rgba(255,255,255,.12)!important;border-color:rgba(255,255,255,.22)!important}
+:root[data-a170] #view .p143-card[data-a173-done=full] .pjbar{background:rgba(255,255,255,.2)!important}
+:root[data-a170] #view .p143-card[data-a173-done=full] .pjbar i{background:#34D399!important}
+:root[data-a170] #view .p143-card[data-a173-done=full] .p143-cardfoot :is(.btn,button){background:#fff!important;color:#065F46!important;border-color:#fff!important}
+:root[data-a170] #view .p143-card[data-a173-done=full] .p143-cardfoot :is(.btn,button) *{color:#065F46!important}
+/* منتهٍ فنياً ومتبقٍ تحصيل: إطار ذهبي */
+:root[data-a170] #view .p143-card[data-a173-done=fin]{border:2px solid #D97706!important;box-shadow:0 10px 26px rgba(217,119,6,.18)!important}
+:root[data-a170] #view .p143-card[data-a173-done=fin] .a172-cover::after{background:linear-gradient(180deg,rgba(120,53,15,.35),rgba(120,53,15,.8))}
+:root[data-a170] #view .p143-card[data-a173-done=fin] .a173-mark i{background:#D97706}
+:root[data-a170] #view .p143-card[data-a173-done=fin] .a172-pct,:root[data-a170] #view .p143-card[data-a173-done=fin] .a172-cover em{display:none}
+:root[data-a170] #view .p143-card[data-a173-done=fin] .pjbar i{background:linear-gradient(90deg,#16A34A,#22C55E)!important}
+:root[data-a170] #view .p143-card[data-a173-done=fin] .p143-cardfoot .btn{background:#D97706!important;color:#fff!important;border-color:#D97706!important}
+:root[data-a170] #view .p143-card:is([data-a173-done=full],[data-a173-done=fin]) .a172-cover{height:176px}
+:root[data-a170] #view .p143-card[data-a173-done=fin]{border-inline-start:2px solid #D97706!important}
+:root[data-a170] #view .p143-card[data-a173-done=full]{border-inline-start:1px solid #065F46!important}
+:root[data-a170] #view .p143-card[data-a173-done=full] :is(.p143-alert,.pjneed,.p143-done,.p143-fin){background:rgba(255,255,255,.12)!important;border-color:rgba(255,255,255,.28)!important;color:#ECFDF5!important}
+:root[data-a170] #view .p143-card[data-a173-done=full] :is(.p143-alert,.pjneed) *{color:#ECFDF5!important}

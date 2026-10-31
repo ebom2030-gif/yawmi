@@ -108,8 +108,9 @@ async function ctxOf(db, th) { if (!th) return null; const s = await db.prepare(
   if (!s.rem && s.last && now - s.last > IDLE) { await db.prepare('DELETE FROM sess2 WHERE th = ?').bind(th).run(); throw new UErr('انتهت الجلسة — أُغلقت بعد 30 دقيقة دون نشاط'); }
   if (!s.last || now - s.last > 300000) await db.prepare('UPDATE sess2 SET last = ? WHERE th = ?').bind(now, th).run();
   // v122: كل بيانات السياق في رحلة واحدة إلى قاعدة البيانات بدل خمس رحلات متتالية
-  const tn = s.tn || '', [rU, rT, rP, rX, rN] = await db.batch([db.prepare('SELECT data FROM users WHERE tn = ?').bind(tn), db.prepare('SELECT data FROM tenants WHERE id = ?').bind(tn), db.prepare('SELECT 1 x FROM pins WHERE tn = ? AND uid = ?').bind(tn, s.uid), db.prepare('SELECT v FROM cfg WHERE k = ?').bind('xp:' + tn), db.prepare('SELECT v FROM cfg WHERE k = ?').bind('native:' + tn)]);
+  const tn = s.tn || '', [rU, rT, rP, rX, rN, rNm] = await db.batch([db.prepare('SELECT data FROM users WHERE tn = ?').bind(tn), db.prepare('SELECT data FROM tenants WHERE id = ?').bind(tn), db.prepare('SELECT 1 x FROM pins WHERE tn = ? AND uid = ?').bind(tn, s.uid), db.prepare('SELECT v FROM cfg WHERE k = ?').bind('xp:' + tn), db.prepare('SELECT v FROM cfg WHERE k = ?').bind('native:' + tn), db.prepare('SELECT k, v FROM cfg WHERE substr(k, 1, ?) = ?').bind(('nm:' + tn + ':').length, 'nm:' + tn + ':')]);
   const rs = r => (r && r.results) || [], US = rs(rU).map(x => JSON.parse(x.data)).map(u => Object.assign(u, { active: u.active !== false })), u = US.find(x => x.id === s.uid); if (!u || u.active === false) throw new UErr('الحساب غير مفعّل');
+  { const pre = 'nm:' + tn + ':', NM = {}; rs(rNm).forEach(r => { if (r.v) NM[r.k.slice(pre.length)] = r.v; }); US.forEach(x => { if (NM[x.id]) x.name = NM[x.id]; }); } // v173: الاسم الظاهر (Cloudflare)
   const ten = tn && rs(rT)[0] ? JSON.parse(rs(rT)[0].data || 'null') : null, st = tn ? tenState(ten) : 'active'; if (st === 'suspended') throw new UErr('حساب الشركة غير مفعّل حالياً — تواصل مع إدارة يومي');
   const pin = rs(rP)[0], xv = rs(rX)[0], nv = rs(rN)[0];
   return { s, th, tn, u, US, ten, ro: st === 'expired', po: !pin || (s.pv && s.pv > now), pin: !!pin, X: JSON.parse((xv && xv.v) || '{}'), native: !nv || nv.v !== '0' }; }
@@ -516,20 +517,24 @@ async function ui173(db, C, fn, a) { const tn = C.tn, u = C.u;
     if (img && (!/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+\/=]+$/.test(img) || img.length > 30000)) throw new UErr('الصورة غير صالحة أو كبيرة جداً');
     await cfgSet(db, 'av:' + tn + ':' + uid, img || null); await cfgSet(db, 'avv:' + tn, Date.now());
     if (uid !== u.id) await audit(db, C, 'تغيير صورة مستخدم', (byId(C, uid) || {}).name || uid, ''); return true; }
+  if (fn === 'nameSet173') { const uid = String(a[0] || u.id), nm = String(a[1] || '').replace(/\s+/g, ' ').trim();
+    if (uid !== u.id) { const t = byId(C, uid); if (!t || !canManage(u, t)) throw new UErr('غير مسموح بتغيير اسم هذا المستخدم'); }
+    if (nm && (nm.length < 2 || nm.length > 60 || /[<>]/.test(nm))) throw new UErr('الاسم يجب أن يكون من 2 إلى 60 حرفاً');
+    await cfgSet(db, 'nm:' + tn + ':' + uid, nm || null); await audit(db, C, 'تغيير الاسم الظاهر', nm || '(الاسم الأصلي)', uid); await bump(db, tn); return { name: nm }; }
   if (fn === 'avatars173') { const ver = Number(await cfgGet(db, 'avv:' + tn)) || 0, since = Number(a[0]) || 0; if (since && since >= ver) return { v: ver, same: true };
     const pre = 'av:' + tn + ':', rows = (await db.prepare('SELECT k, v FROM cfg WHERE substr(k, 1, ?) = ?').bind(pre.length, pre).all()).results || [], m = {};
     rows.forEach(r => { if (r.v) m[r.k.slice(pre.length)] = r.v; }); return { v: ver, m }; }
 }
 
 const WRITES = new Set(['recordMeetingOutcome','saveItem', 'deleteItem', 'saveProject', 'deleteProject', 'saveContact', 'deleteContact', 'saveNote', 'saveMat', 'addUser', 'updateUser', 'deleteUser', 'restoreTenant', 'setPrivPin', 'trashDel', 'xpSet', 'boSave']);
-const TREAD = new Set(['uiGet173', 'uiSet173', 'avatarSet173', 'avatars173', 'getMat', 'getAll', 'getSince', 'listUsers', 'listAudit', 'listIdeas', 'lockPriv', 'unlockPriv', 'logout', 'trashList', 'achList', 'xpGet', 'todoStatus', 'health', 'boList', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155']);
+const TREAD = new Set(['nameSet173', 'uiGet173', 'uiSet173', 'avatarSet173', 'avatars173', 'getMat', 'getAll', 'getSince', 'listUsers', 'listAudit', 'listIdeas', 'lockPriv', 'unlockPriv', 'logout', 'trashList', 'achList', 'xpGet', 'todoStatus', 'health', 'boList', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155']);
 export async function onRequestPost({ request, env, waitUntil }) {
   const body = await request.text(); const t0 = Date.now(); const db = env.DB; let req = {}; try { req = JSON.parse(body); } catch (e) {}
   const fn = String(req.fn || ''), a = Array.isArray(req.args) ? req.args : [];
   if (!db) return fail('قاعدة البيانات غير مربوطة');
   try {
     await init(db);
-    if (fn === 'buildInfo') return ok({version:'v173'});
+    if (fn === 'buildInfo') return ok({version:'v174'});
     if (fn === 'login') { const r = await login(env, a[0], a[1], waitUntil, request.headers.get('CF-Connecting-IP')); if (a[2] && r && r.token) { try { await env.DB.prepare('UPDATE sess2 SET rem = 1 WHERE th = ?').bind(await sha('yw|' + r.token)).run(); } catch (e) {} } return ok(r); }
     if (OPEN.has(fn)) { // تمرير إلى Google ثم تبنّي الجلسة إن عادت بجلسة
       const r = await gasOpen(env, fn, a); if (!r.ok) return fail(r.error || 'تعذّر التنفيذ');
@@ -549,7 +554,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
     if (fn === 'retryIntegrations155') { await drain(env,15000); return ok(await integrationStatus155(env,C)); }
     if (fn === 'repairNotifications155') { if(C.u.role!=='owner') return fail('هذه العملية للمالك فقط'); const gt=await gtFor(db,C.tn,C.u.id); if(!gt)return fail('جدّد اتصال حساب يومي أولاً'); await gasCall(env,gt,'notificationConfig155',[JSON.parse(await cfgGet(db,'hol:'+C.tn)||'[]')]); const r=await gasCall(env,gt,fn,[]);return r.ok?ok(r.data):fail(r.error); }
     if (fn === 'cfNative') { if (C.u.role !== 'owner') return fail('هذه العملية للمالك فقط'); await cfgSet(db, 'native:' + C.tn, a[0] ? '1' : '0'); await log(db, C.tn, C.u.id, 'cfNative:' + (a[0] ? 'on' : 'off'), 1, 0, null); return ok({ native: !!a[0] }); }
-    if (fn === 'uiGet173' || fn === 'uiSet173' || fn === 'avatarSet173' || fn === 'avatars173') return ok(await ui173(db, C, fn, a));
+    if (fn === 'uiGet173' || fn === 'uiSet173' || fn === 'avatarSet173' || fn === 'avatars173' || fn === 'nameSet173') return ok(await ui173(db, C, fn, a));
     const native = C.native !== undefined ? C.native : await nativeOn(db, C.tn); let data, done = true;
     try {
       if (TRASH.has(fn)) data = await trashOp(db, C, fn, a);
