@@ -99,3 +99,14 @@
 :root[data-a170] .a176-out{color:#FCA5A5}
 :root[data-a170]{--a176-acc1:#1E3A8A;--a176-acc2:#3B82F6}
 :root[data-a173-scrolled] #hBrief>*{display:none!important}
+/* ===== الطباعة والتقارير ===== */
+@media print{
+ body.printday #printDay table{width:100%;border-collapse:collapse}
+ body.printday #printDay tr,body.printday #printDay .pdk>*,body.printday #printDay .sig{break-inside:avoid;page-break-inside:avoid}
+ body.printday #printDay .pdb,body.printday #printDay h2,body.printday #printDay h3,body.printday #printDay table tr:first-child{break-after:avoid;page-break-after:avoid}
+ body.printday #printDay section{orphans:3;widows:3}
+ body.printday #printDay td,body.printday #printDay th{vertical-align:top;word-break:normal;overflow-wrap:anywhere}
+ body.printday #printDay td small{display:block;color:#64748b}
+ body.printday #printDay footer{break-inside:avoid}
+}
+@media print{body.printday #printDay thead{display:table-header-group}body.printday #printDay thead tr{break-inside:avoid}}
