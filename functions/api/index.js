@@ -176,7 +176,10 @@ async function reconcile(env, C) { const db = env.DB; const gt = await gtFor(db,
   (d.items || []).forEach(o => { if (!o || !o.id || (o.space==='p'&&o.owner!==C.u.id) || (o.owner!==C.u.id&&o.assignedBy!==C.u.id&&!(can(C.u,'team')&&seeScope(C.u,byId(C,o.owner)))) || pend.has('item:' + o.id) || gone.has(o.id)) return; const cur = have.get(String(o.id));
     if (!cur) { B.push(upItem(db, tn, o, now)); return; } const x = JSON.parse(cur); let ch = false;
     if(o.todo&&Number(o.todoSyncedAt||0)>Number(x.todoSyncedAt||0)){['title','due','priority','todoSyncedAt'].forEach(k=>{x[k]=o[k]});ch=true;}
-    if (o.done && !x.done && (x.todo || o.todo)) { x.done = true; x.doneAt = o.doneAt || now; ch = true; } ['calId', 'todo'].forEach(k => { if (o[k] && o[k] !== x[k]) { x[k] = o[k]; ch = true; } }); if (ch) B.push(upItem(db, tn, x, now)); });
+    if (o.done && !x.done && (x.todo || o.todo)) { x.done = true; x.doneAt = o.doneAt || now; ch = true; }
+    // v177: أُعيد فتحها في To Do، أو حُذفت منه (تُغلق ولا تُحذف)
+    if (Number(o.todoReopenAt || 0) > Number(x.todoReopenAt || 0)) { if (x.done && Number(o.todoReopenAt) > Number(x.doneAt || 0)) { x.done = false; x.doneAt = null; } x.todoReopenAt = Number(o.todoReopenAt); if (o.note) x.note = o.note; ch = true; }
+    if (Number(o.todoGoneAt || 0) > Number(x.todoGoneAt || 0)) { x.todoGoneAt = Number(o.todoGoneAt); x.todo = ''; if (!x.done) { x.done = true; x.doneAt = Number(o.todoGoneAt); } if (o.note) x.note = o.note; ch = true; } ['calId', 'todo'].forEach(k => { if (o[k] && o[k] !== x[k]) { x[k] = o[k]; ch = true; } }); if (ch) B.push(upItem(db, tn, x, now)); });
   // v117: لا نعلن «تغيير» للأجهزة إلا إذا تغيّرت مهمة فعلاً (المستخدمون والمشترك يُحدَّثون بصمت)
   const B2 = []; (d.users || []).filter(u => u && u.id && u.username !== undefined).forEach(u => B2.push(upUser(db, tn, u, now)));
   if (d.ten && d.ten.id) B2.push(db.prepare('INSERT INTO tenants (id, data, updated_at) VALUES (?, ?, ?) ON CONFLICT(id) DO UPDATE SET data = excluded.data, updated_at = excluded.updated_at').bind(d.ten.id, J(d.ten), now));
@@ -521,20 +524,26 @@ async function ui173(db, C, fn, a) { const tn = C.tn, u = C.u;
     if (uid !== u.id) { const t = byId(C, uid); if (!t || !canManage(u, t)) throw new UErr('غير مسموح بتغيير اسم هذا المستخدم'); }
     if (nm && (nm.length < 2 || nm.length > 60 || /[<>]/.test(nm))) throw new UErr('الاسم يجب أن يكون من 2 إلى 60 حرفاً');
     await cfgSet(db, 'nm:' + tn + ':' + uid, nm || null); await audit(db, C, 'تغيير الاسم الظاهر', nm || '(الاسم الأصلي)', uid); await bump(db, tn); return { name: nm }; }
+  if (fn === 'bannerGet177') { const n = Number(await cfgGet(db, 'bnn:' + tn)) || 0, ver = Number(await cfgGet(db, 'bnv:' + tn)) || 0; if (!n) return { v: ver, urls: [] }; let k = await cfgGet(db, 'bkt:' + tn); if (!k) return { v: ver, urls: [] };
+    return { v: ver, urls: Array.from({ length: n }, (_, i) => '/api?bimg=' + k + '&i=' + i + '&v=' + ver) }; }
+  if (fn === 'bannerSet177') { if (!(u.role === 'owner' || u.role === 'ceo')) throw new UErr('صور البانر للمالك والرئيس التنفيذي فقط');
+    const L = (Array.isArray(a[0]) ? a[0] : []).slice(0, 6).map(String); if (L.some(x => !/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+\/=]+$/.test(x) || x.length > 400000)) throw new UErr('صورة غير صالحة أو كبيرة جداً');
+    let k = await cfgGet(db, 'bkt:' + tn); if (!k) { k = [...crypto.getRandomValues(new Uint8Array(16))].map(b => b.toString(16).padStart(2, '0')).join(''); await cfgSet(db, 'bkt:' + tn, k); await cfgSet(db, 'bk:' + k, tn); }
+    for (let i = 0; i < 6; i++) await cfgSet(db, 'bn:' + tn + ':' + i, L[i] || null); await cfgSet(db, 'bnn:' + tn, L.length); await cfgSet(db, 'bnv:' + tn, Date.now()); await audit(db, C, 'تحديث صور البانر', L.length + ' صور', ''); return { n: L.length }; }
   if (fn === 'avatars173') { const ver = Number(await cfgGet(db, 'avv:' + tn)) || 0, since = Number(a[0]) || 0; if (since && since >= ver) return { v: ver, same: true };
     const pre = 'av:' + tn + ':', rows = (await db.prepare('SELECT k, v FROM cfg WHERE substr(k, 1, ?) = ?').bind(pre.length, pre).all()).results || [], m = {};
     rows.forEach(r => { if (r.v) m[r.k.slice(pre.length)] = r.v; }); return { v: ver, m }; }
 }
 
 const WRITES = new Set(['recordMeetingOutcome','saveItem', 'deleteItem', 'saveProject', 'deleteProject', 'saveContact', 'deleteContact', 'saveNote', 'saveMat', 'addUser', 'updateUser', 'deleteUser', 'restoreTenant', 'setPrivPin', 'trashDel', 'xpSet', 'boSave']);
-const TREAD = new Set(['nameSet173', 'uiGet173', 'uiSet173', 'avatarSet173', 'avatars173', 'getMat', 'getAll', 'getSince', 'listUsers', 'listAudit', 'listIdeas', 'lockPriv', 'unlockPriv', 'logout', 'trashList', 'achList', 'xpGet', 'todoStatus', 'health', 'boList', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155']);
+const TREAD = new Set(['bannerGet177', 'nameSet173', 'uiGet173', 'uiSet173', 'avatarSet173', 'avatars173', 'getMat', 'getAll', 'getSince', 'listUsers', 'listAudit', 'listIdeas', 'lockPriv', 'unlockPriv', 'logout', 'trashList', 'achList', 'xpGet', 'todoStatus', 'health', 'boList', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155']);
 export async function onRequestPost({ request, env, waitUntil }) {
   const body = await request.text(); const t0 = Date.now(); const db = env.DB; let req = {}; try { req = JSON.parse(body); } catch (e) {}
   const fn = String(req.fn || ''), a = Array.isArray(req.args) ? req.args : [];
   if (!db) return fail('قاعدة البيانات غير مربوطة');
   try {
     await init(db);
-    if (fn === 'buildInfo') return ok({version:'v176'});
+    if (fn === 'buildInfo') return ok({version:'v177'});
     if (fn === 'login') { const r = await login(env, a[0], a[1], waitUntil, request.headers.get('CF-Connecting-IP')); if (a[2] && r && r.token) { try { await env.DB.prepare('UPDATE sess2 SET rem = 1 WHERE th = ?').bind(await sha('yw|' + r.token)).run(); } catch (e) {} } return ok(r); }
     if (OPEN.has(fn)) { // تمرير إلى Google ثم تبنّي الجلسة إن عادت بجلسة
       const r = await gasOpen(env, fn, a); if (!r.ok) return fail(r.error || 'تعذّر التنفيذ');
@@ -554,7 +563,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
     if (fn === 'retryIntegrations155') { await drain(env,15000); return ok(await integrationStatus155(env,C)); }
     if (fn === 'repairNotifications155') { if(C.u.role!=='owner') return fail('هذه العملية للمالك فقط'); const gt=await gtFor(db,C.tn,C.u.id); if(!gt)return fail('جدّد اتصال حساب يومي أولاً'); await gasCall(env,gt,'notificationConfig155',[JSON.parse(await cfgGet(db,'hol:'+C.tn)||'[]')]); const r=await gasCall(env,gt,fn,[]);return r.ok?ok(r.data):fail(r.error); }
     if (fn === 'cfNative') { if (C.u.role !== 'owner') return fail('هذه العملية للمالك فقط'); await cfgSet(db, 'native:' + C.tn, a[0] ? '1' : '0'); await log(db, C.tn, C.u.id, 'cfNative:' + (a[0] ? 'on' : 'off'), 1, 0, null); return ok({ native: !!a[0] }); }
-    if (fn === 'uiGet173' || fn === 'uiSet173' || fn === 'avatarSet173' || fn === 'avatars173' || fn === 'nameSet173') return ok(await ui173(db, C, fn, a));
+    if (fn === 'uiGet173' || fn === 'uiSet173' || fn === 'avatarSet173' || fn === 'avatars173' || fn === 'nameSet173' || fn === 'bannerGet177' || fn === 'bannerSet177') return ok(await ui173(db, C, fn, a));
     const native = C.native !== undefined ? C.native : await nativeOn(db, C.tn); let data, done = true;
     try {
       if (TRASH.has(fn)) data = await trashOp(db, C, fn, a);
@@ -595,6 +604,10 @@ export async function onRequestGet({ request, env }) { // حالة الخادم�
   const o = { ok: true, gateway: true, d1: !!env.DB, v3: 1 }; const url = new URL(request.url), auth = request.headers.get('Authorization') || '', m = /^Bearer\s+([^\s]+)$/i.exec(auth), t = m ? m[1] : '';
   if (!env.DB) return new Response(J(o), { headers: H });
   try { const db = env.DB; await init(db); const th = t ? await sha('yw|' + t) : '';
+    const bim = url.searchParams.get('bimg'); if (bim != null) { // v177: صور البانر (مفتاح عشوائي لكل مساحة، تخزين مؤقت طويل)
+      const k = String(bim), i = Number(url.searchParams.get('i')); if (!/^[a-f0-9]{32}$/.test(k) || !(i >= 0 && i < 6)) return new Response('', { status: 404 });
+      const tn = await cfgGet(db, 'bk:' + k); if (tn == null) return new Response('', { status: 404 }); const v = await cfgGet(db, 'bn:' + tn + ':' + i); const mm = /^data:(image\/(?:jpeg|png|webp));base64,(.+)$/.exec(v || ''); if (!mm) return new Response('', { status: 404 });
+      const bin = Uint8Array.from(atob(mm[2]), c => c.charCodeAt(0)); return new Response(bin, { headers: { 'content-type': mm[1], 'cache-control': 'public, max-age=31536000, immutable', 'x-yw-gw': '1' } }); }
     const shr = url.searchParams.get('share'); if (shr != null) { // v129: صفحة حالة المشروع للعميل (للعرض فقط)
       if (!/^[a-f0-9]{24,64}$/.test(shr)) return new Response(J({ ok: false, error: 'الرابط غير صالح' }), { headers: H });
       const r = await db.prepare("SELECT data FROM projects WHERE json_extract(data, '$.share.tok') = ?").bind(shr).first(); const p = r ? JSON.parse(r.data) : null;

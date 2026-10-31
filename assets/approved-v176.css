@@ -110,3 +110,6 @@
  body.printday #printDay footer{break-inside:avoid}
 }
 @media print{body.printday #printDay thead{display:table-header-group}body.printday #printDay thead tr{break-inside:avoid}}
+/* المبلغ والنص على شارة حالة المشروع: أبيض دائماً */
+:root[data-a170][data-ui167] #view .pjgrid .p143-card .a172-cover .a173-mark small,:root[data-a170][data-ui167] #view .pjgrid .p143-card .a172-cover .a173-mark b,:root[data-a170] #view .p143-card .a173-mark :is(small,b){color:#fff!important;-webkit-text-fill-color:#fff!important;opacity:1!important}
+:root[data-a170][data-ui167] #view .pjgrid .p143-card .a172-cover .a173-mark small{background:#7C2D12!important;font-weight:800!important;font-size:15px!important}
