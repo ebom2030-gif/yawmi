@@ -98,3 +98,4 @@
 :root:not([data-theme=dark]) .side:not([class*=dark]) .a176-out{color:#DC2626}
 :root[data-a170] .a176-out{color:#FCA5A5}
 :root[data-a170]{--a176-acc1:#1E3A8A;--a176-acc2:#3B82F6}
+:root[data-a173-scrolled] #hBrief>*{display:none!important}
