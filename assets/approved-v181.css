@@ -1,0 +1,10 @@
+/* v181 — التصاريح */
+.a181-strip{background:#EFF6FF;border-color:#BFDBFE;color:#0F1B33}
+html[data-theme=dark] .a181-strip{background:#13233d;border-color:#1e3a8a;color:#dbeafe}
+.a181-k .a180-ag{border:0;cursor:pointer;text-align:start;font:inherit;color:inherit}
+.a181-k .a180-ag[aria-pressed=true]{outline:3px solid var(--ui167-accent,#2563EB);outline-offset:2px}
+.a181-form{width:min(620px,100%)}.a181-g{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.a181-form select{height:40px;border-radius:10px;border:1px solid #CBD5E1;padding:0 8px;font:inherit}
+.a181-del{color:#B91C1C!important;margin-inline-start:auto}
+.a181-pbtn{margin-inline-start:8px}
+@media (max-width:700px){.a181-g{grid-template-columns:1fr}}
