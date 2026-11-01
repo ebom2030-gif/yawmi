@@ -1,4 +1,4 @@
-/* yawmi-ui.css — طبقات الواجهة المدمجة (20 ملفاً بالترتيب): appearance-v161.css، hybrid-v162.css، executive-v163.css، engineering-v164.css، workspaces-v165.css، templates-v166.css، additional-identities-v167.css، full-identity-v167.css، essentials-v168.css، approved-v170.css، approved-v172.css، approved-v173.css، approved-v176.css، approved-v177.css، approved-v178.css، approved-v179.css، approved-v180.css، approved-v181.css، approved-v184.css، approved-v185.css */
+/* yawmi-ui.css — طبقات الواجهة المدمجة (21 ملفاً بالترتيب): appearance-v161.css، hybrid-v162.css، executive-v163.css، engineering-v164.css، workspaces-v165.css، templates-v166.css، additional-identities-v167.css، full-identity-v167.css، essentials-v168.css، approved-v170.css، approved-v172.css، approved-v173.css، approved-v176.css، approved-v177.css، approved-v178.css، approved-v179.css، approved-v180.css، approved-v181.css، approved-v184.css، approved-v185.css، approved-v186.css */
 /* ===== appearance-v161.css ===== */
 /* Typography scale and theme roles; original Hijazi surface is exempt. */
 @import url("./fonts/fonts.css");
@@ -1308,3 +1308,12 @@ html:root:root:root[data-a170] #view .task .acts label.stsel:focus-within{outlin
 /* عنوان المشروع داخل الرأس الأزرق: أبيض واضح */
 html:root:root #view .pbl .pbt h2{color:#fff!important}
 html:root:root #view .a185-img .ui167-icon,html:root:root #view .a181-pbtn .ui167-icon{display:none}
+
+/* ===== approved-v186.css ===== */
+.a186-row{display:flex;gap:8px;flex-wrap:wrap}.a186-cam{cursor:pointer}.a186-chk{flex-direction:row!important;align-items:center;gap:6px!important;font-weight:500!important}
+.a186-pics{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:6px}.a186-pics span{position:relative}.a186-pics img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px}
+.a186-pics button{position:absolute;top:2px;inset-inline-end:2px;width:24px;height:24px;border-radius:50%;border:0;background:rgba(0,0,0,.6);color:#fff;cursor:pointer}
+.a186-form{max-height:92vh;overflow:auto}.a181-doc{font-size:12.5px;color:#1D4ED8;text-decoration:none}
+#printDay .a186-rep table{width:100%}#printDay .a186-rep h3{margin:10px 0 4px}#printDay .a186-txt{line-height:1.8}
+#printDay .a186-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}#printDay .a186-grid figure{margin:0;break-inside:avoid}#printDay .a186-grid img{width:100%;height:62mm;object-fit:cover;border-radius:4px}#printDay .a186-grid figcaption{font-size:9pt;color:#475569;text-align:center}
+@media (max-width:700px){html:root:root #view div:has(>[data-psave])>.a186-vbtn{grid-column:1/-1}}
