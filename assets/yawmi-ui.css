@@ -1,4 +1,4 @@
-/* yawmi-ui.css — طبقات الواجهة المدمجة (24 ملفاً بالترتيب): appearance-v161.css، hybrid-v162.css، executive-v163.css، engineering-v164.css، workspaces-v165.css، templates-v166.css، additional-identities-v167.css، full-identity-v167.css، essentials-v168.css، approved-v170.css، approved-v172.css، approved-v173.css، approved-v176.css، approved-v177.css، approved-v178.css، approved-v179.css، approved-v180.css، approved-v181.css، approved-v184.css، approved-v185.css، approved-v186.css، approved-v187.css، approved-v189.css، approved-v190.css */
+/* yawmi-ui.css — طبقات الواجهة المدمجة (25 ملفاً بالترتيب): appearance-v161.css، hybrid-v162.css، executive-v163.css، engineering-v164.css، workspaces-v165.css، templates-v166.css، additional-identities-v167.css، full-identity-v167.css، essentials-v168.css، approved-v170.css، approved-v172.css، approved-v173.css، approved-v176.css، approved-v177.css، approved-v178.css، approved-v179.css، approved-v180.css، approved-v181.css، approved-v184.css، approved-v185.css، approved-v186.css، approved-v187.css، approved-v189.css، approved-v190.css، approved-v191.css */
 /* ===== appearance-v161.css ===== */
 /* Typography scale and theme roles; original Hijazi surface is exempt. */
 @import url("./fonts/fonts.css");
@@ -1349,3 +1349,35 @@ html:root:root #view.a190-day:has(>.sheet)>.sheet{order:-1}
 .a190-pray{margin:12px 0}
 .a190-stop{background:#F1F5F9;border-color:#CBD5E1}
 .a190-foot{margin-top:14px}
+
+/* ===== approved-v191.css ===== */
+/* v191 — قالب التقارير بالهوية الجديدة */
+#printDay header.pdh[data-a191]{display:block!important;border:0!important;padding:0!important;margin:0 0 12px!important}
+#printDay .a191-band{display:flex;justify-content:space-between;align-items:center;background:#0B1B3A!important;color:#fff!important;border-radius:10px;padding:10px 16px;margin-bottom:12px;border-bottom:3px solid #D4AF37;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+#printDay .a191-logo{display:flex;align-items:center;gap:10px}#printDay .a191-logo img{width:40px;height:40px;border-radius:9px}
+#printDay .a191-logo b{display:block;font-size:20pt;line-height:1;color:#fff!important;font-weight:800}#printDay .a191-logo small{display:block;font-size:7.5pt;letter-spacing:3px;color:#D4AF37!important;font-weight:700}
+#printDay .a191-org{text-align:left}#printDay .a191-org b{display:block;font-size:13pt;color:#fff!important}#printDay .a191-org small{font-size:8pt;color:#C7D2FE!important}
+#printDay header.pdh[data-a191] .pdt h1{font-size:19pt!important;color:#0B1B3A!important;margin:2px 0 2px!important;font-weight:800!important}
+#printDay header.pdh[data-a191] .pdt .pdd{font-size:10pt!important;color:#475569!important}
+#printDay .a191-meta{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 4px;padding-bottom:10px;border-bottom:2px solid #D4AF37}
+#printDay .a191-meta span{border:1px solid #E2E8F0;border-radius:8px;padding:4px 10px;background:#F8FAFC!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+#printDay .a191-meta small{display:block;font-size:7.5pt;color:#64748B}#printDay .a191-meta b{font-size:9.5pt;color:#0F1B33}
+#printDay[class] table:not(.pdm) thead th,#printDay[class] table:not(.pdm) tr:first-child>th{background:#0B1B3A!important;color:#fff!important;font-weight:700!important;border-color:#0B1B3A!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+#printDay[class] table:not(.pdm) tbody tr:nth-child(even) td{background:#F8FAFC!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+#printDay[class] table:not(.pdm) td,#printDay[class] table:not(.pdm) th{border-color:#E2E8F0!important;padding:6px 8px!important;font-variant-numeric:tabular-nums}
+#printDay[class] table:not(.pdm) tbody th{background:#EEF2F7!important;color:#0B1B3A!important}
+#printDay[class] h3{color:#0B1B3A!important;border-inline-start:4px solid #D4AF37;padding-inline-start:8px;margin:14px 0 6px!important;font-size:12pt!important}
+#printDay .a180-kp>div,#printDay .pdk{border-top:3px solid #D4AF37!important;border-radius:8px!important}
+#printDay .a180-kp b{font-size:14pt;color:#0B1B3A}
+#printDay footer.a191-foot{display:flex!important;justify-content:space-between;border-top:1px solid #CBD5E1;padding-top:6px;margin-top:14px;font-size:8pt;color:#64748B}
+#printDay,#printDay *{font-family:'IBM Plex Sans Arabic','Tajawal',system-ui,sans-serif}
+.a191-wdb{height:34px;border-radius:8px;border:1px solid #CBD5E1;margin-inline-start:6px;font:inherit;font-size:12.5px}
+#printDay:has(header[data-a191]) .w146-report-stamp{display:none!important}
+#printDay .a191-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin:4px 0 12px}
+#printDay .a191-kpis>div{border-radius:10px;padding:8px 12px;color:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;background:linear-gradient(135deg,#0B1B3A,#1E3A8A)!important}
+#printDay .a191-kpis>div.m{background:linear-gradient(135deg,#7A4E0E,#A16207)!important}#printDay .a191-kpis>div.g{background:linear-gradient(135deg,#166534,#15803D)!important}#printDay .a191-kpis>div.r{background:linear-gradient(135deg,#991B1B,#B91C1C)!important}
+#printDay .a191-kpis small{display:block;font-size:8pt;color:rgba(255,255,255,.85)}#printDay .a191-kpis b{font-size:15pt;color:#fff}
+#printDay .a191-pill{display:inline-block;padding:1px 9px;border-radius:999px;font-size:8.5pt;font-weight:700;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+#printDay .a191-pill.g{background:#DCFCE7!important;color:#166534}#printDay .a191-pill.r{background:#FEE2E2!important;color:#B91C1C}#printDay .a191-pill.o{background:#FFEDD5!important;color:#9A3412}#printDay .a191-pill.b{background:#DBEAFE!important;color:#1E40AF}
+#printDay .a191-bar{display:inline-block;width:60px;height:7px;border-radius:4px;background:#E2E8F0!important;vertical-align:middle;margin-inline-end:6px;overflow:hidden;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+#printDay .a191-bar i{display:block;height:100%;background:#2563EB!important}#printDay .a191-bar i.g{background:#16A34A!important}#printDay .a191-bar i.o{background:#F59E0B!important}#printDay .a191-bar i.r{background:#DC2626!important}#printDay .a191-bar.m i{background:#D4AF37!important}
