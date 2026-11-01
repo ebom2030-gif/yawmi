@@ -1,4 +1,4 @@
-/* yawmi-ui.css — طبقات الواجهة المدمجة (23 ملفاً بالترتيب): appearance-v161.css، hybrid-v162.css، executive-v163.css، engineering-v164.css، workspaces-v165.css، templates-v166.css، additional-identities-v167.css، full-identity-v167.css، essentials-v168.css، approved-v170.css، approved-v172.css، approved-v173.css، approved-v176.css، approved-v177.css، approved-v178.css، approved-v179.css، approved-v180.css، approved-v181.css، approved-v184.css، approved-v185.css، approved-v186.css، approved-v187.css، approved-v189.css */
+/* yawmi-ui.css — طبقات الواجهة المدمجة (24 ملفاً بالترتيب): appearance-v161.css، hybrid-v162.css، executive-v163.css، engineering-v164.css، workspaces-v165.css، templates-v166.css، additional-identities-v167.css، full-identity-v167.css، essentials-v168.css، approved-v170.css، approved-v172.css، approved-v173.css، approved-v176.css، approved-v177.css، approved-v178.css، approved-v179.css، approved-v180.css، approved-v181.css، approved-v184.css، approved-v185.css، approved-v186.css، approved-v187.css، approved-v189.css، approved-v190.css */
 /* ===== appearance-v161.css ===== */
 /* Typography scale and theme roles; original Hijazi surface is exempt. */
 @import url("./fonts/fonts.css");
@@ -1323,3 +1323,29 @@ html:root:root #view .a185-img .ui167-icon,html:root:root #view .a181-pbtn .ui16
 
 /* ===== approved-v189.css ===== */
 /* v189 */
+
+/* ===== approved-v190.css ===== */
+/* v190 */
+.a190-pick{border:1px solid #CBD5E1;background:#fff;border-radius:8px;height:34px;width:34px;margin-inline-start:4px;cursor:pointer;font-size:14px;vertical-align:middle}
+.a190-menu{position:absolute;z-index:9500;width:260px;max-height:320px;overflow:auto;background:#fff;border:1px solid #E2E8F0;border-radius:12px;box-shadow:0 12px 30px rgba(15,27,51,.18);padding:6px;display:flex;flex-direction:column;gap:2px}
+.a190-menu .a190-q{height:36px;border:1px solid #CBD5E1;border-radius:8px;padding:0 10px;font:inherit;margin-bottom:4px}
+.a190-menu button{text-align:start;border:0;background:transparent;padding:8px 10px;border-radius:8px;font:inherit;cursor:pointer;color:#0F1B33}.a190-menu button:hover{background:#EFF6FF}.a190-menu small{color:#64748B;font-size:11px}
+html[data-theme=dark] .a190-menu{background:#111a2b;border-color:#24324a}html[data-theme=dark] .a190-menu button{color:#e5ecf6}
+/* تفاصيل المهمة: ترتيب حسب الاستخدام */
+html:root:root #view .task .more.h152-editor[data-a190]{display:flex!important;flex-wrap:wrap!important;gap:10px 12px!important;align-items:flex-end}
+#view .more[data-a190]>*{order:50}
+#view .more[data-a190]>.a190-h{flex:1 1 100%;font-size:12px;font-weight:800;color:#526075;border-bottom:1px solid #E2E8F0;padding-bottom:4px;margin-top:4px}
+#view .more[data-a190]>[data-a190k=h1]{order:0}
+#view .more[data-a190]>[data-a190k=due]{order:1}#view .more[data-a190]>[data-a190k=wd]{order:2}#view .more[data-a190]>[data-a190k=from]{order:3}#view .more[data-a190]>[data-a190k=comm]{order:4}#view .more[data-a190]>[data-a190k=prio]{order:5}
+#view .more[data-a190]>[data-a190k=h2]{order:10}
+#view .more[data-a190]>[data-a190k=proj]{order:11}#view .more[data-a190]>[data-a190k=cli]{order:12}#view .more[data-a190]>[data-a190k=type]{order:13}#view .more[data-a190]>[data-a190k=rem]{order:14}
+#view .more[data-a190]>[data-a190k=note]{order:15;flex:1 1 100%}#view .more[data-a190]>[data-a190k=ck]{order:16;flex:1 1 100%}#view .more[data-a190]>[data-a190k=att]{order:17;flex:1 1 100%}
+#view .more[data-a190]>[data-a190k=h3]{order:30}#view .more[data-a190]>[data-a190k=wf]{order:31;flex:1 1 100%}#view .more[data-a190]>[data-a190k=act]{order:32}
+#view .more[data-a190]>[data-a190k=from] input{width:220px!important}
+/* صفحة اليوم: المهام أولاً على كل المقاسات */
+html:root:root #view.a190-day:has(>.sheet){display:flex;flex-direction:column}
+html:root:root #view.a190-day:has(>.sheet)>.sheet{order:-1}
+/* الصلاة والأذكار في الرئيسية */
+.a190-pray{margin:12px 0}
+.a190-stop{background:#F1F5F9;border-color:#CBD5E1}
+.a190-foot{margin-top:14px}
