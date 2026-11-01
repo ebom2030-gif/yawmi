@@ -1,0 +1,12 @@
+/* v185 — أزرار رأس المشروع على الجوال: شبكة مرتبة بدل أعمدة متكدسة */
+@media (max-width:700px){
+  html:root:root #view .a181-pbtn,html:root:root #view .a185-img{min-height:44px}
+  html:root:root #view div:has(>[data-psave]){display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important;width:100%;align-items:stretch}
+  html:root:root #view div:has(>[data-psave])>*{width:100%!important;margin:0!important;min-height:44px;justify-content:center;text-align:center}
+  html:root:root #view div:has(>[data-psave])>[data-psave]{grid-column:1/-1}
+  html:root:root #view div:has(>[data-psave])>[data-pdel]{grid-column:1/-1;min-height:40px;background:transparent!important}
+  html:root:root #view div:has(>[data-psave])>span{grid-column:1/-1;text-align:start;min-height:0}
+}
+/* عنوان المشروع داخل الرأس الأزرق: أبيض واضح */
+html:root:root #view .pbl .pbt h2{color:#fff!important}
+html:root:root #view .a185-img .ui167-icon,html:root:root #view .a181-pbtn .ui167-icon{display:none}
