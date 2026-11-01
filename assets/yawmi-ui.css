@@ -1,4 +1,4 @@
-/* yawmi-ui.css — طبقات الواجهة المدمجة (21 ملفاً بالترتيب): appearance-v161.css، hybrid-v162.css، executive-v163.css، engineering-v164.css، workspaces-v165.css، templates-v166.css، additional-identities-v167.css، full-identity-v167.css، essentials-v168.css، approved-v170.css، approved-v172.css، approved-v173.css، approved-v176.css، approved-v177.css، approved-v178.css، approved-v179.css، approved-v180.css، approved-v181.css، approved-v184.css، approved-v185.css، approved-v186.css */
+/* yawmi-ui.css — طبقات الواجهة المدمجة (22 ملفاً بالترتيب): appearance-v161.css، hybrid-v162.css، executive-v163.css، engineering-v164.css، workspaces-v165.css، templates-v166.css، additional-identities-v167.css، full-identity-v167.css، essentials-v168.css، approved-v170.css، approved-v172.css، approved-v173.css، approved-v176.css، approved-v177.css، approved-v178.css، approved-v179.css، approved-v180.css، approved-v181.css، approved-v184.css، approved-v185.css، approved-v186.css، approved-v187.css */
 /* ===== appearance-v161.css ===== */
 /* Typography scale and theme roles; original Hijazi surface is exempt. */
 @import url("./fonts/fonts.css");
@@ -1317,3 +1317,6 @@ html:root:root #view .a185-img .ui167-icon,html:root:root #view .a181-pbtn .ui16
 #printDay .a186-rep table{width:100%}#printDay .a186-rep h3{margin:10px 0 4px}#printDay .a186-txt{line-height:1.8}
 #printDay .a186-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}#printDay .a186-grid figure{margin:0;break-inside:avoid}#printDay .a186-grid img{width:100%;height:62mm;object-fit:cover;border-radius:4px}#printDay .a186-grid figcaption{font-size:9pt;color:#475569;text-align:center}
 @media (max-width:700px){html:root:root #view div:has(>[data-psave])>.a186-vbtn{grid-column:1/-1}}
+
+/* ===== approved-v187.css ===== */
+.a187-sh.on{border-color:#16A34A!important;color:#166534!important}
