@@ -1,4 +1,4 @@
-/* yawmi-ui.css — طبقات الواجهة المدمجة (25 ملفاً بالترتيب): appearance-v161.css، hybrid-v162.css، executive-v163.css، engineering-v164.css، workspaces-v165.css، templates-v166.css، additional-identities-v167.css، full-identity-v167.css، essentials-v168.css، approved-v170.css، approved-v172.css، approved-v173.css، approved-v176.css، approved-v177.css، approved-v178.css، approved-v179.css، approved-v180.css، approved-v181.css، approved-v184.css، approved-v185.css، approved-v186.css، approved-v187.css، approved-v189.css، approved-v190.css، approved-v191.css */
+/* yawmi-ui.css — طبقات الواجهة المدمجة (25 ملفاً بالترتيب): appearance-v161.css، hybrid-v162.css، executive-v163.css، engineering-v164.css، workspaces-v165.css، templates-v166.css، additional-identities-v167.css، full-identity-v167.css، essentials-v168.css، approved-v170.css، approved-v172.css، approved-v173.css، approved-v176.css، approved-v177.css، approved-v178.css، approved-v179.css، approved-v180.css، approved-v181.css، approved-v184.css، approved-v185.css، approved-v186.css، approved-v187.css، approved-v189.css، approved-v190.css، approved-v191.css، approved-v192.css */
 /* ===== appearance-v161.css ===== */
 /* Typography scale and theme roles; original Hijazi surface is exempt. */
 @import url("./fonts/fonts.css");
@@ -1381,3 +1381,69 @@ html:root:root #view.a190-day:has(>.sheet)>.sheet{order:-1}
 #printDay .a191-pill.g{background:#DCFCE7!important;color:#166534}#printDay .a191-pill.r{background:#FEE2E2!important;color:#B91C1C}#printDay .a191-pill.o{background:#FFEDD5!important;color:#9A3412}#printDay .a191-pill.b{background:#DBEAFE!important;color:#1E40AF}
 #printDay .a191-bar{display:inline-block;width:60px;height:7px;border-radius:4px;background:#E2E8F0!important;vertical-align:middle;margin-inline-end:6px;overflow:hidden;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 #printDay .a191-bar i{display:block;height:100%;background:#2563EB!important}#printDay .a191-bar i.g{background:#16A34A!important}#printDay .a191-bar i.o{background:#F59E0B!important}#printDay .a191-bar i.r{background:#DC2626!important}#printDay .a191-bar.m i{background:#D4AF37!important}
+
+/* ===== approved-v192.css ===== */
+/* v192 — أداة مرحلة العرض الموحدة */
+.q192{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:10px 0;padding:10px 12px;border:1px solid #DBE4F0;border-radius:12px;background:#F7FAFF;font-size:13px}
+.q192-lbl{font-weight:800;color:#0B1B3A}
+.q192-sel{position:relative;display:inline-flex;align-items:center;margin:0}
+.q192-sel select{appearance:auto;min-height:36px;padding:4px 10px;border-radius:10px;border:1.5px solid #2563EB;background:#fff;color:#0B1B3A;font:inherit;font-weight:700;max-width:260px}
+.q192-t-wait select{border-color:#C2410C;color:#7C2D12;background:#FFF7ED}
+.q192-t-doing select{border-color:#2563EB;color:#1E3A8A;background:#EFF6FF}
+.q192-t-done select{border-color:#15803D;color:#14532D;background:#F0FDF4}
+.q192-t-mut select{border-color:#64748B;color:#334155;background:#F8FAFC}
+.q192-sel select:disabled{opacity:.75;cursor:not-allowed}
+.q192-vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.q192-prob,.q192-meta{color:#526075;font-size:12px}
+.q192-meta{flex-basis:100%}
+.q192-btn{min-height:34px;padding:4px 12px;border-radius:10px;border:1px solid #CBD5E1;background:#fff;color:#1E3A8A;font:inherit;font-weight:700;cursor:pointer}
+.q192-btn:hover{border-color:#2563EB}
+.q192-btn.gold{background:#D4AF37;border-color:#B8962E;color:#0B1B3A}
+.q192-btn.bad{color:#B91C1C;border-color:#FECACA}
+.q192-task{margin:8px 0 0;padding:6px 8px;gap:6px;background:#FFFBEB;border-color:#FDE68A}
+.q192-task .q192-sel select{min-height:32px;font-size:12.5px}
+.q192-task .q192-btn{min-height:32px;font-size:12px;padding:2px 10px}
+.qfr .q192-row{flex-basis:100%;margin:8px 0 0}
+:root[data-theme=dark] .q192{background:#16233B;border-color:#24344F}
+:root[data-theme=dark] .q192-lbl{color:#E2E8F0}
+:root[data-theme=dark] .q192-sel select,:root[data-theme=dark] .q192-btn{background:#0F1A2E;color:#E2E8F0;border-color:#334155}
+:root[data-theme=dark] .q192-task{background:#2A2110;border-color:#5B4613}
+@media(max-width:700px){.q192{padding:8px}.q192-sel,.q192-sel select{width:100%;max-width:none}.q192-btn{flex:1 1 auto}}
+
+/* v192 — أزرار المهمة: صف واحد مضغوط (الأيقونات الثانوية بلا نص، والشرح في التلميح) بدل أن تنزل لصف ثانٍ وتكبّر البطاقة */
+html:root:root:root:root:root #view .task .acts.h153-actions{display:flex!important;flex-wrap:wrap!important;align-items:center!important;align-content:flex-start!important;gap:6px!important;width:auto!important}
+html:root:root:root:root:root #view .task .acts.h153-actions>.h153-update{flex:0 0 auto!important;width:auto!important;min-width:0!important;height:40px!important;min-height:40px!important;padding:0 14px!important;font-size:13.5px!important;order:1!important;grid-column:auto!important}
+html:root:root:root:root:root #view .task .acts.h153-actions>.h153-update span{font-size:13.5px!important}
+html:root:root:root:root:root #view .task .acts.h153-actions>.h153-state{flex:0 0 auto!important;width:auto!important;min-width:118px!important;height:40px!important;min-height:40px!important;order:2!important;grid-column:auto!important}
+html:root:root:root:root:root #view .task .acts.h153-actions>.h153-control:not(.h153-update):not(.stsel){flex:0 0 38px!important;width:38px!important;min-width:38px!important;max-width:38px!important;height:38px!important;min-height:38px!important;padding:0!important;flex-direction:row!important;gap:0!important;order:3!important;grid-column:auto!important}
+html:root:root:root:root:root #view .task .acts.h153-actions>.h153-control:not(.h153-update):not(.stsel)>span{display:none!important}
+html:root:root:root:root:root #view .task .acts.h153-actions>.h153-control:not(.h153-update):not(.stsel)>i{font-size:16px!important;height:auto!important}
+@media(max-width:700px){
+ html:root:root:root:root:root #view .task .acts.h153-actions{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;width:100%!important}
+ html:root:root:root:root:root #view .task .acts.h153-actions>.h153-update,html:root:root:root:root:root #view .task .acts.h153-actions>.h153-state{grid-column:span 3!important;width:100%!important;min-width:0!important}
+ html:root:root:root:root:root #view .task .acts.h153-actions>.h153-control:not(.h153-update):not(.stsel){grid-column:span 1!important;width:100%!important;max-width:none!important;min-width:0!important;flex:none!important}
+}
+
+/* v192 — رأس الصفحة: لا تداخل بين اسم المستخدم وعنوان الصفحة على الشاشات المتوسطة */
+html:root:root:root:root .hero .htl{min-width:0!important;flex:0 1 auto!important}
+html:root:root:root:root .hero .htr{min-width:0!important;flex:1 1 0!important;flex-wrap:wrap!important;row-gap:6px!important;justify-content:flex-start!important}
+html:root:root:root:root .hero .htr>#gqWrap{flex:1 1 150px!important;min-width:110px!important;width:auto!important;max-width:360px!important}
+@media(max-width:1700px){html:root:root:root:root .a170-user-t{display:none!important}}
+@media(max-width:1500px){html:root:root:root:root .hero #a170New{font-size:0!important;gap:0!important;padding:0 12px!important;min-width:44px!important;min-height:40px!important}html:root:root:root:root .hero #a170New svg{width:20px;height:20px}html:root:root:root:root .hero #viewSel{max-width:130px!important}}
+
+/* v192 — الرسائل المنبثقة أسفل الشاشة على الكمبيوتر حتى لا تغطي عنوان المشروع وأزراره */
+@media(min-width:701px){html:root:root:root #toast.toast{top:auto!important;bottom:24px!important;left:24px!important;right:auto!important;inset-inline-start:auto!important;transform:none!important;max-width:420px}}
+
+/* v192 — زر الحذف مفصول عن الطباعة */
+html:root:root:root [data-pdel]{margin-inline-start:14px!important;position:relative}
+html:root:root:root [data-pdel]::before{content:"";position:absolute;inset-inline-start:-9px;top:20%;height:60%;border-inline-start:1px solid #CBD5E1}
+@media(min-width:1100px){html:root:root:root:root:root #view .task .acts.h153-actions{flex-wrap:nowrap!important;flex-shrink:0!important}}
+html:root:root .q192 .q192-t-wait select{border-color:#C2410C!important;color:#7C2D12!important;background:#FFF7ED!important}
+html:root:root .q192 .q192-t-doing select{border-color:#2563EB!important;color:#1E3A8A!important;background:#EFF6FF!important}
+html:root:root .q192 .q192-t-done select{border-color:#15803D!important;color:#14532D!important;background:#F0FDF4!important}
+html:root:root .q192 .q192-t-mut select{border-color:#64748B!important;color:#334155!important;background:#F8FAFC!important}
+html:root:root[data-theme=dark] .q192 .q192-sel select{background:#0F1A2E!important;color:#E2E8F0!important}
+.q192-unb{margin:14px 0;padding:12px;border:1px dashed #D4AF37;border-radius:12px;background:#FFFBEB}
+.q192-unb h3{margin:0 0 8px;font-size:15px;color:#0B1B3A}.q192-unb h3 small{color:#526075;font-weight:600}
+.q192-unb table{width:100%}
+:root[data-theme=dark] .q192-unb{background:#2A2110;border-color:#5B4613}:root[data-theme=dark] .q192-unb h3{color:#E2E8F0}
