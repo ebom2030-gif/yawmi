@@ -1,4 +1,4 @@
-/* yawmi-ui.css — طبقات الواجهة المدمجة (25 ملفاً بالترتيب): appearance-v161.css، hybrid-v162.css، executive-v163.css، engineering-v164.css، workspaces-v165.css، templates-v166.css، additional-identities-v167.css، full-identity-v167.css، essentials-v168.css، approved-v170.css، approved-v172.css، approved-v173.css، approved-v176.css، approved-v177.css، approved-v178.css، approved-v179.css، approved-v180.css، approved-v181.css، approved-v184.css، approved-v185.css، approved-v186.css، approved-v187.css، approved-v189.css، approved-v190.css، approved-v191.css، approved-v192.css، approved-v193.css، approved-v194.css، approved-v195.css، approved-v196.css، approved-v197.css */
+/* yawmi-ui.css — طبقات الواجهة المدمجة (25 ملفاً بالترتيب): appearance-v161.css، hybrid-v162.css، executive-v163.css، engineering-v164.css، workspaces-v165.css، templates-v166.css، additional-identities-v167.css، full-identity-v167.css، essentials-v168.css، approved-v170.css، approved-v172.css، approved-v173.css، approved-v176.css، approved-v177.css، approved-v178.css، approved-v179.css، approved-v180.css، approved-v181.css، approved-v184.css، approved-v185.css، approved-v186.css، approved-v187.css، approved-v189.css، approved-v190.css، approved-v191.css، approved-v192.css، approved-v193.css، approved-v194.css، approved-v195.css، approved-v196.css، approved-v197.css، approved-v198.css */
 /* ===== appearance-v161.css ===== */
 /* Typography scale and theme roles; original Hijazi surface is exempt. */
 @import url("./fonts/fonts.css");
@@ -1618,3 +1618,17 @@ html:root body{font-weight:500;-webkit-font-smoothing:antialiased;text-rendering
 html:root body b,html:root body strong,html:root body th,html:root body h1,html:root body h2,html:root body h3,html:root body h4{font-weight:700}
 html:root body small,html:root body .sub{font-weight:500}
 html:root body input,html:root body select,html:root body textarea,html:root body button{font-family:inherit}
+
+/* ===== approved-v198.css ===== */
+/* v198 — زر المساعد الذكي باسم ظاهر + تمييز المهام السريعة + شاشة البداية */
+#cmdBtn.cmdb{display:inline-flex!important;align-items:center;gap:6px;white-space:nowrap;font-size:12.5px!important;font-weight:800;background:linear-gradient(135deg,#F3DE9A,#D4AF37)!important;color:#0B1B3A!important;border:1px solid #C29A3E!important;border-radius:10px;padding:6px 11px;box-shadow:0 4px 12px rgba(212,175,55,.28)}
+#cmdBtn.cmdb .y198-ai-i{font-size:15px;line-height:1}
+#cmdBtn.cmdb .y198-ai-l,#cmdBtn.cmdb .y198-ai-full{display:inline!important;font-size:12.5px!important;color:#0B1B3A!important}
+#cmdBtn.cmdb .y198-ai-short{display:none!important}
+#cmdBtn.cmdb kbd{background:rgba(11,27,58,.12)!important;color:#0B1B3A!important;border:0;border-radius:5px;padding:1px 5px;font-size:10.5px}
+html:root:root[data-theme=dark] #cmdBtn.cmdb{color:#0B1B3A!important}
+@media (max-width:900px){#cmdBtn.cmdb{padding:6px 9px}#cmdBtn.cmdb kbd,#cmdBtn.cmdb .y198-ai-full{display:none!important}#cmdBtn.cmdb .y198-ai-short{display:inline!important;font-size:12px!important;color:#0B1B3A!important}}
+#cmdM .cmdi[data-cmd^="q198:"] small{color:#8A6A1F;font-weight:800}
+#cmdM .cmdi[data-cmd^="q198:"]{border-inline-start:3px solid #D4AF37;background:rgba(212,175,55,.07);margin-bottom:2px}
+#cmdM .cmdi[data-cmd^="q198:"].on{background:rgba(212,175,55,.2)}
+@media print{#y198Splash{display:none!important}}

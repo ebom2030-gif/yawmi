@@ -1,0 +1,12 @@
+/* v198 — زر المساعد الذكي باسم ظاهر + تمييز المهام السريعة + شاشة البداية */
+#cmdBtn.cmdb{display:inline-flex!important;align-items:center;gap:6px;white-space:nowrap;font-size:12.5px!important;font-weight:800;background:linear-gradient(135deg,#F3DE9A,#D4AF37)!important;color:#0B1B3A!important;border:1px solid #C29A3E!important;border-radius:10px;padding:6px 11px;box-shadow:0 4px 12px rgba(212,175,55,.28)}
+#cmdBtn.cmdb .y198-ai-i{font-size:15px;line-height:1}
+#cmdBtn.cmdb .y198-ai-l,#cmdBtn.cmdb .y198-ai-full{display:inline!important;font-size:12.5px!important;color:#0B1B3A!important}
+#cmdBtn.cmdb .y198-ai-short{display:none!important}
+#cmdBtn.cmdb kbd{background:rgba(11,27,58,.12)!important;color:#0B1B3A!important;border:0;border-radius:5px;padding:1px 5px;font-size:10.5px}
+html:root:root[data-theme=dark] #cmdBtn.cmdb{color:#0B1B3A!important}
+@media (max-width:900px){#cmdBtn.cmdb{padding:6px 9px}#cmdBtn.cmdb kbd,#cmdBtn.cmdb .y198-ai-full{display:none!important}#cmdBtn.cmdb .y198-ai-short{display:inline!important;font-size:12px!important;color:#0B1B3A!important}}
+#cmdM .cmdi[data-cmd^="q198:"] small{color:#8A6A1F;font-weight:800}
+#cmdM .cmdi[data-cmd^="q198:"]{border-inline-start:3px solid #D4AF37;background:rgba(212,175,55,.07);margin-bottom:2px}
+#cmdM .cmdi[data-cmd^="q198:"].on{background:rgba(212,175,55,.2)}
+@media print{#y198Splash{display:none!important}}
