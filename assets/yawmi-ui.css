@@ -1815,3 +1815,41 @@ html:root #view .btn.gold:not(#y203x),html:root .auth .btn.gold:not(#y203x){back
 html:root #view .btn.gold:not(#y203x):hover{filter:brightness(1.04)}
 :root[data-a170] .a170-head h2::before,:root[data-a170] .a170-head h3::before{background:#D4AF37!important}
 html:root :focus-visible{outline:2px solid #D4AF37;outline-offset:2px}
+
+/* ===== 38-approved-v204.css ===== */
+/* v204 — خط لوحة المؤشرات أثقل وأوضح على الكحلي */
+html:root #view .y199-kpi .y199-kh h2:not(#y204x){font-weight:800!important;font-size:19px!important;letter-spacing:.2px}
+html:root #view .y199-kpi .y199-kl:not(#y204x){font-weight:800!important;font-size:13.5px!important;color:#FFFFFF!important}
+html:root #view .y199-kpi .y199-kv:not(#y204x){font-weight:800!important;font-size:30px!important;text-shadow:0 1px 0 rgba(0,0,0,.25)}
+html:root #view .y199-kpi .y199-ks:not(#y204x){font-weight:600!important;font-size:12.5px!important;color:#E2E8F3!important}
+html:root #view .y199-kpi .y199-krt:not(#y204x){font-weight:800!important;font-size:13px!important}
+html:root #view .y199-kpi .y199-kh small:not(#y204x){font-weight:600!important;color:#E2E8F3!important}
+html:root #view .y199-att span:not(#y204x){font-weight:800!important;font-size:13.5px!important}
+html:root #view .y199-att small:not(#y204x){font-weight:600!important;color:#E2E8F3!important;font-size:12px!important}
+html:root #view .y199-k{background:rgba(255,255,255,.08)!important;border-color:rgba(255,255,255,.18)!important}
+
+/* تنبيه نتائج الاجتماعات تحت اللوحة وبشكل واضح */
+html:root #view .h152-meeting-alerts.y204-meet{margin:0 0 14px!important;border-radius:14px!important;border:1px solid #E6D3A0!important;border-inline-start:5px solid #D4AF37!important;background:#FFFBF0!important;box-shadow:0 4px 14px rgba(11,27,58,.06)!important}
+html:root #view .h152-meeting-alerts.y204-meet h3,html:root #view details>summary:has(+ .h152-meeting-alerts){font-size:15px!important;font-weight:800!important;color:#0B1B3A!important}
+html:root #view details:has(> .h152-meeting-alerts)>summary{cursor:pointer;padding:12px 16px;border-radius:14px;background:#FFFBF0;border:1px solid #E6D3A0;border-inline-start:5px solid #D4AF37;font-weight:800;color:#0B1B3A}
+
+/* زر المساعد الذكي في الرأس: اسم ظاهر وخط واضح */
+html:root .htr #cmdBtn.cmdb:not(#y204x),html:root .hero #cmdBtn.cmdb:not(#y204x){width:auto!important;min-width:0!important;height:40px!important;font-size:13px!important;padding:0 14px!important;gap:6px!important;display:inline-flex!important;align-items:center!important;flex-direction:row!important;white-space:nowrap!important;background:linear-gradient(135deg,#0B1B3A,#16305C)!important;color:#fff!important;border:1px solid #D4AF37!important;border-radius:12px!important;box-shadow:0 4px 12px rgba(11,27,58,.18)!important}
+html:root #cmdBtn.cmdb .y198-ai-i{display:inline!important;font-size:15px!important;color:#F3DE9A!important}
+html:root #cmdBtn.cmdb .y198-ai-l,html:root #cmdBtn.cmdb .y198-ai-full{display:inline!important;font-size:13px!important;font-weight:800!important;color:#fff!important}
+html:root #cmdBtn.cmdb .y198-ai-short,html:root #cmdBtn.cmdb kbd{display:none!important}
+@media (max-width:900px){html:root #cmdBtn.cmdb .y198-ai-full{display:none!important}html:root #cmdBtn.cmdb .y198-ai-short{display:inline!important;font-size:12.5px!important;font-weight:800!important;color:#fff!important}html:root .htr #cmdBtn.cmdb:not(#y204x){padding:0 10px!important}}
+
+/* عروض أسعار تحتاج متابعة: البطاقات عمودية فلا تتداخل، ومرحلة العرض بعرض البطاقة */
+html:root #view .qfp .qfr:not(#y204x){display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:10px!important;min-width:0!important;overflow:hidden!important;position:relative}
+html:root #view .qfp .qfr:not(#y204x)>*:not(#y204x){max-width:100%!important;min-width:0!important;width:100%!important;flex:none!important;float:none!important;position:static!important;margin:0!important;grid-area:auto!important}
+html:root #view .qfp .qfr:not(#y204x)>.q192-row:not(#y204x){order:2!important}
+html:root #view .qfp .qfr:not(#y204x)>.qfa:not(#y204x){order:3!important}
+html:root #view .qfp .qfr>.qfa:not(#y204x){display:flex!important;flex-wrap:wrap!important;gap:6px!important;align-items:center!important}
+html:root #view .qfp .q192-row:not(#y204x){position:static!important;display:flex!important;flex-wrap:wrap!important;align-items:center!important;gap:6px 8px!important;padding:8px 10px!important;border-radius:10px!important;background:#F7F4EA!important;border:1px solid #EDE3C8!important;transform:none!important;inset:auto!important}
+html:root #view .qfp .q192-row .q192-sel{position:relative!important}
+html:root #view .remsel:not(#y204x){display:inline-flex!important;align-items:center!important;gap:4px!important;position:relative}
+html:root #view .remsel select{position:static!important;margin:0!important}
+html:root .hero #cmdBtn.cmdb::before,html:root .htr #cmdBtn.cmdb::before{content:none!important;display:none!important}
+html:root #view .pjc .pjneed:not(#y204x){max-width:100%!important;box-sizing:border-box!important;white-space:normal!important;overflow-wrap:anywhere!important;margin-inline:0!important;width:auto!important}
+html:root #view .remsel:not(#y204x){padding:0 6px!important}html:root #view .remsel select:not(#y204x){border:0!important;background:transparent!important;box-shadow:none!important}
