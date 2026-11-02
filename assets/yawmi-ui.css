@@ -1884,3 +1884,134 @@ html:root nav.tabs button span:not(#y206x){font-size:15px!important}
 /* لوحة واحدة فقط: في الصفحات التي لها لوحة v206 يُخفى شريط .stats العام */
 body.y206-has .wrap>section.stats{display:none!important}
 html:root #view details.y205-pray .y205-pn small{opacity:1!important;color:#F1F4FA!important}
+
+/* ===== 41-approved-v207.css ===== */
+/* ===== v207 — الهوية الموحدة (دليلها: الهوية\دليل_النقشة_والهوية_v207.md) ===== */
+:root{--yw-navy:#0B1B3A;--yw-navy2:#13294F;--yw-gold:#D4AF37;--yw-gold2:#F3DE9A;--yw-gold3:#A37E2D;--yw-sand:#F5EEDF;--yw-ink:#0B1B3A;
+ --yw-pat:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cg fill='none' stroke='%23D4AF37' stroke-opacity='.13'%3E%3Cpath d='M22 6l4.7 11.3L38 22l-11.3 4.7L22 38l-4.7-11.3L6 22l11.3-4.7z'/%3E%3Crect x='12' y='12' width='20' height='20' transform='rotate(45 22 22)'/%3E%3C/g%3E%3C/svg%3E");
+ --yw-navybg:var(--yw-pat),linear-gradient(135deg,#0B1B3A 0%,#13294F 60%,#0B1B3A 100%)}
+
+/* [7/8] كل الأسطح الكحلية: درجة واحدة + النقشة النجمية */
+html:root #view :is(.y199-kpi,.ckp,.bkk,.pvks,.h154-metrics,.rcsum,.p143-kpis,.kpis.k8,.y202-q,.y201-bar,details.y205-pray):not(#y207x),html:root .wrap>section.stats:not(#y207x){background:var(--yw-navybg)!important;background-size:44px 44px,auto!important;border:1px solid rgba(212,175,55,.45)!important}
+html:root #view :is(.y199-kpi,.ckp,.bkk,.pvks,.h154-metrics,.rcsum):not(#y207x)::before{display:none!important}
+
+/* [4/15] المشاريع: لوحة p143 بنفس الكحلي، والمحافظ شريط تصفية مدمج */
+html:root #view .p143-kpis:not(#y207x){display:grid!important;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))!important;gap:10px!important;padding:14px!important;margin:12px 0!important;border-radius:18px!important;box-shadow:0 14px 34px rgba(11,27,58,.2)!important}
+html:root #view .p143-kpis>.p143-metric:not(#y207x){all:unset;box-sizing:border-box;display:flex;flex-direction:column;gap:3px;min-height:92px;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:#E2E8F3;cursor:pointer;text-align:start}
+html:root #view .p143-kpis>.p143-metric:not(#y207x):hover{border-color:var(--yw-gold);transform:translateY(-2px)}
+html:root #view .p143-kpis>.p143-metric span{order:1;font-weight:800!important;font-size:14px!important;color:#fff!important}
+html:root #view .p143-kpis>.p143-metric b{order:2;font-weight:800!important;font-size:28px!important;color:var(--yw-gold2)!important;line-height:1.15}
+html:root #view .p143-kpis>.p143-metric small{order:3;font-weight:600!important;font-size:12.5px!important;color:#E2E8F3!important}
+html:root #view .p143-kpis>.p143-metric.on,html:root #view .p143-kpis>.p143-metric[aria-pressed="true"]{border-color:var(--yw-gold)!important;background:rgba(212,175,55,.2)!important}
+html:root #view .p143-scope{border-radius:12px!important;background:#FBF8F1!important;border:1px solid #E6DCC3!important;padding:8px 12px!important}
+
+/* [5] رأس المشروع: كحلي بالنقشة فوق صورة المشروع، وكل زر بأيقونة واضحة */
+html:root #view .pband:not(#y207x){background:var(--yw-pat),linear-gradient(135deg,rgba(11,27,58,.94),rgba(19,41,79,.88)),var(--q193-img,none) center/cover!important;background-size:44px 44px,auto,cover!important;border:1px solid rgba(212,175,55,.5)!important;border-radius:18px!important;color:#fff!important;box-shadow:0 14px 34px rgba(11,27,58,.22)!important}
+html:root #view .pband :is(h2,.pbm,.pbm *):not(.spill):not(button){color:#fff!important}
+html:root #view .pband .pcode,html:root #view .pband .tchip{background:rgba(255,255,255,.12)!important;color:#F3DE9A!important;border:1px solid rgba(212,175,55,.45)!important}
+html:root #view .pband .pbr button:not(.danger):not([data-pdel]){background:rgba(255,255,255,.1)!important;color:#fff!important;border:1px solid rgba(255,255,255,.25)!important}
+html:root #view .pband .pbr button.gold,html:root #view .pband .pbr .btn.gold{background:linear-gradient(135deg,#F3DE9A,#D4AF37)!important;color:#0B1B3A!important;border-color:#C29A3E!important}
+html:root #view .pband .bk{background:rgba(255,255,255,.12)!important;color:#fff!important}
+
+/* [6] الإجراءات السريعة أعلى المشروع */
+.y207-quick{margin:10px 0 14px;padding:12px 14px;border-radius:16px;background:#fff;border:1px solid #E6DCC3;border-inline-start:5px solid var(--yw-gold);box-shadow:0 6px 18px rgba(11,27,58,.07);display:flex;flex-direction:column;gap:10px}
+.y207-qh{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.y207-qh b{font-size:15px;color:var(--yw-ink)}.y207-qh span{padding:2px 10px;border-radius:999px;background:var(--yw-navy);color:var(--yw-gold2);font-weight:700;font-size:13px}
+.y207-qc .q192-row{margin:0!important}
+.y207-qb{display:flex;flex-wrap:wrap;gap:8px}
+.y207-qb button{border:1px solid #E6DCC3;background:#FBF8F1;color:var(--yw-ink);border-radius:12px;padding:8px 14px;font:700 14px inherit;cursor:pointer}
+.y207-qb button:hover{border-color:var(--yw-gold);background:#F5EEDF}
+html:root[data-theme=dark] .y207-quick{background:#13213D;border-color:#2A3A5C}html:root[data-theme=dark] .y207-qb button{background:#0F1A31;color:#E5E9F2;border-color:#2A3A5C}html:root[data-theme=dark] .y207-qh b{color:#E5E9F2}
+@media print{.y207-quick{display:none!important}}
+
+/* [1/2] بطاقة المهمة: العنوان في سطر والأزرار في سطر تحته، والأزرار بنصها الكامل */
+html:root #view .task[data-tid]:not(#y207x){grid-template-columns:auto 1fr!important;row-gap:8px}
+html:root #view .task[data-tid]:not(#y207x)>.acts{grid-column:1/-1!important;grid-row:auto!important;display:flex!important;flex-wrap:wrap!important;gap:6px!important;justify-content:flex-start!important;width:auto!important;max-width:none!important;margin-inline-start:34px}
+html:root #view .task[data-tid]:not(#y207x)>.num,html:root #view .task[data-tid]:not(#y207x)>.a176-done{display:none}
+html:root #view .task .acts .h153-control.ic:not(#y207x){width:auto!important;min-width:64px!important;max-width:none!important;padding:5px 10px!important;white-space:nowrap!important}
+html:root #view .task .acts .h153-control.ic:not(#y207x) *{max-width:none!important;overflow:visible!important;text-overflow:clip!important;white-space:nowrap!important}
+@media (max-width:760px){html:root #view .task[data-tid]:not(#y207x)>.acts{margin-inline-start:0}}
+
+/* [3] تفاصيل المهمة: خانات أعرض ونص كامل، وصندوق التحويل مطوي */
+html:root #view .task .more:not(#y207x){display:flex!important;flex-wrap:wrap!important;gap:12px 16px!important;align-items:flex-end!important}
+html:root #view .task .more>:is(.a190-h,.cklist,.attach,details,.wfbox,.tkfin):not(#y207x){flex:1 1 100%!important;max-width:100%!important}
+html:root #view .task .more>label:not(#y207x){display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:4px!important;flex:1 1 230px!important;min-width:200px!important;font-weight:700}
+html:root #view .task .more>label:not(#y207x) :is(input,select){width:100%!important;min-width:0!important;max-width:none!important}
+html:root #view .task .more>label.wdl:not(#y207x){flex-direction:row!important;flex-wrap:wrap!important;align-items:center!important}
+html:root #view .task .more>label.wdl input{width:90px!important;flex:0 0 90px}
+.y207-hide{display:none!important}
+details.y207-wf{border:1px dashed #D9C9A3;border-radius:12px;padding:6px 12px;background:#FFFCF4}
+details.y207-wf>summary{cursor:pointer;font-weight:800;color:var(--yw-ink);padding:4px 0}
+details.y207-wf .wfbox{margin:6px 0 0!important;border:0!important;box-shadow:none!important}
+
+/* [9] أسفل القائمة الجانبية: شبكة أنيقة متجاوبة */
+html:root aside.side:not(#y207x){background-image:var(--yw-pat)!important;background-size:44px 44px!important}
+html:root .a176-sf .a176-grid:not(#y207x){display:grid!important;grid-template-columns:repeat(auto-fill,minmax(88px,1fr))!important;gap:6px!important}
+html:root .a176-sf .a176-grid button:not(#y207x){display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:4px!important;min-height:62px!important;padding:8px 4px!important;border-radius:12px!important;background:rgba(255,255,255,.06)!important;border:1px solid rgba(212,175,55,.3)!important;color:#fff!important;font:700 12.5px inherit!important;white-space:normal!important;text-align:center!important;line-height:1.3!important}
+html:root .a176-sf .a176-grid button:not(#y207x):hover{border-color:var(--yw-gold)!important;background:rgba(212,175,55,.14)!important}
+html:root .a176-sf .a176-grid button svg{color:var(--yw-gold2)!important;stroke:var(--yw-gold2)!important}
+html:root .a176-sf .a176-me:not(#y207x){border:1px solid rgba(212,175,55,.35)!important;border-radius:12px!important;background:rgba(255,255,255,.06)!important}
+/* [14] زر «أعمالي الخاصة» كامل النص */
+html:root #spc:not(#y207x){display:flex!important;gap:4px!important}html:root #spc button:not(#y207x){flex:1 1 0!important;min-width:0!important;white-space:normal!important;line-height:1.25!important;padding:6px 6px!important;font-size:13px!important}
+
+/* [13] الرأس: أسماء ظاهرة لزر الصلاة على الشاشات الواسعة */
+@media (min-width:1200px){html:root #ess168-open.ess168-trigger:not(#y207x){font-size:13px!important;width:auto!important;padding:0 12px!important;white-space:nowrap}}
+
+/* [10/17] الرئيسية: بطاقتا المساعد والصورة بلا فراغ، وتبويبات المساعد على سطر */
+html:root #view .a170-grid>:is(.a170-assistant,.a170-picture):not(#y207x){align-self:start!important;height:auto!important;min-height:0!important}
+html:root #view .a170-assistant .a170-tabs button:not(#y207x){white-space:nowrap!important;padding:6px 10px!important;font-size:13px!important}
+html:root #view .a170-assistant .a170-tabs:not(#y207x){display:flex!important;flex-wrap:wrap!important;gap:6px!important}
+html:root #view .a170-picture.y207-nopic figure{display:none!important}
+.y207-up{margin:6px 14px 14px;padding:12px;border-radius:12px;background:#FBF8F1;border:1px dashed #D9C9A3;color:#3F4A5E;font-weight:600}
+
+/* [19] شاشة البداية بالنقشة */
+html.y198-boot #y198Splash{background-image:var(--yw-pat)!important;background-size:44px 44px!important}
+
+/* [22] شاشة الدخول: زر دخول مميز وبطاقة بالهوية */
+html:root #auth .auth-card:not(#y207x){border-top:4px solid var(--yw-gold)!important;box-shadow:0 20px 50px rgba(11,27,58,.25)!important}
+html:root #auth #authBtn:not(#y207x){width:100%!important;min-height:50px!important;border:0!important;border-radius:14px!important;background:linear-gradient(135deg,#F3DE9A,#D4AF37)!important;color:#0B1B3A!important;font-size:18px!important;font-weight:800!important;font-family:inherit!important;box-shadow:0 8px 20px rgba(212,175,55,.35)!important;cursor:pointer;letter-spacing:.3px}
+html:root #auth #authBtn:not(#y207x):hover{box-shadow:0 10px 26px rgba(212,175,55,.5)!important;filter:brightness(1.05);transform:translateY(-1px)}
+html:root #auth{background-image:var(--yw-pat),linear-gradient(135deg,#0B1B3A,#13294F)!important;background-size:44px 44px,auto!important}
+
+/* [12/18] التقارير المطبوعة بالهوية */
+@media print{
+ body.printday #printDay.y207-print .pdh,body.printday #printDay:not(.y202doc) .pdh{background:#0B1B3A url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cg fill='none' stroke='%23D4AF37' stroke-opacity='.18'%3E%3Cpath d='M22 6l4.7 11.3L38 22l-11.3 4.7L22 38l-4.7-11.3L6 22l11.3-4.7z'/%3E%3C/g%3E%3C/svg%3E")!important;background-size:30px 30px!important;color:#fff!important;border-bottom:3px solid #A37E2D!important;padding:4mm 5mm!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ body.printday #printDay:not(.y202doc) .pdh :is(h1,.pdd,.pdbrand){color:#fff!important}
+ body.printday #printDay:not(.y202doc) .pdh .pdbrand small{color:#F3DE9A!important}
+ body.printday #printDay:not(.y202doc) .pdh .pdm th{background:rgba(255,255,255,.12)!important;color:#F3DE9A!important}
+ body.printday #printDay:not(.y202doc) .pdh .pdm td{color:#fff!important;background:transparent!important}
+ body.printday #printDay:not(.y202doc) :is(.pdb,.pdsh){background:#0B1B3A!important;color:#fff!important;border-inline-start:4mm solid #A37E2D!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ body.printday #printDay:not(.y202doc) :is(.pdb,.pdsh) span{background:#A37E2D!important;color:#fff!important}
+ body.printday #printDay:not(.y202doc) table th{background:#F5EEDF!important;color:#0B1B3A!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ body.printday #printDay:not(.y202doc) .pdk>div{border:1px solid #D9C9A3!important;background:#FBF8F1!important}
+ body.printday #printDay:not(.y202doc) .pdk>div.hi{background:#0B1B3A!important;color:#fff!important}
+ body.printday #printDay:not(.y202doc) .pdk>div.hi b{color:#F3DE9A!important}
+ body.printday #printDay:not(.y202doc) footer{border-top:2px solid #A37E2D!important;color:#6B5A2E!important}
+}
+html:root #auth #authBtn:not(#y207x)::before{content:"🔐  ";}
+html:root #auth #authBtn:not(#y207x):active{transform:translateY(1px)}
+/* [22] زر الدخول هو الأبرز: التجريبي يصبح إطاراً كحلياً ثانوياً */
+html:root #auth #demoBtn:not(#y207x){background:transparent!important;color:#0B1B3A!important;border:1.5px solid #0B1B3A!important;box-shadow:none!important;min-height:44px!important;font-weight:700!important}
+html:root #auth #demoBtn:not(#y207x) img,html:root #auth #demoBtn:not(#y207x) svg{display:none!important}
+html:root[data-theme="dark"] #auth #demoBtn:not(#y207x),html:root.dark #auth #demoBtn:not(#y207x){color:#F3DE9A!important;border-color:#D4AF37!important}
+html:root #auth #demoBtn:not(#y207x)::before,html:root #auth #demoBtn:not(#y207x)::after{display:none!important;content:none!important}
+html:root #auth #demoBtn:not(#y207x) .ui167-icon{display:none!important}
+/* [5] لوحة واحدة في كل صفحة: شريط .stats العام يظهر في «أعمال اليوم» فقط (كان يتكرر فوق لوحة الرئيسية والمشاريع وبقية الصفحات) */
+html:root body:not([data-tab="day"]) .wrap>section.stats:not(#y207x),html:root body.y206-has .wrap>section.stats:not(#y207x){display:none!important}
+/* [مضاف] ترحيب الرئيسية: خلفية كحلية بالنقشة بدل الرمادي */
+html:root #view .a170-hero:not(#y207x){background:var(--yw-navybg)!important;background-size:44px 44px,auto!important;border:1px solid rgba(212,175,55,.45)!important}
+html:root #view .a170-hero .a170-hero-bg:not(#y207x){background:var(--yw-navybg)!important;background-size:44px 44px,auto!important;filter:none!important;opacity:1!important}
+html:root #view .a170-hero :is(.a170-weather,.a170-wx,[class*="weather"]):not(#y207x){background:rgba(255,255,255,.08)!important;border:1px solid rgba(212,175,55,.35)!important}
+/* [13] زر الصلاة كان يظهر كهلال فقط فيبدو زراً ثانياً للوضع الليلي: يظهر باسمه */
+html:root #ess168-open.ess168-trigger:not(#y207x){width:auto!important;min-width:0!important;padding:0 12px!important;gap:6px!important;display:inline-flex!important;align-items:center!important;white-space:nowrap!important}
+html:root #ess168-open.ess168-trigger:not(#y207x) span{display:inline!important;position:static!important;width:auto!important;height:auto!important;clip:auto!important;overflow:visible!important;font-size:13px!important;font-weight:700!important}
+html:root #ess168-open.ess168-trigger:not(#y207x) svg{display:none!important}
+html:root #ess168-open.ess168-trigger:not(#y207x)::before{content:"🕌";font-size:17px;line-height:1}
+@media (max-width:1599px){html:root #ess168-open.ess168-trigger:not(#y207x) span{display:none!important}html:root #ess168-open.ess168-trigger:not(#y207x){padding:0 10px!important}}
+/* [13] أزرار الرأس في سطر واحد على الشاشات الواسعة (كانت الصورة الشخصية تنزل لسطر ثانٍ في «أعمال اليوم») */
+@media (min-width:1100px){html:root header.hero .htl:not(#y207x){flex:0 1 auto!important;min-width:0!important}html:root header.hero .htr:not(#y207x){flex-wrap:nowrap!important;flex:1 1 0!important;min-width:0;justify-content:flex-end}html:root header.hero .htr #gqWrap:not(#y207x){flex:0 1 260px!important;min-width:200px!important}html:root header.hero .htr #viewSel:not(#y207x){max-width:120px}}
+/* [مضاف] ملخص أعلى «أعمال اليوم» (.hbrief): نفس الكحلي بالنقشة بدل البطاقات البيضاء */
+html:root body header.hero .hbrief:not(#y207x):not(#y207y):not(#y207z){background:var(--yw-navybg)!important;background-size:44px 44px,auto!important;border:1px solid rgba(212,175,55,.45)!important;border-radius:18px!important;padding:12px!important;gap:10px!important}
+html:root body header.hero .hbrief :is(.hbc,.hbg):not(#y207x):not(#y207y):not(#y207z){background:rgba(255,255,255,.08)!important;border:1px solid rgba(255,255,255,.18)!important;box-shadow:none!important;color:#fff!important}
+html:root body header.hero .hbrief :is(.hbc,.hbg):not(#y207x):not(#y207y) *{color:#fff!important}
+html:root header.hero .hbrief .hbc:not(#y207x) :is(small,.hbk,.hbl){color:#F3DE9A!important}
+html:root header.hero .hbrief .hbc:not(#y207x) :is(.late,.red,b.r,[style*="red"],[style*="#d"]){color:#FCA5A5!important}
