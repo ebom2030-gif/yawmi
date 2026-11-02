@@ -1,0 +1,6 @@
+/* v194 — مؤشر الحفظ في الخلفية */
+#y194sv{position:fixed;bottom:24px;right:24px;z-index:230;padding:7px 14px;border-radius:999px;background:#0B1B3A;color:#fff;font-size:12.5px;font-weight:700;box-shadow:0 8px 22px rgba(11,27,58,.25);opacity:0;transform:translateY(8px);transition:opacity .2s ease,transform .2s ease;pointer-events:none}
+#y194sv.on{opacity:1;transform:none}#y194sv.ok{background:#15803D}
+@media(max-width:700px){#y194sv{bottom:calc(84px + env(safe-area-inset-bottom,0px));right:12px}}
+@media(prefers-reduced-motion:reduce){#y194sv{transition:none}}
+#y194sv.err{background:#B91C1C}

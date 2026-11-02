@@ -1,0 +1,57 @@
+/* v193 — أزرار المهمة: الأيقونة ومسمّاها تحتها (عادت المسميات) في صف واحد مرتب */
+html:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-control:not(.h153-update):not(.stsel){flex:0 0 58px!important;width:58px!important;min-width:58px!important;max-width:58px!important;height:50px!important;min-height:50px!important;flex-direction:column!important;gap:2px!important;padding:4px 2px!important;border-radius:12px!important;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease,background-color .15s ease!important}
+html:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-control:not(.h153-update):not(.stsel)>span{display:block!important;font-size:10.5px!important;font-weight:700!important;line-height:1.15!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;max-width:100%!important}
+html:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-control:not(.h153-update):not(.stsel)>i{font-size:17px!important;line-height:1!important}
+html:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-update,html:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-state{height:50px!important;min-height:50px!important;border-radius:12px!important}
+html:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-control:not(.h153-update):not(.stsel):hover{transform:translateY(-2px)!important;box-shadow:0 6px 14px rgba(37,99,235,.18)!important;border-color:#93C5FD!important}
+html:root:root:root:root:root:root #view .task .acts.h153-actions>*:active{transform:scale(.96)!important}
+html:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-control[aria-pressed="true"]:not(.h153-update):not(.stsel){background:#EFF6FF!important;border-color:#2563EB!important;color:#1D4ED8!important}
+@media(max-width:700px){
+ html:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-control:not(.h153-update):not(.stsel){width:100%!important;max-width:none!important;min-width:0!important;flex:none!important;height:48px!important;min-height:48px!important}
+ html:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-control:not(.h153-update):not(.stsel)>span{font-size:9.5px!important}
+ html:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-update,html:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-state{height:46px!important;min-height:46px!important}
+}
+/* v193 — تفاعل بطاقة المهمة: رفع خفيف عند المرور وظل ناعم */
+html:root:root:root #view .task.t145-task{transition:box-shadow .18s ease,transform .18s ease,border-color .18s ease}
+@media(hover:hover){html:root:root:root #view .task.t145-task:hover{box-shadow:0 10px 26px rgba(11,27,58,.10)!important;transform:translateY(-1px)}}
+@media(prefers-reduced-motion:reduce){html:root:root:root #view .task.t145-task,html:root:root:root:root:root:root #view .task .acts.h153-actions>*{transition:none!important;transform:none!important}}
+/* v193 — شريط التنقل بين الأيام: صف واحد منظم (تنقل | التاريخ | أدوات) بدل العناصر المتكسرة */
+html:root:root:root #dayWrap .daynav{display:grid!important;grid-template-columns:auto auto auto minmax(0,1fr) auto auto auto!important;grid-template-areas:"prev next today dl pick pdf xls"!important;align-items:center!important;gap:8px!important;padding:10px 12px!important;background:var(--card,#fff)!important;border:1px solid #E2E8F0!important;border-radius:16px!important;box-shadow:0 2px 10px rgba(11,27,58,.05)!important;margin-bottom:14px!important}
+html:root:root:root #dayWrap .daynav>#prevDay{grid-area:prev}html:root:root:root #dayWrap .daynav>#nextDay{grid-area:next}html:root:root:root #dayWrap .daynav>#goToday{grid-area:today}
+html:root:root:root #dayWrap .daynav>.dl{grid-area:dl;display:flex!important;flex-wrap:wrap!important;align-items:center!important;justify-content:center!important;gap:4px 10px!important;min-width:0!important;text-align:center!important}
+html:root:root:root #dayWrap .daynav>.dl #dayName{font-size:17px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;max-width:100%!important;flex:0 1 auto}
+html:root:root:root #dayWrap .daynav>.dl #dayHijri{font-size:12.5px!important;color:#526075!important;white-space:nowrap!important}
+html:root:root:root #dayWrap .daynav>.dl .nbday:not([hidden]){display:inline-flex!important;align-items:center;gap:4px;height:28px!important;padding:0 10px!important;border-radius:999px!important;font-size:12px!important;white-space:nowrap!important;margin:0!important}
+html:root:root:root #dayWrap .daynav>#pickDay{grid-area:pick;height:40px!important;border-radius:10px!important;min-width:0!important;width:150px!important}
+html:root:root:root #dayWrap .daynav>#dayPdf{grid-area:pdf}html:root:root:root #dayWrap .daynav>#dayXls{grid-area:xls}
+html:root:root:root #dayWrap .daynav>.nb{height:40px!important;min-height:40px!important;padding:0 14px!important;border-radius:10px!important;white-space:nowrap!important;margin:0!important;transition:background-color .15s ease,border-color .15s ease,transform .1s ease}
+html:root:root:root #dayWrap .daynav>.nb:hover{border-color:#93C5FD!important;background:#EFF6FF!important}html:root:root:root #dayWrap .daynav>.nb:active{transform:scale(.97)}
+:root[data-theme=dark] #dayWrap .daynav{background:#111C30!important;border-color:#1F2C44!important}
+@media(max-width:1100px){html:root:root:root #dayWrap .daynav{grid-template-columns:auto auto auto 1fr auto auto!important;grid-template-areas:"dl dl dl dl dl dl" "prev next today . pick pdf" "prev next today . pick xls"!important}
+ html:root:root:root #dayWrap .daynav{grid-template-columns:auto auto auto 1fr auto auto auto!important;grid-template-areas:"dl dl dl dl dl dl dl" "prev next today . pick pdf xls"!important}}
+@media(max-width:600px){html:root:root:root #dayWrap .daynav{grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-template-areas:"dl dl dl" "prev today next" "pick pdf xls"!important;padding:10px!important}
+ html:root:root:root #dayWrap .daynav>.nb,html:root:root:root #dayWrap .daynav>#pickDay{width:100%!important;padding:0 6px!important;font-size:13px!important}
+ html:root:root:root #dayWrap .daynav>.dl #dayName{font-size:15.5px!important}}
+/* v193 — حالة الزر المفعّل (مثل «بانتظار رد») مقروءة: خلفية فاتحة ونص ملوّن */
+html:root:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-control.a176-on:not(.h153-update):not(.stsel),html:root:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-waitreply[aria-pressed="true"]{background:#FFF7ED!important;border-color:#F97316!important;color:#C2410C!important}
+html:root:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-control.a176-on>*,html:root:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-waitreply[aria-pressed="true"]>*{color:#C2410C!important}
+html:root:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-star[aria-pressed="true"]{background:#FFFBEB!important;border-color:#D4AF37!important;color:#92400E!important}
+/* الجوال: مسميات قصيرة تحت الأيقونات حتى لا تُقص */
+@media(max-width:700px){
+ html:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-control:not(.h153-update):not(.stsel)>span{font-size:0!important}
+ html:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-control:not(.h153-update):not(.stsel)>span::after{font-size:10px;font-weight:700;line-height:1.15}
+ html:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-waitreply>span::after{content:"انتظار"}
+ html:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-star>span::after{content:"أولوية"}
+ html:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-tomorrow>span::after{content:"للغد"}
+ html:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-achievement>span::after{content:"إنجاز"}
+ html:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-pv>span::after{content:"خاص"}
+ html:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-details>span::after{content:"تفاصيل"}
+ html:root:root:root #view .task .meta,html:root:root:root #view .task .h152-identity{display:flex!important;flex-wrap:wrap!important;gap:6px!important;flex-direction:row!important}
+ html:root:root:root #view .task .meta>*,html:root:root:root #view .task .h152-identity>*{width:auto!important;margin:0!important}
+}
+/* v193 — رأس المشروع بصورة المشروع وطبقة شفافة */
+html:root:root:root:root #view .pband.q193-band{background:linear-gradient(90deg,rgba(11,27,58,.86) 0%,rgba(11,27,58,.62) 55%,rgba(11,27,58,.35) 100%),var(--q193-img) center/cover no-repeat!important;color:#fff!important}
+html:root:root:root:root #view .pband.q193-band h2,html:root:root:root:root #view .pband.q193-band h3,html:root:root:root:root #view .pband.q193-band b{color:#fff!important}
+/* وسم حالة المشروع في الرأس كان أبيض على أبيض */
+html:root:root:root:root #view .pband .pill,html:root:root:root:root #view .pband [class*="st-"],html:root:root:root:root #view .pband .pst{background:rgba(255,255,255,.18)!important;color:#fff!important;border:1px solid rgba(255,255,255,.45)!important}
+html:root:root:root:root:root #view .pband .spill{background:rgba(255,255,255,.2)!important;color:#fff!important;border:1px solid rgba(255,255,255,.55)!important;font-weight:800!important;opacity:1!important}
