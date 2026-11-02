@@ -1,0 +1,7 @@
+/* v203 — إخفاء زر «بانتظار رد» المكرر + توحيد الألوان (كحلي #0B1B3A / ذهبي #D4AF37) */
+html:root #view .task .acts [data-a="waitreply"].y203-dup{display:none!important}
+/* توحيد الألوان: الأزرار الذهبية والعناوين والتركيز */
+html:root #view .btn.gold:not(#y203x),html:root .auth .btn.gold:not(#y203x){background:linear-gradient(135deg,#F3DE9A,#D4AF37)!important;color:#0B1B3A!important;border-color:#C29A3E!important}
+html:root #view .btn.gold:not(#y203x):hover{filter:brightness(1.04)}
+:root[data-a170] .a170-head h2::before,:root[data-a170] .a170-head h3::before{background:#D4AF37!important}
+html:root :focus-visible{outline:2px solid #D4AF37;outline-offset:2px}

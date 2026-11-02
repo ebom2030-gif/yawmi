@@ -1,4 +1,4 @@
-/* yawmi-ui.css — طبقات الواجهة المدمجة (25 ملفاً بالترتيب): appearance-v161.css، hybrid-v162.css، executive-v163.css، engineering-v164.css، workspaces-v165.css، templates-v166.css، additional-identities-v167.css، full-identity-v167.css، essentials-v168.css، approved-v170.css، approved-v172.css، approved-v173.css، approved-v176.css، approved-v177.css، approved-v178.css، approved-v179.css، approved-v180.css، approved-v181.css، approved-v184.css، approved-v185.css، approved-v186.css، approved-v187.css، approved-v189.css، approved-v190.css، approved-v191.css، approved-v192.css، approved-v193.css، approved-v194.css، approved-v195.css، approved-v196.css، approved-v197.css، approved-v198.css، approved-v199.css */
+/* yawmi-ui.css — طبقات الواجهة المدمجة (25 ملفاً بالترتيب): appearance-v161.css، hybrid-v162.css، executive-v163.css، engineering-v164.css، workspaces-v165.css، templates-v166.css، additional-identities-v167.css، full-identity-v167.css، essentials-v168.css، approved-v170.css، approved-v172.css، approved-v173.css، approved-v176.css، approved-v177.css، approved-v178.css، approved-v179.css، approved-v180.css، approved-v181.css، approved-v184.css، approved-v185.css، approved-v186.css، approved-v187.css، approved-v189.css، approved-v190.css، approved-v191.css، approved-v192.css، approved-v193.css، approved-v194.css، approved-v195.css، approved-v196.css، approved-v197.css، approved-v198.css، approved-v199.css، approved-v200.css، approved-v201.css، approved-v202.css، approved-v203.css */
 /* ===== appearance-v161.css ===== */
 /* Typography scale and theme roles; original Hijazi surface is exempt. */
 @import url("./fonts/fonts.css");
@@ -1721,3 +1721,97 @@ html:root #view .y199-ptabs .ptab .y199-kb>i{background:#fff!important}
 html:root #view .ptabs.y199-ptabs .ptab.on{outline:3px solid #D4AF37;outline-offset:2px;transform:translateY(-2px);box-shadow:0 14px 30px rgba(11,27,58,.32)}
 html:root #view .ptabs.y199-ptabs .ptab:not(.on){opacity:.92}
 html:root[data-theme=dark] #view .ptabs.y199-ptabs .ptab:not(.on){color:#fff!important}
+
+/* ===== approved-v200.css ===== */
+/* v200 — المهام المتكررة + تنبيه الدفعات + ملخص واتساب */
+.y200-rl{display:flex;align-items:center;gap:8px;font-weight:700}
+.y200-rl select{min-width:160px}
+.pill.y200-pill{background:#EDE7F6!important;color:#4C1D95!important;border:1px solid #C4B5FD!important}
+html:root[data-theme=dark] .pill.y200-pill{background:#2E1065!important;color:#DDD6FE!important}
+html:root #view .y199-att li.y200-soon{display:flex;gap:6px;align-items:stretch}
+html:root #view .y199-att li.y200-soon>button{flex:1;min-width:0}
+html:root #view .y199-att .y200-wa{display:flex;align-items:center;padding:0 10px;border-radius:10px;background:#16A34A;color:#fff!important;font-size:12px;font-weight:800;text-decoration:none;white-space:nowrap}
+html:root #view .y199-att .y200-wa:hover{background:#15803D}
+html:root #view .y199-kpi .y200-dg{margin-inline-start:auto;border:1px solid rgba(212,175,55,.6);background:rgba(212,175,55,.15);color:#F3DE9A;font:700 12px inherit;border-radius:999px;padding:5px 12px;cursor:pointer}
+html:root #view .y199-kpi .y200-dg:hover{background:rgba(212,175,55,.3)}
+
+/* ===== approved-v201.css ===== */
+/* v201 — تقرير أداء الفريق + قوالب المشاريع */
+.y201-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 14px;padding:12px 14px;border-radius:14px;background:linear-gradient(135deg,#0B1B3A,#16305C);border:1px solid rgba(212,175,55,.45);color:#fff}
+.y201-bar b{color:#F3DE9A;font-size:14px}
+.y201-bar select{min-width:220px;border-radius:10px;padding:6px 10px;border:1px solid rgba(255,255,255,.25);background:#fff;color:#0B1B3A;font:600 13px inherit}
+.y201-tpl{display:flex;flex-direction:column;gap:6px;margin:6px 0 12px;padding:10px 12px;border-radius:12px;background:#FBF6E8;border:1px solid #E6D3A0;font-weight:800;color:#0B1B3A}
+.y201-tpl small{font-weight:600;color:#6B5A2E}
+.y201-tpl .y201-tok{color:#166534;font-weight:800}
+html:root[data-theme=dark] .y201-tpl{background:#1E293B;border-color:#7A6326;color:#F3DE9A}
+
+/* ===== approved-v202.css ===== */
+/* v202 — عرض السعر الموحد: اللوحة + الطباعة بهوية المكتب (كحلي #0A1B33 · ذهبي #A37E2D · رملي #F5EEDF · IBM Plex Sans Arabic) */
+.y202-q{margin:0 0 14px;padding:14px 16px;border-radius:16px;background:linear-gradient(135deg,#0A1B33,#13294F);border:1px solid rgba(212,175,55,.45);color:#fff;box-shadow:0 10px 24px rgba(10,27,51,.18)}
+.y202-qh{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px}
+.y202-qh b{font-size:16px;color:#F3DE9A}.y202-qh small{display:block;color:#C9D3E6;font-size:12px;margin-top:2px}
+.y202-qa{display:flex;flex-wrap:wrap;gap:6px}.y202-qa em{font-style:normal;color:#B45309;font-size:11px}
+.y202-qg{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.y202-c{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:4px;min-width:0}
+html:root #view .y202-c h4{margin:0;font-size:12px;color:#D4AF37!important;font-weight:800}
+html:root #view .y202-c b{font-size:17px;color:#fff!important}
+html:root #view .y202-c small:not(#y202x){font-size:11.5px;color:#C9D3E6!important}
+.y202-c ul{list-style:none;margin:0;padding:0;font-size:12px}
+.y202-c li{display:flex;justify-content:space-between;gap:6px;border-bottom:1px dashed rgba(255,255,255,.12);padding:3px 0}
+.y202-c li span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#E5EAF3}.y202-c li em{font-style:normal;color:#F3DE9A;font-weight:700}
+.y202-go{all:unset;cursor:pointer;margin-top:auto;font-size:11.5px;font-weight:700;color:#F3DE9A}.y202-go:hover{text-decoration:underline}
+@media (max-width:1100px){.y202-qg{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.y202-qg{grid-template-columns:1fr}}
+.y202-dlg .pset{max-width:520px}
+
+/* الطباعة */
+#printDay.y202doc{display:none;font-family:'IBM Plex Sans Arabic','Noto Sans Arabic',sans-serif;direction:rtl;color:#1F2937;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+@media print{
+ @page{size:A4 portrait;margin:14mm 12mm}
+ body.printday>*:not(#printDay){display:none!important}
+ body.printday #printDay.y202doc{display:block!important;background:#fff!important}
+ .y202cover{height:269mm;page-break-after:always;break-after:page;background:#0A1B33!important;color:#fff;display:flex;flex-direction:column;justify-content:space-between;padding:22mm 18mm;border:3px solid #A37E2D;box-sizing:border-box;margin:-1mm}
+ .y202cv-top{font-size:20pt;font-weight:700;color:#F5EEDF;border-bottom:1px solid #A37E2D;padding-bottom:6mm}.y202cv-top small{display:block;font-size:11pt;font-weight:500;color:#D9C38A;margin-top:2mm}
+ .y202cv-mid small{color:#D9C38A;font-size:13pt;font-weight:600}.y202cv-mid h1{font-size:30pt;margin:4mm 0;color:#fff;line-height:1.3}
+ .y202cv-line{width:60mm;height:2px;background:#A37E2D;margin:6mm 0}.y202cv-mid p{font-size:13pt;color:#F5EEDF;margin:2mm 0}
+ .y202cv-bot{display:flex;justify-content:space-between;font-size:11pt;color:#D9C38A;border-top:1px solid #A37E2D;padding-top:5mm}
+ .y202toc{page-break-after:always;break-after:page;padding-top:4mm}
+ .y202toc ol{list-style:none;padding:0;margin:8mm 0 0}.y202toc li{display:flex;gap:6mm;align-items:center;font-size:13pt;padding:4mm 2mm;border-bottom:1px dotted #A37E2D}
+ .y202toc li span{min-width:22mm;color:#A37E2D;font-weight:700}
+ .y202hd{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid #A37E2D;padding-bottom:4mm;margin-bottom:6mm}
+ .y202hd b{font-size:14pt;color:#0A1B33}.y202hd small{display:block;color:#6B5A2E;font-size:9.5pt}.y202hd h1{margin:0;font-size:20pt;color:#0A1B33;text-align:left}
+ .y202s{margin:0 0 7mm;break-inside:avoid-page}
+ .y202bar{display:flex;align-items:center;gap:3mm;background:#0A1B33!important;color:#fff;font-size:13pt;font-weight:700;padding:2.5mm 4mm;border-radius:1.5mm;border-inline-start:4mm solid #A37E2D}
+ .y202bar span{display:inline-grid;place-items:center;min-width:7mm;height:7mm;border-radius:50%;background:#A37E2D!important;color:#fff;font-size:10.5pt}
+ .y202sub{color:#A37E2D;font-weight:700;font-size:11pt;margin:2.5mm 1mm 2mm}
+ .y202t{width:100%;border-collapse:collapse;margin-top:2mm;font-size:10.5pt}
+ .y202t th{background:#F5EEDF!important;color:#0A1B33;font-weight:700;text-align:start;border:1px solid #D9C9A3;padding:2mm 2.5mm}
+ .y202t td{border:1px solid #E5DCC5;padding:2mm 2.5mm;vertical-align:top}
+ .y202tot{width:60%;margin-inline-start:auto}.y202tot tr.g td{background:#0A1B33!important;color:#fff;font-size:12pt}
+ .y202p{font-size:10.5pt;line-height:1.9;margin:2mm 1mm}
+ .y202l{margin:2mm 6mm;font-size:10.5pt;line-height:2}
+ .y202sig td{height:32mm;line-height:2.2}
+ .y202foot{margin-top:8mm;border-top:2px solid #A37E2D;padding-top:2mm;font-size:8.5pt;color:#6B5A2E;text-align:center}
+
+ html:root:root body.printday{background:#fff!important;background-image:none!important}
+ body.printday #printDay.y202doc .y202cover *{color:inherit}
+ body.printday #printDay.y202doc .y202cv-mid h1{color:#fff!important;font-size:30pt!important}
+ body.printday #printDay.y202doc .y202cv-top,body.printday #printDay.y202doc .y202cv-mid p{color:#F5EEDF!important}
+ body.printday #printDay.y202doc .y202cv-mid small,body.printday #printDay.y202doc .y202cv-bot,body.printday #printDay.y202doc .y202cv-top small{color:#D9C38A!important}
+ body.printday #printDay.y202doc .y202t th{background:#F5EEDF!important;color:#0A1B33!important}
+ body.printday #printDay.y202doc .y202t td{color:#1F2937!important;background:#fff!important}
+ body.printday #printDay.y202doc .y202tot tr.g td{background:#0A1B33!important;color:#fff!important}
+ body.printday #printDay.y202doc .y202bar{color:#fff!important}
+ body.printday #printDay.y202doc .y202tot tr.g td *{color:#fff!important}
+ body.printday #printDay.y202doc .y202t td b{color:#0A1B33!important}
+ body.printday #printDay.y202doc .y202tot tr.g td b{color:#fff!important}
+}
+
+/* ===== approved-v203.css ===== */
+/* v203 — إخفاء زر «بانتظار رد» المكرر + توحيد الألوان (كحلي #0B1B3A / ذهبي #D4AF37) */
+html:root #view .task .acts [data-a="waitreply"].y203-dup{display:none!important}
+/* توحيد الألوان: الأزرار الذهبية والعناوين والتركيز */
+html:root #view .btn.gold:not(#y203x),html:root .auth .btn.gold:not(#y203x){background:linear-gradient(135deg,#F3DE9A,#D4AF37)!important;color:#0B1B3A!important;border-color:#C29A3E!important}
+html:root #view .btn.gold:not(#y203x):hover{filter:brightness(1.04)}
+:root[data-a170] .a170-head h2::before,:root[data-a170] .a170-head h3::before{background:#D4AF37!important}
+html:root :focus-visible{outline:2px solid #D4AF37;outline-offset:2px}

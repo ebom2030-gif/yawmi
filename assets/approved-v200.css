@@ -1,0 +1,11 @@
+/* v200 — المهام المتكررة + تنبيه الدفعات + ملخص واتساب */
+.y200-rl{display:flex;align-items:center;gap:8px;font-weight:700}
+.y200-rl select{min-width:160px}
+.pill.y200-pill{background:#EDE7F6!important;color:#4C1D95!important;border:1px solid #C4B5FD!important}
+html:root[data-theme=dark] .pill.y200-pill{background:#2E1065!important;color:#DDD6FE!important}
+html:root #view .y199-att li.y200-soon{display:flex;gap:6px;align-items:stretch}
+html:root #view .y199-att li.y200-soon>button{flex:1;min-width:0}
+html:root #view .y199-att .y200-wa{display:flex;align-items:center;padding:0 10px;border-radius:10px;background:#16A34A;color:#fff!important;font-size:12px;font-weight:800;text-decoration:none;white-space:nowrap}
+html:root #view .y199-att .y200-wa:hover{background:#15803D}
+html:root #view .y199-kpi .y200-dg{margin-inline-start:auto;border:1px solid rgba(212,175,55,.6);background:rgba(212,175,55,.15);color:#F3DE9A;font:700 12px inherit;border-radius:999px;padding:5px 12px;cursor:pointer}
+html:root #view .y199-kpi .y200-dg:hover{background:rgba(212,175,55,.3)}

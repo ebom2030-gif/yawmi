@@ -1,0 +1,8 @@
+/* v201 — تقرير أداء الفريق + قوالب المشاريع */
+.y201-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 14px;padding:12px 14px;border-radius:14px;background:linear-gradient(135deg,#0B1B3A,#16305C);border:1px solid rgba(212,175,55,.45);color:#fff}
+.y201-bar b{color:#F3DE9A;font-size:14px}
+.y201-bar select{min-width:220px;border-radius:10px;padding:6px 10px;border:1px solid rgba(255,255,255,.25);background:#fff;color:#0B1B3A;font:600 13px inherit}
+.y201-tpl{display:flex;flex-direction:column;gap:6px;margin:6px 0 12px;padding:10px 12px;border-radius:12px;background:#FBF6E8;border:1px solid #E6D3A0;font-weight:800;color:#0B1B3A}
+.y201-tpl small{font-weight:600;color:#6B5A2E}
+.y201-tpl .y201-tok{color:#166534;font-weight:800}
+html:root[data-theme=dark] .y201-tpl{background:#1E293B;border-color:#7A6326;color:#F3DE9A}
