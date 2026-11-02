@@ -1,0 +1,32 @@
+/* v197 — حالة صرف المطالبة */
+.y197-cell{display:flex;flex-direction:column;gap:3px;margin-top:6px}
+.y197-cell select{min-height:30px;border-radius:8px;font-size:12.5px;font-weight:700;padding:2px 6px;border:1.5px solid #CBD5E1}
+.y197-cell small{font-size:11px;color:#B91C1C}
+.y197-processing select,.y197-badge.y197-processing{border-color:#F59E0B!important;background:#FFFBEB!important;color:#92400E!important}
+.y197-paid select,.y197-badge.y197-paid{border-color:#16A34A!important;background:#F0FDF4!important;color:#15803D!important}
+.y197-blocked select,.y197-badge.y197-blocked{border-color:#DC2626!important;background:#FEF2F2!important;color:#B91C1C!important}
+.y197-badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11.5px;font-weight:800;border:1px solid;margin-inline-end:6px;white-space:nowrap}
+.y197-panel{margin:8px 0 12px;padding:10px;border:1px solid #DBE4F0;border-radius:12px;background:#F7FAFF;display:flex;flex-direction:column;gap:8px}
+.y197-h{font-size:13.5px;color:#0B1B3A}
+.y197-row{display:grid;grid-template-columns:minmax(0,1fr) 170px;gap:6px 10px;align-items:center;padding:8px;border-radius:10px;background:#fff;border:1px solid #E2E8F0}
+.y197-row>div{display:flex;flex-direction:column;gap:2px}.y197-row small{font-size:11.5px;color:#526075}
+.y197-row select{min-height:34px;border-radius:9px;font-weight:700}
+.y197-row input{grid-column:1/-1;min-height:34px;border-radius:9px}
+.y197-row.y197-blocked{border-color:#FCA5A5}.y197-row.y197-paid{border-color:#86EFAC}.y197-row.y197-processing{border-color:#FCD34D}
+.y197-qpaid{background:#16A34A!important;color:#fff!important;border-color:#15803D!important}
+.y197-qfu{margin-inline:4px}
+@media(max-width:600px){.y197-row{grid-template-columns:1fr}}
+:root[data-theme=dark] .y197-panel{background:#16233B;border-color:#24344F}:root[data-theme=dark] .y197-row{background:#0F1A2E;border-color:#24344F}
+.y197-need{flex-basis:100%;width:100%;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13px;font-weight:800;padding:6px 10px;border-radius:9px;margin-bottom:6px}
+.y197-need em{font-style:normal;font-size:11.5px;font-weight:700;color:#15803D;background:#F0FDF4;border:1px solid #86EFAC;border-radius:999px;padding:1px 8px}
+.y197-n-bad{background:#FEF2F2;color:#991B1B}.y197-n-warn{background:#FFFBEB;color:#92400E}.y197-n-ok{background:#F0FDF4;color:#166534}
+:root[data-theme=dark] .y197-n-bad{background:#3B1212;color:#FCA5A5}:root[data-theme=dark] .y197-n-warn{background:#3A2A0A;color:#FCD34D}:root[data-theme=dark] .y197-n-ok{background:#0F2E1A;color:#86EFAC}
+.y197-agc{cursor:pointer;text-decoration:underline dotted;text-underline-offset:4px;transition:background-color .15s ease}
+.y197-agc:hover,.y197-agc:focus-visible{background:#EFF6FF;color:#1D4ED8;outline:none}
+#a180Root.y197-solo [data-a180-col],#a180Root.y197-solo [data-a180-who]{display:none!important}
+#a180Root.y197-solo label:has(>[data-a180-col]),#a180Root.y197-solo label:has(>[data-a180-who]){display:none!important}
+/* v197 — وضوح الخطوط: خط الهوية محمّل الآن من ملفات البرنامج، ووزن أساسي أوضح للنصوص (كانت رفيعة) */
+html:root body{font-weight:500;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+html:root body b,html:root body strong,html:root body th,html:root body h1,html:root body h2,html:root body h3,html:root body h4{font-weight:700}
+html:root body small,html:root body .sub{font-weight:500}
+html:root body input,html:root body select,html:root body textarea,html:root body button{font-family:inherit}
