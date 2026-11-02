@@ -1,0 +1,32 @@
+/* v195 — الرئيسية مرتبة حسب الأهمية والاستخدام: الترحيب ← التنبيهات التي تحتاج إجراء ← أدوات اليوم ← المهام والمشاريع والتقويم ← المؤشرات والفريق ← الباقي ← الصلاة والأذكار (موعد الصلاة القادمة ظاهر في الترحيب) */
+html:root:root:root #view .a170{display:flex!important;flex-direction:column!important}
+html:root:root:root #view .a170>*{order:3}
+html:root:root:root #view .a170>.a170-hero{order:0!important}html:root:root:root #view .a170>.a180-strip{order:1!important}html:root:root:root #view .a170>.a184-hub{order:2!important}html:root:root:root #view .a170>.a170-grid{order:3!important}html:root:root:root #view .a170>.a190-pray,html:root:root:root #view .a170>.ess168{order:4!important}html:root:root:root #view .a170>.a170-foot{order:9!important}
+/* البطاقات: الصف الأول المهام والمشاريع والتقويم بنفس الارتفاع (كان التقويم يمتد صفين وفيه فراغ كبير)، ثم المؤشرات وتوزيع الفريق والملاحظات */
+@media(min-width:1101px){
+ html:root:root:root #view .a170-grid>.a170-calendar{grid-row:1!important}
+ html:root:root:root #view .a170-grid>.a170-tasks,html:root:root:root #view .a170-grid>.a170-projects{grid-row:1!important}
+}
+html:root:root:root #view .a170-grid>.a170-performance{order:1}html:root:root:root #view .a170-grid>.a170-team{order:2}html:root:root:root #view .a170-grid>.a170-notes{order:3}html:root:root:root #view .a170-grid>.a170-documents{order:4}html:root:root:root #view .a170-grid>.a170-locations{order:5}html:root:root:root #view .a170-grid>.a170-assistant{order:6}html:root:root:root #view .a170-grid>.a170-picture{order:7}
+@media(max-width:1100px){html:root:root:root #view .a170-grid>.a170-tasks{order:-3}html:root:root:root #view .a170-grid>.a170-projects{order:-2}html:root:root:root #view .a170-grid>.a170-calendar{order:-1}}
+/* الرسم البياني في التقويم: آخر 6 أشهر فقط، أعمدة أعرض، وأسماء الشهور كاملة غير مقصوصة */
+html:root:root:root #view .a170-chart .a170-bars>div:nth-last-child(n+7){display:none!important}
+html:root:root:root #view .a170-chart .a170-bars{grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:8px!important;align-items:end!important}
+html:root:root:root #view .a170-chart .a170-bars>div>span{gap:3px!important}
+html:root:root:root #view .a170-chart .a170-bars>div>span>i{min-height:2px;border-radius:4px 4px 0 0!important;width:9px!important}
+html:root:root:root #view .a170-chart .a170-bars small{font-size:11px!important;white-space:nowrap!important;overflow:visible!important;text-overflow:clip!important;color:#526075!important;margin-top:6px!important}
+html:root:root:root #view .a170-chart .a170-legend{gap:14px!important;font-size:12px!important}
+/* v195 — خانة «الحالة» في المهمة: لون ثابت لكل حالة (كانت كلها بلون واحد) */
+html:root:root:root:root:root:root:root:root #view .task .acts.h153-actions>label.stsel[data-st]{background-image:none!important;color:#fff!important;border:0!important}
+html:root:root:root:root:root:root:root:root #view .task .acts.h153-actions>label.stsel[data-st="todo"]{background:linear-gradient(135deg,#64748B,#475569)!important}
+html:root:root:root:root:root:root:root:root #view .task .acts.h153-actions>label.stsel[data-st="doing"]{background:linear-gradient(135deg,#2563EB,#1D4ED8)!important}
+html:root:root:root:root:root:root:root:root #view .task .acts.h153-actions>label.stsel[data-st="waiting"]{background:linear-gradient(135deg,#EA580C,#C2410C)!important}
+html:root:root:root:root:root:root:root:root #view .task .acts.h153-actions>label.stsel[data-st="postponed"]{background:linear-gradient(135deg,#7C3AED,#6D28D9)!important}
+html:root:root:root:root:root:root:root:root #view .task .acts.h153-actions>label.stsel[data-st="stopped"]{background:linear-gradient(135deg,#DC2626,#B91C1C)!important}
+html:root:root:root:root:root:root:root:root #view .task .acts.h153-actions>label.stsel[data-st="done"]{background:linear-gradient(135deg,#16A34A,#15803D)!important}
+html:root:root:root:root:root:root:root:root #view .task .acts.h153-actions>label.stsel[data-st] *{color:#fff!important}
+html:root:root:root:root:root:root:root:root #view .task .acts.h153-actions>label.stsel[data-st] select option{color:#0B1B3A!important;background:#fff!important}
+/* زر «انتظار رد» بجانب خانة الحالة كان يكرر نفس الكلمة؛ وظيفته تسجيل الجهة والموعد المنتظَرين، فاسمه الأوضح «متابعة الرد» */
+html:root:root:root:root:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-waitreply>span{font-size:0!important}
+html:root:root:root:root:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-waitreply>span::after{content:"متابعة الرد";font-size:10.5px;font-weight:700}
+@media(max-width:700px){html:root:root:root:root:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-waitreply>span::after{content:"متابعة";font-size:10px}}

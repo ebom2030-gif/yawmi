@@ -1,4 +1,4 @@
-/* yawmi-ui.css — طبقات الواجهة المدمجة (25 ملفاً بالترتيب): appearance-v161.css، hybrid-v162.css، executive-v163.css، engineering-v164.css، workspaces-v165.css، templates-v166.css، additional-identities-v167.css، full-identity-v167.css، essentials-v168.css، approved-v170.css، approved-v172.css، approved-v173.css، approved-v176.css، approved-v177.css، approved-v178.css، approved-v179.css، approved-v180.css، approved-v181.css، approved-v184.css، approved-v185.css، approved-v186.css، approved-v187.css، approved-v189.css، approved-v190.css، approved-v191.css، approved-v192.css، approved-v193.css، approved-v194.css */
+/* yawmi-ui.css — طبقات الواجهة المدمجة (25 ملفاً بالترتيب): appearance-v161.css، hybrid-v162.css، executive-v163.css، engineering-v164.css، workspaces-v165.css، templates-v166.css، additional-identities-v167.css، full-identity-v167.css، essentials-v168.css، approved-v170.css، approved-v172.css، approved-v173.css، approved-v176.css، approved-v177.css، approved-v178.css، approved-v179.css، approved-v180.css، approved-v181.css، approved-v184.css، approved-v185.css، approved-v186.css، approved-v187.css، approved-v189.css، approved-v190.css، approved-v191.css، approved-v192.css، approved-v193.css، approved-v194.css، approved-v195.css، approved-v196.css */
 /* ===== appearance-v161.css ===== */
 /* Typography scale and theme roles; original Hijazi surface is exempt. */
 @import url("./fonts/fonts.css");
@@ -1514,3 +1514,73 @@ html:root:root:root:root:root #view .pband .spill{background:rgba(255,255,255,.2
 @media(max-width:700px){#y194sv{bottom:calc(84px + env(safe-area-inset-bottom,0px));right:12px}}
 @media(prefers-reduced-motion:reduce){#y194sv{transition:none}}
 #y194sv.err{background:#B91C1C}
+
+/* ===== approved-v195.css ===== */
+/* v195 — الرئيسية مرتبة حسب الأهمية والاستخدام: الترحيب ← التنبيهات التي تحتاج إجراء ← أدوات اليوم ← المهام والمشاريع والتقويم ← المؤشرات والفريق ← الباقي ← الصلاة والأذكار (موعد الصلاة القادمة ظاهر في الترحيب) */
+html:root:root:root #view .a170{display:flex!important;flex-direction:column!important}
+html:root:root:root #view .a170>*{order:3}
+html:root:root:root #view .a170>.a170-hero{order:0!important}html:root:root:root #view .a170>.a180-strip{order:1!important}html:root:root:root #view .a170>.a184-hub{order:2!important}html:root:root:root #view .a170>.a170-grid{order:3!important}html:root:root:root #view .a170>.a190-pray,html:root:root:root #view .a170>.ess168{order:4!important}html:root:root:root #view .a170>.a170-foot{order:9!important}
+/* البطاقات: الصف الأول المهام والمشاريع والتقويم بنفس الارتفاع (كان التقويم يمتد صفين وفيه فراغ كبير)، ثم المؤشرات وتوزيع الفريق والملاحظات */
+@media(min-width:1101px){
+ html:root:root:root #view .a170-grid>.a170-calendar{grid-row:1!important}
+ html:root:root:root #view .a170-grid>.a170-tasks,html:root:root:root #view .a170-grid>.a170-projects{grid-row:1!important}
+}
+html:root:root:root #view .a170-grid>.a170-performance{order:1}html:root:root:root #view .a170-grid>.a170-team{order:2}html:root:root:root #view .a170-grid>.a170-notes{order:3}html:root:root:root #view .a170-grid>.a170-documents{order:4}html:root:root:root #view .a170-grid>.a170-locations{order:5}html:root:root:root #view .a170-grid>.a170-assistant{order:6}html:root:root:root #view .a170-grid>.a170-picture{order:7}
+@media(max-width:1100px){html:root:root:root #view .a170-grid>.a170-tasks{order:-3}html:root:root:root #view .a170-grid>.a170-projects{order:-2}html:root:root:root #view .a170-grid>.a170-calendar{order:-1}}
+/* الرسم البياني في التقويم: آخر 6 أشهر فقط، أعمدة أعرض، وأسماء الشهور كاملة غير مقصوصة */
+html:root:root:root #view .a170-chart .a170-bars>div:nth-last-child(n+7){display:none!important}
+html:root:root:root #view .a170-chart .a170-bars{grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:8px!important;align-items:end!important}
+html:root:root:root #view .a170-chart .a170-bars>div>span{gap:3px!important}
+html:root:root:root #view .a170-chart .a170-bars>div>span>i{min-height:2px;border-radius:4px 4px 0 0!important;width:9px!important}
+html:root:root:root #view .a170-chart .a170-bars small{font-size:11px!important;white-space:nowrap!important;overflow:visible!important;text-overflow:clip!important;color:#526075!important;margin-top:6px!important}
+html:root:root:root #view .a170-chart .a170-legend{gap:14px!important;font-size:12px!important}
+/* v195 — خانة «الحالة» في المهمة: لون ثابت لكل حالة (كانت كلها بلون واحد) */
+html:root:root:root:root:root:root:root:root #view .task .acts.h153-actions>label.stsel[data-st]{background-image:none!important;color:#fff!important;border:0!important}
+html:root:root:root:root:root:root:root:root #view .task .acts.h153-actions>label.stsel[data-st="todo"]{background:linear-gradient(135deg,#64748B,#475569)!important}
+html:root:root:root:root:root:root:root:root #view .task .acts.h153-actions>label.stsel[data-st="doing"]{background:linear-gradient(135deg,#2563EB,#1D4ED8)!important}
+html:root:root:root:root:root:root:root:root #view .task .acts.h153-actions>label.stsel[data-st="waiting"]{background:linear-gradient(135deg,#EA580C,#C2410C)!important}
+html:root:root:root:root:root:root:root:root #view .task .acts.h153-actions>label.stsel[data-st="postponed"]{background:linear-gradient(135deg,#7C3AED,#6D28D9)!important}
+html:root:root:root:root:root:root:root:root #view .task .acts.h153-actions>label.stsel[data-st="stopped"]{background:linear-gradient(135deg,#DC2626,#B91C1C)!important}
+html:root:root:root:root:root:root:root:root #view .task .acts.h153-actions>label.stsel[data-st="done"]{background:linear-gradient(135deg,#16A34A,#15803D)!important}
+html:root:root:root:root:root:root:root:root #view .task .acts.h153-actions>label.stsel[data-st] *{color:#fff!important}
+html:root:root:root:root:root:root:root:root #view .task .acts.h153-actions>label.stsel[data-st] select option{color:#0B1B3A!important;background:#fff!important}
+/* زر «انتظار رد» بجانب خانة الحالة كان يكرر نفس الكلمة؛ وظيفته تسجيل الجهة والموعد المنتظَرين، فاسمه الأوضح «متابعة الرد» */
+html:root:root:root:root:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-waitreply>span{font-size:0!important}
+html:root:root:root:root:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-waitreply>span::after{content:"متابعة الرد";font-size:10.5px;font-weight:700}
+@media(max-width:700px){html:root:root:root:root:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-waitreply>span::after{content:"متابعة";font-size:10px}}
+
+/* ===== approved-v196.css ===== */
+/* v196 — نافذة التوقيع */
+.y196-dlg{border:0;border-radius:16px;padding:20px;max-width:440px;width:calc(100% - 32px);box-shadow:0 24px 60px rgba(11,27,58,.3)}
+.y196-dlg::backdrop{background:rgba(11,27,58,.45)}
+.y196-dlg h3{margin:0 0 6px;font-size:17px;color:#0B1B3A}
+.y196-prev{display:grid;place-items:center;min-height:120px;margin:12px 0;border:1.5px dashed #CBD5E1;border-radius:12px;background:repeating-conic-gradient(#F8FAFC 0 25%,#fff 0 50%) 50%/16px 16px}
+.y196-prev img{max-width:100%;max-height:110px}.y196-prev span{color:#526075;font-size:13px}
+.y196-file{display:inline-flex;cursor:pointer}.y196-err{color:#B91C1C;font-size:13px;min-height:18px;margin:6px 0}
+:root[data-theme=dark] .y196-dlg{background:#111C30;color:#E2E8F0}:root[data-theme=dark] .y196-dlg h3{color:#E2E8F0}
+/* زر «توقيعي» في أسفل القائمة الجانبية بنفس شكل أزرار الشبكة */
+#side .a176-grid [data-y196me]{display:flex;flex-direction:column;align-items:center;gap:2px}
+
+/* v196 — زر المتابعة: قبل الانتظار «متابعة الرد»، وأثناء الانتظار «تمت المتابعة» (ضغطة تسجل متابعة اليوم وتنقل الموعد للغد) */
+html:root:root:root:root:root:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-waitreply[aria-pressed="true"]>span::after{content:"تمت المتابعة"}
+html:root:root:root:root:root:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-waitreply[aria-pressed="true"]>i{font-size:0!important}
+html:root:root:root:root:root:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-waitreply[aria-pressed="true"]>i::after{content:"✅";font-size:17px}
+@media(max-width:700px){html:root:root:root:root:root:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-waitreply[aria-pressed="true"]>span::after{content:"تمت"}}
+html:root:root:root:root:root:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-waitreply[aria-pressed="true"]{background:#F0FDF4!important;border-color:#16A34A!important;color:#15803D!important}
+html:root:root:root:root:root:root:root:root:root:root:root #view .task .acts.h153-actions>.h153-waitreply[aria-pressed="true"]>*{color:#15803D!important}
+
+/* v196 — الطباعة الاحترافية: خط الهوية، تكرار رأس الجداول في كل صفحة، عدم قطع الصفوف والبطاقات، خانات التوقيع */
+#printDay{font-family:var(--yw-font,"IBM Plex Sans Arabic"),"IBM Plex Sans Arabic",Tajawal,Tahoma,sans-serif}
+#printDay table{border-collapse:collapse}
+#printDay thead{display:table-header-group}#printDay tfoot{display:table-footer-group}
+#printDay tr,#printDay .a191-kpi,#printDay .a191-kpis>*,#printDay .pds>.pdb{break-inside:avoid;page-break-inside:avoid}
+#printDay h2,#printDay h3,#printDay .pdb{break-after:avoid;page-break-after:avoid}
+#printDay td,#printDay th{font-variant-numeric:tabular-nums}
+.y196-sign{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:22px 0 8px;break-inside:avoid;page-break-inside:avoid}
+.y196-sign>div{display:flex;flex-direction:column;align-items:center;gap:4px;padding-top:6px;text-align:center}
+.y196-sign small{font-size:11px;color:#526075;font-weight:700}
+.y196-sign b{font-size:12.5px;color:#0B1B3A}
+.y196-sign .y196-line{display:block;width:75%;height:46px;border-bottom:1px solid #94A3B8}
+.y196-sigimg{display:block;max-width:170px;max-height:56px;object-fit:contain;margin:2px auto}
+#printDay .sig .y196-sigimg{margin-top:6px}
+@media print{.y196-dlg,#y194sv{display:none!important}}

@@ -530,13 +530,22 @@ async function ui173(db, C, fn, a) { const tn = C.tn, u = C.u;
     const L = (Array.isArray(a[0]) ? a[0] : []).slice(0, 6).map(String); if (L.some(x => !/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+\/=]+$/.test(x) || x.length > 400000)) throw new UErr('صورة غير صالحة أو كبيرة جداً');
     let k = await cfgGet(db, 'bkt:' + tn); if (!k) { k = [...crypto.getRandomValues(new Uint8Array(16))].map(b => b.toString(16).padStart(2, '0')).join(''); await cfgSet(db, 'bkt:' + tn, k); await cfgSet(db, 'bk:' + k, tn); }
     for (let i = 0; i < 6; i++) await cfgSet(db, 'bn:' + tn + ':' + i, L[i] || null); await cfgSet(db, 'bnn:' + tn, L.length); await cfgSet(db, 'bnv:' + tn, Date.now()); await audit(db, C, 'تحديث صور البانر', L.length + ' صور', ''); return { n: L.length }; }
+  // v196 — توقيع المستخدم (صورة) يظهر تلقائياً في التقارير المطبوعة باسم المُعِد. مفاتيح cfg: sg:<tn>:<uid> و sgv:<tn>
+  if (fn === 'sigSet196') { const uid = String(a[0] || u.id), img = a[1] ? String(a[1]) : '';
+    if (uid !== u.id) { const t = byId(C, uid); if (!t || !canManage(u, t)) throw new UErr('غير مسموح بتغيير توقيع هذا المستخدم'); }
+    if (img && (!/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+\/=]+$/.test(img) || img.length > 80000)) throw new UErr('صورة التوقيع غير صالحة أو كبيرة جداً');
+    await cfgSet(db, 'sg:' + tn + ':' + uid, img || null); await cfgSet(db, 'sgv:' + tn, Date.now());
+    await audit(db, C, img ? 'حفظ توقيع' : 'حذف توقيع', (byId(C, uid) || u).name || uid, ''); return true; }
+  if (fn === 'sigs196') { const ver = Number(await cfgGet(db, 'sgv:' + tn)) || 0, since = Number(a[0]) || 0; if (since && since >= ver) return { v: ver, same: true };
+    const pre = 'sg:' + tn + ':', rows = (await db.prepare('SELECT k, v FROM cfg WHERE substr(k, 1, ?) = ?').bind(pre.length, pre).all()).results || [], m = {};
+    rows.forEach(r => { if (r.v) m[r.k.slice(pre.length)] = r.v; }); return { v: ver, m }; }
   if (fn === 'avatars173') { const ver = Number(await cfgGet(db, 'avv:' + tn)) || 0, since = Number(a[0]) || 0; if (since && since >= ver) return { v: ver, same: true };
     const pre = 'av:' + tn + ':', rows = (await db.prepare('SELECT k, v FROM cfg WHERE substr(k, 1, ?) = ?').bind(pre.length, pre).all()).results || [], m = {};
     rows.forEach(r => { if (r.v) m[r.k.slice(pre.length)] = r.v; }); return { v: ver, m }; }
 }
 
 const WRITES = new Set(['recordMeetingOutcome','saveItem', 'deleteItem', 'saveProject', 'deleteProject', 'saveContact', 'deleteContact', 'saveNote', 'saveMat', 'addUser', 'updateUser', 'deleteUser', 'restoreTenant', 'setPrivPin', 'trashDel', 'xpSet', 'boSave']);
-const TREAD = new Set(['bannerGet177', 'nameSet173', 'uiGet173', 'uiSet173', 'avatarSet173', 'avatars173', 'getMat', 'getAll', 'getSince', 'listUsers', 'listAudit', 'listIdeas', 'lockPriv', 'unlockPriv', 'logout', 'trashList', 'achList', 'xpGet', 'todoStatus', 'health', 'boList', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155']);
+const TREAD = new Set(['sigs196', 'bannerGet177', 'nameSet173', 'uiGet173', 'uiSet173', 'avatarSet173', 'avatars173', 'getMat', 'getAll', 'getSince', 'listUsers', 'listAudit', 'listIdeas', 'lockPriv', 'unlockPriv', 'logout', 'trashList', 'achList', 'xpGet', 'todoStatus', 'health', 'boList', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155']);
 export async function onRequestPost({ request, env, waitUntil }) {
   const body = await request.text(); const t0 = Date.now(); const db = env.DB; let req = {}; try { req = JSON.parse(body); } catch (e) {}
   const fn = String(req.fn || ''), a = Array.isArray(req.args) ? req.args : [];
@@ -563,7 +572,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
     if (fn === 'retryIntegrations155') { await drain(env,15000); return ok(await integrationStatus155(env,C)); }
     if (fn === 'repairNotifications155') { if(C.u.role!=='owner') return fail('هذه العملية للمالك فقط'); const gt=await gtFor(db,C.tn,C.u.id); if(!gt)return fail('جدّد اتصال حساب يومي أولاً'); await gasCall(env,gt,'notificationConfig155',[JSON.parse(await cfgGet(db,'hol:'+C.tn)||'[]')]); const r=await gasCall(env,gt,fn,[]);return r.ok?ok(r.data):fail(r.error); }
     if (fn === 'cfNative') { if (C.u.role !== 'owner') return fail('هذه العملية للمالك فقط'); await cfgSet(db, 'native:' + C.tn, a[0] ? '1' : '0'); await log(db, C.tn, C.u.id, 'cfNative:' + (a[0] ? 'on' : 'off'), 1, 0, null); return ok({ native: !!a[0] }); }
-    if (fn === 'uiGet173' || fn === 'uiSet173' || fn === 'avatarSet173' || fn === 'avatars173' || fn === 'nameSet173' || fn === 'bannerGet177' || fn === 'bannerSet177') return ok(await ui173(db, C, fn, a));
+    if (fn === 'sigSet196' || fn === 'sigs196' || fn === 'uiGet173' || fn === 'uiSet173' || fn === 'avatarSet173' || fn === 'avatars173' || fn === 'nameSet173' || fn === 'bannerGet177' || fn === 'bannerSet177') return ok(await ui173(db, C, fn, a));
     const native = C.native !== undefined ? C.native : await nativeOn(db, C.tn); let data, done = true;
     try {
       if (TRASH.has(fn)) data = await trashOp(db, C, fn, a);
