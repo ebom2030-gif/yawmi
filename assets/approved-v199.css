@@ -1,0 +1,87 @@
+/* v199 — لوحة المؤشرات الفخمة + بطاقات تبويبات المشاريع + خلفية بنقشة هادئة (كحلي/ذهبي) */
+
+/* ===== (0) الخلفية والنقشة: رمل فاتح متدرج + شبكة ونجمة هندسية ذهبية خافتة مستوحاة من شعار الواجهة القديمة ===== */
+:root{--y199-bg1:#FBF8F1;--y199-bg2:#F2ECDD;--y199-pat:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cg fill='none' stroke='%23B8933A' stroke-opacity='.13' stroke-width='1'%3E%3Cpath d='M0 48H96M48 0V96'/%3E%3Cpath d='M48 30 66 48 48 66 30 48Z'/%3E%3Cpath d='M48 36 60 48 48 60 36 48Z' stroke-opacity='.09'/%3E%3Ccircle cx='0' cy='0' r='10'/%3E%3Ccircle cx='96' cy='0' r='10'/%3E%3Ccircle cx='0' cy='96' r='10'/%3E%3Ccircle cx='96' cy='96' r='10'/%3E%3C/g%3E%3C/svg%3E")}
+html:root:not([data-theme=dark]) body,html:root[data-a170]:not([data-theme=dark]) body{background-color:var(--y199-bg1)!important;background-image:var(--y199-pat),radial-gradient(1200px 600px at 100% 0,rgba(212,175,55,.10),transparent 60%),linear-gradient(180deg,var(--y199-bg1),var(--y199-bg2))!important;background-attachment:fixed!important;background-size:96px 96px,auto,auto!important}
+html:root[data-theme=dark] body{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cg fill='none' stroke='%23D4AF37' stroke-opacity='.07' stroke-width='1'%3E%3Cpath d='M0 48H96M48 0V96'/%3E%3Cpath d='M48 30 66 48 48 66 30 48Z'/%3E%3Ccircle cx='0' cy='0' r='10'/%3E%3Ccircle cx='96' cy='0' r='10'/%3E%3Ccircle cx='0' cy='96' r='10'/%3E%3Ccircle cx='96' cy='96' r='10'/%3E%3C/g%3E%3C/svg%3E")!important;background-attachment:fixed!important;background-size:96px 96px!important}
+:root[data-a170] .main,:root[data-a170] .wrap{background:transparent!important}
+@media print{html:root body{background:#fff!important}}
+
+/* ===== (1) لوحة المؤشرات في الرئيسية ===== */
+html:root #view .y199-kpi{margin:14px 0 12px;padding:16px 18px 18px;border-radius:18px;background:linear-gradient(135deg,#0B1B3A 0%,#13294F 60%,#0B1B3A 100%);border:1px solid rgba(212,175,55,.45);box-shadow:0 14px 34px rgba(11,27,58,.22);position:relative;overflow:hidden;color:#fff}
+html:root #view .y199-kpi:before{content:"";position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cg fill='none' stroke='%23D4AF37' stroke-opacity='.10'%3E%3Cpath d='M36 18 54 36 36 54 18 36Z'/%3E%3Cpath d='M0 36H72M36 0V72'/%3E%3C/g%3E%3C/svg%3E");pointer-events:none}
+html:root #view .y199-kh{position:relative;display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+html:root #view .y199-kpi .y199-kh h2{margin:0;font-size:18px!important;font-weight:800;color:#fff!important}html:root #view .y199-kpi .y199-kh h2 span{color:#D4AF37!important;font-size:14px}
+html:root #view .y199-kpi .y199-kh small:not(#y199x){color:#C9D3E6!important;font-size:12px}
+html:root #view .y199-kg{position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(122px,1fr));gap:10px}
+html:root #view .y199-k{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:3px;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);transition:transform .15s,border-color .15s,background .15s;min-height:104px}
+html:root #view .y199-k:hover,html:root #view .y199-k:focus-visible{transform:translateY(-2px);border-color:#D4AF37;background:rgba(255,255,255,.10)}
+html:root #view .y199-ki{font-size:18px;line-height:1}
+html:root #view .y199-kpi .y199-kl:not(#y199x){font-size:12.5px;font-weight:700;color:#DCE3F0!important}
+html:root #view .y199-kpi .y199-kv{font-size:27px;font-weight:800;color:#F3DE9A!important;line-height:1.15;font-variant-numeric:tabular-nums}
+html:root #view .y199-kpi .y199-ks:not(#y199x){font-size:11.5px;color:#C9D3E6!important}html:root #view .y199-kpi .y199-ks:not(#y199x) em{font-style:normal;color:#FCA5A5;font-weight:800}
+html:root #view .y199-k.gold{background:linear-gradient(135deg,rgba(212,175,55,.28),rgba(212,175,55,.10));border-color:rgba(212,175,55,.6)}
+html:root #view .y199-kpi .y199-k.gold .y199-kv{color:#FFFFFF!important}
+html:root #view .y199-k.warn{border-color:rgba(252,165,165,.45)}
+html:root #view .y199-kpi .y199-k.ok .y199-kv{color:#86EFAC!important}
+html:root #view .y199-kb{display:block;height:5px;border-radius:5px;background:rgba(255,255,255,.14);overflow:hidden;margin-top:auto}
+html:root #view .y199-kb>i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,#F3DE9A,#D4AF37)}
+
+/* التنبيهات في حاوية واحدة */
+html:root #view .y199-alerts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 14px}
+html:root #view .y199-alerts>.a180-strip{margin:0!important;border-radius:14px!important;border-inline-start:4px solid #D4AF37!important;box-shadow:0 4px 14px rgba(11,27,58,.06)}
+html:root #view .y199-alerts>.a184-hub{grid-column:1/-1;margin:0!important}
+@media (max-width:900px){.y199-alerts{grid-template-columns:1fr}}
+
+/* بطاقات الرئيسية: لمسة ذهبية موحدة */
+:root[data-a170] .a170-card{border-top:3px solid #D4AF37!important;box-shadow:0 2px 4px rgba(15,27,51,.04),0 10px 24px rgba(15,27,51,.07)!important}
+
+/* ===== (2) تبويبات المشاريع بطاقات مؤشرات ===== */
+html:root #view .ptabs.y199-ptabs{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0 16px}
+html:root #view .ptabs.y199-ptabs .ptab{display:flex!important;flex-direction:column;align-items:flex-start!important;gap:2px!important;padding:12px 14px!important;min-height:108px;border-radius:16px!important;background:#fff!important;border:1px solid #E6DCC3!important;border-top:3px solid #D4AF37!important;box-shadow:0 6px 18px rgba(11,27,58,.06);text-align:start;width:auto!important;color:#0B1B3A!important;transition:transform .15s,box-shadow .15s}
+html:root #view .y199-ptabs .ptab:hover{transform:translateY(-2px);box-shadow:0 12px 24px rgba(11,27,58,.12)}
+html:root #view .y199-ptabs .ptab .y199-pi{font-size:18px;font-style:normal}
+html:root #view .y199-ptabs .y199-pl{font-size:13px;font-weight:800;color:#33415C}
+html:root #view .y199-ptabs .y199-pv{font-size:26px;font-weight:800;color:#0B1B3A;line-height:1.15;font-variant-numeric:tabular-nums}
+html:root #view .y199-ptabs .y199-ps:not(#y199x){font-size:11.5px;font-weight:600;color:#526075;background:none!important;padding:0!important}
+html:root #view .y199-ptabs .y199-kb{background:#EFE7D3;width:100%}
+html:root #view .ptabs.y199-ptabs .ptab.on{background:linear-gradient(135deg,#0B1B3A,#16305C)!important;border-color:#0B1B3A!important;border-top-color:#D4AF37!important;box-shadow:0 12px 26px rgba(11,27,58,.28)}
+html:root #view .y199-ptabs .ptab.on .y199-pl{color:#DCE3F0!important}html:root #view .y199-ptabs .ptab.on .y199-pv{color:#F3DE9A!important}html:root #view .y199-ptabs .ptab.on .y199-ps:not(#y199x){color:#C9D3E6!important}
+html:root #view .y199-ptabs .ptab.on .y199-kb{background:rgba(255,255,255,.15)}
+html:root[data-theme=dark] #view .y199-ptabs .ptab:not(.on){background:#13213D!important;border-color:#2A3A5C!important;color:#E5E9F2!important}
+html:root[data-theme=dark] #view .y199-ptabs .ptab:not(.on) .y199-pv{color:#F3DE9A}html:root[data-theme=dark] #view .y199-ptabs .ptab:not(.on) .y199-pl,html:root[data-theme=dark] #view .y199-ptabs .ptab:not(.on) .y199-ps{color:#C9D3E6}
+@media (max-width:760px){.ptabs.y199-ptabs{grid-template-columns:1fr 1fr!important;overflow:visible!important}html:root #view .y199-ptabs .ptab{min-height:96px;padding:10px 12px!important}html:root #view .y199-ptabs .y199-pv{font-size:22px}html:root #view .y199-kv{font-size:23px}html:root #view .y199-kg{grid-template-columns:1fr 1fr}}
+@media print{.y199-kpi,html:root #view .y199-alerts{display:none!important}}
+
+/* ===== v199 (مراجعة المالك): صفوف مجمّعة + «يحتاج انتباهك الآن» + لوحة المشاريع + تبويبات المشاريع بألوان بطاقات البانر ===== */
+html:root #view .y199-kpi .y199-kg{grid-template-columns:repeat(6,minmax(0,1fr))}
+html:root #view .y199-kr{position:relative;margin-top:10px}
+html:root #view .y199-kpi .y199-krt:not(#y199x){position:relative;font-size:12px;font-weight:800;color:#D4AF37!important;margin:0 2px 6px;letter-spacing:.3px}
+html:root #view .y199-kpi .y199-krt:empty{display:none}
+html:root #view .y199-att{position:relative;margin-top:12px;padding-top:10px;border-top:1px solid rgba(212,175,55,.3)}
+html:root #view .y199-att ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 12px}
+html:root #view .y199-att button{all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:8px;padding:7px 10px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
+html:root #view .y199-att button:hover,html:root #view .y199-att button:focus-visible{border-color:#D4AF37;background:rgba(255,255,255,.09)}
+html:root #view .y199-att i{grid-row:1/3;font-style:normal;font-size:11px;align-self:center}
+html:root #view .y199-att i.r{color:#F87171}html:root #view .y199-att i.b{color:#93C5FD}html:root #view .y199-att i.g{color:#F3DE9A}html:root #view .y199-att i.o{color:#FDBA74}
+html:root #view .y199-att span:not(#y199x){font-size:13px;font-weight:700;color:#fff!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html:root #view .y199-att small:not(#y199x){font-size:11.5px;color:#C9D3E6!important}
+html:root #view .y199-ppanel{margin-top:6px}
+@media (max-width:1100px){html:root #view .y199-kpi .y199-kg{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:760px){html:root #view .y199-kpi .y199-kg{grid-template-columns:repeat(2,minmax(0,1fr))}html:root #view .y199-att ul{grid-template-columns:1fr}}
+
+/* تبويبات المشاريع بألوان بطاقات البانر (أزرق / كهرماني / بنفسجي / أخضر) */
+html:root #view .ptabs.y199-ptabs .ptab{border:0!important;border-top:0!important;color:#fff!important;box-shadow:0 10px 24px rgba(11,27,58,.18);position:relative;overflow:hidden}
+html:root #view .ptabs.y199-ptabs .ptab[data-ptab="dash"]{background:linear-gradient(135deg,#2563EB,#1E3A8A)!important}
+html:root #view .ptabs.y199-ptabs .ptab[data-ptab="quotes"]{background:linear-gradient(135deg,#B7791F,#8A4B0F)!important}
+html:root #view .ptabs.y199-ptabs .ptab[data-ptab="lost"]{background:linear-gradient(135deg,#7C3AED,#4C1D95)!important}
+html:root #view .ptabs.y199-ptabs .ptab[data-ptab="list"]{background:linear-gradient(135deg,#0F766E,#134E4A)!important}
+html:root #view .ptabs.y199-ptabs .ptab .y199-pi{position:absolute;inset-inline-end:14px;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;display:grid!important;place-items:center;background:rgba(255,255,255,.16);font-size:19px}
+html:root #view .y199-ptabs .ptab .y199-pl:not(#y199x){color:#fff!important;font-size:14px}
+html:root #view .y199-ptabs .ptab .y199-pv:not(#y199x){color:#fff!important;font-size:28px}
+html:root #view .y199-ptabs .ptab .y199-ps:not(#y199x){color:rgba(255,255,255,.85)!important}
+html:root #view .y199-ptabs .ptab .y199-kb{background:rgba(255,255,255,.22)!important;width:calc(100% - 56px)}
+html:root #view .y199-ptabs .ptab .y199-kb>i{background:#fff!important}
+html:root #view .ptabs.y199-ptabs .ptab.on{outline:3px solid #D4AF37;outline-offset:2px;transform:translateY(-2px);box-shadow:0 14px 30px rgba(11,27,58,.32)}
+html:root #view .ptabs.y199-ptabs .ptab:not(.on){opacity:.92}
+html:root[data-theme=dark] #view .ptabs.y199-ptabs .ptab:not(.on){color:#fff!important}
