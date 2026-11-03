@@ -1,5 +1,5 @@
 // يومي | Yawmi — service worker v2: أحدث نسخة دايماً، والنسخة المحفوظة لو النت بطيء أو مقطوع
-const V = 'yawmi-v214-9ab12304fc', FONTS = 'yawmi-fonts';
+const V = 'yawmi-v215-597c0cd7d2', FONTS = 'yawmi-fonts';
 const SHELL = ['./', './manifest.json', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(V).then(async c => { await c.addAll(SHELL.map(u => new Request(u, { cache: 'reload' })));
   // v112: تخزين ملفات البرنامج مسبقاً ليعمل بدون إنترنت من أول مرة
@@ -18,6 +18,10 @@ self.addEventListener('fetch', e => {
   }
   if (u.origin === location.origin && u.pathname.indexOf('/api') === 0) return; // طلبات الخادم لا تُخزَّن أبداً
   if (u.origin === location.origin && u.searchParams.has('vc')) { e.respondWith(fetch(r, { cache: 'no-store' })); return; } // فحص التحديثات: من النت دايماً
+  if (u.origin === location.origin && (u.pathname.endsWith('/assets/app.js') || u.pathname.endsWith('/assets/yawmi-ui.css'))) { // v215: ملفا البرنامج من النت أولاً (تحقق سريع 304) ثم الذاكرة بدون إنترنت — حتى لا تعلق نسخة قديمة
+    e.respondWith(fetch(r, { cache: 'no-cache' }).then(res => { if (res.ok) { const cp = res.clone(); caches.open(V).then(c => c.put(r, cp)); } return res; }).catch(() => caches.open(V).then(c => c.match(r, { ignoreSearch: true })).then(m => m || Response.error())));
+    return;
+  }
   if (u.origin === location.origin && u.pathname.includes('/assets/')) { // ملفات البرنامج بإصدار في الرابط (?v=): من الذاكرة إن وُجدت بنفس الإصدار، وإلا من النت
     e.respondWith(caches.open(V).then(async c => { const m = await c.match(r); if (m) return m; const res = await fetch(r); if (res.ok) c.put(r, res.clone()); return res; }));
     return;
