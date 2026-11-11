@@ -103,12 +103,15 @@ const wfReq = o => (o && o.wf && o.wf.req) || null;
 async function usersOf(db, tn) { return (await rowsOf(db, 'users', tn)).map(u => Object.assign(u, { active: u.active !== false })); }
 async function tenOf(db, tn) { if (!tn) return null; const r = await db.prepare('SELECT data FROM tenants WHERE id = ?').bind(tn).first(); return r ? JSON.parse(r.data || 'null') : null; }
 function tenState(t) { if (!t) return 'active'; if (t.state === 'suspended') return 'suspended'; if (t.state === 'active' && !t.paidUntil) return 'active'; const end = t.state === 'active' ? t.paidUntil : t.trialEnd; return end && end < today() ? 'expired' : 'ok'; }
-async function ctxOf(db, th) { if (!th) return null; const s = await db.prepare('SELECT * FROM sess2 WHERE th = ?').bind(th).first(); if (!s) return null;
+async function ctxOf(db, th) { if (!th) return null;
+  // v259: الجلسة وكل بيانات السياق في رحلة واحدة إلى قاعدة البيانات (كانت رحلتين متتاليتين)
+  const SQ = "(SELECT COALESCE(tn, '') FROM sess2 WHERE th = ?)", SU = '(SELECT uid FROM sess2 WHERE th = ?)', NMP = "'nm:' || " + SQ + " || ':'";
+  const [rS, rU, rT, rP, rX, rN, rNm] = await db.batch([db.prepare('SELECT * FROM sess2 WHERE th = ?').bind(th), db.prepare('SELECT data FROM users WHERE tn = ' + SQ).bind(th), db.prepare('SELECT data FROM tenants WHERE id = ' + SQ).bind(th), db.prepare('SELECT 1 x FROM pins WHERE tn = ' + SQ + ' AND uid = ' + SU).bind(th, th), db.prepare("SELECT v FROM cfg WHERE k = 'xp:' || " + SQ).bind(th), db.prepare("SELECT v FROM cfg WHERE k = 'native:' || " + SQ).bind(th), db.prepare('SELECT k, v FROM cfg WHERE substr(k, 1, length(' + NMP + ')) = ' + NMP).bind(th, th)]);
+  const s = ((rS && rS.results) || [])[0]; if (!s) return null;
   const now = Date.now(); if (s.exp < now) { await db.prepare('DELETE FROM sess2 WHERE th = ?').bind(th).run(); throw new UErr('انتهت الجلسة — سجّل الدخول مرة أخرى'); }
   if (!s.rem && s.last && now - s.last > IDLE) { await db.prepare('DELETE FROM sess2 WHERE th = ?').bind(th).run(); throw new UErr('انتهت الجلسة — أُغلقت بعد 30 دقيقة دون نشاط'); }
   if (!s.last || now - s.last > 300000) await db.prepare('UPDATE sess2 SET last = ? WHERE th = ?').bind(now, th).run();
-  // v122: كل بيانات السياق في رحلة واحدة إلى قاعدة البيانات بدل خمس رحلات متتالية
-  const tn = s.tn || '', [rU, rT, rP, rX, rN, rNm] = await db.batch([db.prepare('SELECT data FROM users WHERE tn = ?').bind(tn), db.prepare('SELECT data FROM tenants WHERE id = ?').bind(tn), db.prepare('SELECT 1 x FROM pins WHERE tn = ? AND uid = ?').bind(tn, s.uid), db.prepare('SELECT v FROM cfg WHERE k = ?').bind('xp:' + tn), db.prepare('SELECT v FROM cfg WHERE k = ?').bind('native:' + tn), db.prepare('SELECT k, v FROM cfg WHERE substr(k, 1, ?) = ?').bind(('nm:' + tn + ':').length, 'nm:' + tn + ':')]);
+  const tn = s.tn || '';
   const rs = r => (r && r.results) || [], US = rs(rU).map(x => JSON.parse(x.data)).map(u => Object.assign(u, { active: u.active !== false })), u = US.find(x => x.id === s.uid); if (!u || u.active === false) throw new UErr('الحساب غير مفعّل');
   { const pre = 'nm:' + tn + ':', NM = {}; rs(rNm).forEach(r => { if (r.v) NM[r.k.slice(pre.length)] = r.v; }); US.forEach(x => { if (NM[x.id]) x.name = NM[x.id]; }); } // v173: الاسم الظاهر (Cloudflare)
   const ten = tn && rs(rT)[0] ? JSON.parse(rs(rT)[0].data || 'null') : null, st = tn ? tenState(ten) : 'active'; if (st === 'suspended') throw new UErr('حساب الشركة غير مفعّل حالياً — تواصل مع إدارة يومي');
@@ -216,11 +219,16 @@ async function login(env, ident, pw, waitUntil, ip) { const db = env.DB, ipHash 
 
 // ---------- العمليات الأصلية ----------
 async function nGetAll(env, C, since) { const db = env.DB, u = C.u, tn = C.tn, po = C.po, B = Object.fromEntries(C.US.map(x => [x.id, x])), now = Date.now(), RAW = {};
-  const RW = async t => { const L = since ? (await db.prepare(`SELECT data FROM ${t} WHERE tn = ? AND updated_at > ?`).bind(tn, since).all()).results.map(x => JSON.parse(x.data)) : await rowsOf(db, t, tn); RAW[t] = L; return L; };
+  // v259: كل القراءات في رحلة واحدة إلى قاعدة البيانات (كانت 4–5 رحلات متتالية)
+  const TB = ['items', 'projects', 'contacts'], Q = TB.map(t => since ? db.prepare(`SELECT data FROM ${t} WHERE tn = ? AND updated_at > ?`).bind(tn, since) : db.prepare(`SELECT data FROM ${t} WHERE tn = ?`).bind(tn));
+  Q.push(since ? db.prepare('SELECT date, text FROM notes WHERE tn = ? AND owner = ? AND updated_at > ?').bind(tn, u.id, since) : db.prepare('SELECT date, text FROM notes WHERE tn = ? AND owner = ?').bind(tn, u.id));
+  if (since) Q.push(db.prepare('SELECT kind, id FROM gone WHERE tn = ? AND at > ?').bind(tn, since));
+  const QR = (await db.batch(Q)).map(r => (r && r.results) || []), PRE = {}; TB.forEach((t, i) => { PRE[t] = QR[i].map(x => JSON.parse(x.data)); });
+  const RW = async t => { const L = PRE[t]; RAW[t] = L; return L; };
   const mineRel = x => x.owner === u.id || x.assignedBy === u.id || (wfReq(x) && wfReq(x).ap === u.id);
   let items = (await RW('items')).filter(x => (x.space !== 'p' || (x.owner === u.id && po)) && (!x.pv || x.owner === u.id));
   items = can(u, 'team') ? items.filter(x => mineRel(x) || seeScope(u, B[x.owner])) : items.filter(mineRel);
-  const notes = {}; (await (since ? db.prepare('SELECT date, text FROM notes WHERE tn = ? AND owner = ? AND updated_at > ?').bind(tn, u.id, since) : db.prepare('SELECT date, text FROM notes WHERE tn = ? AND owner = ?').bind(tn, u.id)).all()).results.forEach(r => notes[r.date] = r.text || '');
+  const notes = {}; QR[3].forEach(r => notes[r.date] = r.text || '');
   const fin = can(u, 'finance');
   const projects = (await RW('projects')).filter(p => p.space === 'p' ? (p.createdBy === u.id && po) : (can(u, 'projects') || (Array.isArray(p.team) && p.team.includes(u.id)))).map(p => p.space === 'p' || fin ? p : stripFin(p));
   const cOK = can(u, 'projects') && xcan(C.X, u, 'clients'), bOK = xcan(C.X, u, 'brk');
@@ -230,7 +238,7 @@ async function nGetAll(env, C, since) { const db = env.DB, u = C.u, tn = C.tn, p
   if (since) { // v122: مزامنة جزئية — ما تغيّر فقط + ما حُذف أو لم يعد مرئياً لهذا المستخدم
     const vis = (L, V) => { const k = new Set(V.map(x => x.id)); return L.filter(x => !k.has(x.id)).map(x => x.id); };
     const drop = { item: vis(RAW.items || [], items), project: vis(RAW.projects || [], projects), contact: vis(RAW.contacts || [], contacts) };
-    (await db.prepare('SELECT kind, id FROM gone WHERE tn = ? AND at > ?').bind(tn, since).all()).results.forEach(g => { if (drop[g.kind]) drop[g.kind].push(g.id); });
+    QR[4].forEach(g => { if (drop[g.kind]) drop[g.kind].push(g.id); });
     out.delta = 1; out.drop = drop; }
   return out; }
 async function nSaveItem(env, C, obj) { const db = env.DB, u = C.u, tn = C.tn; if (!obj || !obj.id) throw new UErr('بيانات غير صالحة'); let ev = null;
