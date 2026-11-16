@@ -4,57 +4,122 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data:; connect-src 'self'">
-<title>حالة المشروع · يومي</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; connect-src 'self'">
+<title>متابعة المشروع</title>
 <link rel="icon" href="icon-192.png">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap">
+<link rel="stylesheet" href="assets/fonts/fonts.css">
 <style>
-:root{--bg:#f3f5f9;--card:#fff;--ink:#14213d;--ink2:#4a5672;--mut:#8590a6;--line:#e3e8f0;--navy:#14213d;--gold:#c29a3e;--gold-soft:#f8f0dc;--done:#2e8b57;--done-soft:#e3f3ea;--late:#c2453b;--late-soft:#fbe6e3;--doing:#2f63b5;--doing-soft:#e3ecfa}
-@media (prefers-color-scheme:dark){:root{--bg:#0d1424;--card:#151e33;--ink:#e8edf7;--ink2:#b3bdd3;--mut:#7f8aa3;--line:#25304a;--gold-soft:#2c2614;--done-soft:#14301f;--late-soft:#3a1d1a;--doing-soft:#16243d}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Tajawal,system-ui,sans-serif;line-height:1.6}
-.top{background:linear-gradient(135deg,#14213d,#1f3360);color:#fff;padding:22px 16px 56px}.top .w{max-width:860px;margin:auto}.org{color:var(--gold);font-weight:700;font-size:13px;letter-spacing:.3px}
-h1{margin:6px 0 2px;font-size:24px}.sub{opacity:.85;font-size:14px}.w{max-width:860px;margin:auto;padding:0 16px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin:0 0 14px;box-shadow:0 6px 20px rgba(20,33,61,.06)}.lift{margin-top:-40px}
+/* v274: هوية المكتب (كحلي/ذهبي/رملي، IBM Plex Sans Arabic) + طلب رخصة البناء + مراحل الرخصة */
+:root{--bg:#F5EEDF;--card:#fff;--ink:#0B1B3A;--ink2:#334260;--mut:#526075;--line:#e4dccb;--navy:#0B1B3A;--gold:#D4AF37;--gold2:#A37E2D;--gold-soft:#f8f0dc;--done:#15803d;--done-soft:#e3f3ea;--late:#c2453b;--late-soft:#fbe6e3;--doing:#2563EB;--doing-soft:#e3ecfa}
+@media (prefers-color-scheme:dark){:root{--bg:#0d1424;--card:#151e33;--ink:#e8edf7;--ink2:#c3cbdc;--mut:#9aa5bc;--line:#25304a;--gold-soft:#2c2614;--done-soft:#14301f;--late-soft:#3a1d1a;--doing-soft:#16243d}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans Arabic',system-ui,sans-serif;line-height:1.65;font-size:15px}
+.top{background:linear-gradient(135deg,#0B1B3A,#16305c);color:#fff;padding:22px 16px 60px;border-bottom:4px solid var(--gold)}.top .w{max-width:880px;margin:auto}
+.org{color:var(--gold);font-weight:700;font-size:13.5px}.orgs{opacity:.8;font-size:12.5px}
+h1{margin:6px 0 2px;font-size:24px}.sub{opacity:.88;font-size:14px}.w{max-width:880px;margin:auto;padding:0 16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin:0 0 14px;box-shadow:0 6px 20px rgba(11,27,58,.06)}.lift{margin-top:-42px}
 .row{display:flex;gap:16px;align-items:center;flex-wrap:wrap}.ring{--p:0;width:96px;height:96px;border-radius:50%;background:conic-gradient(var(--gold) calc(var(--p)*1%),var(--line) 0);display:grid;place-items:center;flex:none}
 .ring b{width:76px;height:76px;border-radius:50%;background:var(--card);display:grid;place-items:center;font-size:22px}.kv{flex:1;min-width:220px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .kv div{background:var(--bg);border-radius:10px;padding:8px 10px}.kv span{display:block;font-size:12px;color:var(--mut)}.kv b{font-size:14.5px}
-.pill{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12.5px;font-weight:700;background:var(--doing-soft);color:var(--doing)}.pill.done{background:var(--done-soft);color:var(--done)}.pill.late{background:var(--late-soft);color:var(--late)}.pill.wait,.pill.mut{background:var(--gold-soft);color:#9a7426}
-h2{font-size:16px;margin:0 0 10px}h2 small{color:var(--mut);font-weight:500;font-size:12.5px}
-.li{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--line)}.li:last-child{border:0}.dot{width:22px;height:22px;border-radius:50%;border:2px solid var(--line);flex:none;display:grid;place-items:center;font-size:12px;color:#fff}
-.li.d .dot{background:var(--done);border-color:var(--done)}.li .t{flex:1}.li small{color:var(--mut);font-size:12px}.li.d .t{color:var(--ink2)}
+.pill{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12.5px;font-weight:700;background:var(--doing-soft);color:var(--doing)}.pill.done{background:var(--done-soft);color:var(--done)}.pill.late{background:var(--late-soft);color:var(--late)}.pill.wait,.pill.mut{background:var(--gold-soft);color:#7a5a17}
+h2{font-size:16.5px;margin:0 0 10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}h2 small{color:var(--mut);font-weight:500;font-size:12.5px}
+h2:before{content:"";width:6px;height:18px;border-radius:3px;background:var(--gold)}
+.li{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--line)}.li:last-child{border:0}.dot{width:24px;height:24px;border-radius:50%;border:2px solid var(--line);flex:none;display:grid;place-items:center;font-size:12px;color:#fff}
+.li.d .dot{background:var(--done);border-color:var(--done)}.li.c .dot{border-color:var(--gold);background:var(--gold)}.li .t{flex:1}.li small{color:var(--mut);font-size:12px}.li.d .t{color:var(--ink2)}.li.c .t{font-weight:700}
 table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:8px;border-bottom:1px solid var(--line);text-align:start}th{color:var(--mut);font-weight:500;font-size:12.5px}td.n{font-variant-numeric:tabular-nums;font-weight:700}
 .foot{text-align:center;color:var(--mut);font-size:12px;padding:10px 0 30px}.err{text-align:center;padding:60px 20px}.err b{display:block;font-size:20px;margin-bottom:6px}
-@media print{.top{background:#14213d!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.card{box-shadow:none;break-inside:avoid}}
+/* نموذج الطلب */
+.frm fieldset{border:0;margin:0 0 14px;padding:0}.frm legend{font-weight:700;font-size:14.5px;margin-bottom:8px;color:var(--gold2)}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.frm label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--ink2)}.frm label.wd{grid-column:1/-1}
+.frm input,.frm select,.frm textarea{font:inherit;font-size:14.5px;padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);width:100%}
+.frm textarea{min-height:80px;resize:vertical}.frm input:focus,.frm select:focus,.frm textarea:focus{outline:2px solid var(--gold);border-color:var(--gold)}
+.req:after{content:" *";color:var(--late)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}.chips label{flex-direction:row;align-items:center;gap:6px;padding:7px 12px;border:1px solid var(--line);border-radius:999px;cursor:pointer;background:var(--card)}
+.chips input{width:auto;margin:0}.chips label:has(input:checked){background:var(--navy);color:#fff;border-color:var(--navy)}
+.fac{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.fac label{border:1px solid var(--line);border-radius:12px;padding:10px;cursor:pointer;align-items:flex-start}.fac input{width:auto}
+.fac b{font-size:14px;color:var(--ink)}.fac small{color:var(--mut);font-size:12px}.fac label:has(input:checked){border-color:var(--gold);background:var(--gold-soft)}
+.prog{position:sticky;top:0;z-index:5;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;display:flex;align-items:center;gap:10px;font-size:13px}
+.prog i{flex:1;height:8px;border-radius:99px;background:var(--line);overflow:hidden}.prog i em{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold2),var(--gold));transition:width .2s}
+.btn{font:inherit;font-weight:700;border:0;border-radius:12px;padding:11px 20px;cursor:pointer;background:var(--navy);color:#fff}.btn.g{background:var(--gold);color:var(--navy)}.btn.l{background:transparent;border:1px solid var(--line);color:var(--ink);font-weight:500;padding:8px 14px}
+.msg{padding:10px 12px;border-radius:10px;margin-top:10px;font-size:14px}.msg.ok{background:var(--done-soft);color:var(--done)}.msg.no{background:var(--late-soft);color:var(--late)}
+.cons{flex-direction:row!important;align-items:flex-start;gap:8px!important}.cons input{width:auto;margin-top:5px}
+.hide{display:none!important}
+@media (max-width:620px){.g2,.g3,.fac{grid-template-columns:1fr}.kv{grid-template-columns:1fr 1fr}h1{font-size:20px}}
+@media print{.top{-webkit-print-color-adjust:exact;print-color-adjust:exact}.card{box-shadow:none;break-inside:avoid}.frm,.btn{display:none}}
 </style>
 </head>
 <body>
-<div id="app"><div class="err"><b>جارٍ تحميل حالة المشروع…</b></div></div>
+<div id="app"><div class="err"><b>جارٍ تحميل بيانات المشروع…</b></div></div>
 <script>
 (function(){
-  var E = function(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){ return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
-  var M = function(v){ return Number(v || 0).toLocaleString("en-US", { maximumFractionDigits: 2 }); };
-  var D = function(s){ if (!s) return "—"; try { return new Date(s + "T00:00:00").toLocaleDateString("ar-SA-u-ca-gregory-nu-latn", { day: "numeric", month: "long", year: "numeric" }); } catch (e) { return s; } };
-  var app = document.getElementById("app"), t = new URLSearchParams(location.search).get("t") || "";
-  function fail(m){ app.innerHTML = '<div class="err"><b>تعذّر عرض حالة المشروع</b>' + E(m || "الرابط غير صالح أو أُوقف. تواصل مع المكتب للحصول على رابط جديد.") + "</div>"; }
-  if (!/^[a-f0-9]{24,64}$/.test(t)) return fail();
-  fetch("/api?share=" + t, { cache: "no-store" }).then(function(r){ return r.json(); }).then(function(j){
-    if (!j || !j.ok || !j.data) return fail(j && j.error);
-    var d = j.data; document.title = d.n + " · حالة المشروع";
-    var cls = { done: "done", late: "late", wait: "wait", doing: "", mut: "mut" }[d.sc] || "";
-    var steps = (d.steps || []), ph = (d.ph || []), cur = steps.filter(function(x){ return !x.d; })[0];
-    var h = '<div class="top"><div class="w"><div class="org">' + E(d.org || "متابعة حالة المشروع") + '</div><h1>' + E(d.n) + '</h1><div class="sub">' + E([d.cl, d.ty, d.code].filter(Boolean).join(" · ")) + '</div></div></div><div class="w">';
-    h += '<div class="card lift"><div class="row"><div class="ring" style="--p:' + (d.prog || 0) + '"><b>' + (d.prog || 0) + '%</b></div><div class="kv">'
-      + '<div><span>حالة المشروع</span><b><span class="pill ' + cls + '">' + E(d.st) + '</span></b></div>'
-      + '<div><span>المرحلة الحالية</span><b>' + E(cur ? cur.n : (d.prog >= 100 ? "اكتمل المشروع" : "—")) + '</b></div>'
-      + '<div><span>تاريخ البدء</span><b>' + D(d.start) + '</b></div><div><span>التسليم المتوقع</span><b>' + D(d.end) + '</b></div></div></div></div>';
-    if (steps.length) h += '<div class="card"><h2>مراحل العمل <small>' + steps.filter(function(x){ return x.d; }).length + ' من ' + steps.length + ' مكتملة</small></h2>' + steps.map(function(x){ return '<div class="li' + (x.d ? " d" : "") + '"><span class="dot">' + (x.d ? "✓" : "") + '</span><span class="t">' + E(x.n) + '</span><small>' + (x.d ? "مكتملة" : x.due ? "الموعد: " + D(x.due) : "") + '</small></div>'; }).join("") + '</div>';
-    if (ph.length) h += '<div class="card"><h2>دفعات العقد <small>حسب مراحل الإنجاز</small></h2><table><tr><th>المرحلة</th><th>النسبة</th><th>الحالة</th></tr>' + ph.map(function(x){ return '<tr><td>' + E(x.n) + '</td><td class="n">' + M(x.pct) + '%</td><td><span class="pill ' + (x.s === "done" ? "done" : "mut") + '">' + (x.s === "done" ? "منجزة" : "قادمة") + '</span></td></tr>'; }).join("") + '</table></div>';
-    if (d.pm && d.pm.length) h += '<div class="card"><h2>التصاريح الحكومية <small>' + d.pm.filter(function(x){ return x.ok; }).length + ' من ' + d.pm.length + ' معتمدة</small></h2><table><tr><th>التصريح</th><th>الجهة</th><th>الحالة</th></tr>' + d.pm.map(function(x){ return '<tr><td>' + E(x.t) + (x.ph ? '<br><small>' + E(x.ph) + '</small>' : '') + '</td><td>' + E(x.a) + '</td><td><span class="pill ' + (x.ok ? 'done' : 'mut') + '">' + E(x.s) + '</span>' + (x.exp ? '<br><small>ينتهي ' + D(x.exp) + '</small>' : '') + '</td></tr>'; }).join('') + '</table></div>';
-    if (d.lv) h += '<div class="card"><h2>آخر زيارة موقع <small>' + D(d.lv) + '</small></h2></div>';
-    if (d.due && d.due.length) { var tot = d.due.reduce(function(s, x){ return s + x.v; }, 0); h += '<div class="card"><h2>المبالغ المستحقة <small>شاملة ضريبة القيمة المضافة</small></h2><table><tr><th>البند</th><th>تاريخ المطالبة</th><th>المبلغ (ر.س)</th></tr>' + d.due.map(function(x){ return '<tr><td>' + E(x.n) + '</td><td>' + D(x.d) + '</td><td class="n">' + M(x.v) + '</td></tr>'; }).join("") + '<tr><th colspan="2">الإجمالي</th><td class="n">' + M(tot) + '</td></tr></table></div>'; }
-    h += '<div class="foot">آخر تحديث: ' + D(d.at) + ' · صفحة للعرض فقط تُحدَّث تلقائياً من المكتب<br>يومي · Yawmi</div></div>';
-    app.innerHTML = h;
-  }).catch(function(){ fail("تعذّر الاتصال — تحقق من الإنترنت ثم أعد المحاولة."); });
+  var E=function(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});};
+  var M=function(v){return Number(v||0).toLocaleString("en-US",{maximumFractionDigits:2});};
+  var D=function(s){if(!s)return"—";try{return new Date(s+"T00:00:00").toLocaleDateString("ar-SA-u-ca-gregory-nu-latn",{day:"numeric",month:"long",year:"numeric"});}catch(e){return s;}};
+  var app=document.getElementById("app"),t=new URLSearchParams(location.search).get("t")||"",DATA=null;
+  function fail(m){app.innerHTML='<div class="err"><b>تعذّر عرض بيانات المشروع</b>'+E(m||"الرابط غير صالح أو أُوقف. تواصل مع المكتب للحصول على رابط جديد.")+"</div>";}
+  if(!/^[a-f0-9]{24,64}$/.test(t))return fail();
+  var RT=["رخصة بناء جديدة","إضافة","ترميم","تعديل","هدم"],CITY=["مكة المكرمة","جدة","الطائف","المدينة المنورة","الرياض","الدمام","أخرى"];
+  var PT=["فيلا سكنية مستقلة","فيلا دوبلكس","عمارة سكنية","مبنى سكني تجاري","مجمع تجاري","مبنى إداري","مستودع","مبنى صناعي","مبنى تعليمي","مبنى طبي","فندق أو شقق فندقية","مبنى متعدد الاستخدامات","أخرى"];
+  var DOCS=[["deed","صك الملكية"],["survey","القرار المساحي"],["soil","تقرير فحص التربة"],["dwg","مخططات سابقة"],["pics","صور الموقع"]];
+  var FAC=[["تقليدي","رواشين خشبية وحجر"],["انتقالي","مزج بين المشربية والكتل الحديثة"],["معاصر","كتل نظيفة وزجاج وشاشات مستوحاة من المشربية"]];
+  var REQK=["nm","mob","area","pt"];
+  function opt(L,v){return '<option value="">اختر…</option>'+L.map(function(x){return '<option'+(x===v?' selected':'')+'>'+E(x)+'</option>';}).join("");}
+  function radios(n,L,v){return '<div class="chips">'+L.map(function(x){return '<label><input type="radio" name="'+n+'" value="'+E(x)+'"'+(x===v?' checked':'')+'>'+E(x)+'</label>';}).join("")+'</div>';}
+  function form(d,old){var o=(old&&old.d)||{},dc=o.docs||{};
+    return '<div class="card frm" id="rqCard"><h2>طلب رخصة البناء <small>'+(old?'رقم الطلب '+E(old.n)+' — يمكنك تحديث بياناتك وإعادة الإرسال':'عبّئ البيانات ليبدأ المكتب دراسة طلبك')+'</small></h2>'
+    +'<form id="rq" novalidate><div class="prog" aria-live="polite"><span>اكتمال البيانات</span><i><em id="pg"></em></i><b id="pgv">0%</b></div>'
+    +'<fieldset><legend>١. بيانات المالك</legend><div class="g3"><label><span class="req">الاسم الكامل</span><input name="nm" maxlength="120" value="'+E(o.nm||d.cl||"")+'"></label><label><span class="req">رقم الجوال</span><input name="mob" type="tel" inputmode="tel" placeholder="05xxxxxxxx" maxlength="20" value="'+E(o.mob||"")+'"></label><label><span>البريد الإلكتروني (اختياري)</span><input name="em" type="email" maxlength="120" value="'+E(o.em||"")+'"></label></div></fieldset>'
+    +'<fieldset><legend>٢. نوع الطلب</legend>'+radios("rt",RT,o.rt||"")+'</fieldset>'
+    +'<fieldset><legend>٣. بيانات الأرض</legend><div class="g3"><label><span>المدينة</span><select name="city">'+opt(CITY,o.city)+'</select></label><label><span>الحي</span><input name="dist" maxlength="80" value="'+E(o.dist||"")+'"></label><label><span>رقم القطعة / المخطط</span><input name="plot" maxlength="80" value="'+E(o.plot||"")+'"></label>'
+    +'<label><span class="req">مساحة الأرض (م²)</span><input name="area" inputmode="decimal" maxlength="12" value="'+E(o.area||"")+'"></label><label class="wd"><span>حالة الأرض</span>'+radios("land",["أرض فضاء","يوجد مبنى قائم"],o.land||"")+'</label>'
+    +'<label class="wd"><span>رابط الموقع من خرائط Google</span><div class="row" style="gap:8px"><input name="map" dir="ltr" placeholder="https://maps.app.goo.gl/…" maxlength="300" value="'+E(o.map||"")+'" style="flex:1"><button type="button" class="btn l" id="geo">📍 موقعي الحالي</button></div></label></div></fieldset>'
+    +'<fieldset><legend>٤. بيانات المشروع</legend><div class="g3"><label><span class="req">نوع المشروع</span><select name="pt">'+opt(PT,o.pt)+'</select></label><label><span>عدد الأدوار</span><input name="fl" inputmode="numeric" maxlength="4" value="'+E(o.fl||"")+'"></label><label><span>غرض المبنى</span><select name="use">'+opt(["استخدام شخصي","استثمار"],o.use)+'</select></label>'
+    +'<label><span>يوجد بدروم؟</span>'+radios("bs",["نعم","لا"],o.bs||"")+'</label><label><span>مخططات معمارية سابقة؟</span>'+radios("prevd",["نعم","لا"],o.prevd||"")+'</label><label><span>طلب رخصة سابق لهذا المشروع؟</span>'+radios("prevp",["نعم","لا"],o.prevp||"")+'</label>'
+    +'<label class="wd"><span>المكونات الرئيسية وتصورك للمشروع</span><textarea name="comp" maxlength="1500" placeholder="مثال: دور أرضي (مجلس، صالة، مطبخ)، دور أول (4 غرف نوم)، ملحق علوي…">'+E(o.comp||"")+'</textarea></label></div>'
+    +'<div class="g2 vil" style="margin-top:10px"><label><span>تفضيل الضيافة</span>'+radios("maj",["مجلس منفصل","جزء من صالة كبيرة"],o.maj||"")+'</label><label><span>نوع المطبخ المفضل</span>'+radios("kit",["مطبخ مفتوح","مطبخ مغلق"],o.kit||"")+'</label></div></fieldset>'
+    +'<fieldset class="facw"><legend>٥. نمط الواجهة المفضل</legend><div class="fac">'+FAC.map(function(x){return '<label><span><input type="radio" name="fac" value="'+E(x[0])+'"'+(o.fac===x[0]?' checked':'')+'> <b>'+E(x[0])+'</b></span><small>'+E(x[1])+'</small></label>';}).join("")+'</div></fieldset>'
+    +'<fieldset><legend>٦. المستندات المتوفرة لديك</legend><div class="chips">'+DOCS.map(function(x){return '<label><input type="checkbox" name="doc_'+x[0]+'"'+(dc[x[0]]?' checked':'')+'>'+E(x[1])+'</label>';}).join("")+'</div>'
+    +'<label class="wd" style="margin-top:10px"><span>رابط المستندات (Google Drive أو OneDrive أو غيره)</span><input name="link" dir="ltr" placeholder="https://drive.google.com/…" maxlength="300" value="'+E(o.link||"")+'"></label><small style="color:var(--mut)">ارفع المستندات في مجلد على Drive أو OneDrive واجعله متاحاً لمن لديه الرابط، ثم الصق الرابط هنا.</small></fieldset>'
+    +'<fieldset><legend>٧. ملاحظات أو متطلبات خاصة</legend><label class="wd"><textarea name="note" maxlength="1500">'+E(o.note||"")+'</textarea></label></fieldset>'
+    +'<label class="cons"><input type="checkbox" name="ok"'+(old?' checked':'')+'><span class="req">أوافق على استخدام بياناتي لدراسة الطلب والتواصل معي بشأنه.</span></label>'
+    +'<div class="row" style="margin-top:12px"><button type="submit" class="btn g" id="snd">'+(old?'تحديث الطلب':'إرسال الطلب')+'</button></div><div id="rqm"></div></form></div>';}
+  function val(f){var g=function(n){var el=f.elements[n];if(!el)return"";if(el.length&&!el.tagName){for(var i=0;i<el.length;i++)if(el[i].checked)return el[i].value;return"";}return String(el.value||"").trim();};
+    var d={};["nm","mob","em","rt","city","dist","plot","area","land","map","pt","fl","bs","use","comp","maj","kit","fac","prevd","prevp","link","note"].forEach(function(k){var v=g(k);if(v)d[k]=v;});
+    d.docs={};DOCS.forEach(function(x){if(f.elements["doc_"+x[0]].checked)d.docs[x[0]]=1;});d.ok=f.elements.ok.checked?1:0;return d;}
+  function upd(f){var d=val(f),keys=["nm","mob","rt","city","area","land","pt","fl","comp"],n=keys.filter(function(k){return d[k];}).length+(Object.keys(d.docs).length?1:0),p=Math.round(n/(keys.length+1)*100);
+    document.getElementById("pg").style.width=p+"%";document.getElementById("pgv").textContent=p+"%";
+    var vil=/فيلا/.test(d.pt||"")||!d.pt;f.querySelector(".vil").classList.toggle("hide",!vil);
+    var fac=!/هدم|ترميم/.test(d.rt||"")&&!/مستودع|صناعي/.test(d.pt||"");f.querySelector(".facw").classList.toggle("hide",!fac);}
+  function bind(){var f=document.getElementById("rq");if(!f)return;f.addEventListener("input",function(){upd(f);});f.addEventListener("change",function(){upd(f);});upd(f);
+    document.getElementById("geo").onclick=function(){var b=this;if(!navigator.geolocation)return;b.textContent="⏳ جارٍ التحديد…";navigator.geolocation.getCurrentPosition(function(p){f.elements.map.value="https://www.google.com/maps?q="+p.coords.latitude.toFixed(6)+","+p.coords.longitude.toFixed(6);b.textContent="✓ تم التحديد";upd(f);},function(){b.textContent="📍 موقعي الحالي";alert("تعذّر تحديد الموقع — الصق رابط الموقع من خرائط Google");},{enableHighAccuracy:true,timeout:12000});};
+    f.addEventListener("submit",function(e){e.preventDefault();var d=val(f),m=document.getElementById("rqm"),miss=REQK.filter(function(k){return!d[k];});
+      if(miss.length){m.className="msg no";m.textContent="أكمل الحقول الإلزامية المعلَّمة بـ *";var el=f.elements[miss[0]];el&&el.focus&&el.focus();return;}
+      if(!/^0?5\d{8}$|^\+?\d{9,15}$/.test(d.mob.replace(/[\s-]/g,""))){m.className="msg no";m.textContent="تحقق من رقم الجوال";f.elements.mob.focus();return;}
+      if(!d.ok){m.className="msg no";m.textContent="يلزم الموافقة على استخدام البيانات";return;}
+      var b=document.getElementById("snd");b.disabled=true;b.textContent="⏳ جارٍ الإرسال…";
+      fetch("/api",{method:"POST",headers:{"content-type":"text/plain;charset=utf-8"},body:JSON.stringify({fn:"shareReq274",args:[t,d]})}).then(function(r){return r.json();}).then(function(j){
+        if(!j||!j.ok){b.disabled=false;b.textContent="إرسال الطلب";m.className="msg no";m.textContent=(j&&j.error)||"تعذّر الإرسال — حاول مرة أخرى";return;}
+        m.className="msg ok";m.textContent="✓ وصل طلبك رقم "+j.data.n+" — سيتواصل معك المكتب بعد دراسة الطلب.";b.textContent="✓ تم الإرسال";setTimeout(load,2500);
+      }).catch(function(){b.disabled=false;b.textContent="إرسال الطلب";m.className="msg no";m.textContent="تعذّر الاتصال — تحقق من الإنترنت ثم أعد المحاولة";});});}
+  function view(d){DATA=d;var ox=d.orgx||{},org=ox.n||d.org||"";document.title=d.n+(org?" · "+org:"");
+    var cls={done:"done",late:"late",wait:"wait",doing:"",mut:"mut"}[d.sc]||"";
+    var steps=(d.steps||[]),ph=(d.ph||[]),cur=steps.filter(function(x){return!x.d;})[0];
+    var h='<div class="top"><div class="w"><div class="org">'+E(org||"متابعة حالة المشروع")+'</div>'+(ox.s?'<div class="orgs">'+E(ox.s)+'</div>':'')+'<h1>'+E(d.n)+'</h1><div class="sub">'+E([d.cl,d.ty&&d.ty!=="أخرى"?d.ty:"",d.code].filter(Boolean).join(" · "))+'</div></div></div><div class="w">';
+    h+='<div class="card lift"><div class="row"><div class="ring" style="--p:'+(d.prog||0)+'"><b>'+(d.prog||0)+'%</b></div><div class="kv">'
+      +'<div><span>حالة المشروع</span><b><span class="pill '+cls+'">'+E(d.st)+'</span></b></div>'
+      +'<div><span>المرحلة الحالية</span><b>'+E(cur?cur.n:(d.prog>=100?"اكتمل المشروع":"—"))+'</b></div>'
+      +'<div><span>تاريخ البدء</span><b>'+D(d.start)+'</b></div><div><span>التسليم المتوقع</span><b>'+D(d.end)+'</b></div></div></div></div>';
+    if(d.tl&&d.tl.length){var dn=d.tl.filter(function(x){return x.s==="d";}).length;h+='<div class="card"><h2>مراحل رخصة البناء <small>'+dn+' من '+d.tl.length+' مكتملة'+(d.rq?' · رقم الطلب '+E(d.rq.n):'')+'</small></h2>'+d.tl.map(function(x){return '<div class="li '+(x.s||"")+'"><span class="dot">'+(x.s==="d"?"✓":"")+'</span><span class="t">'+E(x.l)+'</span><small>'+(x.s==="d"?"مكتملة":x.s==="c"?"جارية الآن":"")+'</small></div>';}).join("")+'</div>';}
+    if(d.req)h+=form(d,d.rq);
+    if(steps.length)h+='<div class="card"><h2>مراحل العمل <small>'+steps.filter(function(x){return x.d;}).length+' من '+steps.length+' مكتملة</small></h2>'+steps.map(function(x){return '<div class="li'+(x.d?" d":"")+'"><span class="dot">'+(x.d?"✓":"")+'</span><span class="t">'+E(x.n)+'</span><small>'+(x.d?"مكتملة":x.due?"الموعد: "+D(x.due):"")+'</small></div>';}).join("")+'</div>';
+    if(ph.length)h+='<div class="card"><h2>دفعات العقد <small>حسب مراحل الإنجاز</small></h2><table><tr><th>المرحلة</th><th>النسبة</th><th>الحالة</th></tr>'+ph.map(function(x){return '<tr><td>'+E(x.n)+'</td><td class="n">'+M(x.pct)+'%</td><td><span class="pill '+(x.s==="done"?"done":"mut")+'">'+(x.s==="done"?"منجزة":"قادمة")+'</span></td></tr>';}).join("")+'</table></div>';
+    if(d.pm&&d.pm.length)h+='<div class="card"><h2>التصاريح الحكومية <small>'+d.pm.filter(function(x){return x.ok;}).length+' من '+d.pm.length+' معتمدة</small></h2><table><tr><th>التصريح</th><th>الجهة</th><th>الحالة</th></tr>'+d.pm.map(function(x){return '<tr><td>'+E(x.t)+(x.ph?'<br><small>'+E(x.ph)+'</small>':'')+'</td><td>'+E(x.a)+'</td><td><span class="pill '+(x.ok?'done':'mut')+'">'+E(x.s)+'</span>'+(x.exp?'<br><small>ينتهي '+D(x.exp)+'</small>':'')+'</td></tr>';}).join('')+'</table></div>';
+    if(d.lv)h+='<div class="card"><h2>آخر زيارة موقع <small>'+D(d.lv)+'</small></h2></div>';
+    if(d.due&&d.due.length){var tot=d.due.reduce(function(s,x){return s+x.v;},0);h+='<div class="card"><h2>المبالغ المستحقة <small>شاملة ضريبة القيمة المضافة</small></h2><table><tr><th>البند</th><th>تاريخ المطالبة</th><th>المبلغ (ر.س)</th></tr>'+d.due.map(function(x){return '<tr><td>'+E(x.n)+'</td><td>'+D(x.d)+'</td><td class="n">'+M(x.v)+'</td></tr>';}).join("")+'<tr><th colspan="2">الإجمالي</th><td class="n">'+M(tot)+'</td></tr></table></div>';}
+    h+='<div class="foot">آخر تحديث: '+D(d.at)+(ox.ph||ox.em?'<br>للتواصل: '+E([ox.ph,ox.em].filter(Boolean).join(" · ")):'')+'<br>'+E(org)+(org?' · ':'')+'يومي</div></div>';
+    app.innerHTML=h;bind();}
+  function load(){fetch("/api?share="+t,{cache:"no-store"}).then(function(r){return r.json();}).then(function(j){if(!j||!j.ok||!j.data)return fail(j&&j.error);view(j.data);}).catch(function(){fail("تعذّر الاتصال — تحقق من الإنترنت ثم أعد المحاولة.");});}
+  load();
 })();
 </script>
 </body>

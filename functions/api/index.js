@@ -379,6 +379,7 @@ async function nSaveProject(env, C, p, base, force) { const db = env.DB, tn = C.
     // v122: دمج تلقائي حقلاً حقلاً — تعديلك يُطبَّق على أحدث نسخة دون إلغاء تعديلات الآخرين
     if (chg && chg.length) { const m = JSON.parse(J(old)); chg.forEach(k => { if (k in p) m[k] = p[k]; else delete m[k]; }); p = m; merged = true; }
     else throw new UErr('CONFLICT:' + ((byId(C, old.updatedBy) || {}).name || '') + '|' + old.updatedAt); }
+  if (old && old.cReq && (!p.cReq || Number(p.cReq.at || 0) < Number(old.cReq.at || 0))) { p.cReq = old.cReq; if (p.share && p.share.data && old.share && old.share.data && old.share.data.rq) p.share.data.rq = old.share.data.rq; } // v274: لا يُفقد طلب العميل عند حفظ نسخة أقدم
   if (old) { projGuard(C, { space: old.space || '', createdBy: old.createdBy || '' }); p.createdBy = old.createdBy || C.u.id; p.space = old.space || ''; if (p.space !== 'p' && !can(C.u, 'finance')) keepFin(p, old); }
   else { p.createdBy = C.u.id; p.space = p.space === 'p' ? 'p' : ''; projGuard(C, p); } delete p._nofin;
   guardProjectPermissions157(C,p,old);
@@ -561,6 +562,27 @@ export async function onRequestPost({ request, env, waitUntil }) {
   try {
     await init(db);
     if (fn === 'buildInfo') return ok({version:'v177'});
+    if (fn === 'shareReq274') { // v274: طلب رخصة البناء من رابط العميل — عام، بالرمز السري فقط، وحين يفعّله المكتب (p.share.req)
+      const tok = String(a[0] || ''), d0 = a[1] && typeof a[1] === 'object' ? a[1] : null;
+      if (!/^[a-f0-9]{24,64}$/.test(tok) || !d0) return fail('الرابط غير صالح');
+      const r = await db.prepare("SELECT tn, id, data, updated_at FROM projects WHERE json_extract(data, '$.share.tok') = ?").bind(tok).first(); const p = r ? JSON.parse(r.data) : null;
+      if (!p || !p.share || p.share.off || !p.share.req) return fail('الرابط لا يستقبل الطلبات — تواصل مع المكتب');
+      const ip = request.headers.get('CF-Connecting-IP') || '', rk = 'rq274:' + (await sha(ip + '|' + tok)), last = Number(await cfgGet(db, rk) || 0);
+      if (Date.now() - last < 20000) return fail('أُرسل الطلب للتو — انتظر قليلاً ثم أعد المحاولة');
+      const K = ['nm','mob','em','rt','city','dist','plot','area','land','map','pt','fl','bs','use','comp','maj','kit','fac','prevd','prevp','link','note'], d = {};
+      K.forEach(k => { if (d0[k] != null && String(d0[k]).trim()) d[k] = String(d0[k]).replace(/[<>]/g, '').trim().slice(0, k === 'comp' || k === 'note' ? 1500 : 300); });
+      d.docs = {}; ['deed','survey','soil','dwg','pics'].forEach(k => { if (d0.docs && d0.docs[k]) d.docs[k] = 1; });
+      if (!d.nm || !d.mob || !d.area || !d.pt || !d0.ok) return fail('أكمل الحقول الإلزامية ووافق على استخدام البيانات');
+      if (d.link && !/^https?:\/\//i.test(d.link)) delete d.link; if (d.map && !/^https?:\/\//i.test(d.map)) d.map = d.map.slice(0, 80);
+      await cfgSet(db, rk, Date.now());
+      const now = Date.now(), prev = p.cReq, n = prev && prev.n || ('PR-' + String(now).slice(-6)), dt = today();
+      p.cReq = { n, at: now, date: dt, v: (prev && prev.v || 0) + 1, d, seen: false };
+      p.log = (p.log || []).concat([{ date: dt, kind: 'طلب العميل', subject: (prev ? 'تحديث' : 'استلام') + ' بيانات طلب الرخصة من رابط العميل', details: 'رقم الطلب ' + n }]);
+      if (p.share.data) p.share.data.rq = { n, date: dt, v: p.cReq.v, d };
+      p.updatedAt = now; if (J(p).length > 90000) return fail('تعذّر حفظ الطلب — تواصل مع المكتب');
+      const up = await db.prepare('UPDATE projects SET data = ?, updated_at = ? WHERE tn = ? AND id = ? AND updated_at = ?').bind(J(p), now, r.tn, String(p.id), r.updated_at).run();
+      if (!up.meta || !up.meta.changes) return fail('حاول مرة أخرى بعد لحظات');
+      await bump(db, r.tn); return ok({ n, v: p.cReq.v }); }
     if (fn === 'login') { const r = await login(env, a[0], a[1], waitUntil, request.headers.get('CF-Connecting-IP')); if (a[2] && r && r.token) { try { await env.DB.prepare('UPDATE sess2 SET rem = 1 WHERE th = ?').bind(await sha('yw|' + r.token)).run(); } catch (e) {} } return ok(r); }
     if (OPEN.has(fn)) { // تمرير إلى Google ثم تبنّي الجلسة إن عادت بجلسة
       const r = await gasOpen(env, fn, a); if (!r.ok) return fail(r.error || 'تعذّر التنفيذ');
