@@ -372,12 +372,15 @@ function guardProjectPermissions157(C,p,old){
  if(!old&&!can(C.u,'finance')){FINK.forEach(k=>delete p[k]);if(Array.isArray(p.visits))p.visits.forEach(v=>{delete v.fee;delete v.paid;delete v.paidDate});if(Array.isArray(p.phases))p.phases.forEach(v=>delete v.amount)}
 }
 
+// v275: عند تعديل مستخدمَين للمشروع نفسه، السجلات التي تُضاف فقط (السجل، أحداث المتابعة) تُدمج ولا يمسح أحدهما ما أضافه الآخر
+const APPEND275 = new Set(['log', 'followEvents']);
+function mergeLog275(a, b) { const key = x => x && (x.id || [x.date, x.at, x.kind, x.subject, x.details].join('|')); const seen = new Set(b.map(key)); return a.filter(x => !seen.has(key(x))).concat(b).sort((x, y) => String(x && x.date || '').localeCompare(String(y && y.date || ''))); }
 async function nSaveProject(env, C, p, base, force) { const db = env.DB, tn = C.tn; if (!p || !p.id || !String(p.name || '').trim()) throw new UErr('اكتب اسم المشروع'); if (J(p).length > 90000) throw new UErr('بيانات المشروع كبيرة جداً — احذف بعض الملفات أو الجداول');
   const row = await db.prepare('SELECT data, updated_at FROM projects WHERE tn = ? AND id = ?').bind(tn, String(p.id)).first(), old = row ? JSON.parse(row.data) : null;
   let merged = false; const chg = Array.isArray(p._chg) ? p._chg.filter(k => typeof k === 'string' && !/^(id|createdBy|space|updatedAt|updatedBy)$/.test(k)) : null; delete p._chg;
   if (old && base && !force && Number(old.updatedAt || 0) > Number(base) + 1000) {
     // v122: دمج تلقائي حقلاً حقلاً — تعديلك يُطبَّق على أحدث نسخة دون إلغاء تعديلات الآخرين
-    if (chg && chg.length) { const m = JSON.parse(J(old)); chg.forEach(k => { if (k in p) m[k] = p[k]; else delete m[k]; }); p = m; merged = true; }
+    if (chg && chg.length) { const m = JSON.parse(J(old)); chg.forEach(k => { if (k in p) m[k] = (APPEND275.has(k) && Array.isArray(p[k]) && Array.isArray(old[k])) ? mergeLog275(old[k], p[k]) : p[k]; else delete m[k]; }); p = m; merged = true; }
     else throw new UErr('CONFLICT:' + ((byId(C, old.updatedBy) || {}).name || '') + '|' + old.updatedAt); }
   if (old && old.cReq && (!p.cReq || Number(p.cReq.at || 0) < Number(old.cReq.at || 0))) { p.cReq = old.cReq; if (p.share && p.share.data && old.share && old.share.data && old.share.data.rq) p.share.data.rq = old.share.data.rq; } // v274: لا يُفقد طلب العميل عند حفظ نسخة أقدم
   if (old) { projGuard(C, { space: old.space || '', createdBy: old.createdBy || '' }); p.createdBy = old.createdBy || C.u.id; p.space = old.space || ''; if (p.space !== 'p' && !can(C.u, 'finance')) keepFin(p, old); }
