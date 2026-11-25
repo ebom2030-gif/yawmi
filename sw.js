@@ -1,9 +1,9 @@
 // يومي | Yawmi — service worker v2: أحدث نسخة دايماً، والنسخة المحفوظة لو النت بطيء أو مقطوع
-const V = 'yawmi-v278-c302bcd35d', FONTS = 'yawmi-fonts';
+const V = 'yawmi-v279-94524aa83a', FONTS = 'yawmi-fonts';
 const SHELL = ['./', './manifest.json', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(V).then(async c => { await c.addAll(SHELL.map(u => new Request(u, { cache: 'reload' })));
   // v112: تخزين ملفات البرنامج مسبقاً ليعمل بدون إنترنت من أول مرة
-  try { const h = await (await c.match('./')).text(); const A = [...new Set((h.match(/assets\/(?:app\.(?:js|css)|yawmi-ui\.css)\?v=[\w.-]+/g) || []))].map(u => './' + u); await Promise.all(A.map(u => fetch(u).then(r => r.ok && c.put(u, r)).catch(() => {}))); } catch (x) {} }).then(() => self.skipWaiting())); });
+  try { const h = await (await c.match('./')).text(); const A = [...new Set((h.match(/assets\/(?:app\.(?:js|css)|yawmi-ui\.css|boot\.js)\?v=[\w.-]+/g) || []))].map(u => './' + u); await Promise.all(A.map(u => fetch(u).then(r => r.ok && c.put(u, r)).catch(() => {}))); } catch (x) {} }).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== V && k !== FONTS).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
 self.addEventListener('fetch', e => {
   const r = e.request; if (r.method !== 'GET') return; // طلبات البيانات (POST) لا تُخزَّن أبداً
@@ -17,7 +17,7 @@ self.addEventListener('fetch', e => {
   }
   if (u.origin === location.origin && u.pathname.indexOf('/api') === 0) return; // طلبات الخادم لا تُخزَّن أبداً
   if (u.origin === location.origin && u.searchParams.has('vc')) { e.respondWith(fetch(r, { cache: 'no-store' })); return; } // فحص التحديثات: من النت دايماً
-  if (u.origin === location.origin && (u.pathname.endsWith('/assets/app.js') || u.pathname.endsWith('/assets/yawmi-ui.css')) && /^v\d+-[a-f0-9]{10}$/.test(u.searchParams.get('v') || '')) {
+  if (u.origin === location.origin && (u.pathname.endsWith('/assets/app.js') || u.pathname.endsWith('/assets/yawmi-ui.css') || u.pathname.endsWith('/assets/boot.js')) && /^v\d+-[a-f0-9]{10}$/.test(u.searchParams.get('v') || '')) {
     // v246: مع الاتصال يقرأ المتصفح الملف من ذاكرته مباشرة (أسرع بكثير من قراءته عبر عامل الخدمة)؛ النسخة المحفوظة للعمل دون اتصال فقط.
     if (navigator.onLine) { e.waitUntil(caches.open(V).then(async c => { if (!(await c.match(r))) { const res = await fetch(r); if (res.ok) await c.put(r, res); } }).catch(() => {})); return; }
     // البناء ذو البصمة يُقرأ بمفتاحه المطابق فقط؛ البصمة الجديدة تطلب الملف الجديد.
