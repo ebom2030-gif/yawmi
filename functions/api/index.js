@@ -37,9 +37,14 @@ const SCHEMA = [
   `CREATE INDEX IF NOT EXISTS audit_tn ON audit (tn, at)`,
   `CREATE TABLE IF NOT EXISTS gone (tn TEXT NOT NULL DEFAULT '', kind TEXT, id TEXT, at INTEGER, PRIMARY KEY (tn, kind, id))`,
   `CREATE TABLE IF NOT EXISTS ltry (k TEXT PRIMARY KEY, n INTEGER, until INTEGER)`,
+  // v278: أخطاء الأجهزة، اللقطات اليومية الاحتياطية، أرشيف سجلات المشاريع الطويلة
+  `CREATE TABLE IF NOT EXISTS cerr (tn TEXT NOT NULL DEFAULT '', h TEXT NOT NULL, uid TEXT, at INTEGER, first_at INTEGER, n INTEGER DEFAULT 1, ver TEXT, msg TEXT, src TEXT, stack TEXT, ua TEXT, page TEXT, PRIMARY KEY (tn, h))`,
+  `CREATE INDEX IF NOT EXISTS cerr_at ON cerr (tn, at)`,
+  `CREATE TABLE IF NOT EXISTS snap (tn TEXT NOT NULL DEFAULT '', d TEXT NOT NULL, part INTEGER NOT NULL DEFAULT 0, parts INTEGER, at INTEGER, size INTEGER, body TEXT, PRIMARY KEY (tn, d, part))`,
+  `CREATE TABLE IF NOT EXISTS parch (tn TEXT NOT NULL DEFAULT '', pid TEXT NOT NULL, f TEXT NOT NULL, h TEXT NOT NULL, at INTEGER, data TEXT, PRIMARY KEY (tn, pid, f, h))`,
 ];
 let ready = false;
-const SCHEMA_V = '123'; // v123: سجل تحويلات الباك أوفيس العامة
+const SCHEMA_V = '278'; // v278: أخطاء الأجهزة + اللقطات اليومية + أرشيف السجلات (v123: سجل تحويلات الباك أوفيس العامة)
 async function init(db) { if (ready) return; try { const r = await db.prepare("SELECT v FROM cfg WHERE k = 'schema'").first(); if (r && r.v === SCHEMA_V) { ready = true; return; } } catch (e) {}
   await db.batch(SCHEMA.map(q => db.prepare(q))); try { await db.prepare('ALTER TABLE sess2 ADD COLUMN rem INTEGER DEFAULT 0').run(); } catch (e) {} await cfgSet(db, 'schema', SCHEMA_V); ready = true; }
 const hex = b => [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join('');
@@ -375,7 +380,7 @@ function guardProjectPermissions157(C,p,old){
 // v275: عند تعديل مستخدمَين للمشروع نفسه، السجلات التي تُضاف فقط (السجل، أحداث المتابعة) تُدمج ولا يمسح أحدهما ما أضافه الآخر
 const APPEND275 = new Set(['log', 'followEvents']);
 function mergeLog275(a, b) { const key = x => x && (x.id || [x.date, x.at, x.kind, x.subject, x.details].join('|')); const seen = new Set(b.map(key)); return a.filter(x => !seen.has(key(x))).concat(b).sort((x, y) => String(x && x.date || '').localeCompare(String(y && y.date || ''))); }
-async function nSaveProject(env, C, p, base, force) { const db = env.DB, tn = C.tn; if (!p || !p.id || !String(p.name || '').trim()) throw new UErr('اكتب اسم المشروع'); if (J(p).length > 90000) throw new UErr('بيانات المشروع كبيرة جداً — احذف بعض الملفات أو الجداول');
+async function nSaveProject(env, C, p, base, force) { const db = env.DB, tn = C.tn; if (!p || !p.id || !String(p.name || '').trim()) throw new UErr('اكتب اسم المشروع'); if (J(p).length > 600000) throw new UErr('بيانات المشروع كبيرة جداً — احذف بعض الملفات أو الجداول');
   const row = await db.prepare('SELECT data, updated_at FROM projects WHERE tn = ? AND id = ?').bind(tn, String(p.id)).first(), old = row ? JSON.parse(row.data) : null;
   let merged = false; const chg = Array.isArray(p._chg) ? p._chg.filter(k => typeof k === 'string' && !/^(id|createdBy|space|updatedAt|updatedBy)$/.test(k)) : null; delete p._chg;
   if (old && base && !force && Number(old.updatedAt || 0) > Number(base) + 1000) {
@@ -394,6 +399,7 @@ async function nSaveProject(env, C, p, base, force) { const db = env.DB, tn = C.
     const previousSteps = new Set((old.steps || []).map(s => String(s.name || '').trim()));
     if ((p.steps || []).some(s => String(s.name || '').trim() && !previousSteps.has(String(s.name).trim()))) need(C.u, 'stepsEdit');
   }
+  await archive278(db, tn, p); if (J(p).length > PMAX278) throw new UErr('بيانات المشروع كبيرة جداً — احذف بعض الملفات أو الجداول');
   const now = Date.now(); p.updatedAt = now; p.updatedBy = C.u.id; await upProj(db, tn, p, now).run(); await enqueue(db, C, 'project', p.id, 'saveProject', [p, 0, true]); return merged ? { updatedAt: now, merged: true, p: p.space==='p'||can(C.u,'finance')?p:stripFin(p) } : { updatedAt: now }; }
 function validateBrokerValues(contact, old) {
   (contact.refs || []).forEach((entry, i) => {
@@ -556,6 +562,91 @@ async function ui173(db, C, fn, a) { const tn = C.tn, u = C.u;
     rows.forEach(r => { if (r.v) m[r.k.slice(pre.length)] = r.v; }); return { v: ver, m }; }
 }
 
+// ===================== v278: الاعتمادية — أخطاء الأجهزة، اللقطات الاحتياطية اليومية، أرشيف السجلات، صحة النظام =====================
+const PMAX278 = 90000, PSOFT278 = 70000, PKEEP278 = 60, SNAP_KEEP278 = 14, SNAP_PART278 = 500000;
+const boss278 = u => u.role === 'owner' || u.role === 'ceo';
+// المشروع الذي يقترب من الحد: تُنقل أقدم قيود السجل وأحداث المتابعة إلى جدول parch (لا يُحذف شيء) ويبقى آخر 60 قيداً داخل المشروع
+async function archive278(db, tn, p) {
+  if (J(p).length <= PSOFT278) return 0; let moved = 0;
+  for (const f of ['log', 'followEvents']) {
+    const L = Array.isArray(p[f]) ? p[f] : null; if (!L || L.length <= PKEEP278) continue;
+    const old = L.slice(0, L.length - PKEEP278), now = Date.now(), B = [];
+    for (const x of old) { const s = J(x); B.push(db.prepare('INSERT OR IGNORE INTO parch (tn, pid, f, h, at, data) VALUES (?, ?, ?, ?, ?, ?)').bind(tn, String(p.id), f, (await sha(s)).slice(0, 32), now, s)); }
+    await batchAll(db, B); p[f] = L.slice(L.length - PKEEP278);
+    const c = await db.prepare('SELECT COUNT(*) n FROM parch WHERE tn = ? AND pid = ? AND f = ?').bind(tn, String(p.id), f).first();
+    p.arch278 = Object.assign({}, p.arch278 || {}, { [f]: Number(c && c.n || 0), at: now }); moved += old.length;
+    if (J(p).length <= PSOFT278) break; }
+  return moved; }
+// نسخة كاملة من بيانات المساحة (نص JSON) — دون بصمات كلمات المرور
+const SECRET278 = /^(pw|pwh|pass|password|hash|salt|pin|token|gt)$/i;
+async function dump278(db, tn) {
+  const q = async (sql, ...b) => (await db.prepare(sql).bind(...b).all()).results;
+  const raw = async t => '[' + (await q(`SELECT data FROM ${t} WHERE tn = ?`, tn)).map(r => r.data).join(',') + ']';
+  const users = (await q('SELECT data FROM users WHERE tn = ?', tn)).map(r => { const u = JSON.parse(r.data); Object.keys(u).forEach(k => { if (SECRET278.test(k)) delete u[k]; }); return u; });
+  const cfg = (await q("SELECT k, v FROM cfg WHERE k LIKE ? OR k LIKE ?", '%:' + tn, '%:' + tn + ':%')).filter(r => !/^(lf|li|rq274|rec|bk|bn|snap|ver|cut):/.test(r.k));
+  const ten = await db.prepare('SELECT data FROM tenants WHERE id = ?').bind(tn).first();
+  return '{"v":"v278","tn":' + J(tn) + ',"at":' + Date.now() + ',"date":' + J(today()) + ',"tenant":' + (ten && ten.data || 'null')
+    + ',"items":' + await raw('items') + ',"projects":' + await raw('projects') + ',"contacts":' + await raw('contacts') + ',"bo_transfers":' + await raw('bo_transfers')
+    + ',"users":' + J(users) + ',"notes":' + J(await q('SELECT owner, date, text, updated_at FROM notes WHERE tn = ?', tn))
+    + ',"trash":' + J(await q('SELECT id, kind, rid, title, data, uid, uname, priv, at FROM trash WHERE tn = ?', tn))
+    + ',"ach":' + J(await q('SELECT uid, k, data, at FROM ach WHERE tn = ?', tn)) + ',"gone":' + J(await q('SELECT kind, id, at FROM gone WHERE tn = ?', tn))
+    + ',"parch":' + J(await q('SELECT pid, f, h, at, data FROM parch WHERE tn = ?', tn)) + ',"cfg":' + J(cfg)
+    + ',"audit":' + J(await q('SELECT at, by, byName, action, target, details FROM audit WHERE tn = ? ORDER BY at DESC LIMIT 3000', tn)) + '}'; }
+const snapSeen278 = new Map();
+async function snap278(env, tn, force) { const db = env.DB, d = today();
+  if (!force) { if (snapSeen278.get(tn) === d) return null; snapSeen278.set(tn, d); if (await db.prepare('SELECT 1 x FROM snap WHERE tn = ? AND d = ? LIMIT 1').bind(tn, d).first()) return null; }
+  const s = await dump278(db, tn), n = Math.max(1, Math.ceil(s.length / SNAP_PART278)), now = Date.now(), B = [db.prepare('DELETE FROM snap WHERE tn = ? AND d = ?').bind(tn, d)];
+  for (let i = 0; i < n; i++) B.push(db.prepare('INSERT INTO snap (tn, d, part, parts, at, size, body) VALUES (?, ?, ?, ?, ?, ?, ?)').bind(tn, d, i, n, now, s.length, s.slice(i * SNAP_PART278, (i + 1) * SNAP_PART278)));
+  await db.batch(B);
+  const old = (await db.prepare('SELECT DISTINCT d FROM snap WHERE tn = ? ORDER BY d DESC').bind(tn).all()).results.slice(SNAP_KEEP278);
+  for (const r of old) await db.prepare('DELETE FROM snap WHERE tn = ? AND d = ?').bind(tn, r.d).run();
+  if (env.BAK) { try { await env.BAK.put('yawmi/' + (tn || 'main') + '/' + d + '.json', s, { httpMetadata: { contentType: 'application/json; charset=utf-8' } }); await cfgSet(db, 'snap:r2:' + tn, now); } catch (e) { await log(db, tn, '', 'err:bak-r2', 0, 0, e.message || e); } }
+  await db.prepare('DELETE FROM cerr WHERE tn = ? AND at < ?').bind(tn, now - 30 * 864e5).run();
+  return { d, size: s.length, parts: n }; }
+async function snapGet278(db, tn, d) { const L = (await db.prepare('SELECT body FROM snap WHERE tn = ? AND d = ? ORDER BY part').bind(tn, String(d)).all()).results; if (!L.length) throw new UErr('لا توجد نسخة بهذا التاريخ'); return L.map(r => r.body).join(''); }
+const OPS278 = new Set(['cerr278', 'cerrList278', 'cerrClear278', 'health278', 'snapList278', 'snapGet278', 'backupNow278', 'parchGet278', 'restoreRec278', 'snapFind278']);
+async function ops278(env, C, fn, a) { const db = env.DB, tn = C.tn, u = C.u;
+  if (fn === 'cerr278') { const L = Array.isArray(a[0]) ? a[0].slice(0, 20) : [], now = Date.now(), B = [];
+    for (const e of L) { if (!e || typeof e !== 'object') continue; const msg = String(e.msg || '').slice(0, 500); if (!msg) continue;
+      const src = String(e.src || '').slice(0, 300), ver = String(e.ver || '').slice(0, 40), h = (await sha(msg + '|' + src + '|' + ver)).slice(0, 32);
+      B.push(db.prepare('INSERT INTO cerr (tn, h, uid, at, first_at, n, ver, msg, src, stack, ua, page) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(tn, h) DO UPDATE SET n = cerr.n + excluded.n, at = excluded.at, uid = excluded.uid, page = excluded.page, ua = excluded.ua')
+        .bind(tn, h, u.id, now, now, Math.max(1, Math.min(100, Number(e.n) || 1)), ver, msg, src, String(e.stack || '').slice(0, 1500), String(e.ua || '').slice(0, 200), String(e.page || '').slice(0, 40))); }
+    if (B.length) await batchAll(db, B); return B.length; }
+  if (fn === 'parchGet278') { if (!(boss278(u) || can(u, 'projects'))) throw new UErr('تحتاج صلاحية المشاريع');
+    const L = (await db.prepare('SELECT f, data FROM parch WHERE tn = ? AND pid = ?').bind(tn, String(a[0] || '')).all()).results, o = { log: [], followEvents: [] };
+    L.forEach(r => { try { (o[r.f] = o[r.f] || []).push(JSON.parse(r.data)); } catch (e) {} }); Object.values(o).forEach(x => x.sort((p, q) => String(p && p.date || '').localeCompare(String(q && q.date || '')))); return o; }
+  if (!boss278(u)) throw new UErr('صحة النظام والنسخ الاحتياطية للمالك والرئيس التنفيذي فقط');
+  if (fn === 'cerrList278') { const L = (await db.prepare('SELECT h, uid, at, first_at, n, ver, msg, src, stack, ua, page FROM cerr WHERE tn = ? ORDER BY at DESC LIMIT 200').bind(tn).all()).results; L.forEach(r => { r.uname = (byId(C, r.uid) || {}).name || ''; }); return L; }
+  if (fn === 'cerrClear278') { if (a[0]) await db.prepare('DELETE FROM cerr WHERE tn = ? AND h = ?').bind(tn, String(a[0])).run(); else await db.prepare('DELETE FROM cerr WHERE tn = ?').bind(tn).run(); return true; }
+  if (fn === 'snapList278') return (await db.prepare('SELECT d, MAX(size) size, MAX(parts) parts, MAX(at) at FROM snap WHERE tn = ? GROUP BY d ORDER BY d DESC').bind(tn).all()).results;
+  if (fn === 'snapGet278') return await snapGet278(db, tn, a[0]);
+  if (fn === 'restoreRec278') { // استرجاع سجل واحد (مهمة/مشروع/جهة اتصال) كما كان في لقطة يوم محدد — للمالك فقط، ويُسجَّل في سجل التدقيق
+    if (u.role !== 'owner') throw new UErr('الاسترجاع من النسخ الاحتياطية للمالك فقط');
+    const kind = String(a[1] || ''), id = String(a[2] || ''), T = { item: 'items', project: 'projects', contact: 'contacts' }[kind]; if (!T || !id) throw new UErr('حدّد نوع السجل ورقمه');
+    const B = JSON.parse(await snapGet278(db, tn, a[0])), o = (B[T] || []).find(x => x && String(x.id) === id); if (!o) throw new UErr('السجل غير موجود في نسخة ' + a[0]);
+    const now = Date.now(); o.updatedAt = now; o.updatedBy = u.id;
+    if (kind === 'item') await upItem(db, tn, o, now).run(); else if (kind === 'project') await upProj(db, tn, o, now).run(); else await upCont(db, tn, o, now).run();
+    await db.prepare('DELETE FROM gone WHERE tn = ? AND kind = ? AND id = ?').bind(tn, kind, id).run();
+    await enqueue(db, C, kind, id, kind === 'item' ? 'saveItem' : kind === 'project' ? 'saveProject' : 'saveContact', kind === 'project' ? [o, 0, true] : [o]);
+    await audit(db, C, 'استرجاع من نسخة احتياطية', (o.title || o.name || id), 'نسخة ' + a[0]); await bump(db, tn); return { ok: true, name: o.title || o.name || id }; }
+  if (fn === 'snapFind278') { // البحث داخل لقطة عن سجلات بالاسم — لاختيار ما يُسترجَع
+    const B = JSON.parse(await snapGet278(db, tn, a[0])), s = String(a[1] || '').trim(), R = [];
+    for (const [kind, T] of [['item', 'items'], ['project', 'projects'], ['contact', 'contacts']]) for (const x of B[T] || []) { const nm = String(x.title || x.name || ''); if (!s || nm.includes(s)) R.push({ kind, id: x.id, name: nm, upd: x.updatedAt || 0 }); }
+    return R.slice(0, 80); }
+  if (fn === 'backupNow278') { const r = await snap278(env, tn, true); await audit(db, C, 'نسخة احتياطية يدوية', r.d, String(r.size)); return await snapGet278(db, tn, r.d); }
+  if (fn === 'health278') { const c = async (sql, ...b) => Number(((await db.prepare(sql).bind(...b).first()) || {}).n || 0), d24 = Date.now() - 864e5;
+    const big = (await db.prepare('SELECT id, name, length(data) n FROM projects WHERE tn = ? ORDER BY n DESC LIMIT 8').bind(tn).all()).results;
+    return { ver: 'v278', at: Date.now(), r2: !!env.BAK, r2At: Number(await cfgGet(db, 'snap:r2:' + tn) || 0), max: PMAX278, soft: PSOFT278,
+      items: await c('SELECT COUNT(*) n FROM items WHERE tn = ?', tn), projects: await c('SELECT COUNT(*) n FROM projects WHERE tn = ?', tn), contacts: await c('SELECT COUNT(*) n FROM contacts WHERE tn = ?', tn), users: await c('SELECT COUNT(*) n FROM users WHERE tn = ?', tn),
+      pending: await c('SELECT COUNT(*) n FROM outbox WHERE done = 0 AND tn = ?', tn), outErr24: await c('SELECT COUNT(*) n FROM outbox WHERE tn = ? AND err IS NOT NULL AND at > ?', tn, d24),
+      lastOutErr: ((await db.prepare('SELECT err FROM outbox WHERE tn = ? AND err IS NOT NULL ORDER BY seq DESC LIMIT 1').bind(tn).first()) || {}).err || '',
+      lastSync: Number(((await db.prepare('SELECT MAX(at) n FROM sync_log WHERE ok = 1 AND tn = ?').bind(tn).first()) || {}).n || 0),
+      srvErr24: await c('SELECT COUNT(*) n FROM sync_log WHERE ok = 0 AND tn = ? AND at > ?', tn, d24),
+      srvErrs: (await db.prepare('SELECT at, fn, substr(err, 1, 200) err FROM sync_log WHERE ok = 0 AND tn = ? ORDER BY at DESC LIMIT 8').bind(tn).all()).results,
+      cerr24: await c('SELECT COUNT(*) n FROM cerr WHERE tn = ? AND at > ?', tn, d24), cerrAll: await c('SELECT COUNT(*) n FROM cerr WHERE tn = ?', tn),
+      gas: !!(C.s.gt || await gtFor(db, tn, u.id)), snaps: (await db.prepare('SELECT d, MAX(size) size, MAX(at) at FROM snap WHERE tn = ? GROUP BY d ORDER BY d DESC').bind(tn).all()).results,
+      big: big.map(r => ({ id: r.id, name: r.name, n: r.n })), arch: (await db.prepare('SELECT pid, COUNT(*) n FROM parch WHERE tn = ? GROUP BY pid').bind(tn).all()).results }; }
+  throw new UErr('أمر غير معروف'); }
 const WRITES = new Set(['recordMeetingOutcome','saveItem', 'deleteItem', 'saveProject', 'deleteProject', 'saveContact', 'deleteContact', 'saveNote', 'saveMat', 'addUser', 'updateUser', 'deleteUser', 'restoreTenant', 'setPrivPin', 'trashDel', 'xpSet', 'boSave']);
 const TREAD = new Set(['sigs196', 'bannerGet177', 'nameSet173', 'uiGet173', 'uiSet173', 'avatarSet173', 'avatars173', 'getMat', 'getAll', 'getSince', 'listUsers', 'listAudit', 'listIdeas', 'lockPriv', 'unlockPriv', 'logout', 'trashList', 'achList', 'xpGet', 'todoStatus', 'health', 'boList', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155', 'integrationStatus155', 'reconnect155', 'retryIntegrations155']);
 export async function onRequestPost({ request, env, waitUntil }) {
@@ -564,7 +655,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
   if (!db) return fail('قاعدة البيانات غير مربوطة');
   try {
     await init(db);
-    if (fn === 'buildInfo') return ok({version:'v177'});
+    if (fn === 'buildInfo') return ok({version:'v278'});
     if (fn === 'shareReq274') { // v274: طلب رخصة البناء من رابط العميل — عام، بالرمز السري فقط، وحين يفعّله المكتب (p.share.req)
       const tok = String(a[0] || ''), d0 = a[1] && typeof a[1] === 'object' ? a[1] : null;
       if (!/^[a-f0-9]{24,64}$/.test(tok) || !d0) return fail('الرابط غير صالح');
@@ -598,6 +689,8 @@ export async function onRequestPost({ request, env, waitUntil }) {
       if (o) { const g = await gasCall(env, req.t, 'getAll', []).catch(() => null); if (g && g.ok) { const d = g.data, tn = (d.ten && d.ten.id) || ''; const cut = (await cfgGet(db, 'cut:' + tn)) || (await cfgGet(db, 'native:' + tn)) === '1'; await importFrom(db, tn, d, d.me.id, !cut); if (!cut) await cfgSet(db, 'cut:' + tn, Date.now());
         await db.prepare('INSERT OR REPLACE INTO sess2 (th, tn, uid, exp, last, pv, gt, gt_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)').bind(th, tn, d.me.id, Date.now() + SESSION_DAYS * 864e5, Date.now(), d.priv && d.priv.open && d.priv.pin ? Date.now() + PRIV_MIN * 60000 : 0, req.t, Date.now()).run(); C = await ctxOf(db, th); } } }
     if (!C) return fail(fn === 'logout' ? 'ok' : 'انتهت الجلسة — سجّل الدخول مرة أخرى');
+    waitUntil(snap278(env, C.tn).catch(async e => { try { await log(db, C.tn, '', 'err:snap278', 0, 0, e.message || e); } catch (x) {} })); // v278: لقطة احتياطية يومية (مرة واحدة يومياً لكل مساحة)
+    if (OPS278.has(fn)) return ok(await ops278(env, C, fn, a));
     if (fn === 'logout') { await db.prepare('DELETE FROM sess2 WHERE th = ?').bind(th).run(); if (C.s.gt) waitUntil(gasCall(env, C.s.gt, 'logout', []).catch(() => {})); return ok(true); }
     if (C.ro && !TREAD.has(fn)) return fail('انتهت الفترة التجريبية — الحساب الآن للعرض فقط. بياناتك محفوظة كما هي، وتواصل معنا لتفعيل الاشتراك');
     if (fn === 'integrationStatus155') return ok(await integrationStatus155(env,C));
@@ -658,11 +751,10 @@ export async function onRequestGet({ request, env }) { // حالة الخادم�
     if (url.searchParams.get('v')) { const q = th ? await db.prepare("SELECT s.tn tn, (SELECT v FROM cfg WHERE k = 'ver:' || s.tn) v FROM sess2 s WHERE s.th = ?").bind(th).first() : null; if (q) return new Response(J({ ok: true, ver: Number(q.v || 0) }), { headers: H });
       const o2 = th ? await db.prepare('SELECT tn FROM ss WHERE th = ?').bind(th).first() : null; return new Response(J({ ok: true, ver: o2 ? Number(await cfgGet(db, 'ver:' + (o2.tn || '')) || 0) : null }), { headers: H }); }
     const s = th ? (await db.prepare('SELECT tn, uid FROM sess2 WHERE th = ?').bind(th).first() || await db.prepare('SELECT tn, uid FROM ss WHERE th = ?').bind(th).first()) : null;
-    o.lastSync = (await db.prepare('SELECT MAX(at) n FROM sync_log WHERE ok = 1').first()).n;
-    if (s) { const tn = s.tn || '', c = async q => (await db.prepare(q).bind(tn).first()).n;
+    if (s) { const tn = s.tn || '', c = async q => (await db.prepare(q).bind(tn).first()).n; o.lastSync = (await db.prepare('SELECT MAX(at) n FROM sync_log WHERE ok = 1 AND tn = ?').bind(tn).first()).n; // v278: كل مساحة ترى سجلها فقط
       Object.assign(o, { native: await nativeOn(db, tn), cut: Number(await cfgGet(db, 'cut:' + tn) || 0), items: await c('SELECT COUNT(*) n FROM items WHERE tn = ?'), projects: await c('SELECT COUNT(*) n FROM projects WHERE tn = ?'), contacts: await c('SELECT COUNT(*) n FROM contacts WHERE tn = ?'), users: await c('SELECT COUNT(*) n FROM users WHERE tn = ?'),
         migrated: await c('SELECT COUNT(*) n FROM auth WHERE tn = ?'), pending: await c('SELECT COUNT(*) n FROM outbox WHERE done = 0 AND tn = ?'), sentOk: await c('SELECT COUNT(*) n FROM outbox WHERE done = 1 AND err IS NULL AND tn = ?'),
         lastErr: ((await db.prepare('SELECT err FROM outbox WHERE tn = ? AND err IS NOT NULL ORDER BY seq DESC LIMIT 1').bind(tn).first()) || {}).err || null,
-        errors24h: (await db.prepare('SELECT COUNT(*) n FROM sync_log WHERE ok = 0 AND at > ?').bind(Date.now() - 864e5).first()).n,
-        recentErrors: (await db.prepare('SELECT at, fn, substr(err, 1, 160) err FROM sync_log WHERE ok = 0 ORDER BY at DESC LIMIT 4').all()).results }); } } catch (e) { o.err = String(e.message || e); }
+        errors24h: (await db.prepare('SELECT COUNT(*) n FROM sync_log WHERE ok = 0 AND tn = ? AND at > ?').bind(tn, Date.now() - 864e5).first()).n,
+        recentErrors: (await db.prepare('SELECT at, fn, substr(err, 1, 160) err FROM sync_log WHERE ok = 0 AND tn = ? ORDER BY at DESC LIMIT 4').bind(tn).all()).results }); } } catch (e) { o.err = String(e.message || e); }
   return new Response(J(o), { headers: H }); }

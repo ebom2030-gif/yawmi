@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "include": [
+    "/api",
+    "/api/*",
+    "/RELEASE-*",
+    "/review-gallery.html",
+    "/STYLE-GUIDE.md",
+    "/README.md",
+    "/.gitignore",
+    "/assets/reviews-v166/*",
+    "/assets/reviews-v167/*",
+    "/assets/brand/hybrid.png",
+    "/assets/hybrid/*",
+    "/assets/focus/*",
+    "/icon-512-1.png"
+  ],
+  "exclude": []
+}
