@@ -510,11 +510,16 @@ async function backofficeOp(db, C, fn, a) {
   return saved;
 }
 // v155: connection diagnostics and scoped recovery; never expose integration tokens.
-async function integrationStatus155(env,C){
+async function integrationStatus155(env,C,fresh,bg){
  const db=env.DB,gt=await gtFor(db,C.tn,C.u.id),manager=C.u.role==='owner';
  const pending=await db.prepare('SELECT COUNT(*) n, MIN(at) oldest FROM outbox WHERE tn = ? AND uid = ? AND done = 0').bind(C.tn,C.u.id).first();
  const failures=await db.prepare('SELECT at, fn, tries, substr(err,1,200) error FROM outbox WHERE tn = ? AND uid = ? AND done = 0 AND err IS NOT NULL ORDER BY seq DESC LIMIT 8').bind(C.tn,C.u.id).all();
- let remote=null,error='';if(gt){try{const r=await gasCall(env,gt,'integrationStatus155',[]);if(r.ok)remote=r.data;else error=r.error||'تعذر فحص الخدمة';}catch{error='تعذر الاتصال بخدمة الربط';}}
+ let remote=null,error='';const ik='ist:'+C.tn+':'+C.u.id;
+ // v286: حالة الربط من ذاكرة Cloudflare (10 دقائق) وتحديثها في الخلفية — كانت تنتظر Google نحو 3.2 ثانية عند كل فتح
+ const pull=async()=>{const r=await gasCall(env,gt,'integrationStatus155',[]);if(r.ok){try{await cfgSet(db,ik,J({at:Date.now(),d:r.data}));}catch(e){}}return r;};
+ let hit=null;if(gt&&!fresh){try{hit=JSON.parse(await cfgGet(db,ik)||'null');}catch(e){}}
+ if(hit&&hit.d){remote=hit.d;if(Date.now()-hit.at>10*60000&&bg)bg(pull().catch(()=>{}));}
+ else if(gt){try{const r=await pull();if(r.ok)remote=r.data;else error=r.error||'تعذر فحص الخدمة';}catch{error='تعذر الاتصال بخدمة الربط';}}
  return {googleSession:!!gt,pending:Number(pending?.n||0),oldest:pending?.oldest||null,failures:failures.results||[],remote,error,manager,needsLogin:!gt||/سجّل الدخول|انتهت الجلسة/.test(error)};
 }
 async function reconnect155(env,C,password){
@@ -526,7 +531,7 @@ async function reconnect155(env,C,password){
  if(!profile.ok)throw new UErr(profile.error||'تعذر التحقق من حساب الخدمة');
  if(profile.data?.me?.id!==C.u.id||((profile.data.ten&&profile.data.ten.id)||'')!==C.tn)throw new UErr('حساب الخدمة لا يطابق حساب يومي');
  await db.prepare('UPDATE sess2 SET gt = ?, gt_at = ? WHERE th = ? AND tn = ? AND uid = ?').bind(r.data.token,Date.now(),C.th,C.tn,C.u.id).run();
- await db.prepare('DELETE FROM ltry WHERE k = ?').bind(k).run();return {connected:true};
+ await db.prepare('DELETE FROM ltry WHERE k = ?').bind(k).run();try{await cfgSet(db,'ist:'+C.tn+':'+C.u.id,null);}catch(e){}return {connected:true};
 }
 
 // v173 — تخصيص الواجهة والصور الشخصية: تُحفظ في Cloudflare مباشرة (لا تحتاج اتصال Google). مفاتيح cfg: ui:<tn>:<uid> و av:<tn>:<uid> و avv:<tn>
@@ -693,9 +698,9 @@ export async function onRequestPost({ request, env, waitUntil }) {
     if (OPS278.has(fn)) return ok(await ops278(env, C, fn, a));
     if (fn === 'logout') { await db.prepare('DELETE FROM sess2 WHERE th = ?').bind(th).run(); if (C.s.gt) waitUntil(gasCall(env, C.s.gt, 'logout', []).catch(() => {})); return ok(true); }
     if (C.ro && !TREAD.has(fn)) return fail('انتهت الفترة التجريبية — الحساب الآن للعرض فقط. بياناتك محفوظة كما هي، وتواصل معنا لتفعيل الاشتراك');
-    if (fn === 'integrationStatus155') return ok(await integrationStatus155(env,C));
+    if (fn === 'integrationStatus155') return ok(await integrationStatus155(env,C,!!a[0],waitUntil));
     if (fn === 'reconnect155') return ok(await reconnect155(env,C,a[0]));
-    if (fn === 'retryIntegrations155') { await drain(env,15000); return ok(await integrationStatus155(env,C)); }
+    if (fn === 'retryIntegrations155') { await drain(env,15000); return ok(await integrationStatus155(env,C,true,waitUntil)); }
     if (fn === 'repairNotifications155') { if(C.u.role!=='owner') return fail('هذه العملية للمالك فقط'); const gt=await gtFor(db,C.tn,C.u.id); if(!gt)return fail('جدّد اتصال حساب يومي أولاً'); await gasCall(env,gt,'notificationConfig155',[JSON.parse(await cfgGet(db,'hol:'+C.tn)||'[]')]); const r=await gasCall(env,gt,fn,[]);return r.ok?ok(r.data):fail(r.error); }
     if (fn === 'cfNative') { if (C.u.role !== 'owner') return fail('هذه العملية للمالك فقط'); await cfgSet(db, 'native:' + C.tn, a[0] ? '1' : '0'); await log(db, C.tn, C.u.id, 'cfNative:' + (a[0] ? 'on' : 'off'), 1, 0, null); return ok({ native: !!a[0] }); }
     if (fn === 'sigSet196' || fn === 'sigs196' || fn === 'uiGet173' || fn === 'uiSet173' || fn === 'avatarSet173' || fn === 'avatars173' || fn === 'nameSet173' || fn === 'bannerGet177' || fn === 'bannerSet177') return ok(await ui173(db, C, fn, a));
@@ -729,11 +734,15 @@ export async function onRequestPost({ request, env, waitUntil }) {
     // v284.1: حالة To Do تُقرأ من ذاكرة مؤقتة (5 دقائق) بدل انتظار Google في كل مرة (كانت تستغرق 1.5–2.7 ثانية)
     const tdk = 'tds:' + C.tn + ':' + C.u.id;
     if (fn === 'todoStatus') { try { const o = JSON.parse(await cfgGet(db, tdk) || 'null'); if (o && Date.now() - o.at < 5 * 60000) return ok(o.d); } catch (e) {} }
+    // v286: قائمة ملاحظات Notability من ذاكرة Cloudflare فوراً، وتُحدَّث في الخلفية بعد 10 دقائق (كانت تنتظر Google نحو 2.3 ثانية). التحديث اليدوي (force) يذهب إلى Google مباشرة
+    const nbk = 'nbl:' + C.tn + ':' + C.u.id;
+    if (fn === 'listNotes' && !a[0]) { try { const o = JSON.parse(await cfgGet(db, nbk) || 'null'); if (o && o.d) { if (Date.now() - o.at > 10 * 60000) { const g2 = C.s.gt || await gtFor(db, C.tn, C.u.id); if (g2) waitUntil((async () => { try { const r2 = await gasCall(env, g2, 'listNotes', []); if (r2.ok) await cfgSet(db, nbk, J({ at: Date.now(), d: r2.data })); } catch (e) {} })()); } return ok(o.d); } } catch (e) {} }
     const gt = C.s.gt || await gtFor(db, C.tn, C.u.id);
     if (!gt) return fail('خدمات Google (Drive، To Do، Notability…) تحتاج تسجيل الدخول مرة أخرى لتفعيلها');
     let r; try { r = await gasCall(env, gt, fn, a); } catch (e) { return fail('تعذّر الاتصال بخدمات Google — حاول مرة أخرى'); }
     if (!r.ok && /سجّل الدخول|انتهت الجلسة/.test(r.error || '')) { await db.prepare('UPDATE sess2 SET gt = NULL WHERE gt = ?').bind(gt).run(); return fail('انتهت جلسة خدمات Google — سجّل الخروج ثم الدخول لتجديدها'); }
     if(r.ok && ['todoNow','todoPoll'].includes(fn)) await reconcile(env,C);
+    if (r.ok && fn === 'listNotes') { try { await cfgSet(db, nbk, J({ at: Date.now(), d: r.data })); } catch (e) {} } else if (r.ok && /^(setNoteFolder|saveNote)/.test(fn)) { try { await cfgSet(db, nbk, null); } catch (e) {} }
     if (r.ok && fn === 'todoStatus') { try { await cfgSet(db, tdk, J({ at: Date.now(), d: r.data })); } catch (e) {} } else if (/^todo/i.test(fn)) { try { await cfgSet(db, tdk, null); } catch (e) {} } // أي عملية To Do أخرى تُلغي الذاكرة المؤقتة
     if (r.ok && fn === 'restoreTenant') waitUntil((async () => { try { const g = await gasCall(env, gt, 'getAll', []); if (g.ok) await importFrom(db, C.tn, g.data, C.u.id, true); } catch (e) {} })());
     return new Response(J(r), { headers: H });
