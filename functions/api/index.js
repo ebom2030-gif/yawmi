@@ -660,7 +660,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
   if (!db) return fail('قاعدة البيانات غير مربوطة');
   try {
     await init(db);
-    if (fn === 'buildInfo') return ok({version:'v285'});
+    if (fn === 'buildInfo') return ok({version:'v286'});
     if (fn === 'shareReq274') { // v274: طلب رخصة البناء من رابط العميل — عام، بالرمز السري فقط، وحين يفعّله المكتب (p.share.req)
       const tok = String(a[0] || ''), d0 = a[1] && typeof a[1] === 'object' ? a[1] : null;
       if (!/^[a-f0-9]{24,64}$/.test(tok) || !d0) return fail('الرابط غير صالح');
