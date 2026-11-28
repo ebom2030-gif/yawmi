@@ -655,7 +655,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
   if (!db) return fail('قاعدة البيانات غير مربوطة');
   try {
     await init(db);
-    if (fn === 'buildInfo') return ok({version:'v278'});
+    if (fn === 'buildInfo') return ok({version:'v285'});
     if (fn === 'shareReq274') { // v274: طلب رخصة البناء من رابط العميل — عام، بالرمز السري فقط، وحين يفعّله المكتب (p.share.req)
       const tok = String(a[0] || ''), d0 = a[1] && typeof a[1] === 'object' ? a[1] : null;
       if (!/^[a-f0-9]{24,64}$/.test(tok) || !d0) return fail('الرابط غير صالح');
@@ -726,11 +726,15 @@ export async function onRequestPost({ request, env, waitUntil }) {
           else if (C.s.gt && Date.now() - (C.s.gt_at || 0) > KEEPALIVE_MIN * 60000) { await db.prepare('UPDATE sess2 SET gt_at = ? WHERE th = ?').bind(Date.now(), th).run(); await gasCall(env, C.s.gt, 'todoStatus', []).catch(() => {}); } } catch (e) { try { await log(db, C.tn, C.u.id, 'bg:' + fn, 0, 0, e.message || e); } catch (x) {} } })());
       return ok(data, ver); }
     // خدمات Google فقط (Drive، Notability، To Do، البريد، الأفكار، المشتركون…) — بجلسة Google الخاصة بالمستخدم
+    // v284.1: حالة To Do تُقرأ من ذاكرة مؤقتة (5 دقائق) بدل انتظار Google في كل مرة (كانت تستغرق 1.5–2.7 ثانية)
+    const tdk = 'tds:' + C.tn + ':' + C.u.id;
+    if (fn === 'todoStatus') { try { const o = JSON.parse(await cfgGet(db, tdk) || 'null'); if (o && Date.now() - o.at < 5 * 60000) return ok(o.d); } catch (e) {} }
     const gt = C.s.gt || await gtFor(db, C.tn, C.u.id);
     if (!gt) return fail('خدمات Google (Drive، To Do، Notability…) تحتاج تسجيل الدخول مرة أخرى لتفعيلها');
     let r; try { r = await gasCall(env, gt, fn, a); } catch (e) { return fail('تعذّر الاتصال بخدمات Google — حاول مرة أخرى'); }
     if (!r.ok && /سجّل الدخول|انتهت الجلسة/.test(r.error || '')) { await db.prepare('UPDATE sess2 SET gt = NULL WHERE gt = ?').bind(gt).run(); return fail('انتهت جلسة خدمات Google — سجّل الخروج ثم الدخول لتجديدها'); }
     if(r.ok && ['todoNow','todoPoll'].includes(fn)) await reconcile(env,C);
+    if (r.ok && fn === 'todoStatus') { try { await cfgSet(db, tdk, J({ at: Date.now(), d: r.data })); } catch (e) {} } else if (/^todo/i.test(fn)) { try { await cfgSet(db, tdk, null); } catch (e) {} } // أي عملية To Do أخرى تُلغي الذاكرة المؤقتة
     if (r.ok && fn === 'restoreTenant') waitUntil((async () => { try { const g = await gasCall(env, gt, 'getAll', []); if (g.ok) await importFrom(db, C.tn, g.data, C.u.id, true); } catch (e) {} })());
     return new Response(J(r), { headers: H });
   } catch (e) { if (e instanceof UErr) return fail(e.message); try { await log(db, '', '', 'err:' + fn, 0, Date.now() - t0, e.message || e); } catch (x) {} return fail('خطأ في الخادم — حاول مرة أخرى'); }
